@@ -11,6 +11,7 @@ rm -r ../../pages/contact-us.tsx
 rm -r ../../pages/about-us.tsx
 rm -r ../../support
 rm -r ../../public/assets
+rm -r ../../services/config/theme-config.ts
 
 cp -R cards ../../
 cp -R components ../../
@@ -25,4 +26,5 @@ cp -R contact-us.tsx ../../pages
 cp -R about-us.tsx ../../pages
 cp -R support ../../pages
 cp -R assets ../../public
+cp -R theme-config.ts ../../services/config
 
