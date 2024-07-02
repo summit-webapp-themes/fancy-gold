@@ -31,17 +31,18 @@
   text-decoration: none !important;
 }
 .badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
+  background: red;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 35px;
+  left: 15px;
 }
 .badge-warning[href] {
   background-color: #c67605;
 }
 
 .icon-container {
+  position: relative;
   display: flex;
   justify-content: center !important;
   flex-direction: column;
@@ -52,14 +53,6 @@
 }
 .search-bar-height{
     height: 44px;
-}
-.category-header-l1{
-    font-size: 16px;
-    font-weight: 600;
-    color: #2e2d4e;
-}
-.category-header-l1:hover{
-    color: #5b5977;
 }
 @media(max-width: 1024px) {
    .search-bar{

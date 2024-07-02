@@ -1,6 +1,4 @@
 import { useState } from 'react';
-// import { Link, useNavigate, useParams } from "react-router-dom";
-import logo from '../../public/assets/images/logo.png';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -9,33 +7,28 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
+import logo from '../../public/assets/images/logo.png';
+import { navbarDataset } from '../../Dataset/navbar-dataset';
+import HeaderCategories from './HeaderCategories';
+
 const Navbar = () => {
-  const {
-    navbarData,
-    isLoading,
-    // handleCurrencyValueChange,
-    // selectedCurrencyValue,
-  } = useNavbar();
-  console.log(navbarData,'navBarData')
+  const data = navbarDataset;
+  const { navbarData, isLoading } = useNavbar();
+  console.log(navbarData, 'navBarData');
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
+
   const handleSearch = (e: any) => {
     e.preventDefault();
-    router.push(
-      '/product-detail/' +
-        //  +
-        //   param.categoryId +
-        //   "/" +
-        //   param.subCategoryId +
-        //   "/"
-        searchTerm
-    );
+    router.push('/product-detail/' + searchTerm);
   };
+
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       handleSearch(e);
     }
   };
+
   return (
     <>
       <header className="header">
@@ -43,20 +36,22 @@ const Navbar = () => {
           <div className="navbar">
             <div className="w-100 d-flex justify-content-between pt-3">
               <div>
-                <Link href="/">
-                  <Image
-                    className="pb-2 mb-1"
-                    src={logo}
-                    alt="logo"
-                    width={50}
-                  />
+                <Link href="/" legacyBehavior>
+                  <a>
+                    <Image
+                      className="pb-2 mb-1"
+                      src={logo}
+                      alt="logo"
+                      width={50}
+                    />
+                  </a>
                 </Link>
               </div>
-              <div className="d-block search-bar mx-2 ">
+              <div className="d-block search-bar mx-2">
                 <div className="search-input">
                   <input
                     type="text"
-                    className=" form-control search-bar-height"
+                    className="form-control search-bar-height"
                     placeholder="Search here"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
@@ -66,49 +61,60 @@ const Navbar = () => {
                 </div>
               </div>
               <div>
-                <ul className="nav align-items-center list-inline flex-wrap">
+                <ul className="nav  list-inline d-flex justify-content-between">
                   <li className="list-inline-item">
-                    <Link href="/" className="link-dark label">
-                      <div className="icon-container ">
-                        <ShoppingCartOutlinedIcon className="icon" />
-                        <span className="badge badge-warning">{/* 2 */}</span>
-                        <span className="label d-none d-md-inline-block">
-                          Cart
-                        </span>
-                      </div>
+                    <Link href="/" legacyBehavior>
+                      <a className="link-dark label">
+                        <div className="icon-container">
+                          <ShoppingCartOutlinedIcon className="icon" />
+                          <span className="badge badge-warning">2</span>
+                          <span className="label d-none d-md-inline-block">
+                            Cart
+                          </span>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link href="/whishlist" className="link-dark label">
-                      <div className="icon-container ">
-                        <FavoriteBorderIcon className="icon" />
-                        <span className="badge badge-warning" id="lblCartCount">
-                          {/* {wishlistCount} */}
-                        </span>
-                        <span className="d-none d-md-inline-block">
-                          Wishlist
-                        </span>
-                      </div>
+                    <Link href="/" legacyBehavior>
+                      <a className="link-dark label">
+                        <div className="icon-container">
+                          <FavoriteBorderIcon className="icon" />
+                          <span
+                            className="badge badge-warning"
+                            id="lblCartCount"
+                          >
+                            {/* {wishlistCount} */}
+                          </span>
+                          <span className="d-none d-md-inline-block">
+                            Wishlist
+                          </span>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link href="/order-list" className="link-dark label">
-                      <div className="icon-container ">
-                        <FormatListBulletedOutlinedIcon className="icon" />
-                        <span className="d-none d-md-inline-block ms-1">
-                          Order List
-                        </span>
-                      </div>
+                    <Link href="/" legacyBehavior>
+                      <a className="link-dark label">
+                        <div className="icon-container">
+                          <FormatListBulletedOutlinedIcon className="icon" />
+                          <span className="d-none d-md-inline-block ms-1">
+                            Order List
+                          </span>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link href="/" className="link-dark label">
-                      <div className="icon-container ">
-                        <LogoutOutlinedIcon className="icon" />
-                        <span className="d-none d-md-inline-block ms-1">
-                          Sign-out
-                        </span>
-                      </div>
+                    <Link href="/" legacyBehavior>
+                      <a className="link-dark label">
+                        <div className="icon-container">
+                          <LogoutOutlinedIcon className="icon" />
+                          <span className="d-none d-md-inline-block ms-1">
+                            Sign-out
+                          </span>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                 </ul>
@@ -117,7 +123,9 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
+      <HeaderCategories navbarData={data} />
     </>
   );
 };
+
 export default Navbar;
