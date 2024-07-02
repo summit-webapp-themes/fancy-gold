@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import Footer from './Footer';
 import Navbar from './Navbar/Navbar';
+
 
 const Layout = ({ children }: any) => {
   const router = useRouter();
@@ -12,8 +12,8 @@ const Layout = ({ children }: any) => {
   return (
     <>
       {toShowHeader && <Navbar />}
-      {children}
-      {toShowFooter && <Footer />}
+      {/* {children} */}
+      {/* {toShowFooter && <Footer />} */}
     </>
   );
 };
