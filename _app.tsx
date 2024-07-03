@@ -1,15 +1,25 @@
 import type { AppProps } from 'next/app';
 import App from 'next/app';
 import { ToastContainer } from 'react-bootstrap';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Layout from '../components/Layout';
 import { getMultiCurrencyValue } from '../services/api/general_apis/default-currency-api';
 import MultiLangApi from '../services/api/general_apis/multilanguage-api';
 import { persistor, store } from '../store/store';
 import '../styles/globals.scss';
+import { setRevalidationTime } from '../store/slices/general_slices/cache-slice';
+import { setDefaultCurrencyValue } from '../store/slices/general_slices/multi-currency-slice';
+import { setMultiLingualData } from '../store/slices/general_slices/multilang-slice';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps,fetchedDataFromServer  }: AppProps & { fetchedDataFromServer: any }) {
+  const dispatch = useDispatch();
+  const getCurrentTimestamp = Date.now();
+  dispatch(setRevalidationTime(getCurrentTimestamp));
+  dispatch(
+    setDefaultCurrencyValue(fetchedDataFromServer?.defaultCurrencyValue)
+  );
+  dispatch(setMultiLingualData(fetchedDataFromServer?.multiLingualValues));
   return (
     <div>
       <Provider store={store}>
