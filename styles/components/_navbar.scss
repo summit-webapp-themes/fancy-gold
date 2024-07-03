@@ -1,0 +1,79 @@
+.header {
+    background: #ededf3;
+  width: 100%;
+  min-height: 4rem;
+}
+.navbar{
+    padding: 0;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.top-navbar {
+  padding-top: 0.75rem;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+.search-bar {
+  width: 60%;
+  padding-bottom: 1.0625rem;
+  text-transform: uppercase;
+}
+.label {
+  text-decoration: none !important;
+}
+.badge {
+  background: red;
+  position: absolute;
+  border-radius: 50%;
+  bottom: 35px;
+  right: 15px;
+}
+.badge-warning[href] {
+  background-color: #c67605;
+}
+
+.icon-container {
+  position: relative;
+  display: flex;
+  justify-content: center !important;
+  flex-direction: column;
+  align-items: center;
+}
+.icon {
+  text-align: center;
+}
+.search-bar-height{
+    height: 44px;
+}
+.list-inline-item{
+  width: 80px;
+}
+@media(max-width: 1024px) {
+   .search-bar{
+    width: 45%;
+   }
+  }
+@media(max-width: 968px) {
+   .search-bar{
+    width: 35%;
+   }
+  }
+@media(max-width: 767px) {
+   .list-inline-item{
+    margin-top: 10px;
+    width: 30px;
+   }
+   .badge {
+    bottom: 10px;
+    right: -8px;
+  }
+  }
