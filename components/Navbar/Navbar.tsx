@@ -1,20 +1,17 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
-import { navbarDataset } from '../../Dataset/navbar-dataset';
 import HeaderCategories from './HeaderCategories';
 
 const Navbar = () => {
-  const data = navbarDataset;
   const { navbarData, isLoading } = useNavbar();
-  console.log(navbarData, 'navBarData');
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -123,7 +120,7 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
-      <HeaderCategories navbarData={data} />
+      <HeaderCategories navbarData={navbarData} />
     </>
   );
 };
