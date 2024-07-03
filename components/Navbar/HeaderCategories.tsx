@@ -2,17 +2,20 @@ import { useRef, useState } from 'react';
 import { Overlay, Popover } from 'react-bootstrap';
 
 const HeaderCategories = ({ navbarData }: any) => {
-  const [showPopover, setShowPopover] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
+  const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseEnter = (e: any) => {
+  const handleMouseEnter = (
+    e: React.MouseEvent<HTMLElement>,
+    index: number
+  ) => {
     setTarget(e.currentTarget);
-    setShowPopover(true);
+    setShowPopoverIndex(index);
   };
 
   const handleMouseLeave = () => {
-    setShowPopover(false);
+    setShowPopoverIndex(null);
   };
   const popoverBottom = (item: any) => (
     <Popover
@@ -39,7 +42,7 @@ const HeaderCategories = ({ navbarData }: any) => {
     </Popover>
   );
   return (
-    <nav>
+    <nav ref={ref}>
       <div className="heading-container" onMouseLeave={handleMouseLeave}>
         {navbarData !== null &&
           navbarData?.length > 0 &&
@@ -47,12 +50,12 @@ const HeaderCategories = ({ navbarData }: any) => {
             <div key={index}>
               <div
                 className="heading-category-l1"
-                onMouseEnter={handleMouseEnter}
+                onMouseEnter={(e) => handleMouseEnter(e, index)}
               >
                 {item.label}
               </div>
               <Overlay
-                show={showPopover}
+                show={showPopoverIndex === index}
                 target={target}
                 placement="bottom"
                 container={ref.current}
