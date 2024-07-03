@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useRef, useState } from 'react';
+import { Overlay, Popover } from 'react-bootstrap';
 
 const HeaderCategories = ({ navbarData }: any) => {
-    const [showPopover, setShowPopover] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
+  const ref = useRef(null);
 
-  const handleMouseEnter = (e:any) => {
+  const handleMouseEnter = (e: any) => {
     setTarget(e.currentTarget);
     setShowPopover(true);
   };
@@ -15,9 +16,10 @@ const HeaderCategories = ({ navbarData }: any) => {
   };
   const popoverBottom = (item: any) => (
     <Popover
-    id={`popover-${item.label}`}
+      id={`popover-${item.label}`}
       title="Popover bottom"
       className="p-2 category-popover "
+      onMouseLeave={handleMouseLeave}
     >
       <div className="row">
         {item?.values?.length > 0 &&
@@ -38,21 +40,27 @@ const HeaderCategories = ({ navbarData }: any) => {
   );
   return (
     <nav>
-      <div className="heading-container">
+      <div className="heading-container" onMouseLeave={handleMouseLeave}>
         {navbarData !== null &&
           navbarData?.length > 0 &&
           navbarData.map((item: any, index: number) => (
-            <OverlayTrigger
-              trigger={['hover', 'click']}
-              rootClose
-              placement="bottom"
-              overlay={popoverBottom(item)}
-              data-popper-reference-hidden="false"
-            >
-              
-                <div className="heading-category-l1" onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}>{item.label}</div>
-            </OverlayTrigger>
+            <div key={index}>
+              <div
+                className="heading-category-l1"
+                onMouseEnter={handleMouseEnter}
+              >
+                {item.label}
+              </div>
+              <Overlay
+                show={showPopover}
+                target={target}
+                placement="bottom"
+                container={ref.current}
+                containerPadding={20}
+              >
+                {popoverBottom(item)}
+              </Overlay>
+            </div>
           ))}
       </div>
     </nav>

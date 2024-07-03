@@ -61,7 +61,7 @@ const Navbar = () => {
                 </div>
               </div>
               <div>
-                <ul className="nav  list-inline d-flex justify-content-between">
+                <ul className="nav  list-inline d-flex justify-content-evenly">
                   <li className="list-inline-item">
                     <Link href="/" legacyBehavior>
                       <a className="link-dark label">

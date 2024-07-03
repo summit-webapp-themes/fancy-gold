@@ -35,7 +35,7 @@
   position: absolute;
   border-radius: 50%;
   bottom: 35px;
-  left: 15px;
+  right: 15px;
 }
 .badge-warning[href] {
   background-color: #c67605;
@@ -54,6 +54,9 @@
 .search-bar-height{
     height: 44px;
 }
+.list-inline-item{
+  width: 80px;
+}
 @media(max-width: 1024px) {
    .search-bar{
     width: 45%;
@@ -63,4 +66,14 @@
    .search-bar{
     width: 35%;
    }
+  }
+@media(max-width: 767px) {
+   .list-inline-item{
+    margin-top: 10px;
+    width: 30px;
+   }
+   .badge {
+    bottom: 10px;
+    right: -8px;
+  }
   }
