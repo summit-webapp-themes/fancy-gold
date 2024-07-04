@@ -7,7 +7,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Layout from '../components/Layout';
 import { getMultiCurrencyValue } from '../services/api/general_apis/default-currency-api';
 import MultiLangApi from '../services/api/general_apis/multilanguage-api';
-import { setRevalidationTime } from '../store/slices/general_slices/cache-slice';
 import { setDefaultCurrencyValue } from '../store/slices/general_slices/multi-currency-slice';
 import { setMultiLingualData } from '../store/slices/general_slices/multilang-slice';
 import { persistor, store } from '../store/store';
@@ -15,12 +14,11 @@ import '../styles/globals.scss';
 
 const initializeStore = (dispatch: Dispatch, fetchedDataFromServer: any) => {
   const getCurrentTimestamp = Date.now();
-  dispatch(setRevalidationTime(getCurrentTimestamp));
   dispatch(setDefaultCurrencyValue(fetchedDataFromServer?.defaultCurrencyValue));
   dispatch(setMultiLingualData(fetchedDataFromServer?.multiLingualValues));
 };
 
-function MyApp({ Component, pageProps,fetchedDataFromServer  }: AppProps & { fetchedDataFromServer: any }) {
+function MyApp({ Component, pageProps, fetchedDataFromServer }: AppProps & { fetchedDataFromServer: any }) {
   initializeStore(store.dispatch, fetchedDataFromServer);
   return (
     <div>
@@ -50,8 +48,7 @@ MyApp.getInitialProps = async (appContext: any) => {
 
   let get_default_currency_value: any = await getMultiCurrencyValue();
   if (get_default_currency_value?.status === 200) {
-    fetchedDataFromServer.defaultCurrencyValue =
-      get_default_currency_value?.data?.message;
+    fetchedDataFromServer.defaultCurrencyValue = get_default_currency_value?.data?.message;
   } else {
     fetchedDataFromServer.defaultCurrencyValue = {};
   }
