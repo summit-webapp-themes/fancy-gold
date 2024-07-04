@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
@@ -5,7 +6,6 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
@@ -35,12 +35,7 @@ const Navbar = () => {
               <div>
                 <Link href="/" legacyBehavior>
                   <a>
-                    <Image
-                      className="pb-2 mb-1"
-                      src={logo}
-                      alt="logo"
-                      width={50}
-                    />
+                    <Image className="pb-2 mb-1" src={logo} alt="logo" width={50} />
                   </a>
                 </Link>
               </div>
@@ -65,9 +60,7 @@ const Navbar = () => {
                         <div className="icon-container">
                           <ShoppingCartOutlinedIcon className="icon" />
                           <span className="badge badge-warning">2</span>
-                          <span className="label d-none d-md-inline-block">
-                            Cart
-                          </span>
+                          <span className="label d-none d-md-inline-block">Cart</span>
                         </div>
                       </a>
                     </Link>
@@ -77,15 +70,10 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <FavoriteBorderIcon className="icon" />
-                          <span
-                            className="badge badge-warning"
-                            id="lblCartCount"
-                          >
+                          <span className="badge badge-warning" id="lblCartCount">
                             {/* {wishlistCount} */}
                           </span>
-                          <span className="d-none d-md-inline-block">
-                            Wishlist
-                          </span>
+                          <span className="d-none d-md-inline-block">Wishlist</span>
                         </div>
                       </a>
                     </Link>
@@ -95,9 +83,7 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <FormatListBulletedOutlinedIcon className="icon" />
-                          <span className="d-none d-md-inline-block ms-1">
-                            Order List
-                          </span>
+                          <span className="d-none d-md-inline-block ms-1">Order List</span>
                         </div>
                       </a>
                     </Link>
@@ -107,9 +93,7 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <LogoutOutlinedIcon className="icon" />
-                          <span className="d-none d-md-inline-block ms-1">
-                            Sign-out
-                          </span>
+                          <span className="d-none d-md-inline-block ms-1">Sign-out</span>
                         </div>
                       </a>
                     </Link>
