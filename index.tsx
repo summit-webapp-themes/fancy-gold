@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import HomePage from '../components/HomePage';
+import HomePage from '../components/HomePage/HomePage';
 import { askForPermissionToReceiveNotifications } from '../push-notifications';
 import MetaTag from '../services/api/general_apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
@@ -8,8 +8,7 @@ const Home: NextPage = (fetchedDataFromServer: any) => {
   askForPermissionToReceiveNotifications();
   return (
     <div>
-      <HomePage
-      />
+      <HomePage />
     </div>
   );
 };
@@ -23,12 +22,9 @@ export async function getServerSideProps(context: any) {
   const url = `${context.resolvedUrl.split('?')[0]}`;
 
   if (CONSTANTS.ENABLE_META_TAGS) {
-    let meta_data: any = await MetaTag(
-      `${CONSTANTS.API_BASE_URL}${CONSTANTS.API_MANDATE_PARAMS}${params}&page_name=${url}`
-    );
+    let meta_data: any = await MetaTag(`${CONSTANTS.API_BASE_URL}${CONSTANTS.API_MANDATE_PARAMS}${params}&page_name=${url}`);
     if (meta_data?.status === 200 && Object.keys(meta_data).length > 0) {
-      fetchedDataFromServer.metaTagsDataFromAPI =
-        meta_data?.data?.message?.data;
+      fetchedDataFromServer.metaTagsDataFromAPI = meta_data?.data?.message?.data;
     } else {
       fetchedDataFromServer = {};
     }
