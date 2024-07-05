@@ -11,14 +11,14 @@ const ProductCard = ({ data }: any) => {
   return (
     <>
       <div className="card mx-4 product-card pt-3">
-        <div className="h-100 product-card-img position-relative">
-          <i className="fa-regular fa-heart"></i>
+        <div className="h-100 product-card-img ">
+          {/* <i className="fa-regular fa-heart"></i> */}
           <Image
             loader={imageLoader}
             src={data.custom_item_image !== null && data.custom_item_image}
             width={100}
             height={500}
-            alt="Home Banner images"
+            alt="Item Image"
             style={{ width: '100%', height: '100%' }}
           />
         </div>
