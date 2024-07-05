@@ -21,11 +21,10 @@ const HeaderCategories = ({ navbarData }: any) => {
           item?.values !== null &&
           item?.values.map((itemL2: any, index: number) =>{
             const columnCount = Math.ceil(itemL2?.values?.length / 8);
-            console.log([...Array(columnCount)],'columnCount')
             return (
             <div className="col">
               <div className="heading-category-l2">{itemL2?.label}</div>
-              <hr className='m-1'/>
+              <hr className='m-1' />
               <div className=" col-container">
               {Array.from({ length: columnCount }, (_, columnIndex) => (
                     <div key={columnIndex} className="column">
@@ -48,18 +47,16 @@ const HeaderCategories = ({ navbarData }: any) => {
     <header className=''>
 
     <nav ref={ref}>
-      <div className="heading-container shadow-sm py-2" onMouseLeave={handleMouseLeave}>
+      <div className="heading-container py-2" onMouseLeave={handleMouseLeave}>
         {navbarData !== null &&
           navbarData?.length > 0 &&
           navbarData.map((item: any, index: number) => (
             <div key={index} className="header-category-container">
-              <div className={`heading-category-l1 ${showPopoverIndex === index && 'text-danger'}`} onMouseEnter={(e) => handleMouseEnter(e, index)}>
+              <div className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`} onMouseEnter={(e) => handleMouseEnter(e, index)}>
                 {item.label}
               </div>
-              {/* <hr className={`my-2 ${showPopoverIndex === index && 'text-danger'}`} /> */}
               <Overlay
                 show={showPopoverIndex === index && item?.values?.length > 0}
-                // show={true}
                 target={target}
                 placement="bottom"
                 container={ref.current}

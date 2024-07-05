@@ -65,7 +65,7 @@ const Navbar = () => {
                         <div className="icon-container">
                           <ShoppingCartOutlinedIcon className="icon" />
                           <span className="badge badge-warning">2</span>
-                          <span className="label d-none d-md-inline-block">
+                          <span className="d-none d-md-inline-block theme-blue">
                             Cart
                           </span>
                         </div>
@@ -83,7 +83,7 @@ const Navbar = () => {
                           >
                             {/* {wishlistCount} */}
                           </span>
-                          <span className="d-none d-md-inline-block">
+                          <span className="d-none d-md-inline-block theme-blue ">
                             Wishlist
                           </span>
                         </div>
@@ -95,7 +95,7 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <FormatListBulletedOutlinedIcon className="icon" />
-                          <span className="d-none d-md-inline-block ms-1">
+                          <span className="d-none d-md-inline-block ms-1 theme-blue">
                             Order List
                           </span>
                         </div>
@@ -107,7 +107,7 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <LogoutOutlinedIcon className="icon" />
-                          <span className="d-none d-md-inline-block ms-1">
+                          <span className="d-none d-md-inline-block ms-1 theme-blue">
                             Sign-out
                           </span>
                         </div>
