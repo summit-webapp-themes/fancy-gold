@@ -1,11 +1,10 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import { Formik, Form as FormikForm, ErrorMessage, useFormikContext } from 'formik';
 import { Form } from 'react-bootstrap';
 import * as Yup from 'yup';
-import Link from 'next/link';
-import Image from 'next/image';
-import logo from '../../public/assets/images/logo.png';
-import { useState } from 'react';
 import useLoginHook from '../../hooks/AuthHooks/useLoginHook';
+import logo from '../../public/assets/images/logo.png';
 
 const validation = Yup.object().shape({
   usr: Yup.string().email(' Enter valid email').required(' Email field is required'),
@@ -27,7 +26,7 @@ function LoginComponent() {
           fetchToken(values);
         }}
       >
-        {({ errors, touched, handleChange, isValid, handleBlur }) => (
+        {({ handleChange, handleBlur, values }) => (
           <FormikForm>
             <div className="form-wrapper" id="wrapper-login">
               <div className="content-wrapper" id="content-signin">
@@ -37,7 +36,7 @@ function LoginComponent() {
                       <div className="col-12">
                         <div className="img">
                           <Link href="/" className="navbar-brand">
-                            <Image src={logo} alt="logo" width={60} className="img-fluid mx-auto d-block mb-4" />
+                            <Image src={logo} alt="logo" width={60} className="img-fluid mx-auto d-block mb-4 h-auto" priority={true} />
                           </Link>
                         </div>
                         <Form.Group controlId="formEmail">
@@ -89,13 +88,6 @@ function LoginComponent() {
           </FormikForm>
         )}
       </Formik>
-      <div>
-        <div className="col-4 text-end">
-          <Link className="linkss" href="#" onClick={(e) => HandleGetOtp(e)}>
-            Get OTP
-          </Link>
-        </div>
-      </div>
     </div>
   );
 }

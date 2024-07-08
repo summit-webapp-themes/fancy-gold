@@ -1,15 +1,17 @@
-import { Dispatch } from '@reduxjs/toolkit';
 import type { AppProps } from 'next/app';
 import App from 'next/app';
+import { Dispatch } from '@reduxjs/toolkit';
 import { ToastContainer } from 'react-bootstrap';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import Layout from '../components/Layout';
-import { getMultiCurrencyValue } from '../services/api/general_apis/default-currency-api';
-import MultiLangApi from '../services/api/general_apis/multilanguage-api';
+import ProtectedRoute from '../routes/ProtectedRoute';
 import { setDefaultCurrencyValue } from '../store/slices/general_slices/multi-currency-slice';
 import { setMultiLingualData } from '../store/slices/general_slices/multilang-slice';
 import { persistor, store } from '../store/store';
+import { CONSTANTS } from '../services/config/app-config';
+import { getMultiCurrencyValue } from '../services/api/general_apis/default-currency-api';
+import MultiLangApi from '../services/api/general_apis/multilanguage-api';
+import Layout from '../components/Layout';
 import '../styles/globals.scss';
 
 const initializeStore = (dispatch: Dispatch, fetchedDataFromServer: any) => {
@@ -20,21 +22,21 @@ const initializeStore = (dispatch: Dispatch, fetchedDataFromServer: any) => {
 
 function MyApp({ Component, pageProps, fetchedDataFromServer }: AppProps & { fetchedDataFromServer: any }) {
   initializeStore(store.dispatch, fetchedDataFromServer);
+
   return (
     <div>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Layout>
-            <ToastContainer
-              position="top-right"
-              autoClose={8000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              draggable={false}
-              closeOnClick
-              pauseOnHover
-            />
-            <Component {...pageProps} />
+            <ToastContainer position="top-right" autoClose={8000} hideProgressBar={false} newestOnTop={false} draggable={false} closeOnClick pauseOnHover />
+            {/* Below condition is to check whether give complete access of site to guest user or user can access site only after authentication */}
+            {CONSTANTS.ALLOW_GUEST_TO_ACCESS_SITE_EVEN_WITHOUT_AUTHENTICATION ? (
+              <Component {...pageProps} />
+            ) : (
+              <ProtectedRoute>
+                <Component {...pageProps} />
+              </ProtectedRoute>
+            )}
           </Layout>
         </PersistGate>
       </Provider>
