@@ -12,7 +12,7 @@ const SliderSection = ({ data }: any) => {
   }, []);
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     slidesPerRow: 1,
     slidesToShow: data.value?.length > 4 ? 4 : data.value?.length,
     slidesToScroll: 1,

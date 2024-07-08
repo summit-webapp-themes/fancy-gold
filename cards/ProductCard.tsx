@@ -10,9 +10,11 @@ const ProductCard = ({ data }: any) => {
   };
   return (
     <>
-      <div className="card mx-4 product-card pt-3">
+      <div className="card mx-4 product-card pt-2">
         <div className="h-100 product-card-img ">
-
+          <span className="wishlist-icon text-danger">
+            <i className="fa fa-heart-o"></i>
+          </span>
           <Image
             loader={imageLoader}
             src={data.custom_item_image !== null && data.custom_item_image}

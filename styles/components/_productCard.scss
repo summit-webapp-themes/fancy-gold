@@ -1,6 +1,6 @@
 .product-card {
     border: 1px solid #b0b0c5 !important;
-    height: 380px ;
+    height: 380px;
 }
 
 .product-card-img {
@@ -10,12 +10,20 @@
 }
 
 .add-to-cart-btn {
-   border: 1px solid #1A1A49; 
-   color: #1A1A49; 
-   font-size: 1rem;
+    border: 1px solid #1A1A49;
+    color: #1A1A49;
+    font-size: 1rem;
 }
+
 .add-to-cart-btn:hover {
     background-color: #1A1A49;
-   border: 1px solid #1A1A49; 
+    border: 1px solid #1A1A49;
     color: white;
+}
+
+.wishlist-icon {
+    position: absolute;
+    right: 10px !important;
+    font-size: 30px;
+    top: -7px !important;
 }
