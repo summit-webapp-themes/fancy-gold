@@ -1,70 +1,87 @@
 import { useRef, useState } from 'react';
-import { Overlay, Popover } from 'react-bootstrap';
+import { Overlay, Placeholder, Popover } from 'react-bootstrap';
+import NavbarLoadingComponent from './NavbarLoadingComponent';
+import CommonErrorMsg from '../CommonErrorMsg';
 
-const HeaderCategories = ({ navbarData }: any) => {
-  const [showPopover, setShowPopover] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
-
-  const handleMouseEnter = (e: any) => {
+const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
+  const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, index: number) => {
     setTarget(e.currentTarget);
-    setShowPopover(true);
+    setShowPopoverIndex(index);
   };
 
   const handleMouseLeave = () => {
-    setShowPopover(false);
+    setShowPopoverIndex(null);
   };
   const popoverBottom = (item: any) => (
-    <Popover
-      id={`popover-${item.label}`}
-      title="Popover bottom"
-      className="p-2 category-popover "
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="row">
+    <Popover id={`popover-${item.label}`} className="p-2 category-popover shadow rounded" onMouseLeave={handleMouseLeave}>
+      <div className="row ">
         {item?.values?.length > 0 &&
           item?.values !== null &&
-          item?.values.map((itemL2: any, index: number) => (
-            <div className="col">
-              <div className="heading-category-l2">{itemL2?.label}</div>
-              <hr />
-              {itemL2?.values?.length > 0 &&
-                itemL2?.values !== null &&
-                itemL2?.values?.map((itemL3: any) => (
-                  <div className="heading-category-l3">{itemL3.label}</div>
-                ))}
-            </div>
-          ))}
+          item?.values.map((itemL2: any, index: number) => {
+            const columnCount = Math.ceil(itemL2?.values?.length / 8);
+            return (
+              <div className="col">
+                <div className="heading-category-l2">{itemL2?.label}</div>
+                <hr className="m-1" />
+                <div className=" col-container">
+                  {Array.from({ length: columnCount }, (_, columnIndex) => (
+                    <div key={columnIndex} className="column">
+                      {itemL2?.values?.slice(columnIndex * 8, (columnIndex + 1) * 8).map((itemL3: any, idx: number) => (
+                        <div key={idx} className="heading-category-l3 p-1">
+                          {itemL3?.label !== undefined ? itemL3?.label : `${idx}`}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
       </div>
     </Popover>
   );
-  return (
-    <nav>
-      <div className="heading-container" onMouseLeave={handleMouseLeave}>
-        {navbarData !== null &&
-          navbarData?.length > 0 &&
-          navbarData.map((item: any, index: number) => (
-            <div key={index}>
-              <div
-                className="heading-category-l1"
-                onMouseEnter={handleMouseEnter}
-              >
-                {item.label}
-              </div>
-              <Overlay
-                show={showPopover}
-                target={target}
-                placement="bottom"
-                container={ref.current}
-                containerPadding={20}
-              >
-                {popoverBottom(item)}
-              </Overlay>
-            </div>
-          ))}
-      </div>
-    </nav>
-  );
+  const handleDataRendering = () => {
+    if (isLoading && (navbarData === null || navbarData?.length <= 0)) {
+      return <NavbarLoadingComponent />;
+    }
+    if (navbarData?.length > 0) {
+      return (
+        <nav ref={ref}>
+          <div className="heading-container py-2" onMouseLeave={handleMouseLeave}>
+            {navbarData?.length > 0 &&
+              navbarData.map((item: any, index: number) => (
+                <div key={index} className="header-category-container">
+                  {navbarData === null ? (
+                    <Placeholder xs={6} bg="dark" />
+                  ) : (
+                    <div className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`} onMouseEnter={(e) => handleMouseEnter(e, index)}>
+                      {item.label}
+                    </div>
+                  )}
+                  <Overlay
+                    show={showPopoverIndex === index && item?.values?.length > 0}
+                    target={target}
+                    placement="bottom"
+                    container={ref.current}
+                    containerPadding={20}
+                  >
+                    {popoverBottom(item)}
+                  </Overlay>
+                </div>
+              ))}
+          </div>
+        </nav>
+      );
+    }
+    if (errorMessage !== '' && navbarData?.length <= 0 && isLoading === false) {
+      return <CommonErrorMsg error={errorMessage} />;
+    }
+  };
+
+  return <header>{handleDataRendering()}</header>;
 };
 
 export default HeaderCategories;

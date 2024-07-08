@@ -1,12 +1,11 @@
 .header {
-    background: #ededf3;
+  background: white;
   width: 100%;
-  min-height: 4rem;
 }
-.navbar{
-    padding: 0;
-    margin-left: 2%;
-    margin-right: 2%;
+.navbar {
+  padding: 0;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 .top-navbar {
   padding-top: 0.75rem;
@@ -28,6 +27,7 @@
   text-transform: uppercase;
 }
 .label {
+  color: #1a1a49 !important;
   text-decoration: none !important;
 }
 .badge {
@@ -49,31 +49,32 @@
   align-items: center;
 }
 .icon {
+  color: #1a1a49;
   text-align: center;
 }
-.search-bar-height{
-    height: 44px;
+.search-bar-height {
+  height: 44px;
 }
-.list-inline-item{
+.list-inline-item {
   width: 80px;
 }
-@media(max-width: 1024px) {
-   .search-bar{
+@media (max-width: 1070px) {
+  .search-bar {
     width: 45%;
-   }
   }
-@media(max-width: 968px) {
-   .search-bar{
+}
+@media (max-width: 968px) {
+  .search-bar {
     width: 35%;
-   }
   }
-@media(max-width: 767px) {
-   .list-inline-item{
+}
+@media (max-width: 767px) {
+  .list-inline-item {
     margin-top: 10px;
     width: 30px;
-   }
-   .badge {
+  }
+  .badge {
     bottom: 10px;
     right: -8px;
   }
-  }
+}
