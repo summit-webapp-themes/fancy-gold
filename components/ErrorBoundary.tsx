@@ -1,7 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import image from '../public/assets/images/error-icon.png';
-import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
 import Image from 'next/image';
+import image from '../public/assets/images/error-icon.png';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
