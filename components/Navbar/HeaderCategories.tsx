@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 import NavbarLoadingComponent from './NavbarLoadingComponent';
-import CommonErrorMsg from '../CommonErrorMsg';
+import ComponentErrorHandler from '../ComponentErrorHandler';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
@@ -44,7 +44,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     </Popover>
   );
   const handleDataRendering = () => {
-    if (isLoading && (navbarData === null || navbarData?.length <= 0)) {
+    if (isLoading) {
       return <NavbarLoadingComponent />;
     }
     if (navbarData?.length > 0) {
@@ -77,7 +77,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
       );
     }
     if (errorMessage !== '' && navbarData?.length <= 0 && isLoading === false) {
-      return <CommonErrorMsg error={errorMessage} />;
+      return <ComponentErrorHandler error={errorMessage} />;
     }
   };
 
