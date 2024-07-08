@@ -11,6 +11,7 @@ import { setDefaultCurrencyValue } from '../store/slices/general_slices/multi-cu
 import { setMultiLingualData } from '../store/slices/general_slices/multilang-slice';
 import { persistor, store } from '../store/store';
 import '../styles/globals.scss';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const initializeStore = (dispatch: Dispatch, fetchedDataFromServer: any) => {
   const getCurrentTimestamp = Date.now();
@@ -24,6 +25,8 @@ function MyApp({ Component, pageProps, fetchedDataFromServer }: AppProps & { fet
     <div>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ErrorBoundary>
+
           <Layout>
             <ToastContainer
               position="top-right"
@@ -36,6 +39,7 @@ function MyApp({ Component, pageProps, fetchedDataFromServer }: AppProps & { fet
             />
             <Component {...pageProps} />
           </Layout>
+          </ErrorBoundary>
         </PersistGate>
       </Provider>
     </div>
