@@ -12,8 +12,8 @@ const DisplayTags = () => {
       {Array.isArray(allTagsData) ? (
         <div className="display-tags-section pb-5">
           <div className="container">
-            {updateDisplayTagList?.length > 0 && (
-              updateDisplayTagList.map((tagsData: any, index: any) => {
+            {updateDisplayTagList?.length > 0 &&
+              updateDisplayTagList?.map((tagsData: any, index: any) => {
                 return (
                   <>
                     <div className="text-center text-secondary">
@@ -23,8 +23,7 @@ const DisplayTags = () => {
                     </div>
                   </>
                 );
-              })
-            )}
+              })}
           </div>
         </div>
       ) : (
