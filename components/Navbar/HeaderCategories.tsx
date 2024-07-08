@@ -1,12 +1,12 @@
-import { Skeleton } from '@mui/material';
 import { useRef, useState } from 'react';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
+import NavbarLoadingComponent from './NavbarLoadingComponent';
+import CommonErrorMsg from '../CommonErrorMsg';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
-  console.log(isLoading, navbarData, 'isLoading');
   const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, index: number) => {
     setTarget(e.currentTarget);
     setShowPopoverIndex(index);
@@ -43,15 +43,13 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
       </div>
     </Popover>
   );
-  return (
-    <header className="">
-      <nav ref={ref}>
-        {!isLoading ? (
-          <div className='d-flex justify-content-center py-2 overflow-hidden'>
-            {[1,2,3,4,5,6,7,8].map((_,index) =><Skeleton sx={{ bgcolor: '#cfcfcf' }} variant="rectangular" width={90} height={18} className='mx-3' animation={false}/>)}
-                
-          </div>
-        ) : (
+  const handleDataRendering = () => {
+    if (isLoading && (navbarData === null || navbarData?.length <= 0)) {
+      return <NavbarLoadingComponent />;
+    }
+    if (navbarData?.length > 0) {
+      return (
+        <nav ref={ref}>
           <div className="heading-container py-2" onMouseLeave={handleMouseLeave}>
             {navbarData?.length > 0 &&
               navbarData.map((item: any, index: number) => (
@@ -59,10 +57,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                   {navbarData === null ? (
                     <Placeholder xs={6} bg="dark" />
                   ) : (
-                    <div
-                      className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`}
-                      onMouseEnter={(e) => handleMouseEnter(e, index)}
-                    >
+                    <div className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`} onMouseEnter={(e) => handleMouseEnter(e, index)}>
                       {item.label}
                     </div>
                   )}
@@ -78,10 +73,15 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                 </div>
               ))}
           </div>
-        )}
-      </nav>
-    </header>
-  );
+        </nav>
+      );
+    }
+    if (errorMessage !== '' && navbarData?.length <= 0 && isLoading === false) {
+      return <CommonErrorMsg error={errorMessage} />;
+    }
+  };
+
+  return <header>{handleDataRendering()}</header>;
 };
 
 export default HeaderCategories;
