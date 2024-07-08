@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import Slider from 'react-slick';
 import ProductCard from '../../../cards/ProductCard';
 
 const SliderSection = ({ data }: any) => {
@@ -52,20 +52,6 @@ const SliderSection = ({ data }: any) => {
     <div className="bgImageWrapper">
       <div className={`container-fluid `} style={{ zIndex: '2', position: 'relative' }}>
         <div className="row">
-          {/* <div className="col-12">
-            <div className="row">
-              <div className="col-6">
-                <h4 className="mb-2 ms-4">Media & Publications</h4>
-              </div>
-              <div className="col-6">
-                <div>
-                  <h6 className="text-end me-4">
-                    <Link href="#">View More</Link>
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div> */}
           <Slider {...settings}>
             {data.value?.length > 0 &&
               data.value.map((item: any, index: any) => (
@@ -76,9 +62,6 @@ const SliderSection = ({ data }: any) => {
           </Slider>
         </div>
       </div>
-      {/* <figure>
-        <Image width={1200} height={1200} src={topRoundedBorders} alt="bg" />
-      </figure> */}
     </div>
   );
 };

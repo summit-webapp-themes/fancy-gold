@@ -5,12 +5,12 @@ import useHomeBanner from '../../hooks/HomePageHooks/HomeBannerHook';
 import Link from 'next/link';
 
 const HomeBanner = () => {
-  const { homeBannerData, isLoading } = useHomeBanner();
+  const { homeBannerData } = useHomeBanner();
 
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
-  // console.log('banner data', isLoading);
+
   return (
     <>
       <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">

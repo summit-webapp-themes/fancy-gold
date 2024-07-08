@@ -4,7 +4,7 @@ import { CONSTANTS } from '../services/config/app-config';
 import Link from 'next/link';
 
 const ProductCard = ({ data }: any) => {
-  console.log('data', data);
+
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -12,7 +12,7 @@ const ProductCard = ({ data }: any) => {
     <>
       <div className="card mx-4 product-card pt-3">
         <div className="h-100 product-card-img ">
-          {/* <i className="fa-regular fa-heart"></i> */}
+
           <Image
             loader={imageLoader}
             src={data.custom_item_image !== null && data.custom_item_image}
