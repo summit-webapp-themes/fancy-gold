@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
+import HomePage from '../components/HomePage/HomePage';
 import { askForPermissionToReceiveNotifications } from '../push-notifications';
-import HomePage from '../components/HomePage';
 import MetaTag from '../services/api/general_apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
 

@@ -1,0 +1,21 @@
+.product-card {
+    border: 1px solid #b0b0c5 !important;
+    height: 380px ;
+}
+
+.product-card-img {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.add-to-cart-btn {
+   border: 1px solid #1A1A49; 
+   color: #1A1A49; 
+   font-size: 1rem;
+}
+.add-to-cart-btn:hover {
+    background-color: #1A1A49;
+   border: 1px solid #1A1A49; 
+    color: white;
+}
