@@ -1,4 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
+import image from '../public/assets/images/error-icon.png';
+import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
+import Image from 'next/image';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -34,10 +37,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       return (
         <div id="error-page">
           <div className="error-content">
-            <h5 className="error-header" data-text="OOPS!">
-              OOPS!
-            </h5>
-            <h4 data-text="Something Went Wrong!">Something Went Wrong!</h4>
+            <div className="p-3" style={{ fontSize: '40px' }}>
+              <Image src={image} width={250} height={250} alt="Error Image" />
+            </div>
+            <h4 data-text="Oops, Something Went Wrong!">Oops, Something Went Wrong!</h4>
             <p>
               Sorry, Our engineers are currently fixing something.
               <br />
