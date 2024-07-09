@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import ProductListViewMaster from './ProductListView/ProductListViewMaster';
 import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
@@ -41,3 +42,14 @@ const ProductListingMaster = () => {
 };
 
 export default ProductListingMaster;
+=======
+import React from 'react'
+
+const ProductListingMaster = () => {
+  return (
+    <div>ProductListingMaster</div>
+  )
+}
+
+export default ProductListingMaster
+>>>>>>> upstream/develop
