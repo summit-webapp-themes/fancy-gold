@@ -1,8 +1,11 @@
 import React from 'react'
+import BreadCrumbs from '../ProductDetailComponents/ProductDetails/BreadCrumbs'
 
 const ProductListingMaster = () => {
   return (
-    <div>ProductListingMaster</div>
+    <div className='container'>
+      <BreadCrumbs/>
+    </div>
   )
 }
 
