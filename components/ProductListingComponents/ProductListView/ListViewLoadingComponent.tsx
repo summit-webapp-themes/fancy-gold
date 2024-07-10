@@ -14,7 +14,6 @@ const ListViewLoadingComponent = () => {
           </Typography>
           <Box mt={1}>
             <Skeleton width="80%" />
-            {/* <Skeleton width="80%" /> */}
             <Skeleton width="40%" />
           </Box>
           <Box display="flex" alignItems="center" mt={2}>

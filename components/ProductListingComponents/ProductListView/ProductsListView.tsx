@@ -9,9 +9,7 @@ const ProductsListView = () => {
           <div className="row justify-content-center mb-3">
             {[...Array(5)].map(() => (
               <>
-                {/* <div className="col-md-3 col-lg-2 mb-3 mx-2 px-0"> */}
                 <ListViewLoadingComponent />
-                {/* </div> */}
               </>
             ))}
           </div>
