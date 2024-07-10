@@ -1,6 +1,6 @@
 .product-card {
     border: 1px solid #b0b0c5 !important;
-    height: 380px ;
+    height: 380px;
 }
 
 .product-card-img {
@@ -10,12 +10,34 @@
 }
 
 .add-to-cart-btn {
-   border: 1px solid #1A1A49; 
-   color: #1A1A49; 
-   font-size: 1rem;
+    border: 1px solid #1A1A49;
+    color: #1A1A49;
+    font-size: 14px;
+    width: 140px;
 }
+
 .add-to-cart-btn:hover {
     background-color: #1A1A49;
-   border: 1px solid #1A1A49; 
-    color: white;
+    border: 1px solid #1A1A49;
+    color: #FFD700;
+}
+.product-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.product-card-text{
+    font-size: 1rem;
+}
+
+.wishlist-icon {
+    position: absolute;
+    right: 14px !important;
+    font-size: 25px;
+    top: -7px !important;
+}
+
+.product-code-img {
+    padding: 20px;
+    margin-top: 15px;
 }
