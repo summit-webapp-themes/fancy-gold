@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
-import { CONSTANTS } from '../services/config/app-config';
+import Image from 'next/image';
 import Link from 'next/link';
+import { CONSTANTS } from '../services/config/app-config';
 
 const ProductCard = ({ data }: any) => {
   const imageLoader = ({ src, width, quality }: any) => {
