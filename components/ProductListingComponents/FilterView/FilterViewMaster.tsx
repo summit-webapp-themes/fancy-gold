@@ -1,10 +1,10 @@
 import React from 'react';
-import WebFilters from './WebFilters';
+import FilterViewComponent from './FIlterViewComponent';
 
 const FilterViewMaster = () => {
   return (
     <div>
-      <WebFilters />
+      <FilterViewComponent />
     </div>
   );
 };
