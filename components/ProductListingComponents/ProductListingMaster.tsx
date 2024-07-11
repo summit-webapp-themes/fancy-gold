@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductListViewMaster from './ProductListView/ProductListViewMaster';
 import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
-import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 import FilterViewMaster from './FilterView/FilterViewMaster';
 
@@ -44,7 +43,6 @@ const ProductListingMaster = () => {
         <div className="container">
           <div className="row mt-2 ms-3 product-listing-row">
             <span className="col-lg-3 col-md-4 handle_display_web_filter">
-              {/* <WebFilters /> */}
               <FilterViewMaster/>
             </span>
             <div className="col-lg-9 col-md-8">{handleDisplayOfProductsList()}</div>
