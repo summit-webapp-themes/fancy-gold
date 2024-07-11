@@ -1,13 +1,13 @@
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import Slider from 'react-slick';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import ProductCard from '../../../cards/ProductCard';
 import ProductCardSkeleton from '../../Skeleton/ProductCardSkeleton';
 import SliderNextArrow from './SliderNextArrow';
 import SliderPrevArrow from './SliderPrevArrow';
+import ProductCard from '../../../cards/ProductCard';
 
 const SliderSection = ({ data }: any) => {
   useEffect(() => {
@@ -22,7 +22,7 @@ const SliderSection = ({ data }: any) => {
     nextArrow: <SliderNextArrow />,
     prevArrow: <SliderPrevArrow />,
     pauseOnHover: true,
-    autoplay: false,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -51,28 +51,48 @@ const SliderSection = ({ data }: any) => {
     ],
   };
 
-  return (
-    <div className="bgImageWrapper">
-      <div className={`container-fluid `} style={{ zIndex: '2', position: 'relative' }}>
-        <div className="row">
-          <Slider {...settings}>
-            {data.value?.length > 0 &&
-              data.value.map((item: any, index: any) => (
-                <div key={index} className="col-lg-3 col-md-3 col-6">
-                  <ProductCard data={item} />
-                </div>
-              ))}
-            {data?.length === 0 &&
-              [...Array(2)].map((_, index) => (
-                <div key={index} className="col-lg-3 col-md-3 col-6 mx-2">
-                  <ProductCardSkeleton />
-                </div>
-              ))}
-          </Slider>
-        </div>
-      </div>
-    </div>
-  );
+  const showSliderSection: any = () => {
+    if (data?.value?.length === 0) {
+      return (
+        <>
+          <div className={`container-fluid `}>
+            <div className="row">
+              <Slider {...settings}>
+                {[...Array(2)].map((_, index) => (
+                  <div key={index} className="col-lg-3 col-md-3 col-6 mx-2">
+                    <ProductCardSkeleton />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          </div>
+        </>
+      );
+    }
+
+    if (data?.value?.length > 0) {
+      return (
+        <>
+          <div className={`container-fluid `} style={{ zIndex: '2', position: 'relative' }}>
+            <div className="row">
+              <Slider {...settings}>
+                {data.value?.length > 0 &&
+                  data.value.map((item: any, index: any) => (
+                    <>
+                      <div key={index} className="col-12">
+                        <ProductCard data={item} />
+                      </div>
+                    </>
+                  ))}
+              </Slider>
+            </div>
+          </div>
+        </>
+      );
+    }
+  };
+
+  return <div className="bgImageWrapper">{showSliderSection()}</div>;
 };
 
 export default SliderSection;
