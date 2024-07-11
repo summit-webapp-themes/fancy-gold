@@ -41,11 +41,11 @@ const ProductListingMaster = () => {
 
       <section className="listing-page ">
         <div className="container">
-          <div className="row mt-2 ms-3 product-listing-row">
-            <span className="col-lg-3 col-md-4 handle_display_web_filter">
+          <div className="row mt-2 product-listing-row">
+            <span className="col-lg-2 col-md-4 handle_display_web_filter">
               <WebFilters />
             </span>
-            <div className="col-lg-9 col-md-8">{handleDisplayOfProductsList()}</div>
+            <div className="col-lg-10 col-md-8">{handleDisplayOfProductsList()}</div>
           </div>
         </div>
       </section>
