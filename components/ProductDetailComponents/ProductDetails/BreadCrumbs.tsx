@@ -17,8 +17,8 @@ const BreadCrumbs = () => {
       }
     });
   const handleDataRendering = () => {
-    if (isLoading) {
-      return <Skeleton variant="rounded" width={200} height={10} className="mt-2" animation={false} />;
+    if (!isLoading) {
+      return <Skeleton variant="rounded" width={200} height={20} className="mt-2" animation={false} />;
     }
     if (breadCrumbData?.length > 0) {
       return (
@@ -61,7 +61,7 @@ const BreadCrumbs = () => {
       );
     }
   };
-  return handleDataRendering();
+  return <div>{handleDataRendering()}</div>;
 };
 
 export default BreadCrumbs;
