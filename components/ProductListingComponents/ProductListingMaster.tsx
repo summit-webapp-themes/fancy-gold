@@ -5,17 +5,17 @@ import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
 const ProductListingMaster = () => {
-  const { toggleProductListView, handleToggleProductsListingView } = useProductListing();
+  const { toggleProductListView, handleToggleProductsListingView,productListingData, isLoading } = useProductListing();
 
   const handleDisplayOfProductsList = () => {
     switch (toggleProductListView) {
       case 'list-view':
-        return <ProductListViewMaster />;
+        // return <ProductListViewMaster productListingData={productListingData} isLoading={isLoading}/>;
       case 'grid-view':
-        return <ProductGridViewMaster />;
+        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} />;
 
       default:
-        return <ProductGridViewMaster />;
+        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading}/>;
     }
   };
 
