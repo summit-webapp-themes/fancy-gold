@@ -1,21 +1,23 @@
-import React from 'react';
-import ProductListViewMaster from './ProductListView/ProductListViewMaster';
+import React, { useEffect } from 'react';
 import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
+import ProductListViewMaster from './ProductListView/ProductListViewMaster';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
 const ProductListingMaster = () => {
-  const { toggleProductListView, handleToggleProductsListingView,productListingData, isLoading } = useProductListing();
-
+  const { toggleProductListView, handleToggleProductsListingView, productListingData, isLoading, handlePaginationBtn } = useProductListing();
+  useEffect(() => {
+    handleToggleProductsListingView('grid-view');
+  }, []);
   const handleDisplayOfProductsList = () => {
     switch (toggleProductListView) {
       case 'list-view':
-        // return <ProductListViewMaster productListingData={productListingData} isLoading={isLoading}/>;
+        return <ProductListViewMaster />;
       case 'grid-view':
-        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} />;
+        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
 
       default:
-        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading}/>;
+        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
     }
   };
 
