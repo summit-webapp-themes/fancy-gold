@@ -51,9 +51,9 @@
 .mobile-menu-container {
   position: relative;
   width: 80%;
-  max-width: 300px;
+  // max-width: 300px;
   height: 100%;
-  background-color: #fff;
+  background-color: rgb(248, 249, 250);
   padding: 8px 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -93,8 +93,11 @@
 }
 .mobile-menu li {
   margin-bottom: 10px;
+  padding-left: 10px;
 }
-
+.fs-5 {
+  font-size: 22px !important;
+}
 .mobile-menu a {
   color: #333;
   text-decoration: none;
@@ -145,6 +148,14 @@
   border-left: none;
   border-radius: 0 5px 5px 0;
   background-color: #f0f0f0;
+}
+
+.caret-icon {
+  transition: transform 0.3s ease;
+}
+
+.caret-icon.rotate {
+  transform: rotate(90deg);
 }
 
 @media (min-width: 768px) {

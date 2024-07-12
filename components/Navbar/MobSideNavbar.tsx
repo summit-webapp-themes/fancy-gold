@@ -18,6 +18,7 @@ const MobSideNavbar = ({
 }: any) => {
   const [arrowIndex, setarrowIndex] = useState<any>(null);
   const [indexVal, setindexVal] = useState<any>(null);
+  const [rotatedIndex, setRotatedIndex] = useState<number | null>(null);
 
   const onClickCloseNav = () => {
     console.log('click close');
@@ -40,6 +41,15 @@ const MobSideNavbar = ({
     setarrowIndex(index);
     return false;
   };
+
+  const handleCaretClick = (index: number) => {
+    if (rotatedIndex === index) {
+      setRotatedIndex(null);
+    } else {
+      setRotatedIndex(index);
+    }
+  };
+
   return (
     <>
       <div className={`mobile-menu-wrapper sidebar ${isOpen ? 'open' : ''}`}>
@@ -74,16 +84,17 @@ const MobSideNavbar = ({
                   <ul className="mobile-menu" key={i}>
                     <li className="bg-light">
                       <a href="#" className="text-dark d-flex justify-content-between">
+                        <span>{navbardata.name}</span>
+
                         <span>
-                          <i className="fa fa-anchor " aria-hidden="true"></i>
-                          {navbardata.name}
-                        </span>
-                        {/* <span
-                          className="toggle-btn"
-                          onClick={() => mobileHandle(i)}
-                        ></span> */}
-                        <span>
-                          <i className="fa fa-arrow-right fs-2" onClick={() => mobileHandle(i)}></i>
+                          <i
+                            className={`fa fa-caret-right fs-5 caret-icon ${rotatedIndex === i ? 'rotate' : ''}`}
+                            aria-hidden="true"
+                            onClick={() => {
+                              mobileHandle(i);
+                              handleCaretClick(i);
+                            }}
+                          ></i>
                         </span>
                       </a>
                       <ul style={{ display: indexVal === i ? 'block' : 'none' }}>
@@ -93,12 +104,13 @@ const MobSideNavbar = ({
                               <a className="text-dark d-flex justify-content-around">
                                 <span className="w-75">{navbarVal.name}</span>
                                 <span className="">
-                                  <i className="fa fa-arrow-right fs-5" onClick={() => arrowHandle(index)}></i>
+                                  <i
+                                    className="fa fa-arrow-right fs-2 me-3"
+                                    onClick={() => {
+                                      arrowHandle(index);
+                                    }}
+                                  ></i>
                                 </span>
-                                {/* <span
-                                    className="toggle-btn "
-                                    onClick={() => arrowHandle(index)}
-                                  ></span> */}
                               </a>
                             </Link>
                             <ul
@@ -110,7 +122,7 @@ const MobSideNavbar = ({
                                 <li key={i}>
                                   <Link href={`${navbarlist.url}?page=1&currency=${selectedCurrencyValue}`} legacyBehavior>
                                     <a className="text-dark" onClick={onClickCloseNav}>
-                                      {navbarlist?.name}
+                                      <span className="pt-2"> {navbarlist?.name}</span>
                                     </a>
                                   </Link>
                                 </li>
