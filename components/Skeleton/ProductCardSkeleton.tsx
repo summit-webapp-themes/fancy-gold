@@ -1,23 +1,24 @@
 import React from 'react';
 import Skeleton from '@mui/material/Skeleton';
+import { CardContent, CardMedia, Typography } from '@mui/material';
+import { Card } from 'react-bootstrap';
 
 const ProductCardSkeleton = () => {
   return (
     <>
       <div className="row justify-content-center m-0">
-        <Skeleton variant="rectangular" width={250} height={200} animation="wave" />
-        <div className="d-flex justify-content-center">
-          <Skeleton width={130} height={30} animation="wave" />
-        </div>
-        <div className="d-flex justify-content-center">
-          <Skeleton width={110} height={25} animation="wave" />
-        </div>
-        <div className="d-flex justify-content-center">
-          <Skeleton width={90} height={25} animation="wave" />
-        </div>
-        <div className="d-flex justify-content-center">
-          <Skeleton width={140} height={45} animation="wave" />
-        </div>
+        <CardMedia>
+          <Skeleton variant="rectangular" width={220} height={140} animation="wave" />
+        </CardMedia>
+        <CardContent className="pt-1">
+          <Typography variant="h5">
+            <Skeleton width="70%" animation="wave" />
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Skeleton width="60%" animation="wave" />
+            <Skeleton width="60%" animation="wave" />
+          </Typography>
+        </CardContent>
       </div>
     </>
   );
