@@ -19,40 +19,24 @@ const ProductListingMaster = () => {
       default:
         return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
     }
-  };
+    const handleDisplayOfProductsList = () => {
+      return <ProductGridViewMaster />;
+    };
 
-  return (
-    <div className="margin_from_nav_cart">
-      <div className="container d-flex justify-content-between w-100  ">
-        <div className="w-50"></div>
-        <div>
-          <div className="row list-toggle-rtl">
-            <div className="col-lg-4 col-4 d-flex justify-content-end">
-              <div className="ms-3 mob-breadcrum-icon d-flex">
-                <div>
-                  <i className="fa fa-list fa-lg cursor_pointer" aria-hidden="true" onClick={() => handleToggleProductsListingView('list-view')}></i>
-                </div>
-                <div>
-                  <i className="fa fa-th fa-lg ms-3 cursor_pointer" aria-hidden="true" onClick={() => handleToggleProductsListingView('grid-view')}></i>
-                </div>
-              </div>
+    return (
+      <div className="mt-5">
+        <section className="listing-page ">
+          <div className="container">
+            <div className="row mt-2 product-listing-row">
+              <span className="col-lg-2 col-md-4 handle_display_web_filter">
+                <WebFilters />
+              </span>
+              <div className="col-lg-9 col-md-8 ms-5">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
-
-      <section className="listing-page ">
-        <div className="container">
-          <div className="row mt-2 ms-3 product-listing-row">
-            <span className="col-lg-3 col-md-4 handle_display_web_filter">
-              <WebFilters />
-            </span>
-            <div className="col-lg-9 col-md-8">{handleDisplayOfProductsList()}</div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+    );
+  };
 };
-
 export default ProductListingMaster;

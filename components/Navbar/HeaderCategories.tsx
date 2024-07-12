@@ -4,7 +4,7 @@ import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
 import Link from 'next/link';
 
-const HeaderCategories = ({ navbarData, isLoading, errorMessage, selectedCurrencyValue }: any) => {
+const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -17,7 +17,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage, selectedCurrenc
   };
   const popoverBottom = (item: any) => (
     <Popover id={`popover-${item.label}`} className="p-2 category-popover shadow rounded" onMouseLeave={handleMouseLeave}>
-      <div className="row ">
+      <div className="row">
         {item?.values?.length > 0 &&
           item?.values !== null &&
           item?.values.map((itemL2: any, index: number) => {
@@ -25,7 +25,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage, selectedCurrenc
             return (
               <div className="col">
                 <div className="heading-category-l2">
-                  <Link href={`${itemL2?.url}?page=1&currency=${selectedCurrencyValue}`} className="label" onClick={() => setShowPopoverIndex(null)}>
+                  <Link href={`${itemL2?.url}?page=1`} className="label" onClick={() => setShowPopoverIndex(null)}>
                     {itemL2?.label}
                   </Link>
                 </div>
@@ -35,11 +35,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage, selectedCurrenc
                     <div key={columnIndex} className="column">
                       {itemL2?.values?.slice(columnIndex * 8, (columnIndex + 1) * 8).map((itemL3: any, idx: number) => (
                         <div key={idx} className=" p-1">
-                          <Link
-                            href={`${itemL3?.url}?page=1&currency=${selectedCurrencyValue}`}
-                            className="heading-category-l3"
-                            onClick={() => setShowPopoverIndex(null)}
-                          >
+                          <Link href={`${itemL3?.url}?page=1`} className="heading-category-l3" onClick={() => setShowPopoverIndex(null)}>
                             {itemL3?.label !== undefined ? itemL3?.label : `${idx}`}
                           </Link>
                         </div>
