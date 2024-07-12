@@ -75,7 +75,7 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div className="d-block search-bar mx-2">
+              <div className="d-block search-bar">
                 <div className="search-input">
                   <input
                     type="text"
