@@ -11,7 +11,7 @@ import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage,selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage } = useNavbar();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -31,7 +31,7 @@ const Navbar = () => {
       <header className="header">
         <nav>
           <div className="navbar">
-            <div className="w-100 d-flex justify-content-between pt-3">
+            <div className="w-100 d-flex justify-content-around pt-3">
               <div>
                 <Link href="/" legacyBehavior>
                   <a>
@@ -39,7 +39,7 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div className="d-block search-bar mx-2">
+              <div className="d-block search-bar">
                 <div className="search-input">
                   <input
                     type="text"
@@ -104,7 +104,7 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
-        <HeaderCategories navbarData={navbarData} isLoading={isLoading} errorMessage={errorMessage} selectedCurrencyValue={selectedCurrencyValue}/>
+      <HeaderCategories navbarData={navbarData} isLoading={isLoading} errorMessage={errorMessage} />
     </>
   );
 };
