@@ -87,7 +87,10 @@
   padding-left: 0rem;
   list-style-type: none !important;
 }
-
+.mobile-menu ul {
+  list-style: none !important;
+  padding-left: 0px;
+}
 .mobile-menu li {
   margin-bottom: 10px;
 }
