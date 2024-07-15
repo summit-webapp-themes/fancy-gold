@@ -5,38 +5,28 @@ import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
 const ProductListingMaster = () => {
-  const { toggleProductListView, handleToggleProductsListingView, productListingData, isLoading, handlePaginationBtn } = useProductListing();
-  useEffect(() => {
-    handleToggleProductsListingView('grid-view');
-  }, []);
+  const { productListingData, isLoading, handlePaginationBtn } = useProductListing();
+
   const handleDisplayOfProductsList = () => {
-    switch (toggleProductListView) {
-      case 'list-view':
-        return <ProductListViewMaster />;
-      case 'grid-view':
-        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
+    return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
+  };
 
-      default:
-        return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
-    }
-    const handleDisplayOfProductsList = () => {
-      return <ProductGridViewMaster />;
-    };
-
-    return (
-      <div className="mt-5">
-        <section className="listing-page ">
-          <div className="container">
-            <div className="row mt-2 product-listing-row">
-              <span className="col-lg-2 col-md-4 handle_display_web_filter">
-                <WebFilters />
-              </span>
-              <div className="col-lg-9 col-md-8 ms-5">{handleDisplayOfProductsList()}</div>
+  return (
+    <div className="mt-5">
+      <section className="listing-page ">
+        <div className="container-fuild">
+          <div className="d-flex ps-lg-5 pe-lg-4">
+            <div id="sidebar" className=" handle_display_web_filter p-3">
+              <WebFilters />
+            </div>
+            <div className="container">
+              <div className="row mt-2 product-listing-row ">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
-        </section>
-      </div>
-    );
-  };
+        </div>
+      </section>
+    </div>
+  );
 };
+
 export default ProductListingMaster;

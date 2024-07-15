@@ -12,7 +12,7 @@ const WebFilters = () => {
 
     if (Object.keys(filtersData)?.length > 0) {
       return (
-        <>
+        <div>
           <h4>Filters</h4>
           {filtersData?.filters?.length > 0 &&
             filtersData?.filters.map((data: any, index: any) => (
@@ -43,7 +43,7 @@ const WebFilters = () => {
                 </div>
               </>
             ))}
-        </>
+        </div>
       );
     }
     if (errorMessage && isLoading === false) {

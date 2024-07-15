@@ -5,22 +5,22 @@ import { Card } from 'react-bootstrap';
 
 const ProductCardSkeleton = () => {
   return (
-    <>
-      <div className="row justify-content-center m-0">
+    <div className="pt-2">
+      <Card className=" mx-2  product-card  row justify-content-center">
         <CardMedia>
-          <Skeleton variant="rectangular" width={220} height={140} animation="wave" />
+          <Skeleton variant="rectangular" width="100%" height={200} className=" product-card-img " />
         </CardMedia>
-        <CardContent className="pt-1">
-          <Typography variant="h5">
-            <Skeleton width="70%" animation="wave" />
+        <CardContent>
+          <Typography variant="h5" component="div">
+            <Skeleton width="100%" />
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <Skeleton width="60%" animation="wave" />
-            <Skeleton width="60%" animation="wave" />
+            <Skeleton width="80%" />
+            <Skeleton width="80%" />
           </Typography>
         </CardContent>
-      </div>
-    </>
+      </Card>
+    </div>
   );
 };
 
