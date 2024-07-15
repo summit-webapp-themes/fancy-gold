@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,14 +6,18 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
+import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleSearch = (e: any) => {
     e.preventDefault();
@@ -26,12 +30,44 @@ const Navbar = () => {
     }
   };
 
+  const navMenuclick = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const toggleSidebar = (isOpen: any) => {
+    setIsSidebarOpen(isOpen);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
       <header className="header">
         <nav>
           <div className="navbar">
-            <div className="w-100 d-flex justify-content-around pt-3">
+            <div className="w-100 d-flex justify-content-between pt-3">
+              <div className="mobile-nav d-flex justify-content-sm-between">
+                <Link href="#" legacyBehavior>
+                  <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
+                    <MenuIcon className="icon" />
+                  </a>
+                </Link>
+              </div>
               <div>
                 <Link href="/" legacyBehavior>
                   <a>
@@ -104,7 +140,11 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
-      <HeaderCategories navbarData={navbarData} isLoading={isLoading} errorMessage={errorMessage} />
+      {isMobile ? (
+        <MobSideNavbar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} navbarData={navbarData} />
+      ) : (
+        <HeaderCategories navbarData={navbarData} isLoading={isLoading} errorMessage={errorMessage} selectedCurrencyValue={selectedCurrencyValue} />
+      )}
     </>
   );
 };

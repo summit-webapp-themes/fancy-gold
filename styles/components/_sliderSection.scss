@@ -1,8 +1,35 @@
-.slider-arrow {
-    color: #1a1a49 !important;
-
+.slider-arrow-right {
+  color: #1a1a49 !important;
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  font-size: 40px;
+  cursor: pointer;
+}
+.slider-arrow-left {
+  color: #1a1a49 !important;
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  font-size: 40px;
+  cursor: pointer;
 }
 
 .slick-next {
-    right: 0px !important;
+  right: 0px !important;
 }
+
+@media only screen and (max-width: 600px) {
+    .slider-arrow-right {
+        font-size: 25px;
+        right: -10px;
+        
+      }
+      .slider-arrow-left {
+        font-size: 25px;
+       
+        left: -5px;
+        
+      }
+      
+  }
