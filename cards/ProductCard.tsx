@@ -17,7 +17,7 @@ const ProductCard = ({ data }: any) => {
           </span>
           <Image
             loader={imageLoader}
-            src={data.custom_item_image !== null && data.custom_item_image}
+            src={data.image !== null && data.image}
             width={100}
             height={500}
             alt="Item Image"
@@ -25,7 +25,7 @@ const ProductCard = ({ data }: any) => {
             style={{ width: '100%', height: '100%' }}
           />
         </div>
-        <div className="card-body ">
+        <div className="card-body text-center">
           <Link href={data?.name} className="text-dark text-decoration-none">
             <p className="card-title my-0 product-name"> {data?.name}</p>
           </Link>

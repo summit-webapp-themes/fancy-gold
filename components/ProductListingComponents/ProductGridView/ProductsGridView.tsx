@@ -1,21 +1,29 @@
-import React from 'react';
-import GridViewLoadingComponent from './GridViewLoadingComponent';
-import ProductCardSkeleton from '../../Skeleton/ProductCardSkeleton';
+import ReactPaginate from "react-paginate";
+import ProductCard from '../../../cards/ProductCard';
 
-const ProductsGridView = () => {
+const ProductsGridView = ({ productListingData,handlePaginationBtn }: any) => {
   return (
-    <div className={'col-lg-12 px-0'}>
-      <div className="row">
-        <div className="row justify-content-center">
-          {[...Array(12)].map(() => (
-            <>
-              <div className="col-md-3 col-lg-3 mb-3 px-0">
-                <ProductCardSkeleton />
-              </div>
-            </>
-          ))}
+    <div className="row justify-content-start">
+      {productListingData.map((item: any, index: any) => (
+        <div key={index}className='col-lg-3 mb-2'>
+          <ProductCard data={item} />
         </div>
-      </div>
+      ))}
+      <ReactPaginate
+            previousLabel={'Prev'}
+            nextLabel={"next"}
+            pageCount={productListingData?.length}
+            pageRangeDisplayed={3}
+            onPageChange={handlePaginationBtn}
+            containerClassName={"paginationBttns"}
+            previousLinkClassName={"previousBttn"}
+            disabledClassName={"paginationDisabled"}
+            nextLinkClassName={
+               "nextBttn"
+            }
+            activeClassName={"paginationActive"}
+            // forcePage={pageOffset}
+          />
     </div>
   );
 };
