@@ -1,7 +1,10 @@
 import ReactPaginate from 'react-paginate';
 import ProductCard from '../../../cards/ProductCard';
 
-const ProductsGridView = ({ productListingData,handlePaginationBtn,productListTotalCount }: any) => {
+const ProductsGridView = ({ productListingData,handlePageClick,productListTotalCount,pageOffset }: any) => {
+  const isNextButtonDisabled: any =
+    productListTotalCount > productListingData ||
+    productListTotalCount === productListingData;
   return (
     <>
       {productListingData.map((item: any, index: any) => (
@@ -11,16 +14,18 @@ const ProductsGridView = ({ productListingData,handlePaginationBtn,productListTo
       ))}
       <ReactPaginate
           previousLabel={'Prev'}
-          nextLabel={'next'}
+          nextLabel={'Next'}
           pageCount={productListTotalCount / 12}
           pageRangeDisplayed={3}
-          onPageChange={handlePaginationBtn}
+          onPageChange={handlePageClick}
           containerClassName={'paginationBttns'}
           previousLinkClassName={'previousBttn'}
           disabledClassName={'paginationDisabled'}
-          nextLinkClassName={'nextBttn'}
+          nextLinkClassName={
+            isNextButtonDisabled ? "paginationDisabled" : "nextBttn"
+          }
           activeClassName={'paginationActive'}
-          // forcePage={pageOffset}
+          forcePage={pageOffset}
         />
     </>
   );

@@ -2,8 +2,14 @@ import Image from 'next/image';
 import image from '../../../public/assets/images/no_data_image.png';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
+import { useState } from 'react';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
+  const [pageOffset, setpageOffset] = useState(0);
+  const handlePageClick = (event: any) => {
+    handlePaginationBtn(event?.selected);
+    setpageOffset(event?.selected);
+  };
   const handleDataRendering = () => {
     if (isLoading) {
       return (
@@ -20,7 +26,12 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
     }
     if (productListingData?.length > 0) {
       return (
-        <ProductsGridView productListingData={productListingData} handlePaginationBtn={handlePaginationBtn} productListTotalCount={productListTotalCount} />
+        <ProductsGridView
+          productListingData={productListingData}
+          handlePageClick={handlePageClick}
+          productListTotalCount={productListTotalCount}
+          pageOffset={pageOffset}
+        />
       );
     }
     if (productListingData?.length === 0) {
