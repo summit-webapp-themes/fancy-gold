@@ -31,8 +31,7 @@ const WebFilters = () => {
                           id={data.section}
                           onChange={handleFilterCheckFun}
                           checked={
-                            Object.values(selectedFilters)?.length > 0 &&
-                            Object.values(selectedFilters).some((selectedFilter: any) => selectedFilter.includes(items))
+                            selectedFilters?.length > 0 && selectedFilters.some((filter: any) => filter.name === data.section && filter.value.includes(items))
                           }
                         />
                         <label className="form-check-label" htmlFor="flexCheckChecked">
