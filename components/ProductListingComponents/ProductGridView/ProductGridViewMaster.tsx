@@ -1,17 +1,18 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
 import ProductsGridView from './ProductsGridView';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
-import image from '../../../public/assets/images/no_data_image.jpg';
+import image from '../../../public/assets/images/no_data_image.png';
 
-const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn }: any) => {
+const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
   const handleDataRendering = () => {
     if (isLoading) {
       return (
         <div className="row justify-content-center">
           {[...Array(10)].map(() => (
             <>
-              <div className="col-md-3 col-lg-3 mb-3 mx-2 px-0">
+              <div className="col-xl-3 col-lg-4 col-md-4 mb-2">
                 <GridViewLoadingComponent />
               </div>
             </>
@@ -20,7 +21,7 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
       );
     }
     if (productListingData?.length > 0) {
-      return <ProductsGridView productListingData={productListingData} handlePaginationBtn={handlePaginationBtn} />;
+      return <ProductsGridView productListingData={productListingData} />;
     }
     if (productListingData?.length === 0) {
       return (
@@ -29,7 +30,7 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
             <Image src={image} width={250} height={250} alt="Error Image" />
           </div>
           <div className="text-center">
-            <h2 className='theme-blue'>Sorry, No Data Found</h2>
+            <h2 className="theme-blue">Sorry, No Data Found</h2>
           </div>
         </div>
       );
@@ -39,6 +40,19 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
     <div className="row">
       <div className={'col-lg-12 px-0'}>
         <div className="row">{handleDataRendering()}</div>
+        <ReactPaginate
+          previousLabel={'Prev'}
+          nextLabel={'next'}
+          pageCount={productListTotalCount / 12}
+          pageRangeDisplayed={3}
+          onPageChange={handlePaginationBtn}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          disabledClassName={'paginationDisabled'}
+          nextLinkClassName={'nextBttn'}
+          activeClassName={'paginationActive'}
+          // forcePage={pageOffset}
+        />
       </div>
     </div>
   );
