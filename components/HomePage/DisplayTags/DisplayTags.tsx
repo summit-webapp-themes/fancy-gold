@@ -14,7 +14,7 @@ const DisplayTags = () => {
       const data = { value: [] };
       return (
         <>
-          <div className="display-tags-section pb-5">
+          <div className="card display-tags-section pb-5">
             <div className="container">
               <div className="d-flex justify-content-center my-3">
                 <Skeleton width={320} height={50} animation="wave" />
@@ -39,7 +39,11 @@ const DisplayTags = () => {
                   <>
                     <div className="text-center text-secondary" key={index}>
                       <h2 className="pt-5 pb-2 heading-text">{tagsData.tag_name}</h2>
+                      {/* <div className=" product-card ">
+                        <div className=" product-card-img "> */}
                       <Image src={lineImg} alt="img" style={{ width: '100%', height: '100%' }} height={200} className="py-4" />
+                      {/* </div>
+                      </div> */}
                       <SliderSection data={tagsData} />
                     </div>
                   </>

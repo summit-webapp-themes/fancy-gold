@@ -5,13 +5,14 @@ import GridViewLoadingComponent from './GridViewLoadingComponent';
 import image from '../../../public/assets/images/no_data_image.jpg';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn }: any) => {
+  console.log('productListingData', productListingData);
   const handleDataRendering = () => {
     if (isLoading) {
       return (
         <div className="row justify-content-center">
           {[...Array(10)].map(() => (
             <>
-              <div className="col-md-3 col-lg-3 mb-3 mx-2 px-0">
+              <div className="col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-3">
                 <GridViewLoadingComponent />
               </div>
             </>
@@ -29,19 +30,13 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
             <Image src={image} width={250} height={250} alt="Error Image" />
           </div>
           <div className="text-center">
-            <h2 className='theme-blue'>Sorry, No Data Found</h2>
+            <h2 className="theme-blue">Sorry, No Data Found</h2>
           </div>
         </div>
       );
     }
   };
-  return (
-    <div className="row">
-      <div className={'col-lg-12 px-0'}>
-        <div className="row">{handleDataRendering()}</div>
-      </div>
-    </div>
-  );
+  return <>{handleDataRendering()}</>;
 };
 
 export default ProductGridViewMaster;
