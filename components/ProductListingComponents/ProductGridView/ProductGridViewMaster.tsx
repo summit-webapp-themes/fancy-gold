@@ -21,7 +21,9 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
       );
     }
     if (productListingData?.length > 0) {
-      return <ProductsGridView productListingData={productListingData} />;
+      return (
+        <ProductsGridView productListingData={productListingData} handlePaginationBtn={handlePaginationBtn} productListTotalCount={productListTotalCount} />
+      );
     }
     if (productListingData?.length === 0) {
       return (
@@ -40,19 +42,6 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
     <div className="row">
       <div className={'col-lg-12 px-0'}>
         <div className="row">{handleDataRendering()}</div>
-        <ReactPaginate
-          previousLabel={'Prev'}
-          nextLabel={'next'}
-          pageCount={productListTotalCount / 12}
-          pageRangeDisplayed={3}
-          onPageChange={handlePaginationBtn}
-          containerClassName={'paginationBttns'}
-          previousLinkClassName={'previousBttn'}
-          disabledClassName={'paginationDisabled'}
-          nextLinkClassName={'nextBttn'}
-          activeClassName={'paginationActive'}
-          // forcePage={pageOffset}
-        />
       </div>
     </div>
   );
