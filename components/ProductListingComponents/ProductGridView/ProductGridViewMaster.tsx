@@ -10,7 +10,7 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
         <div className="row justify-content-center">
           {[...Array(10)].map(() => (
             <>
-              <div className="col-xl-3 col-lg-4 col-md-4 mb-2">
+              <div className="col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-3">
                 <GridViewLoadingComponent />
               </div>
             </>
