@@ -4,7 +4,7 @@ import React from 'react';
 const FilterViewLoadingComponent = () => {
   return (
     <>
-      <Skeleton variant="rounded" width={230} height={720} />
+      <Skeleton variant="rounded" width={180} height={720} id="sidebar" />
     </>
   );
 };

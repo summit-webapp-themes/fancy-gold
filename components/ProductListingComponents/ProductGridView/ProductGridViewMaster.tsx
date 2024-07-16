@@ -1,9 +1,7 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
-import ProductsGridView from './ProductsGridView';
-import GridViewLoadingComponent from './GridViewLoadingComponent';
 import image from '../../../public/assets/images/no_data_image.png';
+import GridViewLoadingComponent from './GridViewLoadingComponent';
+import ProductsGridView from './ProductsGridView';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
   const handleDataRendering = () => {
@@ -38,13 +36,7 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
       );
     }
   };
-  return (
-    <div className="row">
-      <div className={'col-lg-12 px-0'}>
-        <div className="row">{handleDataRendering()}</div>
-      </div>
-    </div>
-  );
+  return <>{handleDataRendering()}</>;
 };
 
 export default ProductGridViewMaster;

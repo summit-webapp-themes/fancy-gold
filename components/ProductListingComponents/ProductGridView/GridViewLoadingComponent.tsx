@@ -3,10 +3,10 @@ import React from 'react';
 
 const GridViewLoadingComponent = () => {
   return (
-    <>
-      <Card style={{ maxWidth: 345, margin: 'auto' }}>
+    <div className="pt-2">
+      <Card className=" mx-2  product-card">
         <CardMedia>
-          <Skeleton variant="rectangular" width="100%" height={140} />
+          <Skeleton variant="rectangular" width="100%" height={200} className=" product-card-img " />
         </CardMedia>
         <CardContent>
           <Typography variant="h5" component="div">
@@ -18,7 +18,7 @@ const GridViewLoadingComponent = () => {
           </Typography>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 };
 

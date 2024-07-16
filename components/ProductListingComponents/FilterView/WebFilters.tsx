@@ -12,7 +12,7 @@ const WebFilters = () => {
 
     if (Object.keys(filtersData)?.length > 0) {
       return (
-        <>
+        <div className="vh-100">
           <h4>Filters</h4>
           {filtersData?.filters?.length > 0 &&
             filtersData?.filters.map((data: any, index: any) => (
@@ -31,8 +31,7 @@ const WebFilters = () => {
                           id={data.section}
                           onChange={handleFilterCheckFun}
                           checked={
-                            Object.values(selectedFilters)?.length > 0 &&
-                            Object.values(selectedFilters).some((selectedFilter: any) => selectedFilter.includes(items))
+                            selectedFilters?.length > 0 && selectedFilters.some((filter: any) => filter.name === data.section && filter.value.includes(items))
                           }
                         />
                         <label className="form-check-label" htmlFor="flexCheckChecked">
@@ -43,7 +42,7 @@ const WebFilters = () => {
                 </div>
               </>
             ))}
-        </>
+        </div>
       );
     }
     if (errorMessage && isLoading === false) {
