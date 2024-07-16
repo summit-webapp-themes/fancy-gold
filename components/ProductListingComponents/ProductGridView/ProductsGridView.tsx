@@ -5,7 +5,7 @@ const ProductsGridView = ({ productListingData,handlePaginationBtn,productListTo
   return (
     <>
       {productListingData.map((item: any, index: any) => (
-        <div key={index} className="col-xl-3 col-lg-4 col-md-4 mb-2">
+        <div key={index} className="col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-3">
           <ProductCard data={item} />
         </div>
       ))}
