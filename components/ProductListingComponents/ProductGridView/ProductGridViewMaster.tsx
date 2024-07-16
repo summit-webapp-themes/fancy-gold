@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import image from '../../../public/assets/images/no_data_image.png';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
-import { useState } from 'react';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
   const [pageOffset, setpageOffset] = useState(0);
