@@ -1,4 +1,4 @@
-import useProductListingFilterHook from '../../../hooks/product-listing-hooks/product-listing-filter-hook';
+import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
 import ComponentErrorHandler from '../../ComponentErrorHandler';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
 
@@ -12,7 +12,7 @@ const WebFilters = () => {
 
     if (Object.keys(filtersData)?.length > 0) {
       return (
-        <>
+        <div className="vh-100">
           <h4>Filters</h4>
           {filtersData?.filters?.length > 0 &&
             filtersData?.filters.map((data: any, index: any) => (
@@ -42,7 +42,7 @@ const WebFilters = () => {
                 </div>
               </>
             ))}
-        </>
+        </div>
       );
     }
     if (errorMessage && isLoading === false) {

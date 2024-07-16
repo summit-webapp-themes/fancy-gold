@@ -11,7 +11,7 @@ const ProductCard = ({ data }: any) => {
   return (
     <>
       <div className="card mx-2 product-card pt-2">
-        <div className="h-100 product-card-img ">
+        <div className=" product-card-img ">
           <span className="wishlist-icon text-danger">
             <i className="fa fa-heart-o"></i>
           </span>

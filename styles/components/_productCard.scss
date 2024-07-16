@@ -1,43 +1,53 @@
-.product-card {
-    border: 1px solid #b0b0c5 !important;
-    height: 380px;
-}
+// .product-card {
+//   border: 1px solid #b0b0c5 !important;
+//   height: 380px;
+// }
 
+.product-card {
+  position: relative;
+  /* border: 1px solid #030f27; */
+  border: 2px solid #f2f2f2;
+  /* margin-bottom: 40px; */
+  font-weight: 300;
+  padding: 40px 10px 10px;
+  height: 100%;
+  /* width: 240px; */
+}
 .product-card-img {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
+  position: relative;
+  height: 200px;
+  overflow: hidden;
 }
 
 .add-to-cart-btn {
-    border: 1px solid #1A1A49;
-    color: #1A1A49;
-    font-size: 14px;
-    width: 140px;
+  border: 1px solid #1a1a49;
+  color: #1a1a49;
+  font-size: 14px;
+  width: 140px;
 }
 
 .add-to-cart-btn:hover {
-    background-color: #1A1A49;
-    border: 1px solid #1A1A49;
-    color: #FFD700;
+  background-color: #1a1a49;
+  border: 1px solid #1a1a49;
+  color: #ffd700;
 }
 .product-name {
-    font-weight: 600;
-    font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.product-card-text{
-    font-size: 1rem;
+.product-card-text {
+  font-size: 1rem;
 }
 
 .wishlist-icon {
-    position: absolute;
-    right: 14px !important;
-    font-size: 25px;
-    top: -7px !important;
+  position: absolute;
+  right: 14px !important;
+  font-size: 25px;
+  top: -7px !important;
 }
 
 .product-code-img {
-    padding: 20px;
-    margin-top: 15px;
+  padding: 15px;
+  margin-top: 15px;
 }
