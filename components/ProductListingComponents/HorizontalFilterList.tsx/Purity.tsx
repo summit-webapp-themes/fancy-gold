@@ -25,18 +25,25 @@ const Purity = () => {
     fetchValues();
   }, []);
   useEffect(() => {
-    if (router.query.hasOwnProperty('filter')) {
-      const encodedFilterString: any = router.query.filter;
-      if (encodedFilterString !== undefined) {
-        const decodedFilterString = decodeURIComponent(encodedFilterString);
+    if (query.filter) {
+      try {
+        const decodedFilterString = decodeURIComponent(query.filter as string);
         const decodedFilters = JSON.parse(decodedFilterString);
+
         setSelectedFilters(decodedFilters);
+
+        const purityFilter = decodedFilters.find((filter: any) => filter.name === 'Purity');
+        setSelectedPurity(purityFilter ? purityFilter.value[0] : '22KT');
+      } catch (error) {
+        console.error('Failed to decode and parse filters:', error);
+        setSelectedFilters([]);
+        setSelectedPurity('22KT');
       }
     } else {
       setSelectedFilters([]);
+      setSelectedPurity('22KT');
     }
   }, [query]);
-  console.log(selectedFilters, 'purity');
   
   const handleSelectPurity = (purityValue: string) => {
     setSelectedPurity(purityValue);
