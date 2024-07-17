@@ -1,4 +1,5 @@
 import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
+import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
@@ -17,8 +18,9 @@ const ProductListingMaster = () => {
   };
 
   return (
-    <div className="mt-5">
+    <div >
       <section className="listing-page ">
+          <HorizontalFilter/>
         <div className="container-fuild">
           <div className="d-flex ps-lg-5 pe-lg-4">
           <div id="sidebar" className=" handle_display_web_filter p-3">
