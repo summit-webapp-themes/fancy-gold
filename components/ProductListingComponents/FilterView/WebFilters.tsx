@@ -17,6 +17,7 @@ const WebFilters = () => {
           {filtersData?.filters?.length > 0 &&
             filtersData?.filters.map((data: any, index: any) => (
               <>
+              {data.section!=='Purity' && 
                 <div key={index}>
                   <h6 className="mt-4 text-uppercase">{data.section}</h6>
                   <hr className="my-1" />
@@ -40,6 +41,7 @@ const WebFilters = () => {
                       </div>
                     ))}
                 </div>
+              }
               </>
             ))}
         </div>

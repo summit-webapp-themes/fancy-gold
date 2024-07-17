@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callGetAPI } from '../../../utils/utils';
-import { useRouter } from 'next/router';
 
 const Purity = () => {
   const router = useRouter();

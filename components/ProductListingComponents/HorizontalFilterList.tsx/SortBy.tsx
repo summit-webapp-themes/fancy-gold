@@ -1,7 +1,7 @@
 const SortBy = () => {
   return (
     <>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center flex-wrap">
         <select className="form-select form-select sort-by-select ">
           <option value="1" selected>
             Yellow

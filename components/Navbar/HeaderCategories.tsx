@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
-import Link from 'next/link';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
