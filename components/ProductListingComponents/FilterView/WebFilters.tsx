@@ -1,4 +1,5 @@
-import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
+// import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
+import useProductListingFilterHook from '../../../hooks/product-listing-hooks/product-listing-filter-hook';
 import ComponentErrorHandler from '../../ComponentErrorHandler';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
 
