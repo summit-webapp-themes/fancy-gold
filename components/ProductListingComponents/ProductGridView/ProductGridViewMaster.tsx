@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import Image from 'next/image';
 import image from '../../../public/assets/images/no-data.svg';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
+import { useRouter } from 'next/router';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
-  const [pageOffset, setpageOffset] = useState(0);
+  const {query}=useRouter()
+  const pageOffset = Number(query?.page)-1
   const handlePageClick = (event: any) => {
     handlePaginationBtn(event?.selected);
-    setpageOffset(event?.selected);
+    
   };
   const handleDataRendering = () => {
     if (isLoading) {

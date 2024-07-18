@@ -13,13 +13,13 @@ const WebFilters = () => {
     if (Object.keys(filtersData)?.length > 0) {
       return (
         <div className="vh-100">
-          <h4>Filters</h4>
+          <h5>Filters</h5>
           {filtersData?.filters?.length > 0 &&
             filtersData?.filters.map((data: any, index: any) => (
               <>
               {data.section!=='Purity' && 
                 <div key={index}>
-                  <h6 className="mt-4 text-uppercase">{data.section}</h6>
+                  <div className="mt-4 text-uppercase" style={{fontSize:'14px'}}>{data.section}</div>
                   <hr className="my-1" />
                   {data.values?.length > 0 &&
                     data.values.map((items: any) => (
@@ -35,7 +35,7 @@ const WebFilters = () => {
                             selectedFilters?.length > 0 && selectedFilters.some((filter: any) => filter.name === data.section && filter.value.includes(items))
                           }
                         />
-                        <label className="form-check-label" htmlFor="flexCheckChecked">
+                        <label className="form-check-label"style={{fontSize:'12px'}} htmlFor="flexCheckChecked">
                           {items}
                         </label>
                       </div>
