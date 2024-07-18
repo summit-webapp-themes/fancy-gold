@@ -74,7 +74,10 @@ const Purity = () => {
     <div className="justify-content-center">
       {purityValues?.map((purity: any) => (
         <>
-          <button className={`${selectedPurity === purity.name ? 'purity_button-active' : 'purity_button'}`} onClick={(e) => handleSelectPurity(purity.name)}>
+          <button
+            className={`${selectedPurity === purity.name ? 'purity_button-active' : 'purity_button'}`}
+            onClick={(e) => handleSelectPurity(purity.name)}
+          >
             {purity.name}
           </button>
         </>
