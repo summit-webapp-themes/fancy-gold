@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
+import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
-import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
 
 const ProductListingMaster = () => {
-  const { productListingData, isLoading, handlePaginationBtn } = useProductListing();
+  const { productListingData, isLoading, handlePaginationBtn, productListTotalCount, sortBy, handleSortBy } = useProductListing();
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
 
   const handleDisplayOfProductsList = () => {
-    return <ProductGridViewMaster productListingData={productListingData} isLoading={isLoading} handlePaginationBtn={handlePaginationBtn} />;
+    return (
+      <ProductGridViewMaster
+        productListingData={productListingData}
+        isLoading={isLoading}
+        handlePaginationBtn={handlePaginationBtn}
+        productListTotalCount={productListTotalCount}
+      />
+    );
   };
 
   return (
-    <div className="mt-5">
-      <section className="listing-page">
+    <div>
+      <section className="listing-page ">
+        <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
           <div className="d-flex ps-lg-5 pe-lg-4">
             <div>

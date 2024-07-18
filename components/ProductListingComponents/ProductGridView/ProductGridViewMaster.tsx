@@ -1,11 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import ProductsGridView from './ProductsGridView';
+import image from '../../../public/assets/images/no-data.svg';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
-import image from '../../../public/assets/images/no_data_image.jpg';
+import ProductsGridView from './ProductsGridView';
 
-const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn }: any) => {
-  console.log('productListingData', productListingData);
+const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
+  const [pageOffset, setpageOffset] = useState(0);
+  const handlePageClick = (event: any) => {
+    handlePaginationBtn(event?.selected);
+    setpageOffset(event?.selected);
+  };
   const handleDataRendering = () => {
     if (isLoading) {
       return (
@@ -21,13 +25,20 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
       );
     }
     if (productListingData?.length > 0) {
-      return <ProductsGridView productListingData={productListingData} handlePaginationBtn={handlePaginationBtn} />;
+      return (
+        <ProductsGridView
+          productListingData={productListingData}
+          handlePageClick={handlePageClick}
+          productListTotalCount={productListTotalCount}
+          pageOffset={pageOffset}
+        />
+      );
     }
     if (productListingData?.length === 0) {
       return (
-        <div className="text-center">
+        <div className="text-center no-data-image">
           <div className="p-3" style={{ fontSize: '40px' }}>
-            <Image src={image} width={250} height={250} alt="Error Image" />
+            <Image src={image} width={200} height={200} alt="Error Image" />
           </div>
           <div className="text-center">
             <h2 className="theme-blue">Sorry, No Data Found</h2>
