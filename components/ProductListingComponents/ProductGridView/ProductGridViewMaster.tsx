@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import image from '../../../public/assets/images/no_data_image.png';
+import image from '../../../public/assets/images/no-data.svg';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
 
@@ -36,9 +36,9 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
     }
     if (productListingData?.length === 0) {
       return (
-        <div className="text-center">
+        <div className="text-center no-data-image">
           <div className="p-3" style={{ fontSize: '40px' }}>
-            <Image src={image} width={250} height={250} alt="Error Image" />
+            <Image src={image} width={200} height={200} alt="Error Image" />
           </div>
           <div className="text-center">
             <h2 className="theme-blue">Sorry, No Data Found</h2>
