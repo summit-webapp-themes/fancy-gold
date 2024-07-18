@@ -4,7 +4,7 @@ import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
 const ProductListingMaster = () => {
-  const { productListingData, isLoading, handlePaginationBtn, productListTotalCount } = useProductListing();
+  const { productListingData, isLoading, handlePaginationBtn, productListTotalCount, sortBy, handleSortBy } = useProductListing();
 
   const handleDisplayOfProductsList = () => {
     return (
@@ -18,12 +18,12 @@ const ProductListingMaster = () => {
   };
 
   return (
-    <div >
+    <div>
       <section className="listing-page ">
-          <HorizontalFilter/>
+        <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
           <div className="d-flex ps-lg-5 pe-lg-4">
-          <div id="sidebar" className=" handle_display_web_filter p-3">
+            <div id="sidebar" className=" handle_display_web_filter p-3">
               <WebFilters />
             </div>
             <div className="container">
@@ -36,5 +36,3 @@ const ProductListingMaster = () => {
   );
 };
 export default ProductListingMaster;
-
-

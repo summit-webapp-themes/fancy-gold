@@ -44,7 +44,7 @@ const Purity = () => {
       setSelectedPurity('22KT');
     }
   }, [query]);
-  
+
   const handleSelectPurity = (purityValue: string) => {
     setSelectedPurity(purityValue);
     let updatedFilters;

@@ -25,7 +25,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
             return (
               <div className="col">
                 <div className="heading-category-l2">
-                  <Link href={`${itemL2?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]`} className="label" onClick={() => setShowPopoverIndex(null)}>
+                  <Link href={`${itemL2?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]&sort_by=latest`} className="label" onClick={() => setShowPopoverIndex(null)}>
                     {itemL2?.label}
                   </Link>
                 </div>
@@ -35,7 +35,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                     <div key={columnIndex} className="column">
                       {itemL2?.values?.slice(columnIndex * 8, (columnIndex + 1) * 8).map((itemL3: any, idx: number) => (
                         <div key={idx} className=" p-1">
-                          <Link href={`${itemL3?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]`} className="heading-category-l3" onClick={() => setShowPopoverIndex(null)}>
+                          <Link href={`${itemL3?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]&sort_by=latest`} className="heading-category-l3" onClick={() => setShowPopoverIndex(null)}>
                             {itemL3?.label !== undefined ? itemL3?.label : `${idx}`}
                           </Link>
                         </div>
