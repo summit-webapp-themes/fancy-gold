@@ -1,7 +1,8 @@
 import useProductListingFilterHook from '../../../hooks/product-listing-hooks/product-listing-filter-hook';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
+import SearchIcon from '@mui/icons-material/Search';
 
-const WebFilters = ({ hideFilterSection, setHideFilterSection }: any) => {
+const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
 
   const showFilterSection: any = () => {
@@ -17,6 +18,21 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection }: any) => {
           {!hideFilterSection && (
             <div className="vh-100 p-3" id="sidebar">
               <h4>Filters</h4>
+              <div className="input-group input-group-sm mt-2 mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search here"
+                  name="search"
+                  id="search"
+                  autoComplete="off"
+                  value={searchFilterValue}
+                  onChange={handleFilterSearchFun}
+                />
+                <span className="input-group-text" id="inputGroup-sizing-sm" onClick={handleFilterSearchBtn}>
+                  <SearchIcon />
+                </span>
+              </div>
               {filtersData?.filters?.length > 0 &&
                 filtersData?.filters.map((data: any, index: any) => (
                   <>
