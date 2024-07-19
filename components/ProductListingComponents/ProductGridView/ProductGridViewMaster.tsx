@@ -1,9 +1,8 @@
-import { useReducer, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import image from '../../../public/assets/images/no-data.svg';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
-import { useRouter } from 'next/router';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
   const {query}=useRouter()
