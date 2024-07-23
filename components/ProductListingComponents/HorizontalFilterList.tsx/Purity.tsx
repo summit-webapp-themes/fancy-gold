@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callGetAPI } from '../../../utils/utils';
+import horizontalFilterStyles from '../../../styles/components/horizontalFilter.module.scss';
 
 const Purity = () => {
   const router = useRouter();
@@ -75,7 +76,9 @@ const Purity = () => {
       {purityValues?.map((purity: any) => (
         <>
           <button
-            className={`${selectedPurity === purity.name ? 'purity_button-active' : 'purity_button'}`}
+            className={`${
+              selectedPurity === purity.name ? horizontalFilterStyles.purity_button_active : horizontalFilterStyles.purity_button
+            }`}
             onClick={(e) => handleSelectPurity(purity.name)}
           >
             {purity.name}

@@ -52,10 +52,11 @@ const SliderSection = ({ data }: any) => {
   };
 
   const showSliderSection: any = () => {
-    if (data?.value?.length === 0) {
+    // if (data?.value?.length === 0) {
+    if (false) {
       return (
         <>
-          <div className={`container-fluid `}>
+          {/* <div className={`container-fluid `}>
             <div className="row">
               <Slider {...settings}>
                 {[...Array(2)].map((_, index) => (
@@ -65,7 +66,7 @@ const SliderSection = ({ data }: any) => {
                 ))}
               </Slider>
             </div>
-          </div>
+          </div> */}
         </>
       );
     }

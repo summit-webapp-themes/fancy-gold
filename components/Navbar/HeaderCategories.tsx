@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
-import NavbarLoadingComponent from './NavbarLoadingComponent';
+// import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
@@ -58,8 +58,8 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     </Popover>
   );
   const handleDataRendering = () => {
-    if (isLoading) {
-      return <NavbarLoadingComponent />;
+    if (false) {
+      // return <NavbarLoadingComponent />;
     }
     if (navbarData?.length > 0) {
       return (
@@ -71,7 +71,10 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                   {navbarData === null ? (
                     <Placeholder xs={6} bg="dark" />
                   ) : (
-                    <div className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`} onMouseEnter={(e) => handleMouseEnter(e, index)}>
+                    <div
+                      className={`heading-category-l1 ${showPopoverIndex === index && 'theme-gold'}`}
+                      onMouseEnter={(e) => handleMouseEnter(e, index)}
+                    >
                       {item.label}
                     </div>
                   )}
