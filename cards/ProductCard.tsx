@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CONSTANTS } from '../services/config/app-config';
-import ProductDetailModal from '../components/ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
 
-const ProductCard = ({ data }: any) => {
+const ProductCard = ({ data,handleShow}: any) => {
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  
   return (
     <>
       <div className="card mx-2 product-card pt-2">
@@ -38,11 +33,11 @@ const ProductCard = ({ data }: any) => {
           <p className="card-text my-0 product-card-text">size:{data.length}</p>
 
           <div className="text-center mt-2">
-            <button className="btn btn-outline-primary text-uppercase mb-0 p-1 add-to-cart-btn" onClick={handleShow}>Add To cart</button>
+            <button className="btn btn-outline-primary text-uppercase mb-0 p-1 add-to-cart-btn" onClick={(e)=>handleShow(data)}>Add To cart</button>
           </div>
         </div>
       </div>
-      <ProductDetailModal show={show} handleClose={handleClose} data={data}/>
+      
     </>
   );
 };

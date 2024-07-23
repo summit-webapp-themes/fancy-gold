@@ -4,7 +4,7 @@ import image from '../../../public/assets/images/no-data.svg';
 import GridViewLoadingComponent from './GridViewLoadingComponent';
 import ProductsGridView from './ProductsGridView';
 
-const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
+const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount, handleShow }: any) => {
   const [pageOffset, setpageOffset] = useState(0);
   const handlePageClick = (event: any) => {
     handlePaginationBtn(event?.selected);
@@ -31,6 +31,7 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
           handlePageClick={handlePageClick}
           productListTotalCount={productListTotalCount}
           pageOffset={pageOffset}
+          handleShow={handleShow}
         />
       );
     }

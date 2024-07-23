@@ -3,6 +3,7 @@ import useProductListing from '../../hooks/product-listing-hooks/product-listing
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
 
 const ProductListingMaster = () => {
   const {
@@ -16,7 +17,20 @@ const ProductListingMaster = () => {
     handleFilterSearchBtn,
     searchFilterValue,
   } = useProductListing();
+
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
+
+  const [show, setShow] = useState(false);
+  const [drawerData, setDrawerData] = useState('');
+
+  const handleClose = () => {
+    setDrawerData('');
+    setShow(false);
+  };
+  const handleShow = (data: any) => {
+    setDrawerData(data);
+    setShow(true);
+  };
 
   const handleDisplayOfProductsList = () => {
     return (
@@ -25,10 +39,11 @@ const ProductListingMaster = () => {
         isLoading={isLoading}
         handlePaginationBtn={handlePaginationBtn}
         productListTotalCount={productListTotalCount}
+        handleShow={handleShow}
       />
     );
   };
-
+  console.log('productDetailData');
   return (
     <div>
       <section className="listing-page ">
@@ -50,6 +65,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       </section>
     </div>
   );
