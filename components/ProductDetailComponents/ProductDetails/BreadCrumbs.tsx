@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { Skeleton } from '@mui/material';
 import UseBreadCrumbsHook from '../../../hooks/GeneralHooks/breadcrumbs-hook';
 import ComponentErrorHandler from '../../ComponentErrorHandler';
-
+import BreadcrumbsStyles from '../../../styles/components/breadcrumbs.module.scss';
 const BreadCrumbs = () => {
   const { breadCrumbData, isLoading, errorMessage } = UseBreadCrumbsHook();
 
@@ -17,8 +16,8 @@ const BreadCrumbs = () => {
       }
     });
   const handleDataRendering = () => {
-    if (isLoading) {
-      return <Skeleton variant="rounded" width={200} height={20} className="mt-2" animation={false} />;
+    if (false) {
+      // return <Skeleton variant="rounded" width={200} height={20} className="mt-2" animation={false} />;
     }
     if (breadCrumbData?.length > 0) {
       return (

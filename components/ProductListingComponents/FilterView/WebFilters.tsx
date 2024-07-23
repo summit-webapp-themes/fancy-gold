@@ -1,13 +1,13 @@
-import useProductListingFilterHook from '../../../hooks/product-listing-hooks/product-listing-filter-hook';
+import { FaAlignJustify } from 'react-icons/fa6';
+import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
-import SearchIcon from '@mui/icons-material/Search';
-
+import filterStyles from '../../../styles/components/filterSidebar.module.scss';
 const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
 
   const showFilterSection: any = () => {
-    if (isLoading) {
-      return <FilterViewLoadingComponent />;
+    if (false) {
+      // return <FilterViewLoadingComponent />;
     }
 
     if (Object.keys(filtersData)?.length > 0) {
@@ -16,7 +16,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
       return (
         <>
           {!hideFilterSection && (
-            <div className="vh-100 p-3" id="sidebar">
+            <div className="h-100 p-3" id={`${filterStyles.sidebar}`}>
               <h4>Filters</h4>
               <div className="input-group input-group-sm mt-2 mb-3">
                 <input
@@ -30,7 +30,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
                   onChange={handleFilterSearchFun}
                 />
                 <span className="input-group-text" id="inputGroup-sizing-sm" onClick={handleFilterSearchBtn}>
-                  <SearchIcon />
+                  <FaAlignJustify />
                 </span>
               </div>
               {filtersData?.filters?.length > 0 &&

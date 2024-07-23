@@ -1,12 +1,12 @@
 import React from 'react';
-import Skeleton from '@mui/material/Skeleton';
-import { CardContent, CardMedia, Typography } from '@mui/material';
+// import Skeleton from '@mui/material/Skeleton';
+// import { CardContent, CardMedia, Typography } from '@mui/material';
 import { Card } from 'react-bootstrap';
 
 const ProductCardSkeleton = () => {
   return (
     <div className="pt-2">
-      <Card className=" mx-2  product-card  row justify-content-center">
+      {/* <Card className=" mx-2  product-card  row justify-content-center">
         <CardMedia>
           <Skeleton variant="rectangular" width="100%" height={200} className=" product-card-img " />
         </CardMedia>
@@ -19,7 +19,7 @@ const ProductCardSkeleton = () => {
             <Skeleton width="80%" />
           </Typography>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 };
