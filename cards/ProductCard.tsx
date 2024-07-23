@@ -33,6 +33,7 @@ const ProductCard = ({ data }: any) => {
           <Link href={data?.name} className="text-dark text-decoration-none">
             <p className="card-title my-0 product-name"> {data?.name}</p>
           </Link>
+          <p className="card-text my-0 product-card-text">{data?.bom_factory_code}</p>
           <p className="card-text my-0 product-card-text">Gross wt:{data.weight_per_unit}</p>
           <p className="card-text my-0 product-card-text">size:{data.length}</p>
 
