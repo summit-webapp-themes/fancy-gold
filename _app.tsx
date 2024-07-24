@@ -1,5 +1,4 @@
 import type { AppProps } from 'next/app';
-import { ToastContainer } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -7,6 +6,7 @@ import Layout from '../components/Layout';
 import ProtectedRoute from '../routes/ProtectedRoute';
 import { CONSTANTS } from '../services/config/app-config';
 import { persistor, store } from '../store/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {

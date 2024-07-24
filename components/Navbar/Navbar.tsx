@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
+import { FaCartPlus, FaHeart, FaRegCalendar, FaArrowRightToBracket, FaAlignJustify } from 'react-icons/fa6';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
@@ -66,7 +62,7 @@ const Navbar = () => {
               <div className="mobile-nav d-flex justify-content-sm-between">
                 <Link href="#" legacyBehavior>
                   <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
-                    <MenuIcon className="icon" />
+                    <FaAlignJustify className="icon" />
                   </a>
                 </Link>
               </div>
@@ -96,7 +92,7 @@ const Navbar = () => {
                     <Link href="/" legacyBehavior>
                       <a className="link-dark label">
                         <div className="icon-container">
-                          <ShoppingCartOutlinedIcon className="icon" />
+                          <FaCartPlus className="icon" />
                           <span className="badge badge-warning">{totalCartCount || 0}</span>
                           <span className="d-none d-md-inline-block theme-blue">Cart</span>
                         </div>
@@ -107,7 +103,7 @@ const Navbar = () => {
                     <Link href="/" legacyBehavior>
                       <a className="link-dark label">
                         <div className="icon-container">
-                          <FavoriteBorderIcon className="icon" />
+                          <FaHeart className="icon" />
                           <span className="badge badge-warning" id="lblCartCount">
                             {/* {wishlistCount} */}
                           </span>
@@ -120,7 +116,7 @@ const Navbar = () => {
                     <Link href="/" legacyBehavior>
                       <a className="link-dark label">
                         <div className="icon-container">
-                          <FormatListBulletedOutlinedIcon className="icon" />
+                          <FaRegCalendar className="icon" />
                           <span className="d-none d-md-inline-block ms-1 theme-blue">Order List</span>
                         </div>
                       </a>
@@ -130,7 +126,7 @@ const Navbar = () => {
                     <Link href="/" legacyBehavior>
                       <a className="link-dark label">
                         <div className="icon-container">
-                          <LogoutOutlinedIcon className="icon" />
+                          <FaArrowRightToBracket className="icon" />
                           <span className="d-none d-md-inline-block ms-1 theme-blue">Sign-out</span>
                         </div>
                       </a>
@@ -145,7 +141,12 @@ const Navbar = () => {
       {isMobile ? (
         <MobSideNavbar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} navbarData={navbarData} />
       ) : (
-        <HeaderCategories navbarData={navbarData} isLoading={isLoading} errorMessage={errorMessage} selectedCurrencyValue={selectedCurrencyValue} />
+        <HeaderCategories
+          navbarData={navbarData}
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+          selectedCurrencyValue={selectedCurrencyValue}
+        />
       )}
     </>
   );

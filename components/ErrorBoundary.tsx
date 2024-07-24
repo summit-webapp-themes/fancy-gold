@@ -1,7 +1,7 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 import Image from 'next/image';
 import image from '../public/assets/images/error-icon.png';
-
+import ErrorBoundaryStyles from '../styles/components/errorboundary.module.scss';
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -34,8 +34,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div id="error-page">
-          <div className="error-content">
+        <div id={`${ErrorBoundaryStyles.error_page}`}>
+          <div className={`${ErrorBoundaryStyles.error_content}`}>
             <div className="p-3" style={{ fontSize: '40px' }}>
               <Image src={image} width={250} height={250} alt="Error Image" />
             </div>
@@ -45,7 +45,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               <br />
               We expect them to be done soon.
             </p>
-            <div className="error-btns">
+            <div className={`${ErrorBoundaryStyles.error_btns}`}>
               <a href="/">Refresh Page</a>
             </div>
           </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
+
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
 
 const ProductListingMaster = () => {
   const {
