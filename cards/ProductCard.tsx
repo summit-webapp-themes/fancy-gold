@@ -37,8 +37,8 @@ const ProductCard = ({ data }: any) => {
             <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
           ) : null}
 
-          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text}`}>Gross wt: {data.weight_per_unit}</Card.Text>
-          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text}`}>Size: {data.length}</Card.Text>
+          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
+          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
 
           <div className="text-center mt-3">
             <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}>Add To cart</button>
