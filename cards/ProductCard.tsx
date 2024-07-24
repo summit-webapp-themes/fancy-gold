@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { CONSTANTS } from '../services/config/app-config';
 import productCardStyles from '../styles/components/productCard.module.scss';
 
-const ProductCard = ({ data }: any) => {
+const ProductCard = ({ data, handleShow }: any) => {
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -36,7 +36,7 @@ const ProductCard = ({ data }: any) => {
           <p className={`card-text my-0 ${productCardStyles.product_card_text}`}>size:{data.length}</p>
 
           <div className="text-center mt-2">
-            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${productCardStyles.add_to_cart_btn}`}>Add To cart</button>
+            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${productCardStyles.add_to_cart_btn}`} onClick={(e)=>handleShow(data)}>Add To cart</button>
           </div>
         </div>
       </div>

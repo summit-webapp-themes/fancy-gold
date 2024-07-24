@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
+import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
@@ -43,9 +43,9 @@ const ProductListingMaster = () => {
       />
     );
   };
-  console.log('productDetailData');
   return (
     <div>
+              <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       <section className="listing-page ">
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
@@ -65,7 +65,6 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
-        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       </section>
     </div>
   );

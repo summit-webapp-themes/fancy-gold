@@ -1,15 +1,78 @@
+import { useEffect, useState } from 'react';
 import { Offcanvas } from 'react-bootstrap';
+import { fetchProductVariant } from '../../../services/api/product-detail-page-api/product-variants-data-api';
 import ProductDetailInfo from './ProductDetailInfo';
-import useProductDetail from '../../../hooks/ProductDetailHook/product-detail-hook';
+import { useSelector } from 'react-redux';
+import { get_access_token } from '../../../store/slices/auth/token-login-slice';
+import { fetchProductDetailData } from '../../../services/api/product-detail-page-api/product-detail-data-api';
+import variantStyles from '../../../styles/components/productVariants.module.scss'
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
-  const { productImageLoading, productDetailLoading, productDetailData } = useProductDetail();
-  console.log(productDetailData,'productDetailData')
+  const TokenFromStore: any = useSelector(get_access_token);
+  const [productDetail, setProductDetail] = useState();
+  const [variantsData, setVariantsData] = useState<any>([]);
+  const [attributesData, setAttributesData] = useState([]);
+  const [cartProducts, setCartProducts] = useState([])
+  const item_code = data?.name?.split('-')[0];
+  const getVariantsData = async () => {
+    if(item_code !== undefined){
+
+      const variantDataAPI = await fetchProductVariant(item_code, TokenFromStore?.token);
+      if (variantDataAPI?.data?.message?.msg === 'success') {
+        if (variantDataAPI?.data?.message?.data?.variants?.length > 0) {
+          setVariantsData(variantDataAPI?.data?.message?.data?.variants);
+        }else{
+          setVariantsData([])
+        }
+        if (variantDataAPI?.data?.message?.data?.attributes?.length > 0) {
+          setAttributesData(variantDataAPI?.data?.message?.data?.attributes);
+        }else{
+          setAttributesData([])
+        }
+      }
+    }
+  };
+  const getProductDetailData = async (item_name: any) => {
+    if(item_name !== null && item_name !== undefined){
+
+      const productDetailData = await fetchProductDetailData(item_name, 'INR', TokenFromStore?.token);
+      if (productDetailData?.data?.message?.msg === 'Success') {
+        setProductDetail(productDetailData?.data?.message?.data[0]);
+      }
+    }
+  };
+  useEffect(() => {
+    getVariantsData();
+    getProductDetailData(data?.name);
+  }, [item_code]);
+  const getVariantStrings = () => {
+    return variantsData?.map((variant: any) => {
+      let variantStringParts: any[] = [];
+      attributesData.forEach((attribute: any) => {
+        if (attribute.field_name in variant) {
+          variantStringParts.push(variant[attribute.field_name]);
+        }
+      });
+      return {
+        variant_code: variant.variant_code,
+        variant_string: variantStringParts.join('-'),
+      };
+    });
+  };
+  const showVariants = variantsData?.length > 0 || variantsData !== null ? getVariantStrings() : [];
   return (
     <Offcanvas show={show} placement="end" onHide={handleClose}>
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
-        <ProductDetailInfo data={data} />
+        <div className="d-flex flex-wrap"></div>
+        {showVariants !== null &&
+          showVariants?.length > 0 &&
+          showVariants.map((variant: any, index: number) => (
+            <button key={index} className={variantStyles.variant_btn} onClick={(e) => getProductDetailData(variant?.variant_code)}>
+              {variant.variant_string}
+            </button>
+          ))}
+        <ProductDetailInfo data={productDetail} />
       </Offcanvas.Body>
     </Offcanvas>
   );
