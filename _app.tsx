@@ -1,5 +1,4 @@
 import type { AppProps } from 'next/app';
-import { ToastContainer } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import ErrorBoundary from '../components/ErrorBoundary';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 const MobSideNavbar = ({
   navbarData,
@@ -74,7 +74,7 @@ const MobSideNavbar = ({
               required
             />
             <button className="btn btn-search text-primary border" type="submit" onClick={handleSearch}>
-              <SearchIcon className="icon" />
+              <FaMagnifyingGlass className="icon" />
             </button>
           </div>
           <div className="tab-content">

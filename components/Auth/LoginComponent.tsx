@@ -5,6 +5,7 @@ import { Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import useLoginHook from '../../hooks/AuthHooks/useLoginHook';
 import logo from '../../public/assets/images/logo.png';
+import LoginStyles from '../../styles/components/login.module.scss';
 
 const validation = Yup.object().shape({
   usr: Yup.string().email(' Enter valid email').required(' Email field is required'),
@@ -31,7 +32,7 @@ function LoginComponent() {
             <div className="form-wrapper" id="wrapper-login">
               <div className="content-wrapper" id="content-signin">
                 <div className="row justify-content-center">
-                  <div className="col-lg-3 col-md-4  main-column">
+                  <div className={`col-lg-3 col-md-4 ${LoginStyles.main_column}`}>
                     <div className="row ">
                       <div className="col-12">
                         <div className="img">
@@ -41,8 +42,15 @@ function LoginComponent() {
                         </div>
                         <Form.Group controlId="formEmail">
                           <Form.Label>Email ID </Form.Label>
-                          <Form.Control onChange={handleChange} type="text" name="usr" placeholder="Enter Email" className="emailfield" onBlur={handleBlur} />
-                          <div className="empty mt-1">
+                          <Form.Control
+                            onChange={handleChange}
+                            type="text"
+                            name="usr"
+                            placeholder="Enter Email"
+                            className={`${LoginStyles.emailfield}`}
+                            onBlur={handleBlur}
+                          />
+                          <div className={`${LoginStyles.empty} mt-1`}>
                             <ErrorMessage name="usr" />
                           </div>
                         </Form.Group>
@@ -52,7 +60,7 @@ function LoginComponent() {
                       <div className="col-12 mt-2">
                         <Form.Group controlId="formPassword">
                           <Form.Label>Password </Form.Label>
-                          <div className="input-group">
+                          <div className={`${LoginStyles.input_group}`}>
                             <Form.Control
                               onChange={handleChange}
                               type={passwordHidden ? 'password' : 'text'}
@@ -76,7 +84,7 @@ function LoginComponent() {
                     </div>
                     <div className="row mt-3">
                       <div className="col-12 d-flex justify-content-center">
-                        <button type="submit" className="btn-login mb-2 mt-2">
+                        <button type="submit" className={`${LoginStyles.btn_login} mb-2 mt-2`}>
                           LOGIN
                         </button>
                       </div>
