@@ -11,9 +11,11 @@ import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import useCartCountHook from '../../hooks/GeneralHooks/CommonHooks/cart-count-hook';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { totalCartCount } = useCartCountHook()
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -95,7 +97,7 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <ShoppingCartOutlinedIcon className="icon" />
-                          <span className="badge badge-warning">2</span>
+                          <span className="badge badge-warning">{totalCartCount || 0}</span>
                           <span className="d-none d-md-inline-block theme-blue">Cart</span>
                         </div>
                       </a>
