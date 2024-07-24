@@ -65,7 +65,7 @@ const Purity = () => {
     router.push(
       {
         pathname: router.pathname,
-        query: { ...router.query, filter: encodedFilters },
+        query: { ...router.query, filter: encodedFilters, page:1 },
       },
       undefined,
       { shallow: true }
