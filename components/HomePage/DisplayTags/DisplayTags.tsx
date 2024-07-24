@@ -33,8 +33,8 @@ const DisplayTags = () => {
 
     if (updateDisplayTagList?.length > 0 && Array.isArray(allTagsData) && isLoading === false) {
       return (
-        <div className="container-fluid pb-5 display-tags-section">
-          <div className="row m-0">
+        <div className="ps-lg-5 pe-lg-4 ">
+          <div className="row m-0  display-tags-section">
             <div className="col-12 ">
               {updateDisplayTagList?.length > 0 &&
                 updateDisplayTagList?.map((tagsData: any, index: any) => {
@@ -44,7 +44,13 @@ const DisplayTags = () => {
                         <h2 className="pt-5 pb-2 heading-text">{tagsData.tag_name}</h2>
                         {/* <div className=" product-card ">
                         <div className=" product-card-img "> */}
-                        <Image src={lineImg} alt="img" style={{ width: '100%', height: '100%' }} height={200} className="py-4" />
+                        <Image
+                          src={lineImg}
+                          alt="img"
+                          style={{ width: '100%', height: '100%' }}
+                          height={200}
+                          className={displayTagStyles.horizontal_wrapper}
+                        />
                         {/* </div>
                       </div> */}
                         <SliderSection data={tagsData} />

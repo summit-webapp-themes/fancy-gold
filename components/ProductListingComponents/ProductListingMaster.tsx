@@ -46,7 +46,7 @@ const ProductListingMaster = () => {
             </div>
 
             <div className="container">
-              <div className="row mt-2 product-listing-row">{handleDisplayOfProductsList()}</div>
+              <div className="row  product-listing-row">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
         </div>
