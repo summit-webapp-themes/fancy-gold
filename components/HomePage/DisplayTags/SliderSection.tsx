@@ -52,38 +52,33 @@ const SliderSection = ({ data }: any) => {
   };
 
   const showSliderSection: any = () => {
-    // if (data?.value?.length === 0) {
-    if (false) {
+    if (data?.value?.length === 0) {
       return (
-        <>
-          {/* <div className={`container-fluid `}>
-            <div className="row">
-              <Slider {...settings}>
-                {[...Array(2)].map((_, index) => (
-                  <div key={index} className="col-lg-3 col-md-3 col-6 mx-2">
-                    <ProductCardSkeleton />
-                  </div>
-                ))}
-              </Slider>
-            </div>
-          </div> */}
-        </>
+        <div className={`container`}>
+          <div className="row">
+            <Slider {...settings}>
+              {[...Array(2)].map((_, index) => (
+                <div key={index} className="col-12">
+                  <ProductCardSkeleton />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
       );
     }
 
     if (data?.value?.length > 0) {
       return (
         <>
-          <div className={`container-fluid `} style={{ zIndex: '2', position: 'relative' }}>
+          <div className={`container`} style={{ zIndex: '2', position: 'relative' }}>
             <div className="row">
               <Slider {...settings}>
                 {data.value?.length > 0 &&
                   data.value.map((item: any, index: any) => (
-                    <>
-                      <div key={index} className="col-12">
-                        <ProductCard data={item} />
-                      </div>
-                    </>
+                    <div key={index} className="col-12 ">
+                      <ProductCard data={item} />
+                    </div>
                   ))}
               </Slider>
             </div>
