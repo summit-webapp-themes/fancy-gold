@@ -6,8 +6,8 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
 
   const showFilterSection: any = () => {
-    if (false) {
-      // return <FilterViewLoadingComponent />;
+    if (isLoading) {
+      return <FilterViewLoadingComponent />;
     }
 
     if (Object.keys(filtersData)?.length > 0) {

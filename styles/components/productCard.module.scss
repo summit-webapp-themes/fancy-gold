@@ -5,7 +5,7 @@
   /* margin-bottom: 40px; */
   font-weight: 300;
   padding: 40px 10px 10px;
-  max-height: 360px;
+  height: 360px;
   // padding: 0.5rem 0.5rem;
   height: 100%;
   /* width: 240px; */
@@ -13,6 +13,7 @@
 .product_card_img {
   position: relative;
   height: 146px !important;
+  height: 180px !important;
   overflow: hidden;
   height: 145px;
   display: flex;
@@ -36,7 +37,9 @@
   font-weight: 600;
   // font-size: 1rem;
   font-size: 12px;
-  margin-bottom: 10px !important;
+  text-decoration: none !important;
+}
+.product_name a {
   text-decoration: none !important;
 }
 
@@ -66,7 +69,9 @@
   transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .content_wrap {
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
-  border: '2px solid red' !important;
+  padding-top: 30px !important;
+  padding-bottom: 10px !important;
+}
+.product_content_wrap {
+  height: 80px;
 }

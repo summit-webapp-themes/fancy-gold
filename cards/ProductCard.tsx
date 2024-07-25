@@ -12,26 +12,26 @@ const ProductCard = ({ data }: any) => {
   };
 
   return (
-    <>
-      <Card className={` ${ProductCardStyles.product_card} py-2`}>
-        <div className={` ${ProductCardStyles.product_card_img} `}>
-          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-            {/* <i className="fa fa-heart-o"></i> */}
-            <FaRegHeart />
-          </span>
-          <Image
-            loader={imageLoader}
-            src={data.image !== null && data.image}
-            width={100}
-            height={500}
-            alt="Item Image"
-            className={`${ProductCardStyles.product_code_img}`}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </div>
-        <Card.Body className={`${ProductCardStyles.content_wrap}`}>
-          <Link href={data?.name} className={` text-dark text-decoration-none`}>
-            <Card.Title className={` my-0 ${ProductCardStyles.product_name}`}> {data?.name}</Card.Title>
+    <Card className={` ${ProductCardStyles.product_card} pt-2`}>
+      <div className={` ${ProductCardStyles.product_card_img} `}>
+        <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+          {/* <i className="fa fa-heart-o"></i> */}
+          <FaRegHeart />
+        </span>
+        <Image
+          loader={imageLoader}
+          src={data.image !== null && data.image}
+          width={100}
+          height={500}
+          alt="Item Image"
+          className={`${ProductCardStyles.product_code_img}`}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+      <Card.Body className={`${ProductCardStyles.content_wrap}`}>
+        <div className={`${ProductCardStyles.product_content_wrap}`}>
+          <Link href={data?.name} className={` text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+            <Card.Title className={` my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
           {data?.bom_factory_code ? (
             <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
@@ -39,13 +39,12 @@ const ProductCard = ({ data }: any) => {
 
           <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
           <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
-
-          <div className="text-center mt-3">
-            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}>Add To cart</button>
-          </div>
-        </Card.Body>
-      </Card>
-    </>
+        </div>
+        <div className="text-center mt-2">
+          <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}>Add To cart</button>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 
