@@ -64,7 +64,7 @@ const ProductDetailInfo = ({ data }: any) => {
     console.log(addToCartParams, 'cartProductsData');
   };
   return (
-    <>
+    <div className='w-100'>
       <div className="py-2">
         This product is available in below sizes :
         <br />
@@ -120,18 +120,15 @@ const ProductDetailInfo = ({ data }: any) => {
         ))}
       </div>
       <div className="">
-        <textarea name="wastage" value={cartProductsData?.wastage} placeholder="wastage" className=" p-2 m-1 border" onChange={(e) => handleRemarkChange(e)}></textarea>
-        <textarea name="remark" value={cartProductsData?.remark} placeholder="Enter note" className=" p-2 m-1 border" onChange={(e) => handleRemarkChange(e)}></textarea>
+        <textarea name="wastage" value={cartProductsData?.wastage} placeholder="wastage" className=" p-2 m-1 border w-50" onChange={(e) => handleRemarkChange(e)}></textarea>
+        <textarea name="remark" value={cartProductsData?.remark} placeholder="Enter note" className=" p-2 m-1 border w-50" onChange={(e) => handleRemarkChange(e)}></textarea>
       </div>
       <div className="d-flex justify-content-start my-2 me-5">
         <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
           Add To Cart
         </button>
       </div>
-      <div className="d-flex justify-content-center">
-        <Image loader={imageLoader} src={data?.image !== null && data?.image} alt="product image" width={300} height={300} />
-      </div>
-    </>
+    </div>
   );
 };
 
