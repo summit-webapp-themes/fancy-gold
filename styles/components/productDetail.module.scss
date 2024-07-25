@@ -4,8 +4,9 @@
     margin: 0 0.2rem 0 0.2rem;
     border: 1px solid #1a1a49;
     border-radius: 5px;
+    background: white;
 }
-.size_button .add_to_cart_btn:hover{
+.size_button:hover{
     background: #1a1a49;
     color:#ffd700;
 }
@@ -25,8 +26,13 @@
     text-align: center;
 }
 .add_to_cart_btn{
-    padding: 0 0.5rem 0 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     margin: 0 0.2rem 0 0.2rem;
     border: 1px solid #1a1a49;
     border-radius: 5px;
+    background: white;
+}
+.add_to_cart_btn:hover{
+    background: #1a1a49;
+    color:#ffd700;
 }

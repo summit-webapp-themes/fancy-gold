@@ -3,7 +3,6 @@
     padding: 0 0.5rem 0 0.5rem;
     margin: 0 0.5rem 0 0.5rem;
     border: 1px solid #1a1a49;
-    // border: 1px solid #c67605;
     border-radius: 5px;
 }
 .purity_button:hover{
@@ -15,7 +14,6 @@
     padding: 0 0.5rem 0 0.5rem;
     margin: 0 0.5rem 0 0.5rem;
     border: 1px solid #1a1a49;
-    // border: 1px solid #c67605;
     border-radius: 5px;
     background: #1a1a49;
     color:#ffd700;
@@ -25,7 +23,26 @@
     padding: 0 0.5rem 0 0.5rem;
     margin: 0 0.5rem 0 0.5rem;
     border: 1px solid #1a1a49;
-    // border: 1px solid #c67605;
     border-radius: 5px;
     cursor: pointer;  
+}
+.save_btn{
+    width: 4rem;
+    padding: 0 0.5rem 0 0.5rem;
+    border: 1px solid #1a1a49;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.save_btn:hover{
+    background: #1a1a49;
+    color:#ffd700;
+}
+.cust_name_input{
+    max-width: 10rem !important;
+    height: 26px;
+    text-align: start;
+    border: 1px solid #1a1a49;
+    border-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }

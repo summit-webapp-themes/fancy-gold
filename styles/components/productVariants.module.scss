@@ -1,11 +1,19 @@
 .variant_btn{
-    width: 6rem;
-    padding: 0 0.5rem 0 0.5rem;
+    width: 7rem;
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem;
     margin: 0.2rem;
     border: 1px solid #1a1a49;
     border-radius: 5px;
     background: white;
-    color: #1a1a49;
+}
+.variant_btn_active{
+    width: 7rem;
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem;
+    margin: 0.2rem;
+    border: 1px solid #1a1a49;
+    border-radius: 5px;
+    background: #1a1a49;
+    color: #ffd700;
 }
 .variant_btn:hover{
     background: #1a1a49;

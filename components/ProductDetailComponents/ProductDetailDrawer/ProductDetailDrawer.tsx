@@ -10,7 +10,7 @@ import variantStyles from '../../../styles/components/productVariants.module.scs
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
-  const [productDetail, setProductDetail] = useState();
+  const [productDetail, setProductDetail] = useState<any>();
   const [variantsData, setVariantsData] = useState<any>([]);
   const [attributesData, setAttributesData] = useState([]);
   const item_code = data?.name?.split('-')[0];
@@ -72,7 +72,11 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           {showVariants !== null &&
             showVariants?.length > 0 &&
             showVariants.map((variant: any, index: number) => (
-              <button key={index} className={variantStyles.variant_btn} onClick={(e) => getProductDetailData(variant?.variant_code)}>
+              <button
+                key={index}
+                className={variant.variant_code === productDetail?.name ? variantStyles.variant_btn_active : variantStyles.variant_btn}
+                onClick={(e) => getProductDetailData(variant?.variant_code)}
+              >
                 {variant.variant_string}
               </button>
             ))}
