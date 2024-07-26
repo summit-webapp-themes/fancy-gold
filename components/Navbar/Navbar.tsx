@@ -89,7 +89,7 @@ const Navbar = () => {
               <div>
                 <ul className="nav  list-inline d-flex justify-content-evenly">
                   <li className="list-inline-item">
-                    <Link href="/" legacyBehavior>
+                    <Link href="/cart" legacyBehavior>
                       <a className="link-dark label">
                         <div className="icon-container">
                           <FaCartPlus className="icon" />
