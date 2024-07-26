@@ -4,6 +4,9 @@ import Image from 'next/image';
 import useBanner from '../../../hooks/HomePageHooks/BannerHook';
 import { CONSTANTS } from '../../../services/config/app-config';
 import BannerSkeleton from './BannerSkeleton';
+import CarouselCaption from 'react-bootstrap/CarouselCaption';
+import BannerStyles from '../../../styles/components/banner.module.scss';
+import { FaForward } from 'react-icons/fa6';
 
 const Banner = () => {
   const { isLoading, allBannerData }: any = useBanner();
@@ -32,13 +35,21 @@ const Banner = () => {
               <Carousel.Item key={index}>
                 <Image
                   loader={imageLoader}
-                  className="d-block w-100"
+                  className={`d-block w-100 `}
                   src={`${banner?.img}`}
                   alt="Banner Images"
                   priority
-                  width={100}
+                  width={1024}
                   height={550}
                 />
+
+                <CarouselCaption className="corousel-caption ">
+                  <div className={`text-start `} key={index}>
+                    <span className={`text-white banner-btn theme-blue-bg theme-btn-blue px-3 ${BannerStyles.banner_btn}`}>
+                      Shop Now &nbsp; <FaForward />
+                    </span>
+                  </div>
+                </CarouselCaption>
               </Carousel.Item>
             ))}
           </Carousel>

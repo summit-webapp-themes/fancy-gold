@@ -15,14 +15,13 @@ const ProductCard = ({ data }: any) => {
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          {/* <i className="fa fa-heart-o"></i> */}
           <FaRegHeart />
         </span>
         <Image
           loader={imageLoader}
           src={data.image !== null && data.image}
-          width={100}
-          height={500}
+          width={1200}
+          height={900}
           alt="Item Image"
           className={`${ProductCardStyles.product_code_img}`}
           style={{ width: '100%', height: '100%' }}

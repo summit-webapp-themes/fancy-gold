@@ -30,7 +30,7 @@ const DisplayTags = () => {
                   return (
                     <>
                       <div className="text-center text-secondary" key={index}>
-                        <h2 className="pt-5 pb-2 heading-text">{tagsData.tag_name}</h2>
+                        <h2 className="pt-4 pb-2 heading-text">{tagsData.tag_name}</h2>
 
                         <Image
                           src={lineImg}

@@ -71,14 +71,22 @@
 .theme-blue {
   color: #1a1a49;
 }
+.theme-blue-bg {
+  background-color: #1a1a49;
+  border: none !important;
+}
+.theme-btn-blue:hover {
+  background-color: #1a1a49;
+  border: none !important;
+}
 .slick-slide {
   padding: 12px !important;
 }
 
-.slick-slide .product_card {
-  border: 2px solid green !important;
-  background-color: green !important;
-}
 .slick-slide {
-  width: 256px !important;
+  width: 320px !important;
+}
+.carousel-caption {
+  bottom: 6rem !important;
+  left: 180px !important;
 }
