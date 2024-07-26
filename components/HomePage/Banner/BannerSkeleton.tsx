@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placeholder } from 'react-bootstrap';
+import Placeholder from 'react-bootstrap/Placeholder';
 
 const BannerSkeleton = () => {
   return (
