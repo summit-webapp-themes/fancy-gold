@@ -32,24 +32,30 @@ const Banner = () => {
         <div>
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {allBannerData?.map((banner: any, index: number) => (
-              <Carousel.Item key={index}>
+              <Carousel.Item key={index} className={`${BannerStyles.image_wrapper}`}>
                 <Image
                   loader={imageLoader}
-                  className={`d-block w-100 `}
+                  className={`d-block w-100`}
                   src={`${banner?.img}`}
                   alt="Banner Images"
                   priority
-                  width={1024}
+                  width={1000}
                   height={550}
                 />
-
-                <CarouselCaption className="corousel-caption ">
+                {/* <CarouselCaption className="corousel-caption " style={{ border: '2px solid red' }}>
                   <div className={`text-start `} key={index}>
-                    <span className={`text-white banner-btn theme-blue-bg theme-btn-blue px-3 ${BannerStyles.banner_btn}`}>
-                      Shop Now &nbsp; <FaForward />
+                    <span className={` theme-blue px-3 ${BannerStyles.banner_btn}`}>
+                      There are deals and then there are <div>Limited Deals</div>you can't let go!
                     </span>
                   </div>
                 </CarouselCaption>
+                <CarouselCaption className="corousel-caption ">
+                  <div className={`text-start `} key={index}>
+                    <span className={`text-white banner-btn theme-blue-bg theme-btn-blue px-3 ${BannerStyles.banner_btn}`}>
+                      Zero Making Charges
+                    </span>
+                  </div>
+                </CarouselCaption> */}
               </Carousel.Item>
             ))}
           </Carousel>
