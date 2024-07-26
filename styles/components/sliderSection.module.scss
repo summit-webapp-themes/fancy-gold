@@ -18,14 +18,17 @@
 .slick-next {
   right: 0px !important;
 }
+.productCard_slider_wrapper {
+  height: 340px !important;
+}
 
 @media only screen and (max-width: 600px) {
-    .slider_arrow_right {
-        font-size: 25px;
-        right: -10px;
-      }
-      .slider_arrow_left {
-        font-size: 25px;
-        left: -5px;
-      }
+  .slider_arrow_right {
+    font-size: 25px;
+    right: -10px;
   }
+  .slider_arrow_left {
+    font-size: 25px;
+    left: -5px;
+  }
+}

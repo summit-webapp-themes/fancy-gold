@@ -8,6 +8,7 @@ import ProductCardSkeleton from '../../Skeleton/ProductCardSkeleton';
 import SliderNextArrow from './SliderNextArrow';
 import SliderPrevArrow from './SliderPrevArrow';
 import ProductCard from '../../../cards/ProductCard';
+import SliderStyles from '../../../styles/components/sliderSection.module.scss';
 
 const SliderSection = ({ data }: any) => {
   useEffect(() => {
@@ -76,7 +77,10 @@ const SliderSection = ({ data }: any) => {
               <Slider {...settings}>
                 {data.value?.length > 0 &&
                   data.value.map((item: any, index: any) => (
-                    <div key={index} className="col-12 ">
+                    <div
+                      key={index}
+                      className={`col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-4 ${SliderStyles.productCard_slider_wrapper}`}
+                    >
                       <ProductCard data={item} />
                     </div>
                   ))}

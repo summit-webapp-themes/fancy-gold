@@ -55,7 +55,7 @@ const Navbar = () => {
     <>
       <header className="header">
         <nav>
-          <div className="navbar">
+          <div className="navbar ps-lg-5 pe-lg-4">
             <div className="w-100 d-flex justify-content-between pt-3">
               <div className="mobile-nav d-flex justify-content-sm-between">
                 <Link href="#" legacyBehavior>
