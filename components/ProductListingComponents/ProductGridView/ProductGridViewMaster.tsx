@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import image from '../../../public/assets/images/no-data.svg';
 import ProductsGridView from './ProductsGridView';
 import NoDataStyles from '../../../styles/components/noData.module.scss';
+import ProductCardSkeleton from '../../../cards/ProductCardSkeleton';
 
 const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount }: any) => {
   const {query}=useRouter()
@@ -12,18 +13,18 @@ const ProductGridViewMaster = ({ productListingData, isLoading, handlePagination
     
   };
   const handleDataRendering = () => {
-    if (false) {
-      // return (
-      //   <div className="row justify-content-center">
-      //     {[...Array(10)].map(() => (
-      //       <>
-      //         <div className="col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-3">
-      //           <GridViewLoadingComponent />
-      //         </div>
-      //       </>
-      //     ))}
-      //   </div>
-      // );
+    if (isLoading) {
+      return (
+        <div className="row ">
+          {[...Array(10)].map(() => (
+            <>
+              <div className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
+                <ProductCardSkeleton />
+              </div>
+            </>
+          ))}
+        </div>
+      );
     }
     if (productListingData?.length > 0) {
       return (

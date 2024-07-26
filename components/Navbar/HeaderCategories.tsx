@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 // import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
+import NavbarLoadingComponent from './NavbarLoadingComponent';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
@@ -58,8 +59,8 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     </Popover>
   );
   const handleDataRendering = () => {
-    if (false) {
-      // return <NavbarLoadingComponent />;
+    if (isLoading) {
+      return <NavbarLoadingComponent />;
     }
     if (navbarData?.length > 0) {
       return (

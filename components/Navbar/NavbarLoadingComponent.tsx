@@ -1,14 +1,22 @@
 import React from 'react';
-// import { Skeleton } from '@mui/material';
-
+import Placeholder from 'react-bootstrap/Placeholder';
 const NavbarLoadingComponent = () => {
   return (
-    <></>
-    // <div className="d-flex justify-content-center py-2 overflow-hidden">
-    //   {[1, 2, 3, 4].map(() => (
-    //     <Skeleton variant="rectangular" width={90} height={18} className="mx-3" animation={'wave'} />
-    //   ))}
-    // </div>
+    <>
+      <nav>
+        <div className="container-fluid navbar-skeleton">
+          <div className="row">
+            <div className="text-center">
+              <Placeholder as="div" animation="glow" size="lg">
+                {[...Array(5)].map((_, index) => (
+                  <Placeholder key={index} style={{ width: '5%', marginRight: '1%', height: 20 }} />
+                ))}
+              </Placeholder>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
