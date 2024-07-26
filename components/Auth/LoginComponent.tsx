@@ -22,7 +22,7 @@ function LoginComponent() {
           usr: '',
           pwd: '',
         }}
-        // validationSchema={validation}
+        validationSchema={validation}
         onSubmit={(values: any) => {
           fetchToken(values);
         }}

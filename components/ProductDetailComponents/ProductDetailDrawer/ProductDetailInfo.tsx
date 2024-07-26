@@ -70,7 +70,6 @@ const ProductDetailInfo = ({ data }: any) => {
       rejection_note:''
     });
     setSizeTable([initialState]);
-    console.log(addToCartParams, 'cartProductsData');
   };
   return (
     <div className="w-100">

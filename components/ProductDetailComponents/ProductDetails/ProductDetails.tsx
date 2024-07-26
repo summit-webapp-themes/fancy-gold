@@ -5,7 +5,6 @@ import ProductCode from './ProductCode';
 import ProductVariants from './ProductVariants';
 
 const ProductDetails = ({ productDetailData, productVariantData, fetchProductDetailDataAPI }: any) => {
-  console.log(productVariantData, 'product');
   return (
     <div className="container ">
       <div className="row">
