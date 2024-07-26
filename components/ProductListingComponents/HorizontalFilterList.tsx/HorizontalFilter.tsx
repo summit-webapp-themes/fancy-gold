@@ -4,7 +4,7 @@ import SortBy from './SortBy';
 
 const HorizontalFilter = ({ sortBy, handleSortBy }: any) => {
   return (
-    <nav className="my-4">
+    <nav className="my-3">
       <div className="container-xl">
         <div className="row d-flex justify-content-center">
           <div className="col-12 col-sm-6 col-lg-3 my-1">
