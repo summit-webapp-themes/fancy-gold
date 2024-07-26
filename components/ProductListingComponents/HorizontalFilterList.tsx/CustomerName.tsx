@@ -7,7 +7,7 @@ const CustomerName = () => {
     setCustomerName(data);
   };
   const handleLocalStorage=()=>{
-    localStorage.setItem("cust_name", JSON.stringify(customerName));
+    localStorage.setItem("cust_name", (customerName));
   }
   return (
     <div className="d-flex mx-2">

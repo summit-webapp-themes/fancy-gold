@@ -5,11 +5,17 @@ import SortBy from './SortBy';
 const HorizontalFilter = ({ sortBy, handleSortBy }: any) => {
   return (
     <nav className="my-4">
-      <div className="container">
-        <div className="d-flex justify-content-center">
-          <CustomerName/>
-          <Purity />
-          <SortBy sortBy={sortBy} handleSortBy={handleSortBy} />
+      <div className="container-xl">
+        <div className="row">
+          <div className="col-3">
+            <CustomerName />
+          </div>
+          <div className="col-5">
+            <Purity />
+          </div>
+          <div className="col-4">
+            <SortBy sortBy={sortBy} handleSortBy={handleSortBy} />
+          </div>
         </div>
       </div>
     </nav>

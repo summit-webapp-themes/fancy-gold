@@ -48,8 +48,8 @@ const ProductListingMaster = () => {
       <section className="listing-page ">
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
-          <div className="d-flex ps-lg-5 pe-lg-4">
-            <div>
+          <div className="row  ps-lg-5 pe-lg-4">
+            <div className='col-12 col-sm-4 col-md-4 col-lg-3 '>
               <WebFilters
                 searchFilterValue={searchFilterValue}
                 handleFilterSearchFun={handleFilterSearchFun}
@@ -59,13 +59,13 @@ const ProductListingMaster = () => {
               />
             </div>
 
-            <div className="container">
+            <div className="container col-lg-9 col-md-6 col-sm-8">
               <div className="row mt-2 product-listing-row">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
         </div>
-      </section>
       <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+      </section>
     </div>
   );
 };

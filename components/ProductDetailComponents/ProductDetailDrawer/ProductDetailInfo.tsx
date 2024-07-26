@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
+import useAddToCartHook from '../../../hooks/ProductDetailHook/add-to-cart-hook';
 
 const ProductDetailInfo = ({ data }: any) => {
+  const {addToCartItem} = useAddToCartHook()
   const cust_name = localStorage.getItem('cust_name');
+  const colour = localStorage.getItem('colour')
+  const user = localStorage.getItem('user')
+  const party_name = localStorage.getItem('party_name')
   const initialState = {
     colour: '',
     size: '',
     qty: '',
   };
   const [sizeTable, setSizeTable] = useState([initialState]);
+  const [reject,setReject] = useState(false)
   const [cartProductsData, setCartProductsData] = useState({
     wastage: '',
     remark: '',
+    rejection_note:''
   });
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -42,18 +49,25 @@ const ProductDetailInfo = ({ data }: any) => {
   };
   const handleAddToCart = () => {
     const addToCartParams = {
-      purity: data?.stock_uom,
       item_code: data?.name,
-      colour: '',
+      party_name:party_name,
+      purity: data?.stock_uom,
       cust_name: cust_name,
+      colour: colour,
+      wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
-      user: '',
-      wastage: cartProductsData.wastage,
+      user: user,
     };
+    if(cust_name !== '' && cust_name !== null){
+      addToCartItem(addToCartParams)
+    }else{
+      alert("Customer Name is Empty")
+    }
     setCartProductsData({
       wastage: '',
       remark: '',
+      rejection_note:''
     });
     setSizeTable([initialState]);
     console.log(addToCartParams, 'cartProductsData');
@@ -119,21 +133,39 @@ const ProductDetailInfo = ({ data }: any) => {
           name="wastage"
           value={cartProductsData?.wastage}
           placeholder="wastage"
-          className=" p-2 m-1 border w-50"
+          className=" p-2 m-1 border w-75"
           onChange={(e) => handleRemarkChange(e)}
           rows={1}
         ></textarea>
+        <div>
+
         <textarea
           name="remark"
           value={cartProductsData?.remark}
           placeholder="Enter note"
-          className=" p-2 m-1 border w-50"
+          className=" p-2 m-1 border"
           onChange={(e) => handleRemarkChange(e)}
         ></textarea>
+        {
+          reject && (
+
+            <textarea
+              name="rejection_note"
+              value={cartProductsData?.rejection_note}
+              placeholder="Enter rejection note"
+              className=" p-2 m-1 border "
+              // onChange={(e) => handleRemarkChange(e)}
+            ></textarea>
+          )
+        }
+        </div>
       </div>
       <div className="d-flex justify-content-start my-2 me-5">
         <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
           Add To Cart
+        </button>
+        <button className={productDetailStyles.add_to_cart_btn} onClick={()=>setReject(!reject)}>
+          Reject
         </button>
       </div>
     </div>

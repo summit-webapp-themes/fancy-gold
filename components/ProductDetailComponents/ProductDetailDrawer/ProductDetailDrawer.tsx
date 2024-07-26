@@ -8,16 +8,15 @@ import { fetchProductDetailData } from '../../../services/api/product-detail-pag
 import ProductCode from '../ProductDetails/ProductCode';
 import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductImage from '../ProductDetails/ProductImage';
+import roductDetailStyles from '../../../styles/components/productDetail.module.scss'
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
-
   const TokenFromStore: any = useSelector(get_access_token);
   const [productDetail, setProductDetail] = useState<any>();
   const [variantsData, setVariantsData] = useState<any>([]);
   const [attributesData, setAttributesData] = useState([]);
   const item_code = data?.name?.split('-')[0];
   const getVariantsData = async () => {
-    console.log('inside')
     if (item_code !== undefined) {
       const variantDataAPI = await fetchProductVariant(item_code, TokenFromStore?.token);
       if (variantDataAPI?.data?.message?.msg === 'success') {
@@ -35,8 +34,6 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
   };
   const getProductDetailData = async (item_name: any) => {
-    console.log('inside')
-
     if (item_name !== null && item_name !== undefined) {
       const productDetailData = await fetchProductDetailData(item_name, 'INR', TokenFromStore?.token);
       if (productDetailData?.data?.message?.msg === 'Success') {
@@ -49,7 +46,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     getProductDetailData(data?.name);
   }, [item_code]);
   return (
-    <Offcanvas show={show} placement="end" onHide={handleClose} style={{ width: '35%' }}>
+    <Offcanvas show={show} placement="end" onHide={handleClose}>
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
         <ProductCode data={productDetail} />
@@ -60,9 +57,8 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           getProductDetailData={getProductDetailData}
         />
         <ProductDetailInfo data={productDetail} />
-        <div className='mt-3'>
-
-        <ProductImage image={productDetail?.image}/>
+        <div className="mt-3">
+          <ProductImage image={productDetail?.image} />
         </div>
       </Offcanvas.Body>
     </Offcanvas>
