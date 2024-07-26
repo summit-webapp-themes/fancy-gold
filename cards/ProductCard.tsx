@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
 import { useRouter } from 'next/router';
 
-const ProductCard = ({ data }: any) => {
+const ProductCard = ({ data , handleShow}: any) => {
   const {query}=useRouter()
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
@@ -43,7 +43,7 @@ const ProductCard = ({ data }: any) => {
           <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>Size: {data.length}</Card.Text>
 
           <div className="text-center mt-2">
-            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}>Add To cart</button>
+            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `} onClick={()=>handleShow(data)}>Add To cart</button>
           </div>
         </Card.Body>
       </Card>

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { IoClose } from 'react-icons/io5';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
-import { CONSTANTS } from '../../../services/config/app-config';
 
 const ProductDetailInfo = ({ data }: any) => {
   const cust_name = localStorage.getItem('cust_name');
@@ -42,9 +40,6 @@ const ProductDetailInfo = ({ data }: any) => {
     const { name, value } = event.target;
     setCartProductsData({ ...cartProductsData, [name]: value });
   };
-  const imageLoader = ({ src, width, quality }: any) => {
-    return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
-  };
   const handleAddToCart = () => {
     const addToCartParams = {
       purity: data?.stock_uom,
@@ -64,7 +59,7 @@ const ProductDetailInfo = ({ data }: any) => {
     console.log(addToCartParams, 'cartProductsData');
   };
   return (
-    <div className='w-100'>
+    <div className="w-100">
       <div className="py-2">
         This product is available in below sizes :
         <br />
@@ -120,8 +115,21 @@ const ProductDetailInfo = ({ data }: any) => {
         ))}
       </div>
       <div className="">
-        <textarea name="wastage" value={cartProductsData?.wastage} placeholder="wastage" className=" p-2 m-1 border w-50" onChange={(e) => handleRemarkChange(e)}></textarea>
-        <textarea name="remark" value={cartProductsData?.remark} placeholder="Enter note" className=" p-2 m-1 border w-50" onChange={(e) => handleRemarkChange(e)}></textarea>
+        <textarea
+          name="wastage"
+          value={cartProductsData?.wastage}
+          placeholder="wastage"
+          className=" p-2 m-1 border w-50"
+          onChange={(e) => handleRemarkChange(e)}
+          rows={1}
+        ></textarea>
+        <textarea
+          name="remark"
+          value={cartProductsData?.remark}
+          placeholder="Enter note"
+          className=" p-2 m-1 border w-50"
+          onChange={(e) => handleRemarkChange(e)}
+        ></textarea>
       </div>
       <div className="d-flex justify-content-start my-2 me-5">
         <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>

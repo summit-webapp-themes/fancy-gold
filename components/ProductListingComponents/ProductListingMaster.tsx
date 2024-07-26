@@ -45,7 +45,6 @@ const ProductListingMaster = () => {
   };
   return (
     <div>
-              <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       <section className="listing-page ">
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
@@ -66,6 +65,7 @@ const ProductListingMaster = () => {
           </div>
         </div>
       </section>
+      <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
     </div>
   );
 };

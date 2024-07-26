@@ -2,8 +2,10 @@ import React from 'react';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
 import ProductImage from './ProductImage';
 import ProductCode from './ProductCode';
+import ProductVariants from './ProductVariants';
 
-const ProductDetails = ({ productDetailData }: any) => {
+const ProductDetails = ({ productDetailData,productVariantData,fetchProductDetailDataAPI }: any) => {
+  console.log(productVariantData,'product')
   return (
     <div className="container d-flex border">
       <div className="p-3">
@@ -11,10 +13,16 @@ const ProductDetails = ({ productDetailData }: any) => {
       </div>
       <div className="p-3 w-100">
         <ProductCode data={productDetailData}/>
+        <ProductVariants
+          productDetail={productDetailData}
+          variantsData={productVariantData?.variants?.length > 0 && productVariantData?.variants}
+          attributesData={productVariantData?.attributes?.length > 0 && productVariantData?.attributes}
+          getProductDetailData={fetchProductDetailDataAPI}
+        />
         <ProductDetailInfo data={productDetailData} />
       </div>
     </div>
   );
 };
-
+ 
 export default ProductDetails;
