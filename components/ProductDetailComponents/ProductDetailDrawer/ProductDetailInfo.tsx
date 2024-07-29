@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
-import useAddToCartHook from '../../../hooks/ProductDetailHook/add-to-cart-hook';
+import useAddToCartHook from '../../../hooks/GeneralHooks/useAddToCart';
 
 const ProductDetailInfo = ({ data }: any) => {
-  const {addToCartItem} = useAddToCartHook()
+  const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
-  const colour = localStorage.getItem('colour')
-  const user = localStorage.getItem('user')
-  const party_name = localStorage.getItem('party_name')
+  const colour = localStorage.getItem('colour');
+  const user = localStorage.getItem('user');
+  const party_name = localStorage.getItem('party_name');
   const initialState = {
     colour: '',
     size: '',
     qty: '',
   };
   const [sizeTable, setSizeTable] = useState([initialState]);
-  const [reject,setReject] = useState(false)
+  const [reject, setReject] = useState(false);
   const [cartProductsData, setCartProductsData] = useState({
     wastage: '',
     remark: '',
-    rejection_note:''
+    rejection_note: '',
   });
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -50,7 +50,7 @@ const ProductDetailInfo = ({ data }: any) => {
   const handleAddToCart = () => {
     const addToCartParams = {
       item_code: data?.name,
-      party_name:party_name,
+      party_name: party_name,
       purity: data?.stock_uom,
       cust_name: cust_name,
       colour: colour,
@@ -59,15 +59,15 @@ const ProductDetailInfo = ({ data }: any) => {
       remark: cartProductsData.remark,
       user: user,
     };
-    if(cust_name !== '' && cust_name !== null){
-      addToCartItem(addToCartParams)
-    }else{
-      alert("Customer Name is Empty")
+    if (cust_name !== '' && cust_name !== null) {
+      addToCartItem(addToCartParams);
+    } else {
+      alert('Customer Name is Empty');
     }
     setCartProductsData({
       wastage: '',
       remark: '',
-      rejection_note:''
+      rejection_note: '',
     });
     setSizeTable([initialState]);
   };
@@ -97,7 +97,12 @@ const ProductDetailInfo = ({ data }: any) => {
           <div className="row mx-1" key={index}>
             <div className="col-2 border text-center fs-6 py-1">{data?.stock_uom}</div>
             <div className="col-3 border py-1">
-              <select name="colour" value={row.colour} onChange={(e) => handleInputChange(index, e)} className="border-0 form-control p-0 text-center">
+              <select
+                name="colour"
+                value={row.colour}
+                onChange={(e) => handleInputChange(index, e)}
+                className="border-0 form-control p-0 text-center"
+              >
                 <option value="Yellow">Yellow</option>
                 <option value="Rose">Rose</option>
                 <option value="White">White</option>
@@ -137,17 +142,14 @@ const ProductDetailInfo = ({ data }: any) => {
           rows={1}
         ></textarea>
         <div>
-
-        <textarea
-          name="remark"
-          value={cartProductsData?.remark}
-          placeholder="Enter note"
-          className=" p-2 m-1 border"
-          onChange={(e) => handleRemarkChange(e)}
-        ></textarea>
-        {
-          reject && (
-
+          <textarea
+            name="remark"
+            value={cartProductsData?.remark}
+            placeholder="Enter note"
+            className=" p-2 m-1 border"
+            onChange={(e) => handleRemarkChange(e)}
+          ></textarea>
+          {reject && (
             <textarea
               name="rejection_note"
               value={cartProductsData?.rejection_note}
@@ -155,15 +157,14 @@ const ProductDetailInfo = ({ data }: any) => {
               className=" p-2 m-1 border "
               // onChange={(e) => handleRemarkChange(e)}
             ></textarea>
-          )
-        }
+          )}
         </div>
       </div>
       <div className="d-flex justify-content-start my-2 me-5">
         <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
           Add To Cart
         </button>
-        <button className={productDetailStyles.add_to_cart_btn} onClick={()=>setReject(!reject)}>
+        <button className={productDetailStyles.add_to_cart_btn} onClick={() => setReject(!reject)}>
           Reject
         </button>
       </div>

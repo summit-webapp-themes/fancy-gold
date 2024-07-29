@@ -1,5 +1,5 @@
 import { FaAlignJustify } from 'react-icons/fa6';
-import useProductListingFilterHook from '../../../hooks/product-listing-hooks/product-listing-filter-hook';
+import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
 import filterStyles from '../../../styles/components/filterSidebar.module.scss';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
 const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {

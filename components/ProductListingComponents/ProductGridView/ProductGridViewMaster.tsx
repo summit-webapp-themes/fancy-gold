@@ -5,12 +5,11 @@ import ProductsGridView from './ProductsGridView';
 import NoDataStyles from '../../../styles/components/noData.module.scss';
 import ProductCardSkeleton from '../../../cards/ProductCardSkeleton';
 
-const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount,handleShow }: any) => {
-  const {query}=useRouter()
-  const pageOffset = Number(query?.page)-1
+const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount, handleShow }: any) => {
+  const { query } = useRouter();
+  const pageOffset = Number(query?.page) - 1;
   const handlePageClick = (event: any) => {
     handlePaginationBtn(event?.selected);
-    
   };
   const handleDataRendering = () => {
     if (isLoading) {

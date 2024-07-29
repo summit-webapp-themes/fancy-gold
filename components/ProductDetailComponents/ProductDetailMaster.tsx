@@ -1,5 +1,5 @@
 import React from 'react';
-import useProductDetail from '../../hooks/ProductDetailHook/product-detail-hook';
+import useProductDetail from '../../hooks//ProductDetailPageHooks/useProductDetail';
 import HorizontalFilter from '../ProductListingComponents/HorizontalFilterList.tsx/HorizontalFilter';
 import ProductDetails from './ProductDetails/ProductDetails';
 
@@ -9,7 +9,11 @@ const ProductDetailMaster = () => {
     <div>
       <section>
         <HorizontalFilter />
-        <ProductDetails productDetailData={productDetailData} productVariantData={productVariantData} fetchProductDetailDataAPI={fetchProductDetailDataAPI} />
+        <ProductDetails
+          productDetailData={productDetailData}
+          productVariantData={productVariantData}
+          fetchProductDetailDataAPI={fetchProductDetailDataAPI}
+        />
       </section>
     </div>
   );

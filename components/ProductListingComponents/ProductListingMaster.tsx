@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
+import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
@@ -21,14 +21,14 @@ const ProductListingMaster = () => {
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
 
   const [show, setShow] = useState(false);
-  const [drawerData, setDrawerData] = useState('');
+  const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
 
   const handleClose = () => {
-    setDrawerData('');
+    setDrawerData({ productName: '', variantOf: '' });
     setShow(false);
   };
-  const handleShow = (data: any) => {
-    setDrawerData(data);
+  const handleShow = (productName: string, variantOf: string) => {
+    setDrawerData((prev: any) => ({ ...prev, productName: productName, variantOf: variantOf }));
     setShow(true);
   };
 
@@ -49,7 +49,7 @@ const ProductListingMaster = () => {
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild">
           <div className="row  ps-lg-5 pe-lg-4">
-            <div className='col-12 col-sm-4 col-md-4 col-lg-3 '>
+            <div className="col-12 col-sm-4 col-md-4 col-lg-3 ">
               <WebFilters
                 searchFilterValue={searchFilterValue}
                 handleFilterSearchFun={handleFilterSearchFun}
@@ -64,7 +64,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
-      <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       </section>
     </div>
   );
