@@ -14,7 +14,7 @@ const Purity = () => {
   const [selectedPurity, setSelectedPurity] = useState('22KT');
   const [selectedFilters, setSelectedFilters] = useState<any>();
   const getPurityValues = async () => {
-    const url = `${CONSTANTS.API_BASE_URL}api/resource/Purity`;
+    const url = `${CONSTANTS.API_BASE_URL}/api/resource/Purity`;
     const fetchPurityValues = await callGetAPI(url, TokenFromStore.token);
     return fetchPurityValues;
   };
@@ -65,7 +65,7 @@ const Purity = () => {
     router.push(
       {
         pathname: router.pathname,
-        query: { ...router.query, filter: encodedFilters, page:1 },
+        query: { ...router.query, filter: encodedFilters, page: 1 },
       },
       undefined,
       { shallow: true }
