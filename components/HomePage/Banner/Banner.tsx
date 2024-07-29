@@ -4,9 +4,7 @@ import Image from 'next/image';
 import useBanner from '../../../hooks/HomePageHooks/BannerHook';
 import { CONSTANTS } from '../../../services/config/app-config';
 import BannerSkeleton from './BannerSkeleton';
-import CarouselCaption from 'react-bootstrap/CarouselCaption';
 import BannerStyles from '../../../styles/components/banner.module.scss';
-import { FaForward } from 'react-icons/fa6';
 
 const Banner = () => {
   const { isLoading, allBannerData }: any = useBanner();

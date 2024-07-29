@@ -10,7 +10,7 @@ const ProductDetailInfo = ({ data }: any) => {
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const initialState = {
-    colour: '',
+    colour: 'Yellow',
     size: '',
     qty: '',
   };
@@ -136,7 +136,7 @@ const ProductDetailInfo = ({ data }: any) => {
         <textarea
           name="wastage"
           value={cartProductsData?.wastage}
-          placeholder="wastage"
+          placeholder="Wastage"
           className=" p-2 m-1 border w-75"
           onChange={(e) => handleRemarkChange(e)}
           rows={1}
