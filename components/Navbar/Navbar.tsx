@@ -9,7 +9,7 @@ import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -125,7 +125,9 @@ const Navbar = () => {
                       <a className="link-dark label">
                         <div className="icon-container">
                           <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue">Sign-out</span>
+                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogout()}>
+                            Sign-out
+                          </span>
                         </div>
                       </a>
                     </Link>
