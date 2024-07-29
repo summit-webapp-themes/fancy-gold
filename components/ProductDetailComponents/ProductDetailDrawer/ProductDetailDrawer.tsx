@@ -14,12 +14,14 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const [productDetail, setProductDetail] = useState<any>();
   const [variantsData, setVariantsData] = useState<any>([]);
+  const [requestTimeOutMsg, setRequestTimeOutMsg] = useState('');
   const [attributesData, setAttributesData] = useState([]);
   const getVariantsData = async () => {
     if (data?.variantOf) {
       const variantDataAPI = await fetchProductVariant(data?.variantOf, TokenFromStore?.token);
       if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
         if (variantDataAPI?.data?.message?.data?.variants?.length > 0) {
+          setRequestTimeOutMsg('');
           setVariantsData(variantDataAPI?.data?.message?.data?.variants);
         } else {
           setVariantsData([]);
@@ -30,7 +32,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           setAttributesData([]);
         }
       } else {
-        alert(variantDataAPI);
+        setRequestTimeOutMsg(variantDataAPI);
       }
     }
   };
@@ -58,9 +60,10 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           variantsData={variantsData}
           attributesData={attributesData}
           getProductDetailData={getProductDetailData}
+          requestTimeOutMsg={requestTimeOutMsg}
         />
         <ProductDetailInfo data={productDetail} />
-        <div className="mt-3">
+        <div className="mt-2">
           <ProductImage image={productDetail?.image} />
         </div>
       </Offcanvas.Body>
