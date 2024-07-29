@@ -1,15 +1,18 @@
 import horizontalFilterStyles from '../../../styles/components/horizontalFilter.module.scss';
 
 const SortBy = ({ sortBy, handleSortBy }: any) => {
+  const setColournInLocalStorage =(value:any)=>{
+    localStorage.setItem("colour", JSON.stringify(value));
+  }
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap">
-        <select className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}>
-          <option value="1" selected>
+        <select className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `} onChange={(e)=>{setColournInLocalStorage(e.target.value)}}>
+          <option value="Yellow" selected>
             Yellow
           </option>
-          <option value="2">Rose</option>
-          <option value="3">White</option>
+          <option value="Rose">Rose</option>
+          <option value="White">White</option>
         </select>
         <select
           className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}
