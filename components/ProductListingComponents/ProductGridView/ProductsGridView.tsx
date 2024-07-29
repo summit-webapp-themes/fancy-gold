@@ -2,13 +2,13 @@ import ReactPaginate from 'react-paginate';
 import ProductCard from '../../../cards/ProductCard';
 import paginationStyle from '../../../styles/components/pagination.module.scss';
 
-const ProductsGridView = ({ productListingData, handlePageClick, productListTotalCount, pageOffset }: any) => {
+const ProductsGridView = ({ productListingData, handlePageClick, productListTotalCount, pageOffset, handleShow }: any) => {
   const isNextButtonDisabled: any = productListTotalCount > productListingData || productListTotalCount === productListingData;
   return (
     <>
       {productListingData.map((item: any, index: any) => (
-        <div key={index} className={`col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-4 `}>
-          <ProductCard data={item} />
+        <div key={index} className="col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-3">
+          <ProductCard data={item} handleShow={handleShow} />
         </div>
       ))}
       <ReactPaginate

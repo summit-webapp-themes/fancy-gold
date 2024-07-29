@@ -72,7 +72,7 @@ const Purity = () => {
     );
   };
   return (
-    <div className="justify-content-center">
+    <div className="justify-content-center ">
       {purityValues?.map((purity: any) => (
         <>
           <button
