@@ -13,7 +13,7 @@ const ProductDetailInfo = ({ data }: any) => {
   const initialState = {
     colour: 'Yellow',
     size: '',
-    qty: '',
+    quantity: '',
   };
   const [sizeTable, setSizeTable] = useState([initialState]);
   const [reject, setReject] = useState(false);
@@ -122,9 +122,9 @@ const ProductDetailInfo = ({ data }: any) => {
             <div className="col-3 border d-flex justify-content-center py-1">
               <input
                 type="text"
-                name="qty"
+                name="quantity"
                 className={`${productDetailStyles.qty_input} form-control ${styles.tableFontSize}`}
-                value={row.qty}
+                value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
             </div>
@@ -140,7 +140,6 @@ const ProductDetailInfo = ({ data }: any) => {
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-
           onChange={(e) => handleRemarkChange(e)}
           rows={1}
         ></textarea>
