@@ -4,7 +4,7 @@ import ProductImage from './ProductImage';
 import ProductCode from './ProductCode';
 import ProductVariants from './ProductVariants';
 
-const ProductDetails = ({ productDetailData, productVariantData, fetchProductDetailDataAPI }: any) => {
+const ProductDetails = ({ productDetailData, productVariantData }: any) => {
   return (
     <div className="container ">
       <div className="row">
@@ -18,7 +18,6 @@ const ProductDetails = ({ productDetailData, productVariantData, fetchProductDet
               productDetail={productDetailData}
               variantsData={productVariantData?.variants?.length > 0 && productVariantData?.variants}
               attributesData={productVariantData?.attributes?.length > 0 && productVariantData?.attributes}
-              getProductDetailData={fetchProductDetailDataAPI}
             />
             <ProductDetailInfo data={productDetailData} />
           </div>

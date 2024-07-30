@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
+import { useRouter } from 'next/router';
 
 const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData }: any) => {
+  const router = useRouter();
+  const { query } = useRouter();
   const [showVariants, setShowVariants] = useState([]);
   const getVariantStrings = () => {
     return (
@@ -9,7 +12,7 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
       variantsData?.map((variant: any) => {
         let variantStringParts: any[] = [];
         attributesData.forEach((attribute: any) => {
-          if (attribute.field_name in variant) {
+          if (attribute.field_name in variant && variant[attribute.field_name] !== null) {
             variantStringParts.push(variant[attribute.field_name]);
           }
         });
@@ -20,13 +23,22 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
       })
     );
   };
+  const handleProductVariant = (variant_code: any) => {
+    if (query?.product_id) {
+      router.push({
+        query: { ...query, product_id: variant_code },
+      });
+    } else {
+      getProductDetailData(variant_code);
+    }
+  };
   useEffect(() => {
     setShowVariants(variantsData?.length > 0 || variantsData !== null ? getVariantStrings() : []);
   }, [variantsData]);
   return (
     <>
       {showVariants?.length > 0 && (
-        <label className="px-1">
+        <label>
           <b>Product Variants:</b>
         </label>
       )}
@@ -37,7 +49,7 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
             <button
               key={index}
               className={variant.variant_code === productDetail?.name ? variantStyles.variant_btn_active : variantStyles.variant_btn}
-              onClick={(e) => getProductDetailData(variant?.variant_code)}
+              onClick={(e) => handleProductVariant(variant?.variant_code)}
             >
               {variant.variant_string}
             </button>

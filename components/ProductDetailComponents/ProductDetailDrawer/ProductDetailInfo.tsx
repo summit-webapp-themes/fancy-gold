@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
-import useAddToCartHook from '../../../hooks/GeneralHooks/useAddToCart';
+import useAddToCartHook from '../../../hooks/ProductDetailHook/add-to-cart-hook';
 
 const ProductDetailInfo = ({ data }: any) => {
   const { addToCartItem } = useAddToCartHook();
