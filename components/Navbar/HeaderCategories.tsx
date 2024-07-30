@@ -4,6 +4,7 @@ import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 // import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
 import NavbarLoadingComponent from './NavbarLoadingComponent';
+import stylesHeader from '../../styles/components/header.module.scss';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
@@ -17,7 +18,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     setShowPopoverIndex(null);
   };
   const popoverBottom = (item: any) => (
-    <Popover id={`popover-${item.label}`} className="p-2 category-popover shadow rounded" onMouseLeave={handleMouseLeave}>
+    <Popover id={`popover-${item.label}`} className={`p-2 ${stylesHeader.category_popover} shadow rounded`} onMouseLeave={handleMouseLeave}>
       <div className="row">
         {item?.values?.length > 0 &&
           item?.values !== null &&
@@ -25,24 +26,30 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
             const columnCount = Math.ceil(itemL2?.values?.length / 8);
             return (
               <div className="col">
-                <div className="heading-category-l2">
+                <div className={stylesHeader.heading_category_l2}>
                   <Link
-                    href={{ pathname: `${itemL2?.url}`, query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' } }}
-                    className="label"
+                    href={{
+                      pathname: `${itemL2?.url}`,
+                      query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' },
+                    }}
+                    className="label theme-blue text-decoration-none"
                     onClick={() => setShowPopoverIndex(null)}
                   >
                     {itemL2?.label}
                   </Link>
                 </div>
                 <hr className="m-1" />
-                <div className=" col-container">
+                <div className={stylesHeader.col_container}>
                   {Array.from({ length: columnCount }, (_, columnIndex) => (
-                    <div key={columnIndex} className="column">
+                    <div key={columnIndex} className={stylesHeader.column}>
                       {itemL2?.values?.slice(columnIndex * 8, (columnIndex + 1) * 8).map((itemL3: any, idx: number) => (
                         <div key={idx} className=" p-1">
                           <Link
-                            href={{ pathname: `${itemL3?.url}`, query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' } }}
-                            className="heading-category-l3"
+                            href={{
+                              pathname: `${itemL3?.url}`,
+                              query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' },
+                            }}
+                            className={stylesHeader.heading_category_l3}
                             onClick={() => setShowPopoverIndex(null)}
                           >
                             {itemL3?.label !== undefined ? itemL3?.label : `${idx}`}
@@ -65,10 +72,10 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     if (navbarData?.length > 0) {
       return (
         <nav ref={ref}>
-          <div className="heading-container py-2" onMouseLeave={handleMouseLeave}>
+          <div className={`${stylesHeader.heading_container} py-2`} onMouseLeave={handleMouseLeave}>
             {navbarData?.length > 0 &&
               navbarData.map((item: any, index: number) => (
-                <div key={index} className="header-category-container">
+                <div key={index} className={`${stylesHeader.header_category_container}`}>
                   {navbarData === null ? (
                     <Placeholder xs={6} bg="dark" />
                   ) : (

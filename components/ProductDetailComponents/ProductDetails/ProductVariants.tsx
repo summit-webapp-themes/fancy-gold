@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
-
-const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData }: any) => {
+import styles from '../../../styles/components/productCard.module.scss';
+const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, requestTimeOutMsg }: any) => {
   const [showVariants, setShowVariants] = useState([]);
+  console.log(requestTimeOutMsg.length, 'requestTimeOutMsg');
   const getVariantStrings = () => {
     return (
       variantsData?.length > 0 &&
@@ -26,12 +27,15 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
   return (
     <>
       {showVariants?.length > 0 && (
-        <label className="px-1">
+        <label className={styles.productCode}>
           <b>Product Variants:</b>
         </label>
       )}
       <div className="d-flex flex-wrap mb-2">
-        {showVariants !== null &&
+        {requestTimeOutMsg?.length > 0 ? (
+          <p className="text-danger">{requestTimeOutMsg}</p>
+        ) : (
+          showVariants !== null &&
           showVariants?.length > 0 &&
           showVariants.map((variant: any, index: number) => (
             <button
@@ -41,7 +45,8 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
             >
               {variant.variant_string}
             </button>
-          ))}
+          ))
+        )}
       </div>
     </>
   );
