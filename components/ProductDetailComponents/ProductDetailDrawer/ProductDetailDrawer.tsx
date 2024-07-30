@@ -8,7 +8,6 @@ import fetchProductDetailData from '../../../services/api/product-detail-page-ap
 import ProductCode from '../ProductDetails/ProductCode';
 import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductImage from '../ProductDetails/ProductImage';
-import roductDetailStyles from '../../../styles/components/productDetail.module.scss';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);

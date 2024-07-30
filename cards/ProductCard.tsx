@@ -6,11 +6,8 @@ import { IoCart } from 'react-icons/io5';
 import { CONSTANTS } from '../services/config/app-config';
 import Card from 'react-bootstrap/Card';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
-import { useRouter } from 'next/router';
 import noImage from '../public/assets/images/no_image.png';
 const ProductCard = ({ data, handleShow }: any) => {
-  console.log(data, 'hh');
-  const { query } = useRouter();
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -56,14 +53,6 @@ const ProductCard = ({ data, handleShow }: any) => {
             </div>
           </div>
         </div>
-        {/* <div className="text-left ">
-          <button
-            className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}
-            onClick={() => handleShow(data?.name, data?.variant_of)}
-          >
-            Add To cart
-          </button>
-        </div> */}
       </Card.Body>
     </Card>
   );
