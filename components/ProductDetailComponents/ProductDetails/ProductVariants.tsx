@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import variantStyles from '../../../styles/components/productVariants.module.scss';
 import { useRouter } from 'next/router';
+import variantStyles from '../../../styles/components/productVariants.module.scss';
 
 const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData }: any) => {
   const router = useRouter();
