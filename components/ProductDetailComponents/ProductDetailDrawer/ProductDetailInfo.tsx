@@ -12,7 +12,7 @@ const ProductDetailInfo = ({ data }: any) => {
   const initialState = {
     colour: 'Yellow',
     size: '',
-    qty: '',
+    quantity: '',
   };
   const [sizeTable, setSizeTable] = useState([initialState]);
   const [reject, setReject] = useState(false);
@@ -120,9 +120,9 @@ const ProductDetailInfo = ({ data }: any) => {
             <div className="col-3 border d-flex justify-content-center py-1">
               <input
                 type="text"
-                name="qty"
+                name="quantity"
                 className={`${productDetailStyles.qty_input} form-control`}
-                value={row.qty}
+                value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
             </div>
