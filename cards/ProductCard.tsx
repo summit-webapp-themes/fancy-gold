@@ -18,6 +18,7 @@ const ProductCard = ({ data, handleShow }: any) => {
         <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
           <FaRegHeart />
         </span>
+        <Link href={`${data?.url}`} target="_blank" className='text-decoration-none text-dark'>
         <Image
           loader={data.image !== null ? imageLoader : undefined}
           src={data.image !== null ? data.image : noImage}
@@ -27,6 +28,7 @@ const ProductCard = ({ data, handleShow }: any) => {
           className={`${ProductCardStyles.product_code_img}`}
           style={{ width: '100%', height: '100%' }}
         />
+        </Link>
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>

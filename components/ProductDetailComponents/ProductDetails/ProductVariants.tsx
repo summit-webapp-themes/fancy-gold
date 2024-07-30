@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
 import styles from '../../../styles/components/productCard.module.scss';
 const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, requestTimeOutMsg }: any) => {
+  const router = useRouter()
+  const {query}= useRouter()
   const [showVariants, setShowVariants] = useState([]);
-  console.log(requestTimeOutMsg.length, 'requestTimeOutMsg');
   const getVariantStrings = () => {
     return (
       variantsData?.length > 0 &&
       variantsData?.map((variant: any) => {
         let variantStringParts: any[] = [];
         attributesData.forEach((attribute: any) => {
-          if (attribute.field_name in variant) {
+          if (attribute.field_name in variant && variant[attribute.field_name] !== null) {
             variantStringParts.push(variant[attribute.field_name]);
           }
         });
@@ -20,6 +22,15 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
         };
       })
     );
+  };
+  const handleProductVariant = (variant_code: any) => {
+    if (query?.productId) {
+      router.push({
+        query: { ...query, productId: variant_code },
+      });
+    } else {
+      getProductDetailData(variant_code);
+    }
   };
   useEffect(() => {
     setShowVariants(variantsData?.length > 0 || variantsData !== null ? getVariantStrings() : []);
@@ -41,7 +52,7 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
             <button
               key={index}
               className={variant.variant_code === productDetail?.name ? variantStyles.variant_btn_active : variantStyles.variant_btn}
-              onClick={(e) => getProductDetailData(variant?.variant_code)}
+              onClick={(e) => handleProductVariant(variant?.variant_code)}
             >
               {variant.variant_string}
             </button>
