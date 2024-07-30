@@ -13,14 +13,14 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const [productDetail, setProductDetail] = useState<any>();
   const [variantsData, setVariantsData] = useState<any>([]);
-  const [requestTimeOutMsg, setRequestTimeOutMsg] = useState('');
+  const [errorMessage, setErrorMessageMsg] = useState('');
   const [attributesData, setAttributesData] = useState([]);
   const getVariantsData = async () => {
     if (data?.variantOf) {
       const variantDataAPI = await fetchProductVariant(data?.variantOf, TokenFromStore?.token);
       if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
         if (variantDataAPI?.data?.message?.data?.variants?.length > 0) {
-          setRequestTimeOutMsg('');
+          setErrorMessageMsg('');
           setVariantsData(variantDataAPI?.data?.message?.data?.variants);
         } else {
           setVariantsData([]);
@@ -31,7 +31,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           setAttributesData([]);
         }
       } else {
-        setRequestTimeOutMsg(variantDataAPI);
+        setErrorMessageMsg(variantDataAPI);
       }
     }
   };
@@ -59,7 +59,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           variantsData={variantsData}
           attributesData={attributesData}
           getProductDetailData={getProductDetailData}
-          requestTimeOutMsg={requestTimeOutMsg}
+          errorMessage={errorMessage}
         />
         <ProductDetailInfo data={productDetail} />
         <div className="mt-2">
