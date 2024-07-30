@@ -11,7 +11,7 @@ const ProductDetailInfo = ({ data }: any) => {
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const initialState = {
-    colour: '',
+    colour: 'Yellow',
     size: '',
     qty: '',
   };
@@ -140,6 +140,7 @@ const ProductDetailInfo = ({ data }: any) => {
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+
           onChange={(e) => handleRemarkChange(e)}
           rows={1}
         ></textarea>
