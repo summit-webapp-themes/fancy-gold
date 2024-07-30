@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
+import stylesMobnavbar from '../../styles/components/mobNavbar.module.scss';
 
 const MobSideNavbar = ({
   navbarData,
@@ -52,9 +53,9 @@ const MobSideNavbar = ({
 
   return (
     <>
-      <div className={`mobile-menu-wrapper sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="mobile-menu-overlay"></div>
-        <div className="mobile-menu-container scrollable bg-light">
+      <div className={`${stylesMobnavbar.mobile_menu_wrapper} ${stylesMobnavbar.sidebar} ${isOpen ? 'open' : ''}`}>
+        <div className={stylesMobnavbar.mobile_menu_overlay}></div>
+        <div className={`${stylesMobnavbar.mobile_menu_container} scrollable bg-light`}>
           <div className="d-flex justify-content-end mb-1 ">
             <Link href="#" legacyBehavior>
               <a className="#" onClick={() => toggleSidebar(false)}>
@@ -62,7 +63,7 @@ const MobSideNavbar = ({
               </a>
             </Link>
           </div>
-          <div className="header-search hs-expanded hs-round input-wrapper">
+          <div className={`${stylesMobnavbar.header_search} hs-expanded hs-round input-wrapper`}>
             <input
               type="text"
               className="form-control border"
@@ -81,7 +82,7 @@ const MobSideNavbar = ({
             <div className="tab-pane active bg-light" id="categories">
               {navbarData?.length > 0 &&
                 navbarData.map((navbardata: any, i: any) => (
-                  <ul className="mobile-menu" key={i}>
+                  <ul className={stylesMobnavbar.mobile_menu} key={i}>
                     <li className="bg-light">
                       <a href="#" className="text-dark d-flex justify-content-between">
                         <span>{navbardata.name}</span>

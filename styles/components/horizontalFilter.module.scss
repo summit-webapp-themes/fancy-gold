@@ -1,20 +1,22 @@
 .purity_button{
-    width: 4rem;
-    padding: 0 0.5rem 0 0.5rem;
-    margin: 0 0.5rem 0 0.5rem;
+    width: 3rem;
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    margin: 0 0.4rem 0 0.4rem;
     border: 1px solid #1a1a49;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 12px;
 }
 .purity_button:hover{
     background: #1a1a49;
     color:#ffd700;
 }
 .purity_button_active{
-    width: 4rem;
-    padding: 0 0.5rem 0 0.5rem;
-    margin: 0 0.5rem 0 0.5rem;
+    width: 3rem;
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    margin: 0 0.4rem 0 0.4rem;
     border: 1px solid #1a1a49;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 12px;
     background: #1a1a49;
     color:#ffd700;
 }
@@ -24,7 +26,8 @@
     margin: 0 0.5rem 0 0.5rem;
     border: 1px solid #1a1a49;
     border-radius: 5px;
-    cursor: pointer;  
+    cursor: pointer;
+    font-size: 0.9rem;  
 }
 .save_btn{
     width: 4rem;

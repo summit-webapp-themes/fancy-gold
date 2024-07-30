@@ -17,7 +17,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
         <>
           {!hideFilterSection && (
             <div className="h-100 p-3" id={`${filterStyles.sidebar}`}>
-              <h4>Filters</h4>
+              <h4 className={filterStyles.filteredTitle}>Filters</h4>
               <div className="input-group input-group-sm mt-2 mb-3">
                 <input
                   type="text"
@@ -38,7 +38,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
                   <>
                     {data.section !== 'Purity' && (
                       <div key={index}>
-                        <h6 className="mt-4 text-uppercase">{data.section}</h6>
+                        <h6 className={`mt-4 text-uppercase ${filterStyles.filteredTitle}`}>{data.section}</h6>
                         <hr className="my-1" />
                         {data.values?.length > 0 &&
                           data.values.map((items: any) => (
@@ -55,7 +55,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
                                   selectedFilters.some((filter: any) => filter.name === data.section && filter.value.includes(items))
                                 }
                               />
-                              <label className="form-check-label" htmlFor="flexCheckChecked">
+                              <label className={`form-check-label text-uppercase ${filterStyles.filteredLabel}`} htmlFor="flexCheckChecked">
                                 {items}
                               </label>
                             </div>
