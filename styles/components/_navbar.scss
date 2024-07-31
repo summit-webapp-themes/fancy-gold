@@ -4,8 +4,8 @@
 }
 .navbar {
   padding: 0;
-  margin-left: 2%;
-  margin-right: 2%;
+  // margin-left: 2%;
+  // margin-right: 2%;
 }
 .top-navbar {
   padding-top: 0.75rem;
@@ -51,12 +51,17 @@
 .icon {
   color: #1a1a49;
   text-align: center;
+  font-size: 22px !important;
 }
 .search-bar-height {
   height: 44px;
 }
 .list-inline-item {
   width: 80px;
+}
+.navbar-skeleton {
+  background-color: #d9d9d9;
+  padding: 9px;
 }
 @media (max-width: 1070px) {
   .search-bar {
@@ -66,6 +71,11 @@
 @media (max-width: 968px) {
   .search-bar {
     width: 35%;
+  }
+}
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none !important;
   }
 }
 @media (max-width: 767px) {

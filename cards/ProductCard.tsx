@@ -1,8 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaRegHeart } from 'react-icons/fa6';
 import { CONSTANTS } from '../services/config/app-config';
-import productCardStyles from '../styles/components/productCard.module.scss';
+import Card from 'react-bootstrap/Card';
+import ProductCardStyles from '../styles/components/productCard.module.scss';
 
 const ProductCard = ({ data }: any) => {
   const imageLoader = ({ src, width, quality }: any) => {
@@ -10,37 +12,38 @@ const ProductCard = ({ data }: any) => {
   };
 
   return (
-    <>
-      <div className={`card mx-2 ${productCardStyles.product_card} pt-2`}>
-        <div className={` ${productCardStyles.product_card_img}`}>
-          <span className="wishlist-icon text-danger">
-            <i className="fa fa-heart-o"></i>
-          </span>
-          <Image
-            loader={imageLoader}
-            src={data.image !== null && data.image}
-            width={100}
-            height={500}
-            alt="Item Image"
-            className={`${productCardStyles.product_code_img}`}
-            style={{ width: '100%', height: '100%' }}
-            priority={true}
-          />
-        </div>
-        <div className="card-body text-center">
-          <Link href={data?.name} className="text-dark text-decoration-none">
-            <p className="card-title my-0 product-name"> {data?.name}</p>
-          </Link>
-          <p className={`card-text my-0 ${productCardStyles.product_card_text}`}>{data?.bom_factory_code}</p>
-          <p className={`card-text my-0 ${productCardStyles.product_card_text}`}>Gross wt:{data.weight_per_unit}</p>
-          <p className={`card-text my-0 ${productCardStyles.product_card_text}`}>size:{data.length}</p>
-
-          <div className="text-center mt-2">
-            <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${productCardStyles.add_to_cart_btn}`}>Add To cart</button>
-          </div>
-        </div>
+    <Card className={` ${ProductCardStyles.product_card} pt-2`}>
+      <div className={` ${ProductCardStyles.product_card_img} `}>
+        <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+          <FaRegHeart />
+        </span>
+        <Image
+          loader={imageLoader}
+          src={data.image !== null && data.image}
+          width={1200}
+          height={900}
+          alt="Item Image"
+          className={`${ProductCardStyles.product_code_img}`}
+          style={{ width: '100%', height: '100%' }}
+        />
       </div>
-    </>
+      <Card.Body className={`${ProductCardStyles.content_wrap}`}>
+        <div className={`${ProductCardStyles.product_content_wrap}`}>
+          <Link href={data?.name} className={` text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+            <Card.Title className={` my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
+          </Link>
+          {data?.bom_factory_code ? (
+            <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
+          ) : null}
+
+          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
+          <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
+        </div>
+        <div className="text-center mt-2">
+          <button className={`btn btn-outline-primary text-uppercase mb-0 p-1 ${ProductCardStyles.add_to_cart_btn} `}>Add To cart</button>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 

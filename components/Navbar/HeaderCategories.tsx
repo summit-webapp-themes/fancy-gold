@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 // import NavbarLoadingComponent from './NavbarLoadingComponent';
 import ComponentErrorHandler from '../ComponentErrorHandler';
+import NavbarLoadingComponent from './NavbarLoadingComponent';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
@@ -26,7 +27,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
               <div className="col">
                 <div className="heading-category-l2">
                   <Link
-                    href={`${itemL2?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]&sort_by=latest`}
+                    href={{ pathname: `${itemL2?.url}`, query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' } }}
                     className="label"
                     onClick={() => setShowPopoverIndex(null)}
                   >
@@ -40,7 +41,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                       {itemL2?.values?.slice(columnIndex * 8, (columnIndex + 1) * 8).map((itemL3: any, idx: number) => (
                         <div key={idx} className=" p-1">
                           <Link
-                            href={`${itemL3?.url}?page=1&filter=[{"name":"Purity","value":["22KT"]}]&sort_by=latest`}
+                            href={{ pathname: `${itemL3?.url}`, query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest' } }}
                             className="heading-category-l3"
                             onClick={() => setShowPopoverIndex(null)}
                           >
@@ -58,8 +59,8 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
     </Popover>
   );
   const handleDataRendering = () => {
-    if (false) {
-      // return <NavbarLoadingComponent />;
+    if (isLoading) {
+      return <NavbarLoadingComponent />;
     }
     if (navbarData?.length > 0) {
       return (

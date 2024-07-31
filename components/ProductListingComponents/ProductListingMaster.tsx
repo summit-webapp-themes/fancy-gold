@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-
+import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
-import useProductListing from '../../hooks/product-listing-hooks/product-listing-hook';
 
 const ProductListingMaster = () => {
   const {
@@ -47,7 +46,7 @@ const ProductListingMaster = () => {
             </div>
 
             <div className="container">
-              <div className="row mt-2 product-listing-row">{handleDisplayOfProductsList()}</div>
+              <div className="row  product-listing-row">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
         </div>

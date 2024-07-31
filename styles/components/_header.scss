@@ -1,7 +1,7 @@
 .heading-container {
   display: flex;
   justify-content: center;
-  background: #1A1A49;
+  background: #1a1a49;
   color: white;
 }
 .header-category-container {
@@ -23,7 +23,7 @@
 .heading-category-l2 {
   font-size: 16px;
   font-weight: 500;
-  color: #1A1A49;
+  color: #1a1a49;
   text-align: center;
 }
 .popover {
@@ -53,21 +53,40 @@
 .pop-over:hover {
   display: block;
 }
-.col-container{
+.col-container {
   display: flex;
   justify-content: flex-start;
-  width : full
+  width: full;
 }
-.column{
-  padding-bottom:15px 0;
+.column {
+  padding-bottom: 15px 0;
   padding-left: 5px;
   padding-right: 5px;
   width: max-content;
   display: table-column;
 }
-.theme-gold{
-  color: #ECD386;
+.theme-gold {
+  color: #ecd386;
 }
-.theme-blue{
-  color: #1A1A49;
+.theme-blue {
+  color: #1a1a49;
+}
+.theme-blue-bg {
+  background-color: #1a1a49;
+  border: none !important;
+}
+.theme-btn-blue:hover {
+  background-color: #1a1a49;
+  border: none !important;
+}
+.slick-slide {
+  padding: 12px !important;
+}
+
+.slick-slide {
+  width: 320px !important;
+}
+.carousel-caption {
+  bottom: 6rem !important;
+  left: 180px !important;
 }
