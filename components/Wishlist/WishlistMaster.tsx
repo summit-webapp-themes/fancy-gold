@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useWishlist from '../../hooks/WishlistHooks/WishlistHooks'
 import ProductCard from '../../cards/ProductCard'
+import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'
 
 const WishlistMaster = () => {
     const {wishlistData}=useWishlist()
@@ -20,11 +21,15 @@ const WishlistMaster = () => {
   return (
     <div className='container'>
         <h2 className="theme-blue text-center my-3">My Wishlist</h2>
+        <div className='d-flex flex-wrap '>
         {wishlistData?.length > 0 && wishlistData?.map ((item:any,index:number)=>(
-            <div key={index} className="col-sm-6 col-lg-3 col-xl-3 col-xxl-3 text-center mb-4">
-            <ProductCard data={item} handleShow={handleShow} />
+            <div key={index} className="col-sm-6 col-lg-3 col-xl-3 col-xxl-3 text-center mb-4 px-3">
+            <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData}/>
           </div>
         ))}
+
+        </div>
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
     </div>
   )
 }

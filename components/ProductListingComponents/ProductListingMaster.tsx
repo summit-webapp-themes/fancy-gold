@@ -4,6 +4,7 @@ import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import WebFilters from './FilterView/WebFilters';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
+import useWishlist from '../../hooks/WishlistHooks/WishlistHooks';
 
 const ProductListingMaster = () => {
   const {
@@ -19,7 +20,7 @@ const ProductListingMaster = () => {
   } = useProductListing();
 
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
-
+const {wishlistData}=useWishlist()
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
 
@@ -40,6 +41,7 @@ const ProductListingMaster = () => {
         handlePaginationBtn={handlePaginationBtn}
         productListTotalCount={productListTotalCount}
         handleShow={handleShow}
+        wishlistData={wishlistData}
       />
     );
   };

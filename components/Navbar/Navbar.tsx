@@ -8,9 +8,11 @@ import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
+import useWishlist from '../../hooks/WishlistHooks/WishlistHooks';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
+  const { wishlistCount } = useWishlist();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -103,9 +105,7 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
-                          <span className={`${stylesNavbar.badge}  ${stylesNavbar.badge_warning}`} id="lblCartCount">
-                            {/* {wishlistCount} */}
-                          </span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} px-2 text-white`}>{wishlistCount}</span>
                           <span className="d-none d-md-inline-block theme-blue ">Wishlist</span>
                         </div>
                       </a>
