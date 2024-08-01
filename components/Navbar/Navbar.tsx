@@ -7,11 +7,12 @@ import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import logo from '../../public/assets/images/logo.png';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import stylesNavbar from '../../styles/components/navbar.module.scss';
 import useCartCountHook from '../../hooks/GeneralHooks/CommonHooks/cart-count-hook';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
-  const { totalCartCount } = useCartCountHook()
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
+  const { totalCartCount } = useCartCountHook();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -55,9 +56,9 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="header">
+      <header className={stylesNavbar.header}>
         <nav>
-          <div className="navbar ps-lg-5 pe-lg-4">
+          <div className={`${stylesNavbar.navbar} ps-lg-5 pe-lg-4`}>
             <div className="w-100 d-flex justify-content-between pt-3">
               <div className="mobile-nav d-flex justify-content-sm-between">
                 <Link href="#" legacyBehavior>
@@ -73,11 +74,11 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div className="d-block search-bar">
+              <div className={`d-block ${stylesNavbar.search_bar}`}>
                 <div className="search-input">
                   <input
                     type="text"
-                    className="form-control search-bar-height"
+                    className={`form-control ${stylesNavbar.search_bar_height}`}
                     placeholder="Search here"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
@@ -88,23 +89,25 @@ const Navbar = () => {
               </div>
               <div>
                 <ul className="nav  list-inline d-flex justify-content-evenly">
-                  <li className="list-inline-item">
+                  <li className={stylesNavbar.list_inline_item}>
                     <Link href="/cart" legacyBehavior>
-                      <a className="link-dark label">
-                        <div className="icon-container">
+                      <a className={`link-dark ${stylesNavbar.label}`}>
+                        <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
-                          <span className="badge badge-warning">{totalCartCount || 0}</span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} px-2 text-white`}>
+                            {totalCartCount || 0}
+                          </span>
                           <span className="d-none d-md-inline-block theme-blue">Cart</span>
                         </div>
                       </a>
                     </Link>
                   </li>
-                  <li className="list-inline-item">
+                  <li className={stylesNavbar.list_inline_item}>
                     <Link href="/" legacyBehavior>
-                      <a className="link-dark label">
-                        <div className="icon-container">
+                      <a className={`link-dark ${stylesNavbar.label}`}>
+                        <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
-                          <span className="badge badge-warning" id="lblCartCount">
+                          <span className={`${stylesNavbar.badge}  ${stylesNavbar.badge_warning}`} id="lblCartCount">
                             {/* {wishlistCount} */}
                           </span>
                           <span className="d-none d-md-inline-block theme-blue ">Wishlist</span>
@@ -112,22 +115,24 @@ const Navbar = () => {
                       </a>
                     </Link>
                   </li>
-                  <li className="list-inline-item">
+                  <li className={stylesNavbar.list_inline_item}>
                     <Link href="/" legacyBehavior>
-                      <a className="link-dark label">
-                        <div className="icon-container">
+                      <a className={`link-dark ${stylesNavbar.label}`}>
+                        <div className={stylesNavbar.icon_container}>
                           <FaRegCalendar className="icon" />
                           <span className="d-none d-md-inline-block ms-1 theme-blue">Order List</span>
                         </div>
                       </a>
                     </Link>
                   </li>
-                  <li className="list-inline-item">
+                  <li className={stylesNavbar.list_inline_item}>
                     <Link href="/" legacyBehavior>
-                      <a className="link-dark label">
-                        <div className="icon-container">
+                      <a className={`link-dark ${stylesNavbar.label}`}>
+                        <div className={stylesNavbar.icon_container}>
                           <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue">Sign-out</span>
+                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogout()}>
+                            Sign-out
+                          </span>
                         </div>
                       </a>
                     </Link>

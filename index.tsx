@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import HomePage from '../components/HomePage/HomePage';
 import { askForPermissionToReceiveNotifications } from '../push-notifications';
-import MetaTag from '../services/api/general_apis/meta-tag-api';
+import MetaTag from '../services/api/general-apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
 
 const Home: NextPage = (fetchedDataFromServer: any) => {
-  askForPermissionToReceiveNotifications();
+  // askForPermissionToReceiveNotifications();
   return (
     <div>
       <HomePage />
