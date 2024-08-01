@@ -4,12 +4,15 @@ import fetchProductVariant from '../../../services/api/product-detail-page-apis/
 import ProductDetailInfo from './ProductDetailInfo';
 import { useSelector } from 'react-redux';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import fetchProductDetailData from '../../../services/api/product-detail-page-apis/get-product-detail';
 import ProductCode from '../ProductDetails/ProductCode';
 import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductImage from '../ProductDetails/ProductImage';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
+  const cartList = useSelector(selectCart)?.items
+  console.log(cartList,'cartList')
   const TokenFromStore: any = useSelector(get_access_token);
   const [productDetail, setProductDetail] = useState<any>();
   const [variantsData, setVariantsData] = useState<any>([]);
@@ -60,6 +63,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
           attributesData={attributesData}
           getProductDetailData={getProductDetailData}
           errorMessage={errorMessage}
+          cartList={cartList}
         />
         <ProductDetailInfo data={productDetail} />
         <div className="mt-2">

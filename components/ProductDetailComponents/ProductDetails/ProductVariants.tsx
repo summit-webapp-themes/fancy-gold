@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
 import styles from '../../../styles/components/productCard.module.scss';
-const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage }: any) => {
+const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage, cartList }: any) => {
+  console.log(cartList,'cartList')
   const router = useRouter();
   const { query } = useRouter();
   const [showVariants, setShowVariants] = useState([]);
@@ -32,9 +33,13 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
       getProductDetailData(variant_code);
     }
   };
+  const isVariantInCart = (variant_code: any) => {
+    return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
+  };
   useEffect(() => {
     setShowVariants(variantsData?.length > 0 || variantsData !== null ? getVariantStrings() : []);
   }, [variantsData]);
+
   return (
     <>
       {showVariants?.length > 0 && (
@@ -51,7 +56,13 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
           showVariants.map((variant: any, index: number) => (
             <button
               key={index}
-              className={variant.variant_code === productDetail?.name ? variantStyles.variant_btn_active : variantStyles.variant_btn}
+              className={
+                variant.variant_code === productDetail?.name
+                  ? variantStyles.variant_btn_active
+                  : isVariantInCart(variant.variant_code)
+                  ? variantStyles.variant_btn_in_cart
+                  : variantStyles.variant_btn
+              }
               onClick={(e) => handleProductVariant(variant?.variant_code)}
             >
               {variant.variant_string}

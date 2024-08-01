@@ -3,8 +3,11 @@ import { IoClose } from 'react-icons/io5';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import useAddToCartHook from '../../../hooks/GeneralHooks/useAddToCart';
 import styles from '../../../styles/components/productCard.module.scss';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../../../store/slices/cart-slices/cart-local-slice';
 
 const ProductDetailInfo = ({ data }: any) => {
+  const dispatch = useDispatch()
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
   const colour = localStorage.getItem('colour');
@@ -62,6 +65,7 @@ const ProductDetailInfo = ({ data }: any) => {
     };
     if (cust_name !== '' && cust_name !== null) {
       addToCartItem(addToCartParams);
+      dispatch(addItemToCart(data))
     } else {
       alert('Customer Name is Empty');
     }

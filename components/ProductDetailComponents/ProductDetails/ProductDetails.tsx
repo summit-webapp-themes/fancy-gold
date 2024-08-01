@@ -3,8 +3,12 @@ import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
 import ProductImage from './ProductImage';
 import ProductCode from './ProductCode';
 import ProductVariants from './ProductVariants';
+import { useSelector } from 'react-redux';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 
 const ProductDetails = ({ productDetailData, productVariantData, fetchProductDetailDataAPI, errorMessage }: any) => {
+  const cartList = useSelector(selectCart)?.items
+  console.log(cartList,'cartList')
   return (
     <div className="container ">
       <div className="row">
@@ -20,6 +24,7 @@ const ProductDetails = ({ productDetailData, productVariantData, fetchProductDet
               attributesData={productVariantData?.attributes?.length > 0 && productVariantData?.attributes}
               getProductDetailData={fetchProductDetailDataAPI}
               errorMessage={errorMessage}
+              cartList={cartList}
             />
             <ProductDetailInfo data={productDetailData} />
           </div>

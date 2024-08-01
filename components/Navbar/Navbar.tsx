@@ -9,12 +9,10 @@ import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import useWishlist from '../../hooks/WishlistHooks/WishlistHooks';
-import { useSelector } from 'react-redux';
-import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
-  const  wishlistCount = useSelector(selectWishlist)?.wislistCount
+  const { wishlistCount } = useWishlist();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
