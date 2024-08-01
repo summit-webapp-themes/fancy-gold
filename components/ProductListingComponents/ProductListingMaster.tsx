@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
-import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
-import WebFilters from './FilterView/WebFilters';
-import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
 import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
-import useWishlist from '../../hooks/WishlistHooks/WishlistHooks';
+import WebFilters from './FilterView/WebFilters';
+import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
+import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
 
 const ProductListingMaster = () => {
   const {
@@ -18,9 +19,8 @@ const ProductListingMaster = () => {
     handleFilterSearchBtn,
     searchFilterValue,
   } = useProductListing();
-
+  const wishlistData = useSelector(selectWishlist)?.items
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
-const {wishlistData}=useWishlist()
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
 
