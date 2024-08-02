@@ -14,3 +14,16 @@
     text-decoration: none;
     font-size: 12px;
 }
+.place_order_btn{
+    max-width: 7rem;
+    border: 1px solid #cd8825;
+    background-color: #cd8825;
+    color: #FFF;
+    display: flex;
+    align-self: center !important;
+}
+.btn_container{
+height: full;
+display: flex;
+align-items: center;
+}
