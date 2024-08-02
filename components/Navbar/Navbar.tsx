@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaCartPlus, FaHeart, FaRegCalendar, FaArrowRightToBracket, FaAlignJustify } from 'react-icons/fa6';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { FaAlignJustify, FaArrowRightToBracket, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
+import useCartPage from '../../hooks/CartPageHook/useCartPageHook';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
+import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
+import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
-import stylesNavbar from '../../styles/components/navbar.module.scss';
-import useWishlist from '../../hooks/WishlistHooks/WishlistHooks';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
   const { wishlistCount } = useWishlist();
+  const {cartCount}=useCartPage()
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -94,7 +96,7 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
-                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} px-2 text-white`}>2</span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
                           <span className="d-none d-md-inline-block theme-blue">Cart</span>
                         </div>
                       </a>
@@ -105,7 +107,7 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
-                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} px-2 text-white`}>{wishlistCount}</span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
                           <span className="d-none d-md-inline-block theme-blue ">Wishlist</span>
                         </div>
                       </a>

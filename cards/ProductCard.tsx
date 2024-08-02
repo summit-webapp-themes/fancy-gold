@@ -3,58 +3,17 @@ import Link from 'next/link';
 import Card from 'react-bootstrap/Card';
 import { FaHeart, FaRegHeart } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
-import { useDispatch, useSelector } from 'react-redux';
+import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
-import { get_access_token } from '../store/slices/auth/token-login-slice';
-import {  fetchWishlistUser } from '../store/slices/wishlist-slices/wishlist-slice';
-import { addItemToWishlist, removeItemFromWishlist } from '../store/slices/wishlist-slices/wishlist-local-slice';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
-import { useRouter } from 'next/router';
 
 const ProductCard = ({ data, handleShow , wishlistData}: any) => {
-  const router = useRouter()
-  const TokenFromStore: any = useSelector(get_access_token);
-  const dispatch = useDispatch<any>()
+  const {handleAddToWishList,handleRemoveFromWishList}=useAddToWishlist()
   let wishProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
-  const handleAddToWishlist =(item:any)=>{
-    const requestNew = {
-      prod_id: data?.name,
-      getWishlist: false,
-      deleteWishlist: false,
-      addTowishlist: true,
-      token: TokenFromStore?.token,
-    };
-    dispatch(fetchWishlistUser(requestNew));
-    dispatch(addItemToWishlist(item))
-
-  }
-  const handleRemoveFromWishlist =(item_code:any)=>{
-    const requestDelete = {
-      prod_id: data?.name,
-      getWishlist: false,
-      deleteWishlist: true,
-      addTowishlist: false,
-      token: TokenFromStore?.token,
-    };
-    dispatch(fetchWishlistUser(requestDelete));
-    dispatch(removeItemFromWishlist(item_code))
-    if(router.asPath?.startsWith('/wishlist')){
-      const requestList = {
-        getWishlist: true,
-        deleteWishlist: false,
-        addTowishlist: false,
-        token: TokenFromStore?.token,
-      };
-      setTimeout(() => {
-        dispatch(fetchWishlistUser(requestList));
-      }, 900);
-    }
-  }
-
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
@@ -66,11 +25,11 @@ const ProductCard = ({ data, handleShow , wishlistData}: any) => {
           })}
         {!wishProducts ? (
           <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-            <FaRegHeart onClick={()=>handleAddToWishlist(data)}/>
+            <FaRegHeart onClick={()=>handleAddToWishList(data)}/>
           </span>
         ) : (
           <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-            <FaHeart onClick={()=>handleRemoveFromWishlist(data?.name)}/> 
+            <FaHeart onClick={()=>handleRemoveFromWishList(data?.name)}/> 
           </span>
         )}
         <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">

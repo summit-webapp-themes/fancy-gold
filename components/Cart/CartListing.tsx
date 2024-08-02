@@ -1,6 +1,6 @@
 import React from 'react';
 import CartProductDetail from './CartProductDetail';
-import useCartPageHook from '../../hooks/CartPageHook/cart-page-hook';
+import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
 import styles from '../../styles/components/cartProductDetail.module.scss'
 
 const CartListing = () => {

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import productDetailStyles from '../../../styles/components/productDetail.module.scss';
-import useAddToCartHook from '../../../hooks/GeneralHooks/useAddToCart';
+import { useSelector } from 'react-redux';
+import useAddToCartHook from '../../../hooks/CartPageHook/useAddToCart';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
-import { useDispatch } from 'react-redux';
-import { addItemToCart } from '../../../store/slices/cart-slices/cart-local-slice';
+import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 
 const ProductDetailInfo = ({ data }: any) => {
-  const dispatch = useDispatch()
+  const cartList = useSelector(selectCart)?.items
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
   const colour = localStorage.getItem('colour');
@@ -25,6 +25,7 @@ const ProductDetailInfo = ({ data }: any) => {
     remark: '',
     rejection_note: '',
   });
+  const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
   };
@@ -52,6 +53,26 @@ const ProductDetailInfo = ({ data }: any) => {
     setCartProductsData({ ...cartProductsData, [name]: value });
   };
   const handleAddToCart = () => {
+    const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
+    let valid = true;
+
+    sizeTable.forEach((row, index) => {
+      if (!row.size) {
+        newErrors[index] = { ...newErrors[index], size: 'Size is required' };
+        valid = false;
+      }
+      if (!row.quantity) {
+        newErrors[index] = { ...newErrors[index], quantity: 'Quantity is required' };
+        valid = false;
+      }
+    });
+
+    setErrors(newErrors);
+
+    if (!valid) {
+      return;
+    }
+
     const addToCartParams = {
       item_code: data?.name,
       party_name: party_name,
@@ -65,7 +86,7 @@ const ProductDetailInfo = ({ data }: any) => {
     };
     if (cust_name !== '' && cust_name !== null) {
       addToCartItem(addToCartParams);
-      dispatch(addItemToCart(data))
+
     } else {
       alert('Customer Name is Empty');
     }
@@ -75,6 +96,9 @@ const ProductDetailInfo = ({ data }: any) => {
       rejection_note: '',
     });
     setSizeTable([initialState]);
+  };
+  const isVariantInCart = (variant_code: any) => {
+    return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
   return (
     <div className="w-100">
@@ -114,7 +138,7 @@ const ProductDetailInfo = ({ data }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1">
+            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
               <input
                 type="text"
                 name="size"
@@ -122,8 +146,9 @@ const ProductDetailInfo = ({ data }: any) => {
                 value={row.size}
                 onChange={(e) => handleInputChange(index, e)}
               />
+              {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1">
+            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
               <input
                 type="text"
                 name="quantity"
@@ -131,6 +156,7 @@ const ProductDetailInfo = ({ data }: any) => {
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
+              <span>{errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}</span>
             </div>
             <div className="col border p-1">
               <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} onClick={() => handleDeleteRow(index)} />
@@ -167,9 +193,15 @@ const ProductDetailInfo = ({ data }: any) => {
         </div>
       </div>
       <div className="d-flex justify-content-start gap-3 ml-1">
-        <button className={`${productDetailStyles.add_to_cart_btn} `} onClick={handleAddToCart}>
-          Add To Cart
-        </button>
+        {isVariantInCart(data?.name) ? (
+          <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>
+            Added
+          </button>
+        ) : (
+          <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
+            Add To Cart
+          </button>
+        )}
         <button className={`${productDetailStyles.reject_btn} `} onClick={() => setReject(!reject)}>
           Reject
         </button>

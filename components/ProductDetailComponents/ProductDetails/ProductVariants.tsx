@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
 import styles from '../../../styles/components/productCard.module.scss';
-const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage, cartList }: any) => {
-  console.log(cartList,'cartList')
+import { useSelector } from 'react-redux';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
+const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage }: any) => {
   const router = useRouter();
   const { query } = useRouter();
+  const cartList = useSelector(selectCart)?.items
   const [showVariants, setShowVariants] = useState([]);
   const getVariantStrings = () => {
     return (

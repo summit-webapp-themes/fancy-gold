@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useWishlist from '../../hooks/WishlistHooks/WishlistHooks'
+import useWishlist from '../../hooks/WishlistHooks/useWishlistHook'
 import ProductCard from '../../cards/ProductCard'
 import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'
 

@@ -6,6 +6,7 @@ import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/
 import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 
 const ProductListingMaster = () => {
   const {
@@ -66,7 +67,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
-        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData}/>
       </section>
     </div>
   );
