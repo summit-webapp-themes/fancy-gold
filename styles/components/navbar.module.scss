@@ -25,11 +25,13 @@
   align-items: center;
 }
 .badge {
+  width: 1.5rem;
   background: red;
   position: absolute;
   border-radius: 50% !important;
   bottom: 35px !important;
   right: 15px !important;
+  text-align: center;
 }
 .badge_warning[href] {
   background-color: #c67605;

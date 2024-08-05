@@ -1,32 +1,48 @@
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaRegHeart } from 'react-icons/fa6';
-import { IoCart } from 'react-icons/io5';
-import { CONSTANTS } from '../services/config/app-config';
 import Card from 'react-bootstrap/Card';
-import ProductCardStyles from '../styles/components/productCard.module.scss';
+import { FaHeart, FaRegHeart } from 'react-icons/fa6';
+import { IoCart } from 'react-icons/io5';
+import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
-const ProductCard = ({ data, handleShow }: any) => {
+import { CONSTANTS } from '../services/config/app-config';
+import ProductCardStyles from '../styles/components/productCard.module.scss';
+
+const ProductCard = ({ data, handleShow , wishlistData}: any) => {
+  const {handleAddToWishList,handleRemoveFromWishList}=useAddToWishlist()
+  let wishProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
-
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
-        <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          <FaRegHeart />
-        </span>
-        <Image
-          loader={data.image !== null ? imageLoader : undefined}
-          src={data.image !== null ? data.image : noImage}
-          width={1200}
-          height={900}
-          alt="Item Image"
-          className={`${ProductCardStyles.product_code_img}`}
-          style={{ width: '100%', height: '100%' }}
-        />
+        {wishlistData?.length > 0 && 
+          wishlistData?.map((item: any, index: number) => {
+            if (item.name === data?.name) {
+              wishProducts = item?.name;
+            }
+          })}
+        {!wishProducts ? (
+          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+            <FaRegHeart onClick={()=>handleAddToWishList(data)}/>
+          </span>
+        ) : (
+          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+            <FaHeart onClick={()=>handleRemoveFromWishList(data?.name)}/> 
+          </span>
+        )}
+        <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">
+          <Image
+            loader={data.image !== null ? imageLoader : undefined}
+            src={data.image !== null ? data.image : noImage}
+            width={1200}
+            height={900}
+            alt="Item Image"
+            className={`${ProductCardStyles.product_code_img}`}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </Link>
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>

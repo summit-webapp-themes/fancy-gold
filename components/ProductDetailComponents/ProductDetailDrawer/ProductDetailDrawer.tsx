@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Offcanvas } from 'react-bootstrap';
-import fetchProductVariant from '../../../services/api/product-detail-page-apis/get-product-variants';
-import ProductDetailInfo from './ProductDetailInfo';
 import { useSelector } from 'react-redux';
-import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import fetchProductDetailData from '../../../services/api/product-detail-page-apis/get-product-detail';
+import fetchProductVariant from '../../../services/api/product-detail-page-apis/get-product-variants';
+import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import ProductCode from '../ProductDetails/ProductCode';
-import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductImage from '../ProductDetails/ProductImage';
+import ProductVariants from '../ProductDetails/ProductVariants';
+import ProductDetailInfo from './ProductDetailInfo';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);

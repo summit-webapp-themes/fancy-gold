@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import variantStyles from '../../../styles/components/productVariants.module.scss';
 import styles from '../../../styles/components/productCard.module.scss';
+import { useSelector } from 'react-redux';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage }: any) => {
+  const router = useRouter();
+  const { query } = useRouter();
+  const cartList = useSelector(selectCart)?.items
   const [showVariants, setShowVariants] = useState([]);
-  console.log(errorMessage.length, 'errorMessage');
   const getVariantStrings = () => {
     return (
       variantsData?.length > 0 &&
       variantsData?.map((variant: any) => {
         let variantStringParts: any[] = [];
         attributesData.forEach((attribute: any) => {
-          if (attribute.field_name in variant) {
+          if (attribute.field_name in variant && variant[attribute.field_name] !== null) {
             variantStringParts.push(variant[attribute.field_name]);
           }
         });
@@ -21,9 +26,22 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
       })
     );
   };
+  const handleProductVariant = (variant_code: any) => {
+    if (query?.productId) {
+      router.push({
+        query: { ...query, productId: variant_code },
+      });
+    } else {
+      getProductDetailData(variant_code);
+    }
+  };
+  const isVariantInCart = (variant_code: any) => {
+    return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
+  };
   useEffect(() => {
     setShowVariants(variantsData?.length > 0 || variantsData !== null ? getVariantStrings() : []);
   }, [variantsData]);
+
   return (
     <>
       {showVariants?.length > 0 && (
@@ -40,8 +58,14 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
           showVariants.map((variant: any, index: number) => (
             <button
               key={index}
-              className={variant.variant_code === productDetail?.name ? variantStyles.variant_btn_active : variantStyles.variant_btn}
-              onClick={(e) => getProductDetailData(variant?.variant_code)}
+              className={
+                variant.variant_code === productDetail?.name
+                  ? variantStyles.variant_btn_active
+                  : isVariantInCart(variant.variant_code)
+                  ? variantStyles.variant_btn_in_cart
+                  : variantStyles.variant_btn
+              }
+              onClick={(e) => handleProductVariant(variant?.variant_code)}
             >
               {variant.variant_string}
             </button>

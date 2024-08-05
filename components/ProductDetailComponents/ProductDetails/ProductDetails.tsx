@@ -1,7 +1,6 @@
-import React from 'react';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
-import ProductImage from './ProductImage';
 import ProductCode from './ProductCode';
+import ProductImage from './ProductImage';
 import ProductVariants from './ProductVariants';
 
 const ProductDetails = ({ productDetailData, productVariantData, fetchProductDetailDataAPI, errorMessage }: any) => {
