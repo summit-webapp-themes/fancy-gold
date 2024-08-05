@@ -4,14 +4,14 @@ import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data }: any) => {
-  console.log(data, 'cart');
+  // console.log(data, 'cart');
   const [editWastage, setEsditWastage] = useState(false);
   const [wastage, setWastage] = useState('');
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
   return (
-    <div className={`row ${styles?.cart_product_container}`}>
+    <div className={`row ${styles?.font_12}`}>
       <div className="col-lg-4 p-3 d-flex justify-content-center">
         <Image
           loader={imageLoader}
