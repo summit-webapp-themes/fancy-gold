@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
-import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
-import WebFilters from './FilterView/WebFilters';
-import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
 import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
+import WebFilters from './FilterView/WebFilters';
+import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
+import ProductGridViewMaster from './ProductGridView/ProductGridViewMaster';
+import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 
 const ProductListingMaster = () => {
   const {
@@ -17,9 +20,8 @@ const ProductListingMaster = () => {
     handleFilterSearchBtn,
     searchFilterValue,
   } = useProductListing();
-
+  const wishlistData = useSelector(selectWishlist)?.items
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
-
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
 
@@ -40,6 +42,7 @@ const ProductListingMaster = () => {
         handlePaginationBtn={handlePaginationBtn}
         productListTotalCount={productListTotalCount}
         handleShow={handleShow}
+        wishlistData={wishlistData}
       />
     );
   };
@@ -64,7 +67,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
-        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData}/>
       </section>
     </div>
   );

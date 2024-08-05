@@ -22,7 +22,6 @@
   color: #cd8825;
 }
 .qty_input {
-  width: 6.5rem;
   height: 1.5rem;
   border: 0;
   text-align: center;
@@ -31,16 +30,22 @@
   border: 1px solid #cd8825;
   color: #ffffff;
   font-size: 12px;
-  // width: 140px;
   padding: 0.3rem 0.5rem;
   font-weight: 600;
   background-color: #cd8825;
+}
+.cart_add_to_cart_btn {
+  border: 1px solid #184f2f;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 0.3rem 0.5rem;
+  font-weight: 600;
+  background-color: #184f2f;
 }
 .reject_btn {
   border: 1px solid #cd2525;
   color: #cd2525;
   font-size: 12px;
-  // width: 140px;
   padding: 0.3rem 0.5rem;
   font-weight: 600;
 
