@@ -2,23 +2,23 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
 import image from '../../public/assets/images/no-data.svg';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
-import styles from '../../styles/components/cartProductDetail.module.scss';
 import CartProductDetail from './CartProductDetail';
 import CartSkeleton from './CartSkeleton';
 import SizeQtyTable from './SizeQtyTable';
-import NoDataStyles from '../../styles/components/noData.module.scss';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
+import styles from '../../styles/components/cartProductDetail.module.scss';
+import NoDataStyles from '../../styles/components/noData.module.scss';
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc } = useAddToCartHook();
+  const { cartListingItems, setCartListingItems, isLoading, fetchCartListingData } = useCartPageHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const user = localStorage.getItem('user');
-  const cartList = useSelector(selectCart)?.items
-
+  const cartList = useSelector(selectCart)?.items;
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
@@ -27,16 +27,27 @@ const CartListing = () => {
     }
   }, [cartListingItems?.transaction_date]);
 
-  const handleDeleteRow = (categoryIndex: any, orderIndex: number) => {
-    const updatedItems = { ...cartListingItems };
-    updatedItems.categories[categoryIndex].orders.splice(orderIndex, 1);
-    setCartListingItems(updatedItems);
+  const handleDeleteRow = (categoryIndex: any, orderIndex: number, itemCode: string) => {
+    const params = {
+      item_code: itemCode,
+      quotation_id: cartListingItems?.name,
+    };
+    RemoveItemCartAPIFunc(params,fetchCartListingData);
   };
 
-  const handleQtyChange = (categoryIndex: number, orderIndex: number, sizeIndex: number, newQty: number,data:any) => {
+  const handleQtyChange = (categoryIndex: number, orderIndex: number, sizeIndex: number, newQty: number, data: any) => {
     const updatedItems = { ...cartListingItems };
     updatedItems.categories[categoryIndex].orders[orderIndex].order[sizeIndex].qty = newQty;
     setCartListingItems(updatedItems);
+    const updatedOrder =
+      data?.order?.length > 0 &&
+      data?.order?.map((item: any) => {
+        return {
+          size: item?.size,
+          qty: item?.qty,
+          colour: item?.colour,
+        };
+      });
     const addToCartParams = {
       item_code: data?.item_code,
       party_name: cartListingItems?.party_name,
@@ -44,13 +55,13 @@ const CartListing = () => {
       cust_name: cartListingItems?.cust_name,
       colour: data?.colour,
       wastage: data?.wastage,
-      qty_size_list: data?.order,
+      qty_size_list: updatedOrder,
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams);
+    addToCartItem(addToCartParams,fetchCartListingData);
   };
-  const handleDeleteSize = (categoryIndex: number, orderIndex: number, sizeIndex: number, data:any) => {
+  const handleDeleteSize = (categoryIndex: number, orderIndex: number, sizeIndex: number, data: any) => {
     if (!cartListingItems) return;
     const updatedItems = { ...cartListingItems };
     updatedItems.categories[categoryIndex]?.orders[orderIndex]?.order.splice(sizeIndex, 1);
@@ -66,7 +77,7 @@ const CartListing = () => {
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams);
+    addToCartItem(addToCartParams,fetchCartListingData);
   };
   const handlePlaceOrder = async () => {
     const selectedDate = new Date(deliveryDate);
@@ -74,18 +85,17 @@ const CartListing = () => {
     minDate.setDate(minDate.getDate() + 15);
     selectedDate.setHours(0, 0, 0, 0);
     minDate.setHours(0, 0, 0, 0);
-    console.log(selectedDate, minDate, 'cart');
     const params = {
       order_id: cartListingItems?.name,
       party_name: cartListingItems?.party_name,
     };
     if (selectedDate < minDate) {
-      alert('Delivery date cannot be before 15 days from the transaction date.');
+      toast.error('Delivery date cannot be before 15 days from the transaction date.');
     } else {
       placeOrderAPIFunc(params);
     }
   };
-  
+
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -131,16 +141,16 @@ const CartListing = () => {
                         <div className={`col-lg-4 ${styles.border}`}>
                           <SizeQtyTable
                             data={order}
-                            onQtyChange={(sizeIndex: number, newQty: number,data:any) =>
-                              handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty,data)
+                            onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
+                              handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                             }
-                            onDelete={(sizeIndex: number,data:any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex,data)}
+                            onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                           />
                         </div>
                         <div className={`col-lg-1 ${styles.cross_icon_container} `}>
                           <RxCross2
                             onClick={() => {
-                              handleDeleteRow(categoryIndex, orderIndex);
+                              handleDeleteRow(categoryIndex, orderIndex, order?.item_code);
                             }}
                           />
                         </div>
@@ -154,7 +164,7 @@ const CartListing = () => {
     }
     if (!cartList) {
       return (
-        <div className={`text-center $`}>
+        <div className={`text-center ${NoDataStyles.no_data_image}`}>
           <div className="p-3" style={{ fontSize: '40px' }}>
             <Image src={image} width={200} height={200} alt="Error Image" />
           </div>
