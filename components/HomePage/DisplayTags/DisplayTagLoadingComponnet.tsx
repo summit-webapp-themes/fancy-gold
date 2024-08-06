@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import Placeholder from 'react-bootstrap/Placeholder';
 import lineImg from '../../../public/assets/images/Line-Design-blue.svg';

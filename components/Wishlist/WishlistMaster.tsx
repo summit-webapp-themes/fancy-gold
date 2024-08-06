@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import image from '../../public/assets/images/no-data.svg';
-import ProductCard from '../../cards/ProductCard';
-import ProductDetailDrawer from '../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
+const ProductCard = dynamic(() => import('../../cards/ProductCard'));
+const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 import ProductCardSkeleton from '../../cards/ProductCardSkeleton';
 import NoDataStyles from '../../styles/components/noData.module.scss';
 
