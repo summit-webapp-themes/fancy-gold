@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'next/image';
 import useBanner from '../../../hooks/HomePageHooks/BannerHook';
@@ -40,20 +40,6 @@ const Banner = () => {
                   width={1000}
                   height={550}
                 />
-                {/* <CarouselCaption className="corousel-caption " style={{ border: '2px solid red' }}>
-                  <div className={`text-start `} key={index}>
-                    <span className={` theme-blue px-3 ${BannerStyles.banner_btn}`}>
-                      There are deals and then there are <div>Limited Deals</div>you can't let go!
-                    </span>
-                  </div>
-                </CarouselCaption>
-                <CarouselCaption className="corousel-caption ">
-                  <div className={`text-start `} key={index}>
-                    <span className={`text-white banner-btn theme-blue-bg theme-btn-blue px-3 ${BannerStyles.banner_btn}`}>
-                      Zero Making Charges
-                    </span>
-                  </div>
-                </CarouselCaption> */}
               </Carousel.Item>
             ))}
           </Carousel>
