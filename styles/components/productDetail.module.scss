@@ -48,18 +48,16 @@
   font-size: 12px;
   padding: 0.3rem 0.5rem;
   font-weight: 600;
-
 }
 .add_to_cart_btn:hover {
   background: #1a1a49;
   color: #ffd700;
 }
-.product_image_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.product_image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pointerCursor {
   cursor: pointer;
 }
-
