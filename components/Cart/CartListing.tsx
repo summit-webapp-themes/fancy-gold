@@ -1,4 +1,3 @@
-import React from 'react';
 import CartProductDetail from './CartProductDetail';
 import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
 import styles from '../../styles/components/cartProductDetail.module.scss';
@@ -20,7 +19,7 @@ const CartListing = () => {
                 <input type="date" value={cartListingItems?.transaction_date} />
               </div>
             </div>
-            <div className={''}>
+            <div>
               <button className={`${styles?.place_order_btn}`}>Place Order</button>
             </div>
           </div>

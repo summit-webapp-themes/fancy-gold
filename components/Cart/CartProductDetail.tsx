@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
@@ -13,14 +13,7 @@ const CartProductDetail = ({ data }: any) => {
   return (
     <div className={`row ${styles?.cart_product_container}`}>
       <div className="col-lg-4 p-3 d-flex justify-content-center">
-        <Image
-          loader={imageLoader}
-          src={data?.image !== null && data?.image}
-          width={100}
-          height={100}
-          sizes="100vw"
-          alt="Item Image"
-        />
+        <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
       </div>
       <div className="col-lg-5 d-flex justify-content-center">
         <p>

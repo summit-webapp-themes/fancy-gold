@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Formik, Form as FormikForm, ErrorMessage, useFormikContext } from 'formik';
-import { Form } from 'react-bootstrap';
+import { Formik, Form as FormikForm, ErrorMessage } from 'formik';
+import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import useLoginHook from '../../hooks/AuthHooks/useLoginHook';
 import logo from '../../public/assets/images/logo.png';
