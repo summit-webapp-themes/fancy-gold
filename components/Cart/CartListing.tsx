@@ -175,6 +175,18 @@ const CartListing = () => {
                 </div>
               </div>
             ))}
+            <div className='d-flex justify-content-between'>
+              <textarea className='w-50 p-3' rows={2} placeholder='Terms and Conditions'></textarea>
+              <div className={`${styles.place_order_container}`}>
+                <h3>Grand Total weight : {cartListingItems?.grand_total_weight}</h3>
+                <div className='d-flex justify-content-end w-100'>
+
+              <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+                Place Order
+              </button>
+                </div>
+            </div>
+            </div>
         </div>
       );
     }
