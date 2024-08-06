@@ -14,7 +14,7 @@ import MobSideNavbar from './MobSideNavbar';
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
   const { wishlistCount } = useWishlist();
-  const {cartCount}=useCartPage()
+  const { cartCount } = useCartPage();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

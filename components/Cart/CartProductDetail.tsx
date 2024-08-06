@@ -4,7 +4,6 @@ import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data }: any) => {
-  // console.log(data, 'cart');
   const [editWastage, setEsditWastage] = useState(false);
   const [wastage, setWastage] = useState('');
   const imageLoader = ({ src, width, quality }: any) => {

@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
 import image from '../../public/assets/images/no-data.svg';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
