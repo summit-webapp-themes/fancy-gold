@@ -1,11 +1,13 @@
 import React from 'react';
-import DisplayTags from './DisplayTags/DisplayTags';
-import Banner from './Banner/Banner';
-
+import dynamic from 'next/dynamic';
+import BannerSkeleton from './Banner/BannerSkeleton';
+import DisplayTagLoadingComponnet from './DisplayTags/DisplayTagLoadingComponnet';
+const Banner = dynamic(() => import('./Banner/Banner'), { loading: () => <BannerSkeleton /> });
+const DisplayTags = dynamic(() => import('./DisplayTags/DisplayTags'), { loading: () => <DisplayTagLoadingComponnet /> });
 const HomePage = () => {
   return (
     <>
-      {/* <Banner /> */}
+      <Banner />
       <DisplayTags />
     </>
   );

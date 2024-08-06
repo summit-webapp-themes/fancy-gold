@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Formik, Form as FormikForm, ErrorMessage, useFormikContext } from 'formik';
-import { Form } from 'react-bootstrap';
+import { Formik, Form as FormikForm, ErrorMessage } from 'formik';
+import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import useLoginHook from '../../hooks/AuthHooks/useLoginHook';
 import logo from '../../public/assets/images/logo.png';
 import LoginStyles from '../../styles/components/login.module.scss';
 
 const validation = Yup.object().shape({
-  // usr: Yup.string().email(' Enter valid email').required(' Email field is required'),
+  usr: Yup.string().email(' Enter valid email').required(' Email field is required'),
   pwd: Yup.string().required(' Password field is required').min(6, ' Password is too short - should be 6 chars minimum.'),
 });
 
