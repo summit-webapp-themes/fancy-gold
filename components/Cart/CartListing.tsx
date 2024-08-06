@@ -17,6 +17,7 @@ const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, fetchCartListingData } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [wastage, setWastage] = useState('');
   const user = localStorage.getItem('user');
   const cartList = useSelector(selectCart)?.items;
   useEffect(() => {
@@ -27,12 +28,12 @@ const CartListing = () => {
     }
   }, [cartListingItems?.transaction_date]);
 
-  const handleDeleteRow = (categoryIndex: any, orderIndex: number, itemCode: string) => {
+  const handleDeleteRow = (itemCode: string) => {
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
     };
-    RemoveItemCartAPIFunc(params,fetchCartListingData);
+    RemoveItemCartAPIFunc(params, fetchCartListingData);
   };
 
   const handleQtyChange = (categoryIndex: number, orderIndex: number, sizeIndex: number, newQty: number, data: any) => {
@@ -59,7 +60,7 @@ const CartListing = () => {
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams,fetchCartListingData);
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
   const handleDeleteSize = (categoryIndex: number, orderIndex: number, sizeIndex: number, data: any) => {
     if (!cartListingItems) return;
@@ -77,7 +78,7 @@ const CartListing = () => {
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams,fetchCartListingData);
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
   const handlePlaceOrder = async () => {
     const selectedDate = new Date(deliveryDate);
@@ -94,6 +95,21 @@ const CartListing = () => {
     } else {
       placeOrderAPIFunc(params);
     }
+  };
+
+  const handleEditWastage = (data: any) => {
+    const addToCartParams = {
+      item_code: data?.item_code,
+      party_name: cartListingItems?.party_name,
+      purity: cartListingItems?.purity,
+      cust_name: cartListingItems?.cust_name,
+      colour: data?.colour,
+      wastage: wastage,
+      qty_size_list: data?.order,
+      remark: cartListingItems?.remark,
+      user: user,
+    };
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
 
   const handleDataRendering = () => {
@@ -136,7 +152,7 @@ const CartListing = () => {
                     category?.orders?.map((order: any, orderIndex: any) => (
                       <>
                         <div className={`col-lg-7 ${styles.border}`}>
-                          <CartProductDetail data={order} />
+                          <CartProductDetail data={order} wastage={wastage} setWastage={setWastage} handleEditWastage={handleEditWastage} />
                         </div>
                         <div className={`col-lg-4 ${styles.border}`}>
                           <SizeQtyTable
@@ -150,7 +166,7 @@ const CartListing = () => {
                         <div className={`col-lg-1 ${styles.cross_icon_container} `}>
                           <RxCross2
                             onClick={() => {
-                              handleDeleteRow(categoryIndex, orderIndex, order?.item_code);
+                              handleDeleteRow(order?.item_code);
                             }}
                           />
                         </div>
