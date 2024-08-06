@@ -1,20 +1,21 @@
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
+import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
 import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
 import image from '../../public/assets/images/no-data.svg';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
+import styles from '../../styles/components/cartProductDetail.module.scss';
+import NoDataStyles from '../../styles/components/noData.module.scss';
+import ApiErrorPage from '../ApiErrorPage';
 import CartProductDetail from './CartProductDetail';
 import CartSkeleton from './CartSkeleton';
 import SizeQtyTable from './SizeQtyTable';
-import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
-import styles from '../../styles/components/cartProductDetail.module.scss';
-import NoDataStyles from '../../styles/components/noData.module.scss';
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading, fetchCartListingData } = useCartPageHook();
+  const { cartListingItems, setCartListingItems, isLoading,errorMessage, fetchCartListingData } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const [wastage, setWastage] = useState('');
@@ -175,18 +176,18 @@ const CartListing = () => {
                 </div>
               </div>
             ))}
-            <div className='d-flex justify-content-between'>
-              <textarea className='w-50 p-3' rows={2} placeholder='Terms and Conditions'></textarea>
-              <div className={`${styles.place_order_container}`}>
-                <h3>Grand Total weight : {cartListingItems?.grand_total_weight}</h3>
-                <div className='d-flex justify-content-end w-100'>
-
-              <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                Place Order
-              </button>
-                </div>
+            <hr />
+          <div className="d-flex justify-content-between">
+            <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
+            <div className={`${styles.place_order_container}`}>
+              <h3>Grand Total weight : {cartListingItems?.grand_total_weight}</h3>
+              <div className="d-flex justify-content-end w-100">
+                <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+                  Place Order
+                </button>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
       );
     }
@@ -201,6 +202,9 @@ const CartListing = () => {
           </div>
         </div>
       );
+    }
+    if( errorMessage !== '' && cartListingItems?.length <= 0 && isLoading === false){
+      <ApiErrorPage/>
     }
   };
   return (

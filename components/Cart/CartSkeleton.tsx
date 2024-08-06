@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Placeholder } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Placeholder from 'react-bootstrap/Placeholder';
 import { RxCross2 } from 'react-icons/rx';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
