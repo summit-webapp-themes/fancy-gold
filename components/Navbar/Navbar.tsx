@@ -12,7 +12,7 @@ import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useCartPage();
   const router = useRouter();
@@ -128,7 +128,9 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue">Sign-out</span>
+                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogout()}>
+                            Sign-out
+                          </span>
                         </div>
                       </a>
                     </Link>

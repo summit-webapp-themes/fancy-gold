@@ -1,4 +1,4 @@
-.cart_product_container {
+.font_12 {
   font-size: 12px;
 }
 .table_header {
@@ -14,9 +14,18 @@
   text-decoration: none;
   font-size: 12px;
 }
+.place_order_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .place_order_btn {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
   max-width: 7rem;
   border: 1px solid #cd8825;
+  border-radius: 0.2rem;
   background-color: #cd8825;
   color: #fff;
   display: flex;
@@ -26,4 +35,19 @@
   height: full;
   display: flex;
   align-items: center;
+}
+.size_qty_table {
+  height: full;
+  border: 1px solid #908c8c;
+}
+.qty_input {
+  max-width: 40px;
+}
+.cross_icon_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: full;
+  border: 1px solid #908c8c;
+  cursor: pointer;
 }
