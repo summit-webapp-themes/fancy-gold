@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
-import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
+import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import image from '../../public/assets/images/no-data.svg';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import NoDataStyles from '../../styles/components/noData.module.scss';
