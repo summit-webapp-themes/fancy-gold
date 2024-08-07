@@ -15,7 +15,7 @@ import CartSkeleton from './CartSkeleton';
 import SizeQtyTable from './SizeQtyTable';
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading,errorMessage, fetchCartListingData } = useCartPageHook();
+  const { cartListingItems, setCartListingItems, isLoading, errorMessage, fetchCartListingData } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const [wastage, setWastage] = useState('');
@@ -176,7 +176,7 @@ const CartListing = () => {
                 </div>
               </div>
             ))}
-            <hr />
+          <hr />
           <div className="d-flex justify-content-between">
             <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
             <div className={`${styles.place_order_container}`}>
@@ -203,8 +203,8 @@ const CartListing = () => {
         </div>
       );
     }
-    if( errorMessage !== '' && cartListingItems?.length <= 0 && isLoading === false){
-      <ApiErrorPage/>
+    if (errorMessage !== '' && cartListingItems?.length <= 0 && isLoading === false) {
+      <ApiErrorPage />;
     }
   };
   return (
