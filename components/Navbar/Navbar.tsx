@@ -12,7 +12,7 @@ import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogout } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useCartPage();
   const router = useRouter();
@@ -24,7 +24,7 @@ const Navbar = () => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);
   };
-
+  const handleLogout = () => {};
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       handleSearch(e);
