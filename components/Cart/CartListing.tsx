@@ -94,7 +94,7 @@ const CartListing = () => {
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
     } else {
-      placeOrderAPIFunc(params,setCartListingItems);
+      placeOrderAPIFunc(params, setCartListingItems);
     }
   };
 
