@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import styles from '../../styles/components/orderReport.module.scss';
+import Link from 'next/link';
 const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
   const tableHeaderArray = [
     'Sr.No',
@@ -36,7 +37,11 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
                   <td className={styles.tableFont}>{i + 1}</td>
                   <td className={styles.tableFont}>{val.transaction_date}</td>
                   <td className={styles.tableFont}>{val.customer_name}</td>
-                  <td className={styles.tableFont}>{val.name}</td>
+                  <td className={styles.tableFont}>
+                    <Link href={`/order-detail/${val.name}`} legacyBehavior>
+                      <a>{val.name.split('-')[val.name.split('-').length - 1]}</a>
+                    </Link>
+                  </td>
                   <td className={styles.tableFont}>{val.product}</td>
                   <td className={styles.tableFont}>{val.item_name}</td>
                   <td className={styles.tableFont}>{val.delivery_date}</td>
