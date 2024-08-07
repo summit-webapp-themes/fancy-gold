@@ -21,6 +21,7 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   console.log('cartCount', cartCount);
+  console.log('cartCount', cartCount);
   const handleSearch = (e: any) => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);
