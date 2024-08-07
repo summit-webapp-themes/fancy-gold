@@ -96,7 +96,7 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
-                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount === 0 ? null : cartCount}</span>
                           <span className="d-none d-md-inline-block theme-blue">Cart</span>
                         </div>
                       </a>

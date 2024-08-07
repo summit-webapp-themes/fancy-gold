@@ -15,14 +15,24 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
         <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
       </div>
       <div className="col-lg-5 d-flex justify-content-center">
-        <p>
-          Product Code : <br />
-          {data?.item_code}
-          <br />
-          BOM Factory Code : {data?.bom_factory_code}
-          <br />
-          Weight :{data?.weight_per_unit} gm
-        </p>
+        <div className="mt-2">
+          <Image
+            loader={imageLoader}
+            src={data?.bar_code_image !== null && data?.bar_code_image}
+            width={100}
+            height={30}
+            sizes="100vw"
+            alt="Item Image"
+          />
+          <p>
+            Product Code : <br />
+            {data?.item_code}
+            <br />
+            BOM Factory Code : {data?.bom_factory_code}
+            <br />
+            Weight :{data?.weight_per_unit} gm
+          </p>
+        </div>
       </div>
       <div className="col-lg-3 d-flex justify-content-center">
         <div className="text-center">
