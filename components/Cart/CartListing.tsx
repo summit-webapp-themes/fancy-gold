@@ -87,7 +87,6 @@ const CartListing = () => {
     minDate.setDate(minDate.getDate() + 15);
     selectedDate.setHours(0, 0, 0, 0);
     minDate.setHours(0, 0, 0, 0);
-    console.log('selectedDate', selectedDate, minDate);
     const params = {
       order_id: cartListingItems?.name,
       party_name: cartListingItems?.party_name,
