@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaAlignJustify, FaArrowRightToBracket, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
-import useCartPage from '../../hooks/CartPageHook/useCartPageHook';
+import useCartPage from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
@@ -19,7 +19,6 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
   const handleSearch = (e: any) => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);

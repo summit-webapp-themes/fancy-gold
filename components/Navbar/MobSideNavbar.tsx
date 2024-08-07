@@ -22,7 +22,6 @@ const MobSideNavbar = ({
   const [rotatedIndex, setRotatedIndex] = useState<number | null>(null);
 
   const onClickCloseNav = () => {
-    console.log('click close');
     setClicks(!clicks);
     toggleSidebar(false);
   };
