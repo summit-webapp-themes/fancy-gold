@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaAlignJustify, FaArrowRightToBracket, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
-import useCartPage from '../../hooks/CartPageHook/useFetchCartItems';
+import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
@@ -14,7 +14,7 @@ import MobSideNavbar from './MobSideNavbar';
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
   const { wishlistCount } = useWishlist();
-  const { cartCount } = useCartPage();
+  const { cartCount } = useFetchCartItems();
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

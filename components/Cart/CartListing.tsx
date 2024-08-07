@@ -33,7 +33,16 @@ const CartListing = () => {
     RemoveItemCartAPIFunc(params, setCartListingItems);
   };
   // to update Cart list after updating Quantity or wastage
-  const handleUpdateListData = (data: any, updatedOrder?: any) => {
+  const handleUpdateListData = (data: any) => {
+    const updatedOrder =
+      data?.order?.length > 0 &&
+      data?.order?.map((item: any) => {
+        return {
+          size: item?.size,
+          quantity: item?.qty,
+          colour: item?.colour,
+        };
+      });
     const addToCartParams = {
       item_code: data?.item_code,
       party_name: cartListingItems?.party_name,
@@ -52,16 +61,8 @@ const CartListing = () => {
     const updatedItems = { ...cartListingItems };
     updatedItems.categories[categoryIndex].orders[orderIndex].order[sizeIndex].qty = newQty;
     setCartListingItems(updatedItems);
-    const updatedOrder =
-      data?.order?.length > 0 &&
-      data?.order?.map((item: any) => {
-        return {
-          size: item?.size,
-          quantity: item?.qty,
-          colour: item?.colour,
-        };
-      });
-    handleUpdateListData(data, updatedOrder);
+
+    handleUpdateListData(data);
   };
   const handleDeleteSize = (categoryIndex: number, orderIndex: number, sizeIndex: number, data: any) => {
     if (!cartListingItems) return;

@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
-  const [editWastage, setEsditWastage] = useState(data?.wastage !== '' && data?.wastage !== null ? true : false);
+  const [editWastage, setEsditWastage] = useState(false);
 
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
@@ -35,9 +35,9 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
         </div>
       </div>
       <div className="col-lg-3 d-flex justify-content-center">
-        <div className="text-center">
+        <div className="text-center mt-2">
           Wastage :
-          {editWastage && (
+          {editWastage ? (
             <textarea
               className="w-75"
               value={data?.wastage}
@@ -46,6 +46,10 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
               }}
               rows={1}
             />
+          ):(
+            <p className='m-0'>
+              {data?.wastage}
+            </p>
           )}
           {editWastage ? (
             <button
