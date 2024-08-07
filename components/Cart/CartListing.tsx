@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
-import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
+import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import image from '../../public/assets/images/no-data.svg';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
@@ -87,6 +87,7 @@ const CartListing = () => {
     minDate.setDate(minDate.getDate() + 15);
     selectedDate.setHours(0, 0, 0, 0);
     minDate.setHours(0, 0, 0, 0);
+    console.log('selectedDate', selectedDate, minDate);
     const params = {
       order_id: cartListingItems?.name,
       party_name: cartListingItems?.party_name,
@@ -94,7 +95,7 @@ const CartListing = () => {
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
     } else {
-      placeOrderAPIFunc(params,setCartListingItems);
+      placeOrderAPIFunc(params, setCartListingItems);
     }
   };
 
