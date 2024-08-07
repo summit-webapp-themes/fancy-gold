@@ -22,6 +22,7 @@ const Navbar = () => {
 
   console.log('cartCount', cartCount);
   console.log('cartCount', cartCount);
+  console.log('cartCount', cartCount);
   const handleSearch = (e: any) => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);
