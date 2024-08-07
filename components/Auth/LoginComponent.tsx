@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import useLoginHook from '../../hooks/AuthHooks/useLoginHook';
 import logo from '../../public/assets/images/logo.png';
 import LoginStyles from '../../styles/components/login.module.scss';
+import { FaEye } from 'react-icons/fa';
+import { FaEyeSlash } from 'react-icons/fa';
 
 const validation = Yup.object().shape({
   usr: Yup.string().email(' Enter valid email').required(' Email field is required'),
@@ -68,11 +70,13 @@ function LoginComponent() {
                               placeholder="Enter Password"
                               onBlur={handleBlur}
                             />
-                            <span className="input-group-text">
+                            <span className={`input-group-text ${LoginStyles.login_icon}`}>
                               {passwordHidden ? (
-                                <i className="fa fa-eye-slash" onClick={(e: any) => togglePasswordIcon(e)} />
+                                <FaEyeSlash onClick={(e: any) => togglePasswordIcon(e)} />
                               ) : (
-                                <i className="fa fa-eye" onClick={(e: any) => togglePasswordIcon(e)} />
+                                // <i className="fa fa-eye-slash" onClick={(e: any) => togglePasswordIcon(e)} />
+                                // <i className="fa fa-eye" onClick={(e: any) => togglePasswordIcon(e)} />
+                                <FaEye onClick={(e: any) => togglePasswordIcon(e)} />
                               )}
                             </span>
                           </div>

@@ -26,6 +26,9 @@
 
 .input_group {
   margin-top: 3px;
+  position: relative;
+  display: flex;
+  align-items: center
 }
 .emailfield {
   margin-top: 3px;
@@ -42,3 +45,8 @@
   color: #c40000;
   font-size: 14px;
 }
+.login_icon {
+  padding: 0.66rem;
+  cursor: pointer;
+}
+
