@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ import CartSkeleton from './CartSkeleton';
 import SizeQtyTable from './SizeQtyTable';
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
+  const { cartListingItems, setCartListingItems, isLoading, errorMessage, fetchCartListingData } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const [wastage, setWastage] = useState('');
@@ -34,7 +34,7 @@ const CartListing = () => {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
     };
-    RemoveItemCartAPIFunc(params, setCartListingItems);
+    RemoveItemCartAPIFunc(params, fetchCartListingData);
   };
 
   const handleQtyChange = (categoryIndex: number, orderIndex: number, sizeIndex: number, newQty: number, data: any) => {
@@ -46,7 +46,7 @@ const CartListing = () => {
       data?.order?.map((item: any) => {
         return {
           size: item?.size,
-          quantity: item?.qty,
+          qty: item?.qty,
           colour: item?.colour,
         };
       });
@@ -61,7 +61,7 @@ const CartListing = () => {
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams, setCartListingItems);
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
   const handleDeleteSize = (categoryIndex: number, orderIndex: number, sizeIndex: number, data: any) => {
     if (!cartListingItems) return;
@@ -79,7 +79,7 @@ const CartListing = () => {
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams, setCartListingItems);
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
   const handlePlaceOrder = async () => {
     const selectedDate = new Date(deliveryDate);
@@ -94,7 +94,7 @@ const CartListing = () => {
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
     } else {
-      placeOrderAPIFunc(params, setCartListingItems);
+      placeOrderAPIFunc(params);
     }
   };
 
@@ -105,18 +105,14 @@ const CartListing = () => {
       purity: cartListingItems?.purity,
       cust_name: cartListingItems?.cust_name,
       colour: data?.colour,
-      wastage: data?.wastage,
+      wastage: wastage,
       qty_size_list: data?.order,
       remark: cartListingItems?.remark,
       user: user,
     };
-    addToCartItem(addToCartParams, setCartListingItems);
+    addToCartItem(addToCartParams, fetchCartListingData);
   };
-  const onEditwastage = (categoryIndex: number, orderIndex: number, data: string) => {
-    const updatedItems = { ...cartListingItems };
-    updatedItems.categories[categoryIndex].orders[orderIndex].wastage = data;
-    setCartListingItems(updatedItems);
-  };
+
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -126,7 +122,7 @@ const CartListing = () => {
         <div className="border p-3">
           <div className="d-flex justify-content-between">
             <div>
-              <label>Customer Name: {cartListingItems?.cust_name} </label>
+              <label>Customer Name: {cartListingItems?.party_name} </label>
               <br />
               <label>Order Purity: {cartListingItems?.purity}</label>
               <div>
@@ -157,13 +153,7 @@ const CartListing = () => {
                     category?.orders?.map((order: any, orderIndex: any) => (
                       <>
                         <div className={`col-lg-7 ${styles.border}`}>
-                          <CartProductDetail
-                            data={order}
-                            wastage={wastage}
-                            setWastage={setWastage}
-                            onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
-                            handleEditWastage={handleEditWastage}
-                          />
+                          <CartProductDetail data={order} wastage={wastage} setWastage={setWastage} handleEditWastage={handleEditWastage} />
                         </div>
                         <div className={`col-lg-4 ${styles.border}`}>
                           <SizeQtyTable
@@ -190,7 +180,7 @@ const CartListing = () => {
           <div className="d-flex justify-content-between">
             <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
             <div className={`${styles.place_order_container}`}>
-              <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
+              <h3>Grand Total weight : {cartListingItems?.grand_total_weight}</h3>
               <div className="d-flex justify-content-end w-100">
                 <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
                   Place Order
