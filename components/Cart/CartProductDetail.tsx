@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
-const CartProductDetail = ({ data, wastage,setWastage,handleEditWastage }: any) => {
-  const [editWastage, setEsditWastage] = useState(false);
-  
+const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
+  const [editWastage, setEsditWastage] = useState(data?.wastage !== '' && data?.wastage !== null ? true : false);
+
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -26,9 +26,26 @@ const CartProductDetail = ({ data, wastage,setWastage,handleEditWastage }: any) 
       </div>
       <div className="col-lg-3 d-flex justify-content-center">
         <div className="text-center">
-          Wastage :{editWastage && <textarea className="w-75" value={wastage} onChange={(e)=>{setWastage(e.target.value)}}/>}
+          Wastage :
+          {editWastage && (
+            <textarea
+              className="w-75"
+              value={data?.wastage}
+              onChange={(e) => {
+                onEditWastage(e.target.value);
+              }}
+              rows={1}
+            />
+          )}
           {editWastage ? (
-            <button className={`btn btn-link ${styles.edit_btn}`} onClick={()=>{handleEditWastage(data)}}>Update wastage</button>
+            <button
+              className={`btn btn-link ${styles.edit_btn}`}
+              onClick={() => {
+                handleEditWastage(data), setEsditWastage(false);
+              }}
+            >
+              Update wastage
+            </button>
           ) : (
             <button className={`btn btn-link ${styles.edit_btn}`} onClick={() => setEsditWastage(true)}>
               Edit Message

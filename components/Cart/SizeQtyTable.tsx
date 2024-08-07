@@ -13,6 +13,10 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
     const newQty = data.order[sizeIndex].qty - 1;
     onQtyChange(sizeIndex, newQty, itemData);
   };
+  const handleQtyChange = (sizeIndex: number, itemData: any,e:any)=>{
+    const newQty = e.target.value;
+    onQtyChange(sizeIndex, newQty, itemData);
+  }
   const handleDelete = (sizeIndex: number) => {
     onDelete(sizeIndex,data);
   };
@@ -32,9 +36,9 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
             <div className="col-lg-3 border py-1">{item?.size}</div>
             <div className="col-lg-3 border p-0 py-1">
               <span onClick={() => handleIncrement(index, data)}>
-                <FaPlus className="px-1 fs-2" />
+                <FaPlus className="px-1 fs-2 " />
               </span>
-              <input type="text" className={styles?.qty_input} value={item?.qty} />
+              <input type="text" className={styles?.qty_input} value={item?.qty} onChange={(e)=>{handleQtyChange(index, data,e)}}/>
               <span
                 onClick={() => {
                   handleDecrement(index, data);
