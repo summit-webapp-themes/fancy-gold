@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
-import useCartPageHook from '../../hooks/CartPageHook/useCartPageHook';
+import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import image from '../../public/assets/images/no-data.svg';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
@@ -20,7 +20,7 @@ const CartListing = () => {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [wastage, setWastage] = useState('');
   const user = localStorage.getItem('user');
-  const cartList = useSelector(selectCart)?.items;
+  const cartList = useSelector(selectCart);
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
@@ -191,7 +191,7 @@ const CartListing = () => {
         </div>
       );
     }
-    if (!cartList) {
+    if (cartList?.items?.length === 0) {
       return (
         <div className={`text-center ${NoDataStyles.no_data_image}`}>
           <div className="p-3" style={{ fontSize: '40px' }}>
