@@ -20,7 +20,7 @@ const CartListing = () => {
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
-      transactionDate.setDate(transactionDate.getDate() + 15);
+      transactionDate.setDate(transactionDate.getDate() + 16);
       setDeliveryDate(transactionDate.toISOString().split('T')[0]);
     }
   }, [cartListingItems?.transaction_date]);
