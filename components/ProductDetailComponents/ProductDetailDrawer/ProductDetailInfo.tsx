@@ -7,7 +7,7 @@ import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 
 const ProductDetailInfo = ({ data }: any) => {
-  const cartList = useSelector(selectCart)?.items
+  const cartList = useSelector(selectCart)?.items;
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
   const colour = localStorage.getItem('colour');
@@ -86,7 +86,6 @@ const ProductDetailInfo = ({ data }: any) => {
     };
     if (cust_name !== '' && cust_name !== null) {
       addToCartItem(addToCartParams);
-
     } else {
       alert('Customer Name is Empty');
     }
