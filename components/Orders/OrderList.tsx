@@ -1,8 +1,8 @@
 import React from 'react';
-import useOrderListHook from '../../hooks/OrderListHooks/useOrderListHook';
-import ListingTable from './ListingTable';
 import Image from 'next/image';
+import useOrderListHook from '../../hooks/OrderListHooks/useOrderListHook';
 import image from '../../public/assets/images/no-data.svg';
+import ListingTable from './ListingTable';
 
 const OrderList = () => {
   const { orderListData, isLoading, errorMessage }: any = useOrderListHook();
@@ -13,13 +13,8 @@ const OrderList = () => {
     if (isLoading) {
       return <h2>Loading</h2>;
     }
-    if (orderListData?.length > 0) {
-      return (
-        <div className="container">
-          <h4 className="text-center my-4 fw-bold">Order List</h4>
-          <ListingTable headers={headers} tableData={orderListData} />
-        </div>
-      );
+    if (orderListData?.length > 0 && orderListData !== null) {
+      return <ListingTable headers={headers} tableData={orderListData} />;
     }
 
     if (isLoading === false && orderListData?.length === 0) {
