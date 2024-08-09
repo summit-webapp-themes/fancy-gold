@@ -28,7 +28,7 @@ const ListingTable = ({ headers, tableData }: any) => {
                   <>
                     <tr className={`text-center ${stylesListing.table_row}`} key={index}>
                       <td>
-                        <Link href={`/order-details/${data.name}`} className={stylesListing.redirect_name}>
+                        <Link href={`/order-detail/${data.name}`} className={stylesListing.redirect_name}>
                           {data.name}
                         </Link>
                       </td>
