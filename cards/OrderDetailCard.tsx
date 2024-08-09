@@ -82,15 +82,7 @@ const OrderDetailCard = ({
                 </div>
                 <div className="col-4 text-start">
                   <div className={`${orderDetailStyles.order_detail_block}`}>
-                    <Image
-                      loader={imageLoader}
-                      className={`d-block w-100`}
-                      src={barcodeimage}
-                      alt="Barcode image"
-                      priority
-                      width={200}
-                      height={70}
-                    />
+                    <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={180} height={70} />
                     <p className="mb-0">Product code:{name}</p>
                     {bom_factory_code !== null && <p>BOM Factory Code: {bom_factory_code}</p>}
                     {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
