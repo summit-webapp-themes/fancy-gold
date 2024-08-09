@@ -1,11 +1,19 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import image from '../../../public/assets/images/no-data.svg';
 import ProductsGridView from './ProductsGridView';
+const ProductCardSkeleton = dynamic(() => import('../../../cards/ProductCardSkeleton'));
 import NoDataStyles from '../../../styles/components/noData.module.scss';
-import ProductCardSkeleton from '../../../cards/ProductCardSkeleton';
 
-const ProductGridViewMaster = ({ productListingData, isLoading, handlePaginationBtn, productListTotalCount, handleShow ,wishlistData}: any) => {
+const ProductGridViewMaster = ({
+  productListingData,
+  isLoading,
+  handlePaginationBtn,
+  productListTotalCount,
+  handleShow,
+  wishlistData,
+}: any) => {
   const { query } = useRouter();
   const pageOffset = Number(query?.page) - 1;
   const handlePageClick = (event: any) => {

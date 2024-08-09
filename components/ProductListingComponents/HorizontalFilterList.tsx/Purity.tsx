@@ -5,7 +5,7 @@ import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import { CONSTANTS } from '../../../services/config/app-config';
 import useAddToCartHook from '../../../hooks/CartPageHook/useAddToCart';
-import { callGetAPI } from '../../../utils/utils';
+import { callGetAPI } from '../../../utils/http-methods';
 import horizontalFilterStyles from '../../../styles/components/horizontalFilter.module.scss';
 import PurityWarningModal from './PurityWarningModal';
 
