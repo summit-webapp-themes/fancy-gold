@@ -13,32 +13,39 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
     const newQty = data.order[sizeIndex].qty - 1;
     onQtyChange(sizeIndex, newQty, itemData);
   };
-  const handleQtyChange = (sizeIndex: number, itemData: any,e:any)=>{
+  const handleQtyChange = (sizeIndex: number, itemData: any, e: any) => {
     const newQty = e.target.value;
     onQtyChange(sizeIndex, newQty, itemData);
-  }
+  };
   const handleDelete = (sizeIndex: number) => {
-    onDelete(sizeIndex,data);
+    onDelete(sizeIndex, data);
   };
   return (
     <>
       <div className={`row ${styles.font_12} text-center`}>
-        <div className="col-lg-2 border py-1">Colour</div>
-        <div className="col-lg-3 border py-1">Size(inch)</div>
-        <div className="col-lg-3 border py-1">Qty</div>
-        <div className="col-lg-3 border py-1">Weight</div>
-        <div className="col-lg-1 border py-1"></div>
+        <div className="col-lg-2 col-2 border py-1">Colour</div>
+        <div className="col-lg-3 col-3 border py-1">Size(inch)</div>
+        <div className="col-lg-3 col-3 border py-1">Qty</div>
+        <div className="col-lg-3 col-3 border py-1">Weight</div>
+        <div className="col-lg-1 col-1 border py-1"></div>
       </div>
       {data?.order?.length > 0 &&
         data?.order?.map((item: any, index: number) => (
           <div className={`row ${styles.font_12} text-center `} key={index}>
-            <div className="col-lg-2 border py-1">{item?.colour}</div>
-            <div className="col-lg-3 border py-1">{item?.size}</div>
-            <div className="col-lg-3 border p-0 py-1">
+            <div className="col-lg-2 col-2 border py-1">{item?.colour}</div>
+            <div className="col-lg-3 col-3 border py-1">{item?.size}</div>
+            <div className="col-lg-3 col-3 border p-0 py-1">
               <span onClick={() => handleIncrement(index, data)}>
                 <FaPlus className="px-1 fs-2 " />
               </span>
-              <input type="text" className={styles?.qty_input} value={item?.qty} onChange={(e)=>{handleQtyChange(index, data,e)}}/>
+              <input
+                type="text"
+                className={styles?.qty_input}
+                value={item?.qty}
+                onChange={(e) => {
+                  handleQtyChange(index, data, e);
+                }}
+              />
               <span
                 onClick={() => {
                   handleDecrement(index, data);
@@ -47,8 +54,8 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
                 <FaMinus className="px-1 fs-2" />
               </span>
             </div>
-            <div className="col-lg-3 border py-1">{item?.weight}gm</div>
-            <div className="col-lg-1 border py-1">
+            <div className="col-lg-3 col-3 border py-1">{item?.weight}gm</div>
+            <div className="col-lg-1 col-1 border py-1">
               <RxCross2 onClick={() => handleDelete(index)} />
             </div>
           </div>

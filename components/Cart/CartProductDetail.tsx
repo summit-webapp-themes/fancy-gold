@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
-  const [editWastage, setEsditWastage] = useState(data?.wastage !== '' && data?.wastage !== null ? true : false);
+  const [editWastage, setEsditWastage] = useState(false);
 
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
@@ -15,19 +15,29 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
         <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
       </div>
       <div className="col-lg-5 d-flex justify-content-center">
-        <p>
-          Product Code : <br />
-          {data?.item_code}
-          <br />
-          BOM Factory Code : {data?.bom_factory_code}
-          <br />
-          Weight :{data?.weight_per_unit} gm
-        </p>
+        <div className="mt-2">
+          <Image
+            loader={imageLoader}
+            src={data?.bar_code_image !== null && data?.bar_code_image}
+            width={100}
+            height={30}
+            sizes="100vw"
+            alt="Item Image"
+          />
+          <p>
+            Product Code : <br />
+            {data?.item_code}
+            <br />
+            BOM Factory Code : {data?.bom_factory_code}
+            <br />
+            Weight :{data?.weight_per_unit} gm
+          </p>
+        </div>
       </div>
       <div className="col-lg-3 d-flex justify-content-center">
-        <div className="text-center">
+        <div className="text-center mt-2">
           Wastage :
-          {editWastage && (
+          {editWastage ? (
             <textarea
               className="w-75"
               value={data?.wastage}
@@ -36,6 +46,10 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
               }}
               rows={1}
             />
+          ):(
+            <p className='m-0'>
+              {data?.wastage}
+            </p>
           )}
           {editWastage ? (
             <button

@@ -3,35 +3,55 @@ import Link from 'next/link';
 import Card from 'react-bootstrap/Card';
 import { FaHeart, FaRegHeart } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
 import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
+import { useRouter } from 'next/router';
 
-const ProductCard = ({ data, handleShow , wishlistData}: any) => {
-  const {handleAddToWishList,handleRemoveFromWishList}=useAddToWishlist()
+const ProductCard = ({ data, handleShow, wishlistData }: any) => {
+  const router = useRouter();
+  const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   let wishProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
+  const handleRenderIcon = () => {
+    {
+      wishlistData?.length > 0 &&
+        wishlistData?.map((item: any, index: number) => {
+          if (item.name === data?.name) {
+            wishProducts = item?.name;
+          }
+        });
+    }
+    if (!wishProducts) {
+      return (
+        <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+          <FaRegHeart onClick={() => handleAddToWishList(data)} />
+        </span>
+      );
+    } else {
+      if (router?.asPath?.startsWith('/wishlist')) {
+        return (
+          <span className={`${ProductCardStyles.wishlist_icon} text-secondary `}>
+            <RxCross2 onClick={() => handleRemoveFromWishList(data?.name)} />
+          </span>
+        );
+      } else {
+        return (
+          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
+            <FaHeart onClick={() => handleRemoveFromWishList(data?.name)} />
+          </span>
+        );
+      }
+    }
+  };
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
-        {wishlistData?.length > 0 && 
-          wishlistData?.map((item: any, index: number) => {
-            if (item.name === data?.name) {
-              wishProducts = item?.name;
-            }
-          })}
-        {!wishProducts ? (
-          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-            <FaRegHeart onClick={()=>handleAddToWishList(data)}/>
-          </span>
-        ) : (
-          <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-            <FaHeart onClick={()=>handleRemoveFromWishList(data?.name)}/> 
-          </span>
-        )}
+        {handleRenderIcon()}
         <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">
           <Image
             loader={data.image !== null ? imageLoader : undefined}
@@ -41,6 +61,7 @@ const ProductCard = ({ data, handleShow , wishlistData}: any) => {
             alt="Item Image"
             className={`${ProductCardStyles.product_code_img}`}
             style={{ width: '100%', height: '100%' }}
+            priority={true}
           />
         </Link>
       </div>
