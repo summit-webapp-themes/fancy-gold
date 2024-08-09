@@ -5,7 +5,7 @@ import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import image from '../../public/assets/images/no-data.svg';
 const ProductCard = dynamic(() => import('../../cards/ProductCard'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
-import ProductCardSkeleton from '../../cards/ProductCardSkeleton';
+const ProductCardSkeleton = dynamic(() => import('../../cards/ProductCardSkeleton'));
 import NoDataStyles from '../../styles/components/noData.module.scss';
 
 const WishlistMaster = () => {
