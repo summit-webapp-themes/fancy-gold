@@ -1,8 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import useOrderListHook from '../../hooks/OrderListHooks/useOrderListHook';
 import image from '../../public/assets/images/no-data.svg';
-import ListingTable from './ListingTable';
+const ListingTable = dynamic(() => import('./ListingTable'));
 import ComponentErrorHandler from '../ComponentErrorHandler';
 
 const OrderList = () => {

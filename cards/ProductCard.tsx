@@ -61,6 +61,7 @@ const ProductCard = ({ data, handleShow, wishlistData }: any) => {
             alt="Item Image"
             className={`${ProductCardStyles.product_code_img}`}
             style={{ width: '100%', height: '100%' }}
+            priority={true}
           />
         </Link>
       </div>

@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
@@ -7,10 +8,10 @@ import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import image from '../../public/assets/images/no-data.svg';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import NoDataStyles from '../../styles/components/noData.module.scss';
-import ApiErrorPage from '../ApiErrorPage';
-import CartProductDetail from './CartProductDetail';
-import CartSkeleton from './CartSkeleton';
-import SizeQtyTable from './SizeQtyTable';
+const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
+const CartSkeleton = dynamic(() => import('./CartSkeleton'));
+const CartProductDetail = dynamic(() => import('./CartProductDetail'));
+const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
