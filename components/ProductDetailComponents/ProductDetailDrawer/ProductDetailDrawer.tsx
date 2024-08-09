@@ -66,7 +66,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
   }, [data]);
   return (
-    <Offcanvas show={show} placement="end" onHide={onHide} backdrop={false}>
+    <Offcanvas show={show} placement="end" onHide={onHide} backdrop='static'>
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
         {Object.keys(productDetail).length === 0 ? (
@@ -85,9 +85,9 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
               errorMessage={errorMessage}
               loading={loading}
             />
-            <ProductDetailInfo data={productDetail} />
+            <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData}/>
             <div className="mt-2">
-              <ProductImage image={productDetail?.image} />
+              <ProductImage image={productDetail?.image}  />
             </div>
           </>
         )}
