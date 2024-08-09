@@ -10,6 +10,7 @@ import logo from '../../public/assets/images/logo.png';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import { NavDropdown } from 'react-bootstrap';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
@@ -112,15 +113,28 @@ const Navbar = () => {
                       </a>
                     </Link>
                   </li>
+
                   <li className={stylesNavbar.list_inline_item}>
-                    <Link href="/" legacyBehavior>
-                      <a className={`link-dark ${stylesNavbar.label}`}>
-                        <div className={stylesNavbar.icon_container}>
-                          <FaRegCalendar className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue">Order List</span>
-                        </div>
-                      </a>
-                    </Link>
+                    <div className="text-center">
+                      <FaRegCalendar className="icon " />
+                    </div>
+                    <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                      <Link href="/order-history" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Order List
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Completed Orders
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Cancelled Orders
+                        </NavDropdown.Item>
+                      </Link>
+                    </NavDropdown>
                   </li>
                   <li className={stylesNavbar.list_inline_item}>
                     <Link href="/" legacyBehavior>
