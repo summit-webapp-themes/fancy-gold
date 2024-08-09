@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { CONSTANTS } from '../../../services/config/app-config';
+import { callPostAPI } from '../../../utils/utils';
 import useAddToCartHook from '../../../hooks/CartPageHook/useAddToCart';
 import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
-import styles from '../../../styles/components/productCard.module.scss';
+import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
+import styles from '../../../styles/components/productCard.module.scss';
 
 const ProductDetailInfo = ({ data }: any) => {
   const cartList = useSelector(selectCart)?.items;
+  const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
   const colour = localStorage.getItem('colour');
@@ -52,6 +57,32 @@ const ProductDetailInfo = ({ data }: any) => {
     const { name, value } = event.target;
     setCartProductsData({ ...cartProductsData, [name]: value });
   };
+  const postRejectionNoteAPI = (params: any) => {
+    const version = CONSTANTS?.CUSTOM_API_SDK_VERSION;
+    const method = 'reject_new_arrival_item';
+    const entity = 'product_list';
+    const apiSDKName = CONSTANTS?.CUSTOM_API_SDK;
+    const url = `${CONSTANTS?.API_BASE_URL}${apiSDKName}?version=${version}&method=${method}&entity=${entity}&item_code=${params?.item_code}&rejection_note=${params?.rejection_note}&reject_status=1`;
+    const postNote = callPostAPI(url, undefined, TokenFromStore?.token);
+    return postNote;
+  };
+  const handleRejectionNote = async () => {
+    const params = {
+      item_code: data?.name,
+      rejection_note: cartProductsData?.rejection_note,
+    };
+    if (cartProductsData?.rejection_note && cartProductsData?.rejection_note !== '') {
+      const postNote = await postRejectionNoteAPI(params);
+      setReject(false);
+      setCartProductsData({ ...cartProductsData, rejection_note: '' });
+      if (postNote?.data?.message?.msg === 'success') {
+        toast.success('Product rejected successfully');
+      } else {
+        toast.error('Failed to Reject Product');
+      }
+    }
+  };
+
   const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
@@ -186,7 +217,7 @@ const ProductDetailInfo = ({ data }: any) => {
               value={cartProductsData?.rejection_note}
               placeholder="Enter rejection note"
               className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-              // onChange={(e) => handleRemarkChange(e)}
+              onChange={(e) => handleRemarkChange(e)}
             ></textarea>
           )}
         </div>
@@ -201,7 +232,7 @@ const ProductDetailInfo = ({ data }: any) => {
             Add To Cart
           </button>
         )}
-        <button className={`${productDetailStyles.reject_btn} `} onClick={() => setReject(!reject)}>
+        <button className={`${productDetailStyles.reject_btn} `} onClick={() => (reject ? handleRejectionNote() : setReject(true))}>
           Reject
         </button>
       </div>
