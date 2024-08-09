@@ -10,7 +10,7 @@ import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import styles from '../../../styles/components/productCard.module.scss';
 
-const ProductDetailInfo = ({ data }: any) => {
+const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -73,10 +73,11 @@ const ProductDetailInfo = ({ data }: any) => {
     };
     if (cartProductsData?.rejection_note && cartProductsData?.rejection_note !== '') {
       const postNote = await postRejectionNoteAPI(params);
-      setReject(false);
-      setCartProductsData({ ...cartProductsData, rejection_note: '' });
       if (postNote?.data?.message?.msg === 'success') {
+        setReject(false);
+        setCartProductsData({ ...cartProductsData, rejection_note: '' });
         toast.success('Product rejected successfully');
+        getProductDetailData(data?.name);
       } else {
         toast.error('Failed to Reject Product');
       }
@@ -232,9 +233,13 @@ const ProductDetailInfo = ({ data }: any) => {
             Add To Cart
           </button>
         )}
-        <button className={`${productDetailStyles.reject_btn} `} onClick={() => (reject ? handleRejectionNote() : setReject(true))}>
-          Reject
-        </button>
+        {/* {data?.reject_button_value === 1 ? ( */}
+          {/* <button className={`${productDetailStyles.reject_btn} `} disabled>Rejected</button> */}
+        {/* ) : ( */}
+          <button className={`${productDetailStyles.reject_btn} `} onClick={() => (reject ? handleRejectionNote() : setReject(true))}>
+            Reject
+          </button>
+        {/* )} */}
       </div>
     </div>
   );
