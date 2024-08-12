@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
 import { CONSTANTS } from '../services/config/app-config';
 import noImage from '../public/assets/images/no_image.png';
 import orderDetailStyles from '../styles/components/orderDetail.module.scss';
+import { Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
 
 const OrderDetailCard = ({
   name,
@@ -55,7 +55,6 @@ const OrderDetailCard = ({
   };
 
   const handleKeyDown = (e: any) => {
-    // console.log("enter press", reviewState);
     if (e.key === 'Enter') {
       handleReviewSubmitBtn();
     }
@@ -100,16 +99,7 @@ const OrderDetailCard = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="">
-                      {/* <div>
-                        <button
-                          className={`mt-3 mb-3  ${orderDetailStyles.order_detail_review_btn}`}
-                          onClick={showReviewModal}
-                        >
-                          Check Review
-                        </button>
-                      </div> */}
-                    </div>
+                    ''
                   )}
                 </div>
                 <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
