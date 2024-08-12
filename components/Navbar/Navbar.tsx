@@ -13,7 +13,7 @@ import MobSideNavbar from './MobSideNavbar';
 import { NavDropdown } from 'react-bootstrap';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useFetchCartItems();
   const router = useRouter();
@@ -24,7 +24,6 @@ const Navbar = () => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);
   };
-  const handleLogout = () => {};
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       handleSearch(e);
@@ -141,7 +140,7 @@ const Navbar = () => {
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogout()}>
+                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogoutUser()}>
                             Sign-out
                           </span>
                         </div>
