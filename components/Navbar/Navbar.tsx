@@ -96,7 +96,7 @@ const Navbar = () => {
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
-                          <span className="d-none d-md-inline-block theme-blue">Cart</span>
+                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>
@@ -107,7 +107,7 @@ const Navbar = () => {
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
-                          <span className="d-none d-md-inline-block theme-blue ">Wishlist</span>
+                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
                       </a>
                     </Link>
@@ -135,12 +135,52 @@ const Navbar = () => {
                       </Link>
                     </NavDropdown>
                   </li>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.List_inline_margin}`}>
+                    <div className="text-center">
+                      <FaRegCalendar className="icon " />
+                    </div>
+                    <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                      <Link href="/reports/pending-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Pending Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          In Process Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/review-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Review Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Dispatched Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Due Date Reminder Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Late Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                    </NavDropdown>
+                  </li>
                   <li className={stylesNavbar.list_inline_item}>
                     <Link href="/" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogoutUser()}>
+                          <span
+                            className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}
+                            onClick={() => handleLogoutUser()}
+                          >
                             Sign-out
                           </span>
                         </div>
