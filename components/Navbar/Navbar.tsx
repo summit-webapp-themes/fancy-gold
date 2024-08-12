@@ -16,6 +16,8 @@ const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useFetchCartItems();
+  const user = localStorage.getItem('user');
+  const party_name = localStorage.getItem('party_name');
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -115,7 +117,7 @@ const Navbar = () => {
                   </li>
 
                   <li className={stylesNavbar.list_inline_item}>
-                    <div className="text-center">
+                    <div className={stylesNavbar.icon_container}>
                       <FaRegCalendar className="icon " />
                     </div>
                     <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
@@ -137,16 +139,31 @@ const Navbar = () => {
                     </NavDropdown>
                   </li>
                   <li className={stylesNavbar.list_inline_item}>
-                    <Link href="/" legacyBehavior>
-                      <a className={`link-dark ${stylesNavbar.label}`}>
-                        <div className={stylesNavbar.icon_container}>
-                          <FaArrowRightToBracket className="icon" />
-                          <span className="d-none d-md-inline-block ms-1 theme-blue" onClick={() => handleLogout()}>
-                            Sign-out
-                          </span>
-                        </div>
-                      </a>
-                    </Link>
+                    <div className={stylesNavbar.icon_container}>
+                      <FaArrowRightToBracket className="icon" />
+                    </div>
+                    <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
+                      <Link href="/order-history" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          {user}
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/quick-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Quick Order
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/bulk-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Bulk Order
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Sign Out
+                        </NavDropdown.Item>
+                      </Link>
+                    </NavDropdown>
                   </li>
                 </ul>
               </div>
