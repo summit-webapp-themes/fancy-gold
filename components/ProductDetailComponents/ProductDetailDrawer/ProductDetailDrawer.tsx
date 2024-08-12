@@ -10,9 +10,11 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductDetailInfo from './ProductDetailInfo';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
+import { CONSTANTS } from '../../../services/config/app-config';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
+  const { SUMMIT_API_SDK }: any = CONSTANTS;
   const [productDetail, setProductDetail] = useState<any>({});
   const [variantsData, setVariantsData] = useState<any>([]);
   const [errorMessage, setErrorMessageMsg] = useState('');
@@ -22,7 +24,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     if (data?.variantOf !== null) {
       setLoading(true); // Set loading to true when API call starts
       try {
-        const variantDataAPI = await fetchProductVariant(data?.variantOf, TokenFromStore?.token);
+        const variantDataAPI = await fetchProductVariant(SUMMIT_API_SDK, data?.variantOf, TokenFromStore?.token);
         if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
           setErrorMessageMsg('');
           setVariantsData(variantDataAPI?.data?.message?.data?.variants || []);
@@ -42,7 +44,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
   };
   const getProductDetailData = async (productName: string) => {
-    const productDetailData = await fetchProductDetailData(productName, 'INR', TokenFromStore?.token);
+    const productDetailData = await fetchProductDetailData(SUMMIT_API_SDK, productName, 'INR', TokenFromStore?.token);
     if (productDetailData?.data?.message?.msg === 'Success') {
       setProductDetail(productDetailData?.data?.message?.data[0]);
     }
@@ -50,10 +52,10 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const onHide = () => {
     handleClose();
     setVariantsData([]);
-    setErrorMessageMsg('')
-    setTimeout(()=>{
+    setErrorMessageMsg('');
+    setTimeout(() => {
       setProductDetail([]);
-    },1000)
+    }, 1000);
   };
   useEffect(() => {
     if (data?.productName) {
@@ -71,8 +73,8 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       <Offcanvas.Body>
         {Object.keys(productDetail).length === 0 ? (
           <>
-          <DrawerSkeleton />
-          <ImageSkeleton/>
+            <DrawerSkeleton />
+            <ImageSkeleton />
           </>
         ) : (
           <>
