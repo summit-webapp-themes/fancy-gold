@@ -5,6 +5,7 @@ import useOrderListHook from '../../hooks/OrderListHooks/useOrderListHook';
 import image from '../../public/assets/images/no-data.svg';
 const ListingTable = dynamic(() => import('./ListingTable'));
 import ComponentErrorHandler from '../ComponentErrorHandler';
+import OrderReportLoadingSkeleton from '../OrderReport/OrderReportLoadingSkeleton';
 
 const OrderList = () => {
   const { orderListData, isLoading, errorMessage }: any = useOrderListHook();
@@ -13,7 +14,13 @@ const OrderList = () => {
 
   const showOrderListingSection: any = () => {
     if (isLoading) {
-      return <h2>Loading</h2>;
+      return (
+        <>
+          <div className="container">
+            <OrderReportLoadingSkeleton />
+          </div>
+        </>
+      );
     }
     if (errorMessage) {
       return <ComponentErrorHandler error={errorMessage} />;
