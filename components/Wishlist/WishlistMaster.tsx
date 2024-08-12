@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
-import image from '../../public/assets/images/no-data.svg';
+const  NoDataFound  = dynamic(()=> import('../NoDataFound')) ;
 const ProductCard = dynamic(() => import('../../cards/ProductCard'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 const ProductCardSkeleton = dynamic(() => import('../../cards/ProductCardSkeleton'));
-import NoDataStyles from '../../styles/components/noData.module.scss';
 
 const WishlistMaster = () => {
   const { wishlistData, isLoading } = useWishlist();
@@ -48,14 +46,7 @@ const WishlistMaster = () => {
     }
     if (wishlistData?.length === 0) {
       return (
-        <div className={`text-center ${NoDataStyles.no_data_image}`}>
-          <div className="p-3" style={{ fontSize: '40px' }}>
-            <Image src={image} width={200} height={200} alt="Error Image" />
-          </div>
-          <div className="text-center">
-            <h2 className="theme-blue">Wishlist is Empty !!</h2>
-          </div>
-        </div>
+        <NoDataFound title="Wishlist list is empty !!" message="Add Items to wishlist to view wishlist list." />
       );
     }
   };

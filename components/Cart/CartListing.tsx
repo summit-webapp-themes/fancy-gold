@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
-import image from '../../public/assets/images/no-data.svg';
 import styles from '../../styles/components/cartProductDetail.module.scss';
-import NoDataStyles from '../../styles/components/noData.module.scss';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
 const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
+const  NoDataFound  = dynamic(()=> import('../NoDataFound')) ;
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
@@ -181,14 +179,7 @@ const CartListing = () => {
     }
     if (Object.keys(cartListingItems).length === 0 && cartListingItems.constructor === Object && errorMessage === '') {
       return (
-        <div className={`text-center ${NoDataStyles.no_data_image}`}>
-          <div className="p-3" style={{ fontSize: '40px' }}>
-            <Image src={image} width={200} height={200} alt="Error Image" />
-          </div>
-          <div className="text-center">
-            <h2 className="theme-blue">Cart is Empty !!</h2>
-          </div>
-        </div>
+        <NoDataFound title="Cart list is empty !!" message="Add Items to cart to view cart list." />
       );
     }
   };

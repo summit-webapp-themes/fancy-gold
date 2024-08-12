@@ -233,13 +233,15 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             Add To Cart
           </button>
         )}
-        {/* {data?.reject_button_value === 1 ? ( */}
-          {/* <button className={`${productDetailStyles.reject_btn} `} disabled>Rejected</button> */}
-        {/* ) : ( */}
+        {data?.reject_button_value === 1 ? (
+          <button className={`${productDetailStyles.reject_btn} `} disabled>
+            Rejected
+          </button>
+        ) : (
           <button className={`${productDetailStyles.reject_btn} `} onClick={() => (reject ? handleRejectionNote() : setReject(true))}>
             Reject
           </button>
-        {/* )} */}
+        )}
       </div>
     </div>
   );
