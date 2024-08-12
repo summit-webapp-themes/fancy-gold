@@ -68,7 +68,7 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div>
+              <div className={stylesNavbar.logo}>
                 <Link href="/" legacyBehavior>
                   <a>
                     <Image className="pb-2 mb-1" src={logo} alt="logo" width={50} />
@@ -88,7 +88,7 @@ const Navbar = () => {
                   />
                 </div>
               </div>
-              <div>
+              <div className={stylesNavbar.inlineList}>
                 <ul className="nav  list-inline d-flex justify-content-evenly">
                   <li className={stylesNavbar.list_inline_item}>
                     <Link href="/cart" legacyBehavior>
@@ -135,7 +135,7 @@ const Navbar = () => {
                       </Link>
                     </NavDropdown>
                   </li>
-                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.List_inline_margin}`}>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
                     <div className="text-center">
                       <FaRegCalendar className="icon " />
                     </div>
