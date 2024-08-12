@@ -8,31 +8,37 @@ import ProductCode from '../ProductDetails/ProductCode';
 import ProductImage from '../ProductDetails/ProductImage';
 import ProductVariants from '../ProductDetails/ProductVariants';
 import ProductDetailInfo from './ProductDetailInfo';
+import DrawerSkeleton from './DrawerSkeleton';
+import ImageSkeleton from './ImageSkeleton';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
-  const [productDetail, setProductDetail] = useState<any>();
+  const [productDetail, setProductDetail] = useState<any>({});
   const [variantsData, setVariantsData] = useState<any>([]);
   const [errorMessage, setErrorMessageMsg] = useState('');
   const [attributesData, setAttributesData] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
   const getVariantsData = async () => {
-    if (data?.variantOf) {
-      const variantDataAPI = await fetchProductVariant(data?.variantOf, TokenFromStore?.token);
-      if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
-        if (variantDataAPI?.data?.message?.data?.variants?.length > 0) {
+    if (data?.variantOf !== null) {
+      setLoading(true); // Set loading to true when API call starts
+      try {
+        const variantDataAPI = await fetchProductVariant(data?.variantOf, TokenFromStore?.token);
+        if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
           setErrorMessageMsg('');
-          setVariantsData(variantDataAPI?.data?.message?.data?.variants);
+          setVariantsData(variantDataAPI?.data?.message?.data?.variants || []);
+          setAttributesData(variantDataAPI?.data?.message?.data?.attributes || []);
         } else {
+          setErrorMessageMsg('Error fetching variants');
           setVariantsData([]);
         }
-        if (variantDataAPI?.data?.message?.data?.attributes?.length > 0) {
-          setAttributesData(variantDataAPI?.data?.message?.data?.attributes);
-        } else {
-          setAttributesData([]);
-        }
-      } else {
-        setErrorMessageMsg(variantDataAPI);
+      } catch (error) {
+        setErrorMessageMsg('Error fetching variants');
+        setVariantsData([]);
+      } finally {
+        setLoading(false); // Set loading to false after API call completes
       }
+    } else {
+      setVariantsData([]);
     }
   };
   const getProductDetailData = async (productName: string) => {
@@ -41,30 +47,50 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setProductDetail(productDetailData?.data?.message?.data[0]);
     }
   };
+  const onHide = () => {
+    handleClose();
+    setVariantsData([]);
+    setErrorMessageMsg('')
+    setTimeout(()=>{
+      setProductDetail([]);
+    },1000)
+  };
   useEffect(() => {
     if (data?.productName) {
       getProductDetailData(data?.productName);
     }
     if (data?.variantOf) {
       getVariantsData();
+    } else {
+      setVariantsData([]);
     }
   }, [data]);
   return (
-    <Offcanvas show={show} placement="end" onHide={handleClose}>
+    <Offcanvas show={show} placement="end" onHide={onHide} backdrop={false}>
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
-        <ProductCode data={productDetail} />
-        <ProductVariants
-          productDetail={productDetail}
-          variantsData={variantsData}
-          attributesData={attributesData}
-          getProductDetailData={getProductDetailData}
-          errorMessage={errorMessage}
-        />
-        <ProductDetailInfo data={productDetail} />
-        <div className="mt-2">
-          <ProductImage image={productDetail?.image} />
-        </div>
+        {Object.keys(productDetail).length === 0 ? (
+          <>
+          <DrawerSkeleton />
+          <ImageSkeleton/>
+          </>
+        ) : (
+          <>
+            <ProductCode data={productDetail} />
+            <ProductVariants
+              productDetail={productDetail}
+              variantsData={variantsData}
+              attributesData={attributesData}
+              getProductDetailData={getProductDetailData}
+              errorMessage={errorMessage}
+              loading={loading}
+            />
+            <ProductDetailInfo data={productDetail} />
+            <div className="mt-2">
+              <ProductImage image={productDetail?.image} />
+            </div>
+          </>
+        )}
       </Offcanvas.Body>
     </Offcanvas>
   );

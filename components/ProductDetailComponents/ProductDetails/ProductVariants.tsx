@@ -4,10 +4,10 @@ import variantStyles from '../../../styles/components/productVariants.module.scs
 import styles from '../../../styles/components/productCard.module.scss';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
-const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage }: any) => {
+const ProductVariants = ({ productDetail, variantsData, attributesData, getProductDetailData, errorMessage, loading }: any) => {
   const router = useRouter();
   const { query } = useRouter();
-  const cartList = useSelector(selectCart)?.items
+  const cartList = useSelector(selectCart)?.items;
   const [showVariants, setShowVariants] = useState([]);
   const getVariantStrings = () => {
     return (
@@ -44,14 +44,23 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
 
   return (
     <>
-      {showVariants?.length > 0 && (
-        <label className={styles.productCode}>
-          <b>Product Variants:</b>
-        </label>
+      {loading ? (
+        <div className={styles.productCode}>
+          <span className="spinner-grow spinner-grow-sm px-2" role="status" aria-hidden="true"></span>
+         Product Variants Loading...
+        </div>
+      ) : (
+        <>
+          {showVariants?.length > 0 && (
+            <label className={styles.productCode}>
+              <b>Product Variants:</b>
+            </label>
+          )}
+        </>
       )}
       <div className="d-flex flex-wrap mb-2">
         {errorMessage?.length > 0 ? (
-          <p className="text-danger">Couldn't load Product variants. {errorMessage}</p>
+          <p className="text-danger m-0">Couldn't load Product variants. {errorMessage}</p>
         ) : (
           showVariants !== null &&
           showVariants?.length > 0 &&
@@ -62,8 +71,8 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
                 variant.variant_code === productDetail?.name
                   ? variantStyles.variant_btn_active
                   : isVariantInCart(variant.variant_code)
-                  ? variantStyles.variant_btn_in_cart
-                  : variantStyles.variant_btn
+                    ? variantStyles.variant_btn_in_cart
+                    : variantStyles.variant_btn
               }
               onClick={(e) => handleProductVariant(variant?.variant_code)}
             >

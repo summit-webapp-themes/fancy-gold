@@ -45,8 +45,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               <br />
               We expect them to be done soon.
             </p>
-            <div className={`${ErrorBoundaryStyles.error_btns}`}>
-              <a href="/">Refresh Page</a>
+            <div className={`${ErrorBoundaryStyles.error_btns}`} onClick={()=>location.reload()}>
+              <a>Refresh Page</a>
             </div>
           </div>
         </div>
