@@ -1,17 +1,7 @@
 import React from 'react'
 
-const BulkOrderInputFields = ({formData}:any) => {
-   const purityList : any[]=[
-    {
-        name:'22KT'
-    },
-    {
-        name:'22KT'
-    },
-    {
-        name:'22KT'
-    },
-    ]
+const BulkOrderInputFields = ({formData,purityList,handleChange}:any) => {
+
   return (
     <div className="row">
     <div className="col-md-6 col-lg-6 col-xl-6 col-xxl-6 ">
@@ -22,8 +12,8 @@ const BulkOrderInputFields = ({formData}:any) => {
         <select
           name={`purity`}
           className="w-100 input-type-select px-1 form-select"
-        //   value={formData?.purity}
-        //   onChange={handleChange}
+          value={formData?.purity}
+          onChange={handleChange}
         >
           <option value="" className="px-1">
             Select purity
@@ -40,8 +30,8 @@ const BulkOrderInputFields = ({formData}:any) => {
             type="text"
             name="description"
             className="w-100 px-1 form-control"
-            // value={formData?.description}
-            // onChange={handleChange}
+            value={formData?.description}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -53,13 +43,13 @@ const BulkOrderInputFields = ({formData}:any) => {
           type="text"
           name="customer"
           className="w-100 px-1 form-control"
-        //   value={formData?.customer}
-        //   onChange={handleChange}
-        //   onKeyDown={(e: any) => {
-        //     if (e.key === "Enter") {
-        //       handleCustomerName();
-        //     }
-        //   }}
+          value={formData?.customer}
+          onChange={handleChange}
+          // onKeyDown={(e: any) => {
+          //   if (e.key === "Enter") {
+          //     handleCustomerName();
+          //   }
+          // }}
         />
       </div>
 
@@ -71,8 +61,8 @@ const BulkOrderInputFields = ({formData}:any) => {
           type="date"
           name="transaction_date"
           className="w-100 form-control input-type-select px-1"
-        //   value={formData?.transaction_date}
-        //   onChange={handleChange}
+          value={formData?.transaction_date}
+          onChange={handleChange}
         />
       </div>
     </div>

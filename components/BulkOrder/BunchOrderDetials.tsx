@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from '../../styles/components/bulkOrder.module.scss'
 
-const BunchOrderDetials = ({formData}:any) => {
+const BunchOrderDetials = ({formData,errorMsg,
+  addBunchOrderRow,
+  deleteBunchOrderRow,
+  handleChangeArray,
+  isBunchWeightDisabled,}:any) => {
   return (
     <>
       <div className="row mt-4 mb-2">
@@ -9,7 +13,7 @@ const BunchOrderDetials = ({formData}:any) => {
           <p className="fs-14"><b>Bunch Orders Details</b></p>
         </div>
         <div className="col-md-3 d-flex justify-content-end">
-          <button className={styles.add_more_btn} >
+          <button className={styles.add_more_btn} onClick={addBunchOrderRow} >
             Add More
           </button>
         </div>
@@ -62,7 +66,7 @@ const BunchOrderDetials = ({formData}:any) => {
                     name={`description${index}`}
                     value={row?.description}
                     className={`form-control ${styles.table_desc}`}
-                    // onChange={(e) => handleChangeArray(e, index, "description")}
+                    onChange={(e) => handleChangeArray(e, index, "description")}
                   />
                 </td>
 
@@ -101,9 +105,9 @@ const BunchOrderDetials = ({formData}:any) => {
                     name={`weight_per_unit${index}`}
                     value={row.weight_per_unit}
                     className={`form-control ${styles.table_desc}`}
-                    // onChange={(e) =>
-                    //   handleChangeArray(e, index, "weight_per_unit")
-                    // }
+                    onChange={(e) =>
+                      handleChangeArray(e, index, "weight_per_unit")
+                    }
                     disabled
                   />
                 </td>
@@ -117,29 +121,29 @@ const BunchOrderDetials = ({formData}:any) => {
                         ? row?.bunch_weight
                         : row?.estimate_bunch_weight
                     }
-                    // onChange={(e) =>
-                    //   handleChangeArray(e, index, "estimate_bunch_weight")
-                    // }
+                    onChange={(e) =>
+                      handleChangeArray(e, index, "estimate_bunch_weight")
+                    }
                     disabled
                   />
                 </td>
                 <td className="text-end p-2">
                   <button
                     className={styles.delete_btn}
-                    // onClick={() => deleteBunchOrderRow(index)}
+                    onClick={() => deleteBunchOrderRow(index)}
                   >
                     Delete
                   </button>
                 </td>
               </tr>
             ))}
-            {/* {errorMsg && (
+            {errorMsg && (
               <tr>
                 <td colSpan={7} className="w-100 text-danger text-center">
                   {errorMsg}
                 </td>
               </tr>
-            )} */}
+            )}
           </tbody>
           {/* {totalEstimateWeight !== 0 && (
             <tfoot>
