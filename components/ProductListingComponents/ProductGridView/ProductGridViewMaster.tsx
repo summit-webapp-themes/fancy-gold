@@ -1,10 +1,9 @@
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import image from '../../../public/assets/images/no-data.svg';
 import ProductsGridView from './ProductsGridView';
 const ProductCardSkeleton = dynamic(() => import('../../../cards/ProductCardSkeleton'));
-import NoDataStyles from '../../../styles/components/noData.module.scss';
+const  NoDataFound  = dynamic(()=> import('../../NoDataFound')) ;
+
 
 const ProductGridViewMaster = ({
   productListingData,
@@ -46,16 +45,7 @@ const ProductGridViewMaster = ({
       );
     }
     if (productListingData?.length === 0) {
-      return (
-        <div className={`text-center ${NoDataStyles.no_data_image}`}>
-          <div className="p-3" style={{ fontSize: '40px' }}>
-            <Image src={image} width={200} height={200} alt="Error Image" />
-          </div>
-          <div className="text-center">
-            <h2 className="theme-blue">Sorry, No Data Found</h2>
-          </div>
-        </div>
-      );
+      return <NoDataFound title="No Record Found !!" message="We couldn't find what you searched for. Try searching again." />;
     }
   };
   return <>{handleDataRendering()}</>;
