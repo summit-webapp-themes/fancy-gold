@@ -10,6 +10,7 @@
   width: 60%;
   padding-bottom: 1.0625rem;
   text-transform: uppercase;
+  flex: 2;
 }
 .label {
   color: #1a1a49 !important;
@@ -34,7 +35,7 @@
   font-size: 12px;
   font-weight: 600;
 }
-.List_inline_margin {
+.list_inline_margin {
 margin-top: -2px;
 }
 .badge_warning[href] {
@@ -58,6 +59,13 @@ margin-top: -2px;
 .order_list_items {
   padding: 4px !important;
   font-size: 14px;
+  padding: 3px;
+}
+.logo {
+  flex:1
+}
+.inlineList {
+  flex:2
 }
 @media (max-width: 1070px) {
   .search_bar {
@@ -92,5 +100,5 @@ margin-top: -2px;
   }
 
 .order_list_items {
-  padding: 4px !important;
+  padding: 3px 7px  !important;
 }
