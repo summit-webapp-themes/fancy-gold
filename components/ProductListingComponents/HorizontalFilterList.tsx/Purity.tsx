@@ -38,6 +38,7 @@ const Purity = () => {
   };
   useEffect(() => {
     fetchValues();
+    localStorage.setItem("localPurity", (selectedPurity));
   }, []);
   useEffect(() => {
     if (query.filter) {

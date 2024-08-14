@@ -2,6 +2,7 @@ import React from 'react';
 import useQuickOrder from '../../hooks/QuickOrder/quick-order-hook';
 import Purity from '../ProductListingComponents/HorizontalFilterList.tsx/Purity';
 import SearchableDropdown from '../SearchableDropdown';
+import QuickOrderCard from './QuickOrderCard';
 
 const QuickOrderMaster = () => {
   const {
@@ -17,15 +18,12 @@ const QuickOrderMaster = () => {
     handleCustomerName,
     refCodesList,
     disableInputField,
-    QuickOrderNotification,
-    setQuickOrderNotification,
-    notificationMessage,
   }: any = useQuickOrder();
   return (
     <div className="container my-3">
       <h2 className="theme-blue text-center my-3">Order by Design Name</h2>
 
-      <div className="text-center mt-5" style={{height:'40px'}}>
+      <div className="text-center mt-5" style={{ height: '40px' }}>
         <Purity />
       </div>
       <div className="mt-4 row justify-content-center">
@@ -50,7 +48,12 @@ const QuickOrderMaster = () => {
             </div>
 
             <div className="col-lg-3 col-md-3 col-6">
-              <SearchableDropdown option={''} onSelect={''} />
+              <SearchableDropdown
+                dropdownData={refCodesList}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                disabled={disableInputField}
+              />
             </div>
 
             <div className="col-lg-3 col-md-3 col-12 ">
@@ -104,18 +107,12 @@ const QuickOrderMaster = () => {
                     </tr>
                   </thead>
                   <tbody className="border-0">
-                    {/* {quickOrderData?.length > 0 &&
+                    {quickOrderData?.length > 0 &&
                       quickOrderData.map((cardData: any, index: any) => {
                         return (
-                          <QuickOrderCard
-                            quickOrderData={cardData}
-                            index={index}
-                            handleDltQuickOrderRecord={
-                              handleDltQuickOrderRecord
-                            }
-                          />
+                          <QuickOrderCard quickOrderData={cardData} index={index} handleDltQuickOrderRecord={handleDltQuickOrderRecord} />
                         );
-                      })} */}
+                      })}
                   </tbody>
                 </table>
               </div>

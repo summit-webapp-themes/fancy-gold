@@ -2,7 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaAlignJustify, FaArrowRightToBracket, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
+import { NavDropdown } from 'react-bootstrap';
+import { FaUserCircle } from 'react-icons/fa';
+import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
@@ -10,7 +12,6 @@ import logo from '../../public/assets/images/logo.png';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
-import { NavDropdown } from 'react-bootstrap';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
@@ -176,7 +177,7 @@ const Navbar = () => {
                   </li>
                   <li className={stylesNavbar.list_inline_item}>
                     <div className={stylesNavbar.icon_container}>
-                      <FaArrowRightToBracket className="icon" />
+                      <FaUserCircle  className="icon" />
                     </div>
                     <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
                       <Link href="/order-history" passHref className="text-decoration-none">
