@@ -13,7 +13,7 @@ import MobSideNavbar from './MobSideNavbar';
 import { NavDropdown } from 'react-bootstrap';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
   const { wishlistCount } = useWishlist();
   const { cartCount } = useFetchCartItems();
   const user = localStorage.getItem('user');
@@ -26,7 +26,6 @@ const Navbar = () => {
     e.preventDefault();
     router.push('/product-detail/' + searchTerm);
   };
-  const handleLogout = () => {};
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       handleSearch(e);
@@ -71,7 +70,7 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div>
+              <div className={stylesNavbar.logo}>
                 <Link href="/" legacyBehavior>
                   <a>
                     <Image className="pb-2 mb-1" src={logo} alt="logo" width={50} />
@@ -91,7 +90,7 @@ const Navbar = () => {
                   />
                 </div>
               </div>
-              <div>
+              <div className={stylesNavbar.inlineList}>
                 <ul className="nav  list-inline d-flex justify-content-evenly">
                   <li className={stylesNavbar.list_inline_item}>
                     <Link href="/cart" legacyBehavior>
@@ -99,7 +98,7 @@ const Navbar = () => {
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
-                          <span className="d-none d-md-inline-block theme-blue">Cart</span>
+                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>
@@ -110,7 +109,7 @@ const Navbar = () => {
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
-                          <span className="d-none d-md-inline-block theme-blue ">Wishlist</span>
+                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
                       </a>
                     </Link>
@@ -134,6 +133,43 @@ const Navbar = () => {
                       <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
                         <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
                           Cancelled Orders
+                        </NavDropdown.Item>
+                      </Link>
+                    </NavDropdown>
+                  </li>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
+                    <div className="text-center">
+                      <FaRegCalendar className="icon " />
+                    </div>
+                    <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                      <Link href="/reports/pending-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Pending Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          In Process Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/review-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Review Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Dispatched Order Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Due Date Reminder Report
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                          Late Order Report
                         </NavDropdown.Item>
                       </Link>
                     </NavDropdown>

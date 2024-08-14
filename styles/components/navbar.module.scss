@@ -10,6 +10,7 @@
   width: 60%;
   padding-bottom: 1.0625rem;
   text-transform: uppercase;
+  flex: 2;
 }
 .label {
   color: #1a1a49 !important;
@@ -23,13 +24,19 @@
   align-items: center;
 }
 .badge {
-  width: 1.5rem;
   background: red;
-  position: absolute;
   border-radius: 50% !important;
   bottom: 35px !important;
-  right: 15px !important;
+  height: 1.1rem;
+  position: absolute;
+  right: 18px !important;
   text-align: center;
+  width: 1.1rem;
+  font-size: 12px;
+  font-weight: 600;
+}
+.list_inline_margin {
+margin-top: -2px;
 }
 .badge_warning[href] {
   background-color: #c67605;
@@ -41,7 +48,25 @@
 .list_inline_item {
   width: 90px;
 }
-
+.order_list_dropdown {
+  text-align: center;
+  font-size: 14px;
+}
+.order_list_dropdown a {
+  padding: 0px;
+  color:#1a1a49 !important
+  }
+.order_list_items {
+  padding: 4px !important;
+  font-size: 14px;
+  padding: 3px;
+}
+.logo {
+  flex:1
+}
+.inlineList {
+  flex:2
+}
 @media (max-width: 1070px) {
   .search_bar {
     width: 45%;
@@ -74,5 +99,5 @@
 }
 
 .order_list_items {
-  padding: 4px !important;
+  padding: 3px 7px  !important;
 }

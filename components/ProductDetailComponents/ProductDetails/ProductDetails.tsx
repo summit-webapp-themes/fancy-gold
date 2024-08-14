@@ -37,7 +37,7 @@ const ProductDetails = ({ productDetailData, productVariantData, fetchProductDet
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo data={productDetailData} />
+              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI}/>
             </div>
           </div>
         </div>
