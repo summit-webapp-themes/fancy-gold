@@ -2,8 +2,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import ProductsGridView from './ProductsGridView';
 const ProductCardSkeleton = dynamic(() => import('../../../cards/ProductCardSkeleton'));
-const  NoDataFound  = dynamic(()=> import('../../NoDataFound')) ;
-
+const NoDataFound = dynamic(() => import('../../NoDataFound'));
 
 const ProductGridViewMaster = ({
   productListingData,
