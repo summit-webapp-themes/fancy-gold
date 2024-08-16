@@ -6,7 +6,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
-import useNavbar from '../../hooks/GeneralHooks/NavbarHooks/NavbarHook';
+import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
@@ -177,7 +177,7 @@ const Navbar = () => {
                   </li>
                   <li className={stylesNavbar.list_inline_item}>
                     <div className={stylesNavbar.icon_container}>
-                      <FaUserCircle  className="icon" />
+                      <FaUserCircle className="icon" />
                     </div>
                     <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
                       <Link href="/order-history" passHref className="text-decoration-none">

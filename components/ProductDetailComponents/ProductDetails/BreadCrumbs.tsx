@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import UseBreadCrumbsHook from '../../../hooks/GeneralHooks/breadcrumbs-hook';
+import UseBreadCrumbsHook from '../../../hooks/GeneralHooks/useBreadcrumbs';
 import ComponentErrorHandler from '../../ComponentErrorHandler';
 import BreadcrumbsStyles from '../../../styles/components/breadcrumbs.module.scss';
 const BreadCrumbs = () => {
