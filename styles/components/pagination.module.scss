@@ -13,10 +13,24 @@
   border-radius: 20px;
   border: 1px solid gray;
   color: gray;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.paginationBttns a:hover {
+.paginationBttns a:not(.paginationDisabled):hover {
+  color: white !important;
+  background-color: #1a1a49;
+}
+
+.paginationBttns a.paginationDisabled {
+  color: gray !important;
+  background-color: #fff !important;
+  cursor: not-allowed !important;
+  pointer-events: none; /* Prevent hover events */
+}
+
+.previous .previousBttn:not(.paginationDisabled):hover,
+.next .nextBttn:not(.paginationDisabled):hover {
   color: white !important;
   background-color: #1a1a49;
 }
@@ -26,6 +40,7 @@
   background-color: #1a1a49;
   border: 1px solid #1a1a49;
 }
+
 .previous .previousBttn {
   padding: 10px !important;
   margin: 8px !important;
@@ -42,4 +57,9 @@
   border: 1px solid gray;
   color: gray;
   cursor: pointer;
+}
+.previousBttn:not(.paginationDisabled):hover,
+.nextBttn:not(.paginationDisabled):hover {
+  color: red !important;
+  background-color: white;
 }

@@ -15,14 +15,15 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
-  const colour = localStorage.getItem('colour');
+  const colour:any = localStorage.getItem('colour');
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const initialState = {
-    colour: 'Yellow',
+    colour: colour,
     size: '',
     quantity: '',
   };
+  console.log(initialState,'colour')
   const [sizeTable, setSizeTable] = useState([initialState]);
   const [reject, setReject] = useState(false);
   const [cartProductsData, setCartProductsData] = useState({
@@ -157,10 +158,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data?.stock_uom}</div>
+            {/* {console.log(row?.colour,'color')} */}
             <div className="col-3 border py-1">
               <select
                 name="colour"
-                value={row.colour}
+                value={row?.colour || colour}
                 onChange={(e) => handleInputChange(index, e)}
                 className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
               >
