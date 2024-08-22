@@ -20,6 +20,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const [errorMessage, setErrorMessageMsg] = useState('');
   const [attributesData, setAttributesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false); // Loading state
+  console.log(productDetail,'productDetail')
   const getVariantsData = async () => {
     if (data?.variantOf !== null) {
       setLoading(true); // Set loading to true when API call starts
@@ -71,7 +72,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     <Offcanvas show={show} placement="end" onHide={onHide} backdrop="static">
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
-        {Object?.keys(productDetail).length === 0 ? (
+        {productDetail && Object?.keys(productDetail).length === 0 ? (
           <>
             <DrawerSkeleton />
             <ImageSkeleton />

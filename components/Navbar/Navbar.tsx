@@ -5,18 +5,21 @@ import { useEffect, useState } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
+import { clearToken } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
+  const dispatch = useDispatch();
   const { wishlistCount } = useWishlist();
-  const { cartCount } = useFetchCartItems();
+  const { cartCount, cartListingItems } = useFetchCartItems();
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const router = useRouter();
@@ -25,7 +28,7 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const handleSearch = (e: any) => {
     e.preventDefault();
-    router.push('/product-detail/' + searchTerm);
+    router.push('/product/' + searchTerm);
   };
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
@@ -41,7 +44,16 @@ const Navbar = () => {
     setIsSidebarOpen(isOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(clearToken());
+  };
+console.log(cartListingItems?.cust_name,'cart')
   useEffect(() => {
+    // store customer name into localstorage
+    if(cartListingItems){
+      localStorage.setItem("cust_name", (cartListingItems?.cust_name));
+    }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
     };
@@ -195,7 +207,7 @@ const Navbar = () => {
                           Bulk Order
                         </NavDropdown.Item>
                       </Link>
-                      <Link href="/" passHref className="text-decoration-none">
+                      <Link href="/login" passHref className="text-decoration-none" onClick={handleLogout}>
                         <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
                           Sign Out
                         </NavDropdown.Item>
