@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { CONSTANTS } from '../../services/config/app-config';
 import { get_access_token } from '../../store/slices/auth/token-login-slice';
-import SearchableDropdown from '../SearchableDropdown';
+import { callGetAPI } from '../../utils/http-methods';
 import Purity from '../ProductListingComponents/HorizontalFilterList.tsx/Purity';
-import { callGetAPI, executeGETAPI } from '../../utils/http-methods';
-import axios from 'axios';
+import SearchableDropdown from '../SearchableDropdown';
 
 const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
   const { API_BASE_URL, CUSTOM_API_SDK } = CONSTANTS;
