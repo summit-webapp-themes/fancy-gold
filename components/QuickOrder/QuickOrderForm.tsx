@@ -5,11 +5,11 @@ import { CONSTANTS } from '../../services/config/app-config';
 import { get_access_token } from '../../store/slices/auth/token-login-slice';
 import SearchableDropdown from '../SearchableDropdown';
 import Purity from '../ProductListingComponents/HorizontalFilterList.tsx/Purity';
-import { executeGETAPI } from '../../utils/http-methods';
+import { callGetAPI, executeGETAPI } from '../../utils/http-methods';
 import axios from 'axios';
 
 const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
-  const { SUMMIT_API_SDK } = CONSTANTS;
+  const { API_BASE_URL, CUSTOM_API_SDK } = CONSTANTS;
   const tokenFromStore = useSelector(get_access_token);
   const [inputValue, setInputValue] = useState('');
   const [qtySizeInput, setQtySizeInput] = useState('');
@@ -29,21 +29,17 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
     }
   };
 
-  const getCustomerItemAPI = async (appName: any, token: string, customer_name: string) => {
-    let additionalParams = { ...(customer_name && { customer_name }) };
-    const response = await executeGETAPI(
-      appName,
-      'customer-item-api',
-      'get_customer_item_by_customer_name_and_item_code',
-      'customer_item_reference_code_api',
-      token,
-      additionalParams
-    );
+  const getCustomerItemAPI = async () => {
+    const version = CONSTANTS.CUSTOM_API_SDK_VERSION;
+    const method = 'get_customer_item_by_customer_name_and_item_code';
+    const entity = 'customer_item_reference_code_api';
+    const url = `${API_BASE_URL}${CUSTOM_API_SDK}?version=${version}&method=${method}&entity=${entity}&customer_name=${customerName}`;
+    const response = callGetAPI(url, tokenFromStore?.token);
     return response;
   };
 
   const handleCustomerName = async () => {
-    let refCodesList = await getCustomerItemAPI(SUMMIT_API_SDK, tokenFromStore?.token, customerName);
+    let refCodesList = await getCustomerItemAPI();
     if (refCodesList?.data?.message?.msg === 'success' && refCodesList?.data?.message?.data?.length > 0) {
       setRefCodesList(refCodesList?.data?.message?.data);
       setDisabledInputField(false);
