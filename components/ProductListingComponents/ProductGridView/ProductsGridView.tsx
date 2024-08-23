@@ -4,7 +4,6 @@ import paginationStyle from '../../../styles/components/pagination.module.scss';
 
 const ProductsGridView = ({ productListingData, handlePageClick, productListTotalCount, pageOffset, handleShow, wishlistData }: any) => {
   const isNextButtonDisabled: boolean = parseInt((productListTotalCount / 12).toString(), 10) === pageOffset;
-  console.log(isNextButtonDisabled,'disable')
   return (
     <>
       {productListingData.map((item: any, index: any) => (  

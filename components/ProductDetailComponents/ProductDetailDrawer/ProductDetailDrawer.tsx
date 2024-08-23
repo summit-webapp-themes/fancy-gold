@@ -82,7 +82,6 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setVariantsData([]);
     }
   }, [data]);
-  console.log(productDetail,'productDetail')
   return (
     <Offcanvas show={show} placement="end" onHide={onHide} backdrop="static">
       <Offcanvas.Header closeButton />
