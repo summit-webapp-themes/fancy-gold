@@ -15,7 +15,7 @@ import ProductDetailInfo from './ProductDetailInfo';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
-  const { SUMMIT_API_SDK }: any = CONSTANTS;
+  const { SUMMIT_APP_CONFIG }: any = CONSTANTS;
   const [productDetail, setProductDetail] = useState<any>({});
   const [variantsData, setVariantsData] = useState<any>([]);
   const [errorMessage, setErrorMessageMsg] = useState('');
@@ -26,7 +26,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     if (data?.variantOf !== null) {
       setLoading(true); // Set loading to true when API call starts
       try {
-        const variantDataAPI = await fetchProductVariant(SUMMIT_API_SDK, data?.variantOf, TokenFromStore?.token);
+        const variantDataAPI = await fetchProductVariant(SUMMIT_APP_CONFIG, data?.variantOf, TokenFromStore?.token);
         if (variantDataAPI?.status === 200 && variantDataAPI?.data?.message?.msg === 'success') {
           setErrorMessageMsg('');
           setVariantsData(variantDataAPI?.data?.message?.data?.variants || []);
@@ -46,8 +46,12 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
   };
   const getProductDetailData = async (productName: string) => {
+    const requestParams = {
+      item: productName,
+      currency: 'INR',
+    };
     setDetailLoading(true);
-    const productDetailData = await fetchProductDetailData(SUMMIT_API_SDK, productName, 'INR', TokenFromStore?.token);
+    const productDetailData = await fetchProductDetailData(SUMMIT_APP_CONFIG, requestParams, TokenFromStore?.token);
     if (productDetailData?.data?.message?.msg === 'Success') {
       if (productDetailData?.data?.message?.data?.length !== 0) {
         setProductDetail(productDetailData?.data?.message?.data[0]);
