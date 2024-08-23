@@ -3,14 +3,15 @@ import { Offcanvas } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import fetchProductDetailData from '../../../services/api/product-detail-page-apis/get-product-detail';
 import fetchProductVariant from '../../../services/api/product-detail-page-apis/get-product-variants';
+import { CONSTANTS } from '../../../services/config/app-config';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
+import NoDataFound from '../../NoDataFound';
 import ProductCode from '../ProductDetails/ProductCode';
 import ProductImage from '../ProductDetails/ProductImage';
 import ProductVariants from '../ProductDetails/ProductVariants';
-import ProductDetailInfo from './ProductDetailInfo';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
-import { CONSTANTS } from '../../../services/config/app-config';
+import ProductDetailInfo from './ProductDetailInfo';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
@@ -20,7 +21,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const [errorMessage, setErrorMessageMsg] = useState('');
   const [attributesData, setAttributesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  console.log(productDetail,'productDetail')
+  const [detailLoading, setDetailLoading] = useState(false);
   const getVariantsData = async () => {
     if (data?.variantOf !== null) {
       setLoading(true); // Set loading to true when API call starts
@@ -45,10 +46,19 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
   };
   const getProductDetailData = async (productName: string) => {
+    setDetailLoading(true);
     const productDetailData = await fetchProductDetailData(SUMMIT_API_SDK, productName, 'INR', TokenFromStore?.token);
     if (productDetailData?.data?.message?.msg === 'Success') {
-      setProductDetail(productDetailData?.data?.message?.data[0]);
+      if (productDetailData?.data?.message?.data?.length !== 0) {
+        setProductDetail(productDetailData?.data?.message?.data[0]);
+        setDetailLoading(false);
+      }else{
+
+        setProductDetail({});
+        setDetailLoading(false);
+      }
     }
+    setDetailLoading(false)
   };
   const onHide = () => {
     handleClose();
@@ -68,16 +78,17 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setVariantsData([]);
     }
   }, [data]);
+  console.log(productDetail,'productDetail')
   return (
     <Offcanvas show={show} placement="end" onHide={onHide} backdrop="static">
       <Offcanvas.Header closeButton />
       <Offcanvas.Body>
-        {productDetail && Object?.keys(productDetail).length === 0 ? (
+        {detailLoading ? (
           <>
             <DrawerSkeleton />
             <ImageSkeleton />
           </>
-        ) : (
+        ) : Object?.keys(productDetail).length !== 0 ? (
           <>
             <ProductCode data={productDetail} />
             <ProductVariants
@@ -93,7 +104,10 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
               <ProductImage image={productDetail?.image} />
             </div>
           </>
+        ) : (
+          <NoDataFound title="Details Not Found!" message="Sorry for inconvenience. Please try again later." />
         )}
+        
       </Offcanvas.Body>
     </Offcanvas>
   );
