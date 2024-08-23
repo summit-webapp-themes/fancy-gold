@@ -51,10 +51,6 @@ const Navbar = () => {
     dispatch(clearToken());
   };
   useEffect(() => {
-    // store customer name into localstorage
-    if (cartListingItems) {
-      localStorage.setItem('cust_name', cartListingItems?.cust_name);
-    }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
     };
