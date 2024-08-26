@@ -15,11 +15,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
   const cust_name = localStorage.getItem('cust_name');
-  const colour = localStorage.getItem('colour');
+  const colour: any = localStorage.getItem('colour');
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const initialState = {
-    colour: 'Yellow',
+    colour: colour,
     size: '',
     quantity: '',
   };
@@ -58,10 +58,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     setCartProductsData({ ...cartProductsData, [name]: value });
   };
   const postRejectionNoteAPI = (params: any) => {
-    const version = CONSTANTS?.CUSTOM_API_SDK_VERSION;
+    const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
     const entity = 'product_list';
-    const apiSDKName = CONSTANTS?.CUSTOM_API_SDK;
+    const apiSDKName = CONSTANTS?.ARC_APP_CONFIG?.app_name;
     const url = `${CONSTANTS?.API_BASE_URL}${apiSDKName}?version=${version}&method=${method}&entity=${entity}&item_code=${params?.item_code}&rejection_note=${params?.rejection_note}&reject_status=1`;
     const postNote = callPostAPI(url, undefined, TokenFromStore?.token);
     return postNote;
@@ -160,7 +160,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             <div className="col-3 border py-1">
               <select
                 name="colour"
-                value={row.colour}
+                value={row?.colour || colour}
                 onChange={(e) => handleInputChange(index, e)}
                 className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
               >

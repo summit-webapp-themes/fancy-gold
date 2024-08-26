@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -9,8 +9,24 @@ import SliderNextArrow from './SliderNextArrow';
 import SliderPrevArrow from './SliderPrevArrow';
 import ProductCard from '../../../cards/ProductCard';
 import SliderStyles from '../../../styles/components/sliderSection.module.scss';
+import ProductDetailDrawer from '../../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
+import { useSelector } from 'react-redux';
+import { selectWishlist } from '../../../store/slices/wishlist-slices/wishlist-local-slice';
 
 const SliderSection = ({ data }: any) => {
+  const wishlistData = useSelector(selectWishlist)?.items;
+
+  const [show, setShow] = useState(false);
+  const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
+
+  const handleClose = () => {
+    setDrawerData({ productName: '', variantOf: '' });
+    setShow(false);
+  };
+  const handleShow = (productName: string, variantOf: string) => {
+    setDrawerData((prev: any) => ({ ...prev, productName: productName, variantOf: variantOf }));
+    setShow(true);
+  };
   useEffect(() => {
     AOS.init();
   }, []);
@@ -81,10 +97,11 @@ const SliderSection = ({ data }: any) => {
                       key={index}
                       className={`col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-4 ${SliderStyles.productCard_slider_wrapper}`}
                     >
-                      <ProductCard data={item} />
+                      <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} />
                     </div>
                   ))}
               </Slider>
+              <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
             </div>
           </div>
         </>

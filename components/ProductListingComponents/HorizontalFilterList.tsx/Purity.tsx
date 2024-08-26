@@ -38,7 +38,7 @@ const Purity = () => {
   };
   useEffect(() => {
     fetchValues();
-    localStorage.setItem("localPurity", (selectedPurity));
+    localStorage.setItem('localPurity', selectedPurity);
   }, []);
   useEffect(() => {
     if (query.filter) {
@@ -63,6 +63,7 @@ const Purity = () => {
   const handleSelectPurity = (purityValue: string) => {
     if (cartData?.cartCount <= 0) {
       setSelectedPurity(purityValue);
+
       let updatedFilters;
       if (selectedFilters?.length > 0) {
         updatedFilters = selectedFilters.map((filter: any) => {
@@ -76,21 +77,33 @@ const Purity = () => {
       }
       setSelectedFilters(updatedFilters);
 
-      const encodedFilters = encodeURIComponent(JSON.stringify(updatedFilters));
-      router.push(
-        {
-          pathname: router.pathname,
-          query: { ...router.query, filter: encodedFilters, page: 1 },
-        },
-        undefined,
-        { shallow: true }
-      );
+      const filterString = updatedFilters?.length > 0 ? `&filter=${encodeURIComponent(JSON.stringify(updatedFilters))}` : '';
+      let url = router.asPath;
+      const existingFilterIndex = url.indexOf('&filter=');
+
+      if (existingFilterIndex !== -1) {
+        const ampIndex = url.indexOf('&', existingFilterIndex + 1);
+        if (ampIndex !== -1) {
+          url = url.slice(0, existingFilterIndex) + url.slice(ampIndex);
+        } else {
+          url = url.slice(0, existingFilterIndex);
+        }
+      }
+
+      if (filterString) {
+        url = `${url.split('?')[0]}?&page=1${filterString}`;
+      } else {
+        url = `${url.split('?')[0]}?page=1`;
+      }
+
+      router.push(url, undefined, { shallow: true });
     } else {
       setShowModal(true);
     }
   };
+
   return (
-    <div className="justify-content-center" style={{height:'100%'}}>
+    <div className="justify-content-center" style={{ height: '100%' }}>
       {purityValues?.map((purity: any) => (
         <>
           <button

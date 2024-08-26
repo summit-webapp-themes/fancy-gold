@@ -3,20 +3,23 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
+import { clearToken } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const dispatch = useDispatch();
   const { wishlistCount } = useWishlist();
-  const { cartCount } = useFetchCartItems();
+  const { cartCount, cartListingItems } = useFetchCartItems();
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const router = useRouter();
@@ -25,7 +28,9 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const handleSearch = (e: any) => {
     e.preventDefault();
-    router.push('/product-detail/' + searchTerm);
+    if (searchTerm !== '') {
+      router.push('/product/' + searchTerm);
+    }
   };
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
@@ -41,6 +46,10 @@ const Navbar = () => {
     setIsSidebarOpen(isOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(clearToken());
+  };
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
@@ -79,16 +88,17 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className={`d-block ${stylesNavbar.search_bar}`}>
-                <div className="search-input">
+                <div className="search-input position-relative">
                   <input
                     type="text"
-                    className={`form-control ${stylesNavbar.search_bar_height}`}
+                    className={`form-control ${stylesNavbar.search_bar_input}`}
                     placeholder="Search here"
                     aria-label="Search"
                     aria-describedby="basic-addon1"
                     onChange={(e: any) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                   />
+                  <FaSearch className={stylesNavbar.search_icon} onClick={(e) => handleSearch(e)} />
                 </div>
               </div>
               <div className={stylesNavbar.inlineList}>
@@ -195,7 +205,7 @@ const Navbar = () => {
                           Bulk Order
                         </NavDropdown.Item>
                       </Link>
-                      <Link href="/" passHref className="text-decoration-none">
+                      <Link href="/login" passHref className="text-decoration-none" onClick={handleLogout}>
                         <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
                           Sign Out
                         </NavDropdown.Item>

@@ -42,8 +42,17 @@ margin-top: -2px;
   background-color: #c67605;
 }
 
-.search_bar_height {
-  height: 44px;
+.search_bar_input {
+  height: 40px;
+  padding-right: 40px;
+}
+.search_icon {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray; /* Adjust color as needed */
+  cursor: pointer;
 }
 .list_inline_item {
   width: 90px;
