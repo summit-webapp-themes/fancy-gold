@@ -9,7 +9,7 @@ import Purity from '../ProductListingComponents/HorizontalFilterList.tsx/Purity'
 import SearchableDropdown from '../SearchableDropdown';
 
 const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
-  const { API_BASE_URL, CUSTOM_API_SDK } = CONSTANTS;
+  const { API_BASE_URL,ARC_APP_CONFIG  } = CONSTANTS;
   const tokenFromStore = useSelector(get_access_token);
   const [inputValue, setInputValue] = useState('');
   const [qtySizeInput, setQtySizeInput] = useState('');
@@ -30,10 +30,10 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
   };
 
   const getCustomerItemAPI = async () => {
-    const version = CONSTANTS.CUSTOM_API_SDK_VERSION;
+    const version = ARC_APP_CONFIG?.version;
     const method = 'get_customer_item_by_customer_name_and_item_code';
     const entity = 'customer_item_reference_code_api';
-    const url = `${API_BASE_URL}${CUSTOM_API_SDK}?version=${version}&method=${method}&entity=${entity}&customer_name=${customerName}`;
+    const url = `${API_BASE_URL}${ARC_APP_CONFIG?.app_name}?version=${version}&method=${method}&entity=${entity}&customer_name=${customerName}`;
     const response = callGetAPI(url, tokenFromStore?.token);
     return response;
   };
@@ -63,10 +63,10 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
   };
   const postQuickOrderAPI: any = async (apiBody: any) => {
     let response: any;
-    const apiSDKName = CONSTANTS.CUSTOM_API_SDK;
+    const apiSDKName = ARC_APP_CONFIG?.app_name;
 
     let body = {
-      version: CONSTANTS.CUSTOM_API_SDK_VERSION,
+      version: ARC_APP_CONFIG?.version,
       method: 'create_sales_quotation',
       entity: 'customer_item_reference_code_api',
       ...apiBody,
