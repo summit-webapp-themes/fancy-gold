@@ -1,3 +1,4 @@
+import NoDataFound from '../../NoDataFound';
 import DrawerSkeleton from '../ProductDetailDrawer/DrawerSkeleton';
 import ImageSkeleton from '../ProductDetailDrawer/ImageSkeleton';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
@@ -5,9 +6,16 @@ import ProductCode from './ProductCode';
 import ProductImage from './ProductImage';
 import ProductVariants from './ProductVariants';
 
-const ProductDetails = ({ productDetailData, productVariantData, fetchProductDetailDataAPI, errorMessage,variantLoading }: any) => {
+const ProductDetails = ({
+  productDetailData,
+  productVariantData,
+  fetchProductDetailDataAPI,
+  errorMessage,
+  variantLoading,
+  isLoading,
+}: any) => {
   const handledataRendering = () => {
-    if (Object.keys(productDetailData).length === 0) {
+    if (isLoading) {
       return (
         <div className="row">
           <div className="col-12 col-sm-12 col-md-12 col-lg-5 p-3">
@@ -20,7 +28,8 @@ const ProductDetails = ({ productDetailData, productVariantData, fetchProductDet
           </div>
         </div>
       );
-    } else {
+    }
+    if (Object.keys(productDetailData).length !== 0) {
       return (
         <div className="row">
           <div className="col-12 col-sm-12 col-md-12 col-lg-5 p-3">
@@ -37,11 +46,17 @@ const ProductDetails = ({ productDetailData, productVariantData, fetchProductDet
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI}/>
+              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
             </div>
           </div>
         </div>
       );
+    }
+    if(Object.keys(productDetailData).length === 0 && !isLoading){
+      return(
+
+        <NoDataFound title="Details Not Found!" message="Sorry for inconvenience. Please try again later." />
+      )
     }
   };
   return <div className="container ">{handledataRendering()}</div>;

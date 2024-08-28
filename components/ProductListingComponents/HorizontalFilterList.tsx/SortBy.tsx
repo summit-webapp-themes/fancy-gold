@@ -2,24 +2,25 @@ import { useEffect } from 'react';
 import horizontalFilterStyles from '../../../styles/components/horizontalFilter.module.scss';
 
 const SortBy = ({ sortBy, handleSortBy }: any) => {
+  const colour: any = localStorage.getItem('colour');
+
   useEffect(() => {
-    localStorage.setItem('colour', 'Yellow');
+    localStorage.setItem('colour', colour || 'Yellow');
   }, []);
   const setColournInLocalStorage = (value: any) => {
-    localStorage.setItem('colour', JSON.stringify(value));
+    localStorage.setItem('colour', value);
   };
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap">
         <select
           className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}
+          defaultValue={colour}
           onChange={(e) => {
             setColournInLocalStorage(e.target.value);
           }}
         >
-          <option value="Yellow" selected>
-            Yellow
-          </option>
+          <option value="Yellow">Yellow</option>
           <option value="Rose">Rose</option>
           <option value="White">White</option>
         </select>
