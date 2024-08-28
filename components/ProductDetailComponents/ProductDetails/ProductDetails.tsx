@@ -2,6 +2,7 @@ import NoDataFound from '../../NoDataFound';
 import DrawerSkeleton from '../ProductDetailDrawer/DrawerSkeleton';
 import ImageSkeleton from '../ProductDetailDrawer/ImageSkeleton';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
+import PrevNextButtons from './PrevNextButtons';
 import ProductCode from './ProductCode';
 import ProductImage from './ProductImage';
 import ProductVariants from './ProductVariants';
@@ -31,12 +32,12 @@ const ProductDetails = ({
     }
     if (Object.keys(productDetailData).length !== 0) {
       return (
-        <div className="row">
+        <div className="row ">
           <div className="col-12 col-sm-12 col-md-12 col-lg-5 p-3">
             <ProductImage image={productDetailData?.image} />
           </div>
-          <div className="col-12 col-md-12 col-sm-12 col-lg-7">
-            <div className="p-3 w-100">
+          <div className="col-12 col-md-12 col-sm-12 col-lg-7 ">
+            <div className="p-3 w-100 border">
               <ProductCode data={productDetailData} />
               <ProductVariants
                 productDetail={productDetailData}
@@ -48,6 +49,7 @@ const ProductDetails = ({
               />
               <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
             </div>
+            <PrevNextButtons data={productDetailData}/>
           </div>
         </div>
       );

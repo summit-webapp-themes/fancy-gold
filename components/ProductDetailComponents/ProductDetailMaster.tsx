@@ -3,7 +3,7 @@ import HorizontalFilter from '../ProductListingComponents/HorizontalFilterList.t
 import ProductDetails from './ProductDetails/ProductDetails';
 
 const ProductDetailMaster = () => {
-  const { productDetailData, productVariantData, fetchProductDetailDataAPI, errorMessage, variantLoading } = useProductDetail();
+  const { productDetailData, productVariantData, fetchProductDetailDataAPI, errorMessage, variantLoading,isLoading } = useProductDetail();
 
   return (
     <div>
@@ -15,6 +15,7 @@ const ProductDetailMaster = () => {
           fetchProductDetailDataAPI={fetchProductDetailDataAPI}
           errorMessage={errorMessage}
           variantLoading={variantLoading}
+          isLoading={isLoading}
         />
       </section>
     </div>
