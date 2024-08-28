@@ -14,9 +14,10 @@ import { clearToken } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import { resetStore } from '../../store/slices/auth/logout-slice';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
   const dispatch = useDispatch();
   const { wishlistCount } = useWishlist();
   const { cartCount, cartListingItems } = useFetchCartItems();
@@ -46,10 +47,10 @@ const Navbar = () => {
     setIsSidebarOpen(isOpen);
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    dispatch(clearToken());
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   dispatch(resetStore());
+  // };
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
@@ -205,7 +206,7 @@ const Navbar = () => {
                           Bulk Order
                         </NavDropdown.Item>
                       </Link>
-                      <Link href="/login" passHref className="text-decoration-none" onClick={handleLogout}>
+                      <Link href="#" passHref className="text-decoration-none" onClick={handleLogoutUser}>
                         <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
                           Sign Out
                         </NavDropdown.Item>
