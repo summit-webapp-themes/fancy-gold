@@ -6,7 +6,7 @@ import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-loca
 import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
-const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'), { loading: () => <ProductCardSkeleton /> });
+const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 const ProductListingMaster = () => {
   const {

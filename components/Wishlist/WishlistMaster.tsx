@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
-const  NoDataFound  = dynamic(()=> import('../NoDataFound')) ;
+const NoDataFound = dynamic(() => import('../NoDataFound'));
 const ProductCard = dynamic(() => import('../../cards/ProductCard'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 const ProductCardSkeleton = dynamic(() => import('../../cards/ProductCardSkeleton'));
@@ -38,16 +38,14 @@ const WishlistMaster = () => {
           {wishlistData?.length > 0 &&
             wishlistData?.map((item: any, index: number) => (
               <div key={index} className="col-sm-6 col-lg-3 col-xl-3 col-xxl-3 text-center mb-4 px-3">
-                <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} />
+                <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} />
               </div>
             ))}
         </div>
       );
     }
     if (wishlistData?.length === 0) {
-      return (
-        <NoDataFound title="Wishlist list is empty !!" message="Add Items to wishlist to view wishlist list." />
-      );
+      return <NoDataFound title="Wishlist list is empty !!" message="Add Items to wishlist to view wishlist list." />;
     }
   };
   return (
