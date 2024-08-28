@@ -24,6 +24,8 @@ const BulkOrderMaster = () => {
     deleteBunchOrderRow,
     handleChangeBunchOrder,
     isBunchWeightDisabled,
+    fetchItemDetails,
+    totalEstimateWeight
   } = useBulkOrder();
   return (
     <div className="container-lg mb-5 pb-5">
@@ -39,7 +41,6 @@ const BulkOrderMaster = () => {
               addMarketOrderRow={addMarketOrderRow}
               deleteMarketOrderRow={deleteMarketOrderRow}
               handleChangeArray={handleChangeMarketOrder}
-              // itemList={itemList}
               errorMsg={errMsgMarketOrder}
               refCodesList={refCodesList}
             />
@@ -48,7 +49,6 @@ const BulkOrderMaster = () => {
               addCustomMarketOrderRow={addCustomMarketOrderRow}
               handleChangeArray={handleChangeCustomOrder}
               deleteCustomMarketOrderRow={deleteCustomMarketOrderRow}
-              // itemListCustom={itemListCustom}
               errorMsg={errMsgCustomOrder}
               refCodesList={refCodesList}
             />
@@ -56,13 +56,12 @@ const BulkOrderMaster = () => {
               formData={formData}
               addBunchOrderRow={addBunchOrderRow}
               handleChangeArray={handleChangeBunchOrder}
-              // itemList={itemListBunch}
               deleteBunchOrderRow={deleteBunchOrderRow}
-              // itemListBunch={itemListBunch}
               errorMsg={errMsgBuchOrder}
-              // totalEstimateWeight={totalEstimateWeight}
-              // fetchItemDetails={fetchItemDetails}
+              totalEstimateWeight={totalEstimateWeight}
+              fetchItemDetails={fetchItemDetails}
               isBunchWeightDisabled={isBunchWeightDisabled}
+              refCodesList={refCodesList}
             />
           </div>
         </div>

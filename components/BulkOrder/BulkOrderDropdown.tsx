@@ -97,11 +97,10 @@ const BulkDropdownInput = ({
 
   const handleSelect = (referenceCode: string) => {
     // Find the corresponding item_code for the selected reference code
-    const selectedItem = refCodesList.find(
+    const selectedItem = refCodesList?.find(
       (item: any) => item.reference_code === referenceCode
     );
     if (selectedItem) {
-      // Extract the item_code value
       const itemCode = selectedItem.item_code;
       // Update the state with the selected item_code
       setInputValue(referenceCode);
