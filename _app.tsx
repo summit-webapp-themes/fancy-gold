@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
             <ToastContainer
                 position="top-right"
+                className='toast-container-below-navbar'
                 autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}

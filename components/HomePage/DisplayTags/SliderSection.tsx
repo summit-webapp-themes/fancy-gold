@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Slider from 'react-slick';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -8,8 +9,8 @@ import ProductCardSkeleton from '../../Skeleton/ProductCardSkeleton';
 import SliderNextArrow from './SliderNextArrow';
 import SliderPrevArrow from './SliderPrevArrow';
 import ProductCard from '../../../cards/ProductCard';
+const ProductDetailDrawer = dynamic(() => import('../../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 import SliderStyles from '../../../styles/components/sliderSection.module.scss';
-import ProductDetailDrawer from '../../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer';
 import { useSelector } from 'react-redux';
 import { selectWishlist } from '../../../store/slices/wishlist-slices/wishlist-local-slice';
 
@@ -97,7 +98,7 @@ const SliderSection = ({ data }: any) => {
                       key={index}
                       className={`col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-4 ${SliderStyles.productCard_slider_wrapper}`}
                     >
-                      <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} />
+                      <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'View'} />
                     </div>
                   ))}
               </Slider>

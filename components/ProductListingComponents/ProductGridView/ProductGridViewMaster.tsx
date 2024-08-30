@@ -22,12 +22,10 @@ const ProductGridViewMaster = ({
     if (isLoading) {
       return (
         <div className="row ">
-          {[...Array(10)].map(() => (
-            <>
-              <div className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
-                <ProductCardSkeleton />
-              </div>
-            </>
+          {[...Array(10)].map((_, index) => (
+            <div key={index} className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
+              <ProductCardSkeleton />
+            </div>
           ))}
         </div>
       );

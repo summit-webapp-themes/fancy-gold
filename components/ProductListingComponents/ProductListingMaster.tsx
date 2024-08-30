@@ -7,7 +7,7 @@ import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
-const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'), { loading: () => <ProductCardSkeleton /> });
+const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 const ProductListingMaster = () => {
   const {

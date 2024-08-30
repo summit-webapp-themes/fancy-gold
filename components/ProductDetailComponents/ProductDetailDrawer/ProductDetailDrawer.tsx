@@ -56,13 +56,12 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       if (productDetailData?.data?.message?.data?.length !== 0) {
         setProductDetail(productDetailData?.data?.message?.data[0]);
         setDetailLoading(false);
-      }else{
-
+      } else {
         setProductDetail({});
         setDetailLoading(false);
       }
     }
-    setDetailLoading(false)
+    setDetailLoading(false);
   };
   const onHide = () => {
     handleClose();
@@ -73,6 +72,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }, 1000);
   };
   useEffect(() => {
+    console.log('data', data);
     if (data?.productName) {
       getProductDetailData(data?.productName);
     }
@@ -110,7 +110,6 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
         ) : (
           <NoDataFound title="Details Not Found!" message="Sorry for inconvenience. Please try again later." />
         )}
-        
       </Offcanvas.Body>
     </Offcanvas>
   );

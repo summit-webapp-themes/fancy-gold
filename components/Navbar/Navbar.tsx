@@ -14,9 +14,10 @@ import { clearToken } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import { resetStore } from '../../store/slices/auth/logout-slice';
 
 const Navbar = () => {
-  const { navbarData, isLoading, errorMessage, selectedCurrencyValue } = useNavbar();
+  const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
   const dispatch = useDispatch();
   const { wishlistCount } = useWishlist();
   const { cartCount, cartListingItems } = useFetchCartItems();
@@ -46,10 +47,10 @@ const Navbar = () => {
     setIsSidebarOpen(isOpen);
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    dispatch(clearToken());
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   dispatch(resetStore());
+  // };
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as per your design
@@ -132,17 +133,17 @@ const Navbar = () => {
                     </div>
                     <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
                       <Link href="/order-history" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Order List
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Completed Orders
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Cancelled Orders
                         </NavDropdown.Item>
                       </Link>
@@ -154,32 +155,32 @@ const Navbar = () => {
                     </div>
                     <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
                       <Link href="/reports/pending-order" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Pending Order Report
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           In Process Order Report
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/reports/review-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Review Report
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Dispatched Order Report
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Due Date Reminder Report
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Late Order Report
                         </NavDropdown.Item>
                       </Link>
@@ -191,22 +192,22 @@ const Navbar = () => {
                     </div>
                     <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
                       <Link href="/order-history" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           {user}
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/quick-order" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Quick Order
                         </NavDropdown.Item>
                       </Link>
                       <Link href="/bulk-order" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Bulk Order
                         </NavDropdown.Item>
                       </Link>
-                      <Link href="/login" passHref className="text-decoration-none" onClick={handleLogout}>
-                        <NavDropdown.Item as="a" className={stylesNavbar.order_list_items}>
+                      <Link href="#" passHref className="text-decoration-none" onClick={handleLogoutUser}>
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Sign Out
                         </NavDropdown.Item>
                       </Link>

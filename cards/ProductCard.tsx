@@ -10,7 +10,7 @@ import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
 import { useRouter } from 'next/router';
 
-const ProductCard = ({ data, handleShow, wishlistData, cartData }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   let wishProducts: any;
@@ -58,19 +58,31 @@ const ProductCard = ({ data, handleShow, wishlistData, cartData }: any) => {
       })
     }
     if (!cartProducts) {
-      return (
+      if (btnAction === 'Add') {
+        return (
+          <button
+            className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+            onClick={() => handleShow(data?.name, data?.variant_of)}
+          >
+            {btnAction}
+            <IoCart className={ProductCardStyles.icon_margin} />
+          </button>
+        )
+      } else {
+        return (
+          <button
+            className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+            onClick={() => {
+              router.push(`${data?.url}`);
+            }}
+          >
+            {btnAction}
+          </button>
+        )
+      }
 
-        <button
-          className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-          onClick={() => handleShow(data?.name, data?.variant_of)}
-        >
-          Add
-          <IoCart className={ProductCardStyles.icon_margin} />
-        </button>
-      )
     } else {
       return (
-
         <button
           className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
           onClick={() => handleShow(data?.name, data?.variant_of)}
