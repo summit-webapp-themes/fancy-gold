@@ -16,6 +16,7 @@ const CartListing = () => {
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const user = localStorage.getItem('user');
+  const partyName = localStorage.getItem('party_name')
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
@@ -44,7 +45,7 @@ const CartListing = () => {
       });
     const addToCartParams = {
       item_code: data?.item_code,
-      party_name: cartListingItems?.party_name,
+      party_name: partyName,
       purity: cartListingItems?.purity,
       cust_name: cartListingItems?.cust_name,
       colour: data?.colour,
@@ -78,7 +79,7 @@ const CartListing = () => {
     minDate.setHours(0, 0, 0, 0);
     const params = {
       order_id: cartListingItems?.name,
-      party_name: cartListingItems?.party_name,
+      party_name: partyName,
     };
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
