@@ -10,10 +10,11 @@ import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
 import { useRouter } from 'next/router';
 
-const ProductCard = ({ data, handleShow, wishlistData }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, cartData }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   let wishProducts: any;
+  let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -48,6 +49,37 @@ const ProductCard = ({ data, handleShow, wishlistData }: any) => {
       }
     }
   };
+  const handleRenderAddToCartBtn = () => {
+    {
+      cartData?.length > 0 && cartData?.map((item: any) => {
+        if (item === data?.name) {
+          cartProducts = item;
+        }
+      })
+    }
+    if (!cartProducts) {
+      return (
+
+        <button
+          className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+          onClick={() => handleShow(data?.name, data?.variant_of)}
+        >
+          Add
+          <IoCart className={ProductCardStyles.icon_margin} />
+        </button>
+      )
+    } else {
+      return (
+
+        <button
+          className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
+          onClick={() => handleShow(data?.name, data?.variant_of)}
+        >
+          Added
+        </button>
+      )
+    }
+  }
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
@@ -80,13 +112,7 @@ const ProductCard = ({ data, handleShow, wishlistData }: any) => {
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
             </div>
             <div>
-              <button
-                className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-                onClick={() => handleShow(data?.name, data?.variant_of)}
-              >
-                Add
-                <IoCart className={ProductCardStyles.icon_margin} />
-              </button>
+              {handleRenderAddToCartBtn()}
             </div>
           </div>
         </div>

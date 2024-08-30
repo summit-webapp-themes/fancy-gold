@@ -31,6 +31,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     rejection_note: '',
   });
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
+  const [customerError, setCustomerError] = useState('')
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
   };
@@ -119,7 +120,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     if (cust_name !== '' && cust_name !== null) {
       addToCartItem(addToCartParams);
     } else {
-      alert('Customer Name is Empty');
+      setCustomerError('Customer name is empty !!')
     }
     setCartProductsData({
       wastage: '',
@@ -223,6 +224,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           )}
         </div>
       </div>
+      {customerError !== '' && (
+        <p className='text-danger'>{customerError}</p>
+      )}
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
           <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>

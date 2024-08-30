@@ -5,6 +5,7 @@ import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataH
 import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
 import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
+import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
 const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'), { loading: () => <ProductCardSkeleton /> });
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
@@ -21,6 +22,7 @@ const ProductListingMaster = () => {
     searchFilterValue,
   } = useProductListing();
   const wishlistData = useSelector(selectWishlist)?.items;
+  const cartData = useSelector(selectCart)?.items;
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
@@ -43,6 +45,7 @@ const ProductListingMaster = () => {
         productListTotalCount={productListTotalCount}
         handleShow={handleShow}
         wishlistData={wishlistData}
+        cartData={cartData}
       />
     );
   };

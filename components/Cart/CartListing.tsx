@@ -9,11 +9,11 @@ const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
 const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
-const  NoDataFound  = dynamic(()=> import('../NoDataFound')) ;
+const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc } = useAddToCartHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove } = useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
   const user = localStorage.getItem('user');
   useEffect(() => {
@@ -147,12 +147,13 @@ const CartListing = () => {
                             onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                           />
                         </div>
-                        <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container} `}>
-                          <RxCross2
-                            onClick={() => {
-                              handleDeleteRow(order?.item_code);
-                            }}
-                          />
+                        <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
+                          <button className='btn btn-link text-decoration-none text-dark' onClick={() => {
+                            handleDeleteRow(order?.item_code);
+                          }} disabled={disableRemove}>
+                            <RxCross2
+                            />
+                          </button>
                         </div>
                       </>
                     ))}
