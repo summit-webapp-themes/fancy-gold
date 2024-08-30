@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Card from 'react-bootstrap/Card';
 import { FaHeart, FaRegHeart } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
@@ -8,7 +9,6 @@ import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
-import { useRouter } from 'next/router';
 
 const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: any) => {
   const router = useRouter();
