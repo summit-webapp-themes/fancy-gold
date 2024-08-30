@@ -13,9 +13,11 @@ const ProductDetailDrawer = dynamic(() => import('../../ProductDetailComponents/
 import SliderStyles from '../../../styles/components/sliderSection.module.scss';
 import { useSelector } from 'react-redux';
 import { selectWishlist } from '../../../store/slices/wishlist-slices/wishlist-local-slice';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 
 const SliderSection = ({ data }: any) => {
   const wishlistData = useSelector(selectWishlist)?.items;
+  const cartData = useSelector(selectCart)?.items;
 
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
@@ -98,7 +100,7 @@ const SliderSection = ({ data }: any) => {
                       key={index}
                       className={`col-sm-6 col-lg-5 col-xl-4 col-xxl-3 text-center mb-4 ${SliderStyles.productCard_slider_wrapper}`}
                     >
-                      <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'View'} />
+                      <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'View'} cartData={cartData} />
                     </div>
                   ))}
               </Slider>
