@@ -11,6 +11,7 @@ const ProductGridViewMaster = ({
   productListTotalCount,
   handleShow,
   wishlistData,
+  cartData,
 }: any) => {
   const { query } = useRouter();
   const pageOffset = Number(query?.page) - 1;
@@ -38,6 +39,8 @@ const ProductGridViewMaster = ({
           pageOffset={pageOffset}
           handleShow={handleShow}
           wishlistData={wishlistData}
+          cartData={cartData}
+
         />
       );
     }

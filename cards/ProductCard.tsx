@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Card from 'react-bootstrap/Card';
 import { FaHeart, FaRegHeart } from 'react-icons/fa6';
 import { IoCart } from 'react-icons/io5';
@@ -8,12 +9,12 @@ import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
-import { useRouter } from 'next/router';
 
-const ProductCard = ({ data, handleShow, wishlistData, btnAction }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   let wishProducts: any;
+  let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
@@ -48,6 +49,49 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction }: any) => {
       }
     }
   };
+  const handleRenderAddToCartBtn = () => {
+    {
+      cartData?.length > 0 && cartData?.map((item: any) => {
+        if (item === data?.name) {
+          cartProducts = item;
+        }
+      })
+    }
+    if (!cartProducts) {
+      if (btnAction === 'Add') {
+        return (
+          <button
+            className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+            onClick={() => handleShow(data?.name, data?.variant_of)}
+          >
+            {btnAction}
+            <IoCart className={ProductCardStyles.icon_margin} />
+          </button>
+        )
+      } else {
+        return (
+          <button
+            className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+            onClick={() => {
+              router.push(`${data?.url}`);
+            }}
+          >
+            {btnAction}
+          </button>
+        )
+      }
+
+    } else {
+      return (
+        <button
+          className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
+          onClick={() => handleShow(data?.name, data?.variant_of)}
+        >
+          Added
+        </button>
+      )
+    }
+  }
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
@@ -80,25 +124,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction }: any) => {
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
             </div>
             <div>
-              {btnAction === 'Add' ? (
-                <button
-                  className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-                  onClick={() => handleShow(data?.name, data?.variant_of)}
-                >
-                  {btnAction}
-                  <IoCart className={ProductCardStyles.icon_margin} />
-                </button>
-              ) : (
-                <button
-                  className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-                  onClick={() => {
-                    router.push(`${data?.url}`);
-                  }}
-                >
-                  {btnAction}
-                  {/* <IoCart className={ProductCardStyles.icon_margin} /> */}
-                </button>
-              )}
+              {handleRenderAddToCartBtn()}
             </div>
           </div>
         </div>

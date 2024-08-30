@@ -191,21 +191,21 @@ const Navbar = () => {
                       <FaUserCircle className="icon" />
                     </div>
                     <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
-                      <Link href="/order-history" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          {user}
-                        </NavDropdown.Item>
-                      </Link>
+
+                      <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
+                        {user}
+                      </NavDropdown.Item>
+
                       <Link href="/quick-order" passHref className="text-decoration-none">
                         <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Quick Order
                         </NavDropdown.Item>
                       </Link>
-                      <Link href="/bulk-order" passHref className="text-decoration-none">
+                      {/* <Link href="/bulk-order" passHref className="text-decoration-none">
                         <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Bulk Order
                         </NavDropdown.Item>
-                      </Link>
+                      </Link> */}
                       <Link href="#" passHref className="text-decoration-none" onClick={handleLogoutUser}>
                         <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Sign Out
