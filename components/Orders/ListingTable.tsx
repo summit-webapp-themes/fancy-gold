@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import stylesListing from '../../styles/components/_listingTable.module.scss';
 
-const ListingTable = ({ headers, tableData }: any) => {
+const ListingTable = ({ headers, tableData, handleSelectOrder }: any) => {
   const router = useRouter();
   const pathParts = router.asPath.split('/');
   const heading = pathParts[pathParts.length - 1];
@@ -28,15 +28,18 @@ const ListingTable = ({ headers, tableData }: any) => {
                   <>
                     <tr className={`text-center ${stylesListing.table_row}`} key={index}>
                       <td>
+                        <input type="checkbox" onClick={() => handleSelectOrder(data?.name)} />
+                      </td>
+                      <td>{data.transaction_date}</td>
+                      <td>
                         <Link href={`/order-detail/${data.name}`} className={stylesListing.redirect_name}>
                           {data.name}
                         </Link>
                       </td>
-                      <td>{data.transaction_date}</td>
-                      <td>{data.status}</td>
+                      <td>{data.customer_name}</td>
                       <td>{data.total_weight}</td>
                       <td>{data.delivery_date}</td>
-                      <td>{data.dispatch_weight}</td>
+                      <td>{data.status}</td>
                     </tr>
                   </>
                 );

@@ -14,7 +14,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
       <div className="col-lg-4 p-3 d-flex justify-content-center">
         <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
       </div>
-      <div className="col-lg-5 d-flex justify-content-center">
+      <div className="col-lg-4 d-flex justify-content-center">
         <div className="mt-2">
           <Image
             loader={imageLoader}
@@ -34,8 +34,8 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
           </p>
         </div>
       </div>
-      <div className="col-lg-3 d-flex justify-content-center">
-        <div className="text-center mt-2">
+      <div className="col-lg-4 d-flex justify-content-center">
+        {/* <div className="text-center mt-2">
           Wastage :
           {editWastage ? (
             <textarea
@@ -46,10 +46,8 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
               }}
               rows={1}
             />
-          ):(
-            <p className='m-0'>
-              {data?.wastage}
-            </p>
+          ) : (
+            <p className="m-0">{data?.wastage}</p>
           )}
           {editWastage ? (
             <button
@@ -65,7 +63,10 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
               Edit Message
             </button>
           )}
-        </div>
+        </div> */}
+        {data?.order.map((item: any, index: any) => {
+          return <div className="text-center">{item?.remark}</div>;
+        })}
       </div>
     </div>
   );

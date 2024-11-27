@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import useOrderListHook from '../../hooks/OrderListHooks/useOrderListHook';
@@ -8,9 +8,9 @@ import ComponentErrorHandler from '../ComponentErrorHandler';
 import OrderReportLoadingSkeleton from '../OrderReport/OrderReportLoadingSkeleton';
 
 const OrderList = () => {
-  const { orderListData, isLoading, errorMessage }: any = useOrderListHook();
+  const { orderListData, isLoading, errorMessage, handleSelectOrder, deleteBulkOrder }: any = useOrderListHook();
 
-  const headers: any = ['Order Id', 'Transaction Date', 'Status', 'Total Ordered Weight', 'Delivery Date', 'Total Dispatched Weight'];
+  const headers: any = ['', 'Order Date ', 'Order Id', 'Customer Name', 'Total Ordered Weight', 'Due Date', 'Status'];
 
   const showOrderListingSection: any = () => {
     if (isLoading) {
@@ -27,7 +27,7 @@ const OrderList = () => {
     }
     if (orderListData) {
       if (orderListData?.length > 0) {
-        return <ListingTable headers={headers} tableData={orderListData} />;
+        return <ListingTable headers={headers} tableData={orderListData} handleSelectOrder={handleSelectOrder} />;
       }
 
       if (orderListData?.length === 0) {

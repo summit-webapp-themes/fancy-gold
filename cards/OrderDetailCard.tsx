@@ -106,10 +106,12 @@ const OrderDetailCard = ({
                   <p>{purity}</p>
                 </div>
                 <div className="col-3 text-start">
-                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
+                  </p> */}
+                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                    remart-{remark}
                   </p>
-                  <p className="text-dark"> {remark}</p>
                 </div>
                 <div className="col-2 text-start">
                   <p className="text-dark" style={{ fontSize: '14px' }}>
