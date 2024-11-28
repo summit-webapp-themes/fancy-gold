@@ -9,10 +9,11 @@ import ApiErrorPage from '../ApiErrorPage';
 
 const OrderDetail = () => {
   const { query } = useRouter();
-  const { orderData, isLoading, errorMessage } = useOrderDetailHook();
+  const { orderData, isLoading, errorMessage, handleReorder, handleCancelOrder } = useOrderDetailHook();
 
   const grandWeight = orderData.total_grand_weight;
   const common_comment = orderData.common_comment;
+  const customerName = orderData.cust_name;
 
   const printPage = () => {
     window.print();
@@ -41,8 +42,20 @@ const OrderDetail = () => {
                 </div>
               </div>
               <div className="col-6 text-end">
-                <div className={` ${orderDetailStyles.print_order} `}>
-                  <FaPrint onClick={printPage} />
+                <div className="d-flex justify-content-end align-items-center">
+                  <div className="mx-2">
+                    <button className={orderDetailStyles?.btn} onClick={() => handleReorder(orderData.cust_name)}>
+                      Reorder
+                    </button>
+                  </div>
+                  <div className="mx-2">
+                    <button className={orderDetailStyles?.btn} onClick={handleCancelOrder}>
+                      Cancel
+                    </button>
+                  </div>
+                  <div className={`mx-2 ${orderDetailStyles.print_order} `}>
+                    <FaPrint onClick={printPage} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -86,8 +99,8 @@ const OrderDetail = () => {
                               <div className="row">
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
-                                <div className="col-3  text-start">Note</div>
-                                <div className="col-1  text-start">Status</div>
+                                <div className="col-1  text-start">Note</div>
+                                <div className="col-3  text-center">Status</div>
                               </div>
                             </div>
                             <div className="col-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>

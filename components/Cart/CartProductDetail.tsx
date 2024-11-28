@@ -65,7 +65,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
           )}
         </div> */}
         {data?.order.map((item: any, index: any) => {
-          return <div className="text-center">{item?.remark}</div>;
+          return <div className="d-flex justify-content-center align-items-center">{item?.remark}</div>;
         })}
       </div>
     </div>

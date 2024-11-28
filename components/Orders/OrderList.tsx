@@ -27,7 +27,14 @@ const OrderList = () => {
     }
     if (orderListData) {
       if (orderListData?.length > 0) {
-        return <ListingTable headers={headers} tableData={orderListData} handleSelectOrder={handleSelectOrder} />;
+        return (
+          <ListingTable
+            headers={headers}
+            tableData={orderListData}
+            handleSelectOrder={handleSelectOrder}
+            handleDeleteOrder={deleteBulkOrder}
+          />
+        );
       }
 
       if (orderListData?.length === 0) {

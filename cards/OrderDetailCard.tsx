@@ -105,18 +105,25 @@ const OrderDetailCard = ({
                 <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
                   <p>{purity}</p>
                 </div>
-                <div className="col-3 text-start">
+                <div className="col-1 text-start">
                   {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
                   </p> */}
                   <p className="text-dark" style={{ fontSize: '14px' }}>
-                    remart-{remark}
+                    {remark}
                   </p>
                 </div>
-                <div className="col-2 text-start">
-                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                <div className="col-4 text-center">
+                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
-                  </p>
+                  </p> */}
+
+                  <div className="m-2">
+                    <button className={`${orderDetailStyles.readyToDispatch}`}>Ready to Dispatch</button>
+                  </div>
+                  <div className="m-2">
+                    <button className={`${orderDetailStyles.deletBtn}`}>Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
