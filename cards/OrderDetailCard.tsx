@@ -31,6 +31,9 @@ const OrderDetailCard = ({
   getOrderStatusValueFromURL,
   soisd_item,
   reviewState,
+  showButtons,
+  handleReadyToDispatch,
+  handleDeleteOrder,
 }: any) => {
   const [reviewModalToggle, setReviewModalToggle] = useState<boolean>(false);
   const [errMsgforReviewSubmitBtn, setErrMsgforReviewSubmitBtn] = useState<boolean>(false);
@@ -113,17 +116,26 @@ const OrderDetailCard = ({
                     {remark}
                   </p>
                 </div>
-                <div className="col-4 text-center">
-                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
+                <div className="col-1">
+                  <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
-                  </p> */}
-
-                  <div className="m-2">
-                    <button className={`${orderDetailStyles.readyToDispatch}`}>Ready to Dispatch</button>
-                  </div>
-                  <div className="m-2">
-                    <button className={`${orderDetailStyles.deletBtn}`}>Delete</button>
-                  </div>
+                  </p>
+                </div>
+                <div className="col-3 text-center">
+                  {showButtons && status === 'pending' && (
+                    <>
+                      <div className="m-2">
+                        <button className={`${orderDetailStyles.readyToDispatch}`} onClick={() => handleReadyToDispatch(name)}>
+                          Ready to Dispatch
+                        </button>
+                      </div>
+                      <div className="m-2">
+                        <button className={`${orderDetailStyles.deletBtn}`} onClick={() => handleDeleteOrder(name)}>
+                          Delete
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

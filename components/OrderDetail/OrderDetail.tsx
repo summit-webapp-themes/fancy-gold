@@ -9,7 +9,8 @@ import ApiErrorPage from '../ApiErrorPage';
 
 const OrderDetail = () => {
   const { query } = useRouter();
-  const { orderData, isLoading, errorMessage, handleReorder, handleCancelOrder } = useOrderDetailHook();
+  const { orderData, isLoading, errorMessage, handleReorder, handleCancelOrder, showButtons, handleReadyToDispatch, handleDeleteOrder } =
+    useOrderDetailHook();
 
   const grandWeight = orderData.total_grand_weight;
   const common_comment = orderData.common_comment;
@@ -100,7 +101,8 @@ const OrderDetail = () => {
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
                                 <div className="col-1  text-start">Note</div>
-                                <div className="col-3  text-center">Status</div>
+                                <div className="col-1  text-center">Status</div>
+                                <div className="col-2"></div>
                               </div>
                             </div>
                             <div className="col-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
@@ -136,6 +138,9 @@ const OrderDetail = () => {
                         review_value={ord?.review}
                         // getOrderStatusValueFromURL={getOrderStatusValueFromURL}
                         soisd_item={ord?.soisd_item}
+                        showButtons={showButtons}
+                        handleReadyToDispatch={handleReadyToDispatch}
+                        handleDeleteOrder={handleDeleteOrder}
                         // callUpdateSalesOrderStatusAPI={callUpdateSalesOrderStatusAPI}
                         // reviewState={reviewState}
                       />

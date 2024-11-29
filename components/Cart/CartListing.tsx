@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
-import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
+import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';

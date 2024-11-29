@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callPostAPI } from '../../../utils/http-methods';
-import useAddToCartHook from '../../../hooks/CartPageHook/useAddToCart';
+import useAddToCartHook from '../../../hooks/CartPageHook/useCartFunctions';
 import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
