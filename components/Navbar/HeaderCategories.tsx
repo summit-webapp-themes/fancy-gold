@@ -25,7 +25,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
           item?.values.map((itemL2: any, index: number) => {
             const columnCount = Math.ceil(itemL2?.values?.length / 8);
             return (
-              <div className="col">
+              <div className="col" key={index}>
                 <div className={stylesHeader.heading_category_l2}>
                   <Link
                     href={{
@@ -70,13 +70,14 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
       return <NavbarLoadingComponent />;
     }
     if (navbarData?.length > 0) {
+      const categoriesData = navbarData[0]?.values;
       return (
         <nav ref={ref}>
           <div className={`${stylesHeader.heading_container} py-2`} onMouseLeave={handleMouseLeave}>
-            {navbarData?.length > 0 &&
-              navbarData.map((item: any, index: number) => (
+            {categoriesData?.length > 0 &&
+              categoriesData.map((item: any, index: number) => (
                 <div key={index} className={`${stylesHeader.header_category_container}`}>
-                  {navbarData === null ? (
+                  {categoriesData === null ? (
                     <Placeholder xs={6} bg="dark" />
                   ) : (
                     <div
