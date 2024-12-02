@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callPostAPI } from '../../../utils/http-methods';
-import useAddToCartHook from '../../../hooks/CartPageHook/useAddToCart';
+import useAddToCartHook from '../../../hooks/CartPageHook/useCartFunctions';
 import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
@@ -22,6 +22,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     colour: colour,
     size: '',
     quantity: '',
+    remark: '',
   };
   const [sizeTable, setSizeTable] = useState([initialState]);
   const [reject, setReject] = useState(false);
@@ -30,8 +31,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     remark: '',
     rejection_note: '',
   });
+
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
-  const [customerError, setCustomerError] = useState('')
+  const [customerError, setCustomerError] = useState('');
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
   };
@@ -56,8 +58,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   };
   const handleRemarkChange = (event: any) => {
     const { name, value } = event.target;
+
     setCartProductsData({ ...cartProductsData, [name]: value });
   };
+
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -118,10 +122,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       user: user,
     };
     if (cust_name !== '' && cust_name !== null) {
-      setCustomerError('')
+      setCustomerError('');
       addToCartItem(addToCartParams);
     } else {
-      setCustomerError('Customer name is empty !!')
+      setCustomerError('Customer name is empty !!');
     }
     setCartProductsData({
       wastage: '',
@@ -225,9 +229,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           )}
         </div>
       </div>
-      {customerError !== '' && (
-        <p className='text-danger'>{customerError}</p>
-      )}
+      {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
           <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>

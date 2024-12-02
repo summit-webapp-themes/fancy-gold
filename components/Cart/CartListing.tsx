@@ -2,9 +2,12 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
-import useAddToCartHook from '../../hooks/CartPageHook/useAddToCart';
+import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import styles from '../../styles/components/cartProductDetail.module.scss';
+import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
+import { useSelector } from 'react-redux';
+import OrderDetail from '../OrderDetail/OrderDetail';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -13,10 +16,13 @@ const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove } = useAddToCartHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCustNameFunc } =
+    useAddToCartHook();
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
-  const partyName = localStorage.getItem('party_name')
+  const partyName = localStorage.getItem('party_name');
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
@@ -24,6 +30,12 @@ const CartListing = () => {
       setDeliveryDate(transactionDate.toISOString().split('T')[0]);
     }
   }, [cartListingItems?.transaction_date]);
+
+  useEffect(() => {
+    if (cartListingItems?.cust_name) {
+      setCustomerName(cartListingItems?.cust_name);
+    }
+  }, [cartListingItems?.cust_name]);
 
   const handleDeleteRow = (itemCode: string) => {
     const params = {
@@ -93,96 +105,140 @@ const CartListing = () => {
     updatedItems.categories[categoryIndex].orders[orderIndex].wastage = data;
     setCartListingItems(updatedItems);
   };
+
+  const handleClearCart = () => {
+    cLearCartAPIFunc(quotation_Id);
+    setCartListingItems([[]]);
+  };
+
+  const updateCustName = () => {
+    if (customerName !== cartListingItems?.cust_name) {
+      updateCustNameFunc(customerName);
+    }
+  };
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
     }
     if (cartListingItems?.categories?.length > 0) {
       return (
-        <div className="border p-3">
-          <div className="d-flex justify-content-between">
-            <div>
-              <label>Customer Name: {cartListingItems?.cust_name} </label>
-              <br />
-              <label>Order Purity: {cartListingItems?.purity}</label>
+        <>
+          <div className="border p-3">
+            <div className="d-flex justify-content-between">
               <div>
-                <label>Delivery Date: </label>
-                <input type="date" value={deliveryDate} onChange={(e) => setDeliveryDate(e.target.value)} min={deliveryDate} />
-              </div>
-            </div>
-            <div className={`${styles.place_order_container}`}>
-              <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                Place Order
-              </button>
-            </div>
-          </div>
-          <hr className="mt-3" />
-          {cartListingItems?.categories?.length > 0 &&
-            cartListingItems?.categories?.map((category: any, categoryIndex: number) => (
-              <div className="p-3" key={categoryIndex}>
-                <h5 className="py-2">
-                  {category?.category} | Total Weight: {category?.total_weight}gm
-                </h5>
-                <div className={`row ${styles?.table_header}`}>
-                  <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
-                  <div className="col-lg-2 col-md-2 col-12 text-center">Note</div>
-                  <div className="col-lg-5 col-md-5 col-12"></div>
+                <div>
+                  <label>Customer Name: </label>
+                  <input type="text" className="mx-2" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                  <button
+                    onClick={updateCustName}
+                    className="ms-2"
+                    style={{
+                      color: 'blue',
+                      marginTop: '12px',
+                      backgroundColor: 'white',
+                      border: 'none',
+                      fontSize: '13px',
+                    }}
+                  >
+                    Update
+                  </button>
                 </div>
-                <div className="row">
-                  {category?.orders?.length > 0 &&
-                    category?.orders?.map((order: any, orderIndex: any) => (
-                      <>
-                        <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
-                          <CartProductDetail
-                            data={order}
-                            onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
-                            handleEditWastage={handleUpdateListData}
-                          />
-                        </div>
-                        <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
-                          <SizeQtyTable
-                            data={order}
-                            onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
-                              handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
-                            }
-                            onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
-                          />
-                        </div>
-                        <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
-                          <button className='btn btn-link text-decoration-none text-dark' onClick={() => {
-                            handleDeleteRow(order?.item_code);
-                          }} disabled={disableRemove}>
-                            <RxCross2
-                            />
-                          </button>
-                        </div>
-                      </>
-                    ))}
+                <label>Order Purity: {cartListingItems?.purity}</label>
+                <div>
+                  <label>Delivery Date: </label>
+                  <input type="date" value={deliveryDate} onChange={(e) => setDeliveryDate(e.target.value)} min={deliveryDate} />
                 </div>
+                <label>Describtion: {cartListingItems?.remark} </label>
               </div>
-            ))}
-          <hr />
-          <div className="d-flex justify-content-between">
-            <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
-            <div className={`${styles.place_order_container}`}>
-              <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
-              <div className="d-flex justify-content-end w-100">
+              <div className={`${styles.place_order_container}`}>
                 <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
                   Place Order
                 </button>
               </div>
             </div>
+            <hr className="mt-3" />
+            {cartListingItems?.categories?.length > 0 &&
+              cartListingItems?.categories?.map((category: any, categoryIndex: number) => (
+                <div className="p-3" key={categoryIndex}>
+                  <h5 className="py-2">
+                    {category?.category} | Total Weight: {category?.total_weight}gm
+                  </h5>
+                  <div className={`row ${styles?.table_header}`}>
+                    <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
+                    <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
+                    <div className="col-lg-5 col-md-5 col-12"></div>
+                  </div>
+                  <div className="row">
+                    {category?.orders?.length > 0 &&
+                      category?.orders?.map((order: any, orderIndex: any) => (
+                        <>
+                          <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
+                            <CartProductDetail
+                              data={order}
+                              onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
+                              handleEditWastage={handleUpdateListData}
+                            />
+                          </div>
+                          <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
+                            <SizeQtyTable
+                              data={order}
+                              onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
+                                handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
+                              }
+                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                            />
+                          </div>
+                          <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
+                            <button
+                              className="btn btn-link text-decoration-none text-dark"
+                              onClick={() => {
+                                handleDeleteRow(order?.item_code);
+                              }}
+                              disabled={disableRemove}
+                            >
+                              <RxCross2 />
+                            </button>
+                          </div>
+                        </>
+                      ))}
+                  </div>
+                </div>
+              ))}
+            <hr />
+            <div className="d-flex justify-content-between">
+              <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
+              <div className={`${styles.place_order_container}`}>
+                <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
+                <div className="d-flex justify-content-end w-100">
+                  <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+                    Place Order
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+          <div className="container p-2">
+            <div className="row my-2 w-100 p-0 text-center">
+              <div className="offset-6 col-md-6 col-6 text-end p-lg-0">
+                <button
+                  className={`${styles.clear_cart_btn}`}
+                  data-toggle="modal"
+                  data-target="#confirmationModal"
+                  onClick={handleClearCart}
+                >
+                  Clear Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
       );
     }
     if (errorMessage !== '' && cartListingItems?.length <= 0 && isLoading === false) {
       return <ApiErrorPage />;
     }
     if (Object.keys(cartListingItems).length === 0 && cartListingItems.constructor === Object && errorMessage === '') {
-      return (
-        <NoDataFound title="Cart list is empty !!" message="Add Items to cart to view cart list." />
-      );
+      return <NoDataFound title="Cart list is empty !!" message="Add Items to cart to view cart list." />;
     }
   };
   return (

@@ -31,6 +31,9 @@ const OrderDetailCard = ({
   getOrderStatusValueFromURL,
   soisd_item,
   reviewState,
+  showButtons,
+  handleReadyToDispatch,
+  handleDeleteOrder,
 }: any) => {
   const [reviewModalToggle, setReviewModalToggle] = useState<boolean>(false);
   const [errMsgforReviewSubmitBtn, setErrMsgforReviewSubmitBtn] = useState<boolean>(false);
@@ -105,16 +108,34 @@ const OrderDetailCard = ({
                 <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
                   <p>{purity}</p>
                 </div>
-                <div className="col-3 text-start">
-                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                <div className="col-1 text-start">
+                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
+                  </p> */}
+                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                    {remark}
                   </p>
-                  <p className="text-dark"> {remark}</p>
                 </div>
-                <div className="col-2 text-start">
+                <div className="col-1">
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
                   </p>
+                </div>
+                <div className="col-3 text-center">
+                  {showButtons && status === 'pending' && (
+                    <>
+                      <div className="m-2">
+                        <button className={`${orderDetailStyles.readyToDispatch}`} onClick={() => handleReadyToDispatch(name)}>
+                          Ready to Dispatch
+                        </button>
+                      </div>
+                      <div className="m-2">
+                        <button className={`${orderDetailStyles.deletBtn}`} onClick={() => handleDeleteOrder(name)}>
+                          Delete
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
