@@ -148,7 +148,6 @@ const CartListing = () => {
                   <label>Delivery Date: </label>
                   <input type="date" value={deliveryDate} onChange={(e) => setDeliveryDate(e.target.value)} min={deliveryDate} />
                 </div>
-                <label>Describtion: {cartListingItems?.remark} </label>
               </div>
               <div className={`${styles.place_order_container}`}>
                 <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>

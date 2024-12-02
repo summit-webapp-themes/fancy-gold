@@ -125,7 +125,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       setCustomerError('');
       addToCartItem(addToCartParams);
     } else {
-      setCustomerError('Customer name is empty !!');
+      setCustomerError('Customer name is empty!');
     }
     setCartProductsData({
       wastage: '',
