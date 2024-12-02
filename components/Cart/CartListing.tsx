@@ -126,7 +126,7 @@ const CartListing = () => {
           <div className="border p-3">
             <div className="d-flex justify-content-between">
               <div>
-                <div>
+                <div className="mt-2">
                   <label>Customer Name: </label>
                   <input type="text" className="mx-2" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
                   <button
@@ -143,10 +143,19 @@ const CartListing = () => {
                     Update
                   </button>
                 </div>
-                <label>Order Purity: {cartListingItems?.purity}</label>
-                <div>
+                <div className="mt-2">
+                  <label>Order Purity:</label>
+                  <span style={{ marginLeft: '36px' }}>{cartListingItems?.purity}</span>
+                </div>
+                <div className="mt-2">
                   <label>Delivery Date: </label>
-                  <input type="date" value={deliveryDate} onChange={(e) => setDeliveryDate(e.target.value)} min={deliveryDate} />
+                  <input
+                    type="date"
+                    style={{ marginLeft: '26px' }}
+                    value={deliveryDate}
+                    onChange={(e) => setDeliveryDate(e.target.value)}
+                    min={deliveryDate}
+                  />
                 </div>
               </div>
               <div className={`${styles.place_order_container}`}>
