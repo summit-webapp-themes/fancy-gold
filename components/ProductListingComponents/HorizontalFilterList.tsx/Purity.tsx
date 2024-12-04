@@ -16,7 +16,7 @@ const Purity = () => {
   const cartData: any = useSelector(selectCart);
   const { cLearCartAPIFunc } = useAddToCartHook();
   const [purityValues, setPurityValues] = useState([]);
-  const [selectedPurity, setSelectedPurity] = useState('22KT');
+  const [selectedPurity, setSelectedPurity] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<any>();
   const [showModal, setShowModal] = useState(false);
 
@@ -38,65 +38,15 @@ const Purity = () => {
   };
   useEffect(() => {
     fetchValues();
-    localStorage.setItem('localPurity', selectedPurity);
+    const localPurity = localStorage.getItem('localPurity');
+
+    setSelectedPurity(localPurity || '22KT');
   }, []);
-  useEffect(() => {
-    if (query.filter) {
-      try {
-        const decodedFilterString = decodeURIComponent(query.filter as string);
-        const decodedFilters = JSON.parse(decodedFilterString);
-
-        setSelectedFilters(decodedFilters);
-
-        const purityFilter = decodedFilters.find((filter: any) => filter.name === 'Purity');
-        setSelectedPurity(purityFilter ? purityFilter.value[0] : '22KT');
-      } catch (error) {
-        setSelectedFilters([]);
-        setSelectedPurity('22KT');
-      }
-    } else {
-      setSelectedFilters([]);
-      setSelectedPurity('22KT');
-    }
-  }, [query]);
 
   const handleSelectPurity = (purityValue: string) => {
     if (cartData?.cartCount <= 0) {
       setSelectedPurity(purityValue);
-
-      let updatedFilters;
-      if (selectedFilters?.length > 0) {
-        updatedFilters = selectedFilters.map((filter: any) => {
-          if (filter.name === 'Purity') {
-            return { ...filter, value: [purityValue] };
-          }
-          return filter;
-        });
-      } else {
-        updatedFilters = [{ name: 'Purity', value: [purityValue] }];
-      }
-      setSelectedFilters(updatedFilters);
-
-      const filterString = updatedFilters?.length > 0 ? `&filter=${encodeURIComponent(JSON.stringify(updatedFilters))}` : '';
-      let url = router.asPath;
-      const existingFilterIndex = url.indexOf('&filter=');
-
-      if (existingFilterIndex !== -1) {
-        const ampIndex = url.indexOf('&', existingFilterIndex + 1);
-        if (ampIndex !== -1) {
-          url = url.slice(0, existingFilterIndex) + url.slice(ampIndex);
-        } else {
-          url = url.slice(0, existingFilterIndex);
-        }
-      }
-
-      if (filterString) {
-        url = `${url.split('?')[0]}?&page=1${filterString}`;
-      } else {
-        url = `${url.split('?')[0]}?page=1`;
-      }
-
-      router.push(url, undefined, { shallow: true });
+      localStorage.setItem('localPurity', purityValue);
     } else {
       setShowModal(true);
     }
