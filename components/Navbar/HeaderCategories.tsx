@@ -30,7 +30,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                   <Link
                     href={{
                       pathname: `${itemL2?.url}`,
-                      query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest', currency: 'INR' },
+                      query: { page: '1', sort_by: 'latest', currency: 'INR' },
                     }}
                     className="label theme-blue text-decoration-none"
                     onClick={() => setShowPopoverIndex(null)}
@@ -47,7 +47,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                           <Link
                             href={{
                               pathname: `${itemL3?.url}`,
-                              query: { page: '1', filter: '[{"name":"Purity","value":["22KT"]}]', sort_by: 'latest', currency: 'INR' },
+                              query: { page: '1', sort_by: 'latest', currency: 'INR' },
                             }}
                             className={stylesHeader.heading_category_l3}
                             onClick={() => setShowPopoverIndex(null)}

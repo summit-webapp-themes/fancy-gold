@@ -40,6 +40,7 @@ const CartListing = () => {
     }
     if (cartListingItems?.purity) {
       setUpdatedPurity(cartListingItems?.purity);
+      localStorage.setItem('localPurity', cartListingItems?.purity);
       const selectedPurity = purity.find((item: any) => item.name === cartListingItems?.purity);
       setModifiedPurity([selectedPurity, ...purity.filter((item: any) => item.name !== cartListingItems?.purity)]);
     }
@@ -128,10 +129,7 @@ const CartListing = () => {
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
-  console.log(
-    [purity.find((item: any) => item.name === updatePurity), ...purity.filter((item: any) => item.name !== updatePurity)],
-    'text'
-  );
+
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;

@@ -4,7 +4,7 @@ import filterStyles from '../../../styles/components/filterSidebar.module.scss';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
 const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
-
+  const purity = localStorage.getItem('localPurity') || '22KT';
   const showFilterSection: any = () => {
     if (isLoading) {
       return <FilterViewLoadingComponent />;
