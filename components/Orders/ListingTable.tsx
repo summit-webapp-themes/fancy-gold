@@ -17,9 +17,9 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
             ?.join(' ')
             ?.replace(/\b\w/g, (char) => char.toUpperCase())}
         </h4>
-        <div className="text-end m-2">
-          <button className="px-2" onClick={handleDeleteOrder}>
-            cancel
+        <div className="text-end my-2">
+          <button className="btn btn-secondary " onClick={handleDeleteOrder}>
+            Cancel
           </button>
         </div>
         <table className="table table-sm table-bordered table-hover">

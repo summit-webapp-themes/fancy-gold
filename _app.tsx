@@ -19,17 +19,22 @@ import { persistor, store } from '../store/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
+      <Head>
+        <title>ARC Digital Catalog</title>
+        <link rel="icon" href="/assets/images/logo.png" />
+      </Head>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ErrorBoundary>
             <Layout>
-            <ToastContainer
+              <ToastContainer
                 position="top-right"
-                className='toast-container-below-navbar'
+                className="toast-container-below-navbar"
                 autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
