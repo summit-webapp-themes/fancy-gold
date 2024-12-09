@@ -74,7 +74,7 @@ const Navbar = () => {
         <nav>
           <div className={`${stylesNavbar.navbar} ps-lg-5 pe-lg-4`}>
             <div className="w-100 d-flex justify-content-between pt-3">
-              <div className="mobile-nav d-flex justify-content-sm-between">
+              <div className="mobile-nav d-flex justify-content-sm-between px-2">
                 <Link href="#" legacyBehavior>
                   <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
                     <FaAlignJustify className="icon" />
@@ -88,23 +88,25 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-              <div className={`d-block ${stylesNavbar.search_bar}`}>
-                <div className="search-input position-relative">
-                  <input
-                    type="text"
-                    className={`form-control ${stylesNavbar.search_bar_input}`}
-                    placeholder="Search here"
-                    aria-label="Search"
-                    aria-describedby="basic-addon1"
-                    onChange={(e: any) => setSearchTerm(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                  />
-                  <FaSearch className={stylesNavbar.search_icon} onClick={(e) => handleSearch(e)} />
+              {!isMobile && (
+                <div className={`d-block ${stylesNavbar.search_bar}`}>
+                  <div className="search-input position-relative ">
+                    <input
+                      type="text"
+                      className={`form-control ${stylesNavbar.search_bar_input}`}
+                      placeholder="Search here"
+                      aria-label="Search"
+                      aria-describedby="basic-addon1"
+                      onChange={(e: any) => setSearchTerm(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                    />
+                    <FaSearch className={stylesNavbar.search_icon} onClick={(e) => handleSearch(e)} />
+                  </div>
                 </div>
-              </div>
-              <div className={stylesNavbar.inlineList}>
-                <ul className="nav  list-inline d-flex justify-content-evenly">
-                  <li className={stylesNavbar.list_inline_item}>
+              )}
+              <div className={` ${stylesNavbar.inlineList} `}>
+                <ul className={`nav  list-inline d-flex justify-content-end ${stylesNavbar.mobnavbar}`}>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
@@ -115,7 +117,7 @@ const Navbar = () => {
                       </a>
                     </Link>
                   </li>
-                  <li className={stylesNavbar.list_inline_item}>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_wishlist}`}>
                     <Link href="/wishlist " legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
@@ -126,72 +128,106 @@ const Navbar = () => {
                       </a>
                     </Link>
                   </li>
-
-                  <li className={stylesNavbar.list_inline_item}>
-                    <div className={stylesNavbar.icon_container}>
-                      <FaRegCalendar className="icon " />
-                    </div>
-                    <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
-                      <Link href="/order-history" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Order List
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Completed Orders
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Cancelled Orders
-                        </NavDropdown.Item>
-                      </Link>
-                    </NavDropdown>
-                  </li>
-                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
-                    <div className="text-center">
-                      <FaRegCalendar className="icon " />
-                    </div>
-                    <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
-                      <Link href="/reports/pending-order" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Pending Order Report
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          In Process Order Report
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/reports/review-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Review Report
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Dispatched Order Report
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Due Date Reminder Report
-                        </NavDropdown.Item>
-                      </Link>
-                      <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
-                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
-                          Late Order Report
-                        </NavDropdown.Item>
-                      </Link>
-                    </NavDropdown>
-                  </li>
+                  {!isMobile && (
+                    <>
+                      <li className={stylesNavbar.list_inline_item}>
+                        <div className={stylesNavbar.icon_container}>
+                          <FaRegCalendar className="icon " />
+                        </div>
+                        <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                          <Link href="/order-history" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Order List
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Completed Orders
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Cancelled Orders
+                            </NavDropdown.Item>
+                          </Link>
+                        </NavDropdown>
+                      </li>
+                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
+                        <div className="text-center">
+                          <FaRegCalendar className="icon " />
+                        </div>
+                        <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                          <Link href="/reports/pending-order" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Pending Order Report
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              In Process Order Report
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/reports/review-report" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Review Report
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Dispatched Order Report
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Due Date Reminder Report
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
+                            <NavDropdown.Item
+                              as="a"
+                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                            >
+                              Late Order Report
+                            </NavDropdown.Item>
+                          </Link>
+                        </NavDropdown>
+                      </li>
+                    </>
+                  )}
                   <li className={stylesNavbar.list_inline_item}>
                     <div className={stylesNavbar.icon_container}>
                       <FaUserCircle className="icon" />
                     </div>
-                    <NavDropdown title={party_name} id="basic-nav-dropdown" className={`text-center ${stylesNavbar.order_list_dropdown}`}>
-
+                    <NavDropdown
+                      title={party_name}
+                      id="basic-nav-dropdown"
+                      className={`text-center ${stylesNavbar.order_list_dropdown} dropdown-menu-end dropleft`}
+                      drop="start"
+                    >
                       <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                         {user}
                       </NavDropdown.Item>

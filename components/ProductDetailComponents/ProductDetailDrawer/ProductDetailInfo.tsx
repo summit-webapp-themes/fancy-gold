@@ -18,6 +18,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const colour: any = localStorage.getItem('colour');
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
+  const purity = localStorage.getItem('localPurity');
   const initialState = {
     colour: colour,
     size: '',
@@ -113,7 +114,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     const addToCartParams = {
       item_code: data?.name,
       party_name: party_name,
-      purity: data?.stock_uom,
+      purity: purity,
       cust_name: cust_name,
       colour: colour,
       wastage: cartProductsData.wastage,
@@ -162,7 +163,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
-            <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data?.stock_uom}</div>
+            <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
             <div className="col-3 border py-1">
               <select
                 name="colour"

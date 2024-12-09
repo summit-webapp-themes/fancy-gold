@@ -15,14 +15,17 @@ const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
 const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading, errorMessage } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCustNameFunc } =
-    useAddToCartHook();
+  const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
+  const [updatedPurity, setUpdatedPurity] = useState('');
+  const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [modifiedPurity, setModifiedPurity] = useState<any>([]);
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
+
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
       const transactionDate = new Date(cartListingItems.transaction_date);
@@ -35,7 +38,13 @@ const CartListing = () => {
     if (cartListingItems?.cust_name) {
       setCustomerName(cartListingItems?.cust_name);
     }
-  }, [cartListingItems?.cust_name]);
+    if (cartListingItems?.purity) {
+      setUpdatedPurity(cartListingItems?.purity);
+      localStorage.setItem('localPurity', cartListingItems?.purity);
+      const selectedPurity = purity.find((item: any) => item.name === cartListingItems?.purity);
+      setModifiedPurity([selectedPurity, ...purity.filter((item: any) => item.name !== cartListingItems?.purity)]);
+    }
+  }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
   const handleDeleteRow = (itemCode: string) => {
     const params = {
@@ -111,11 +120,16 @@ const CartListing = () => {
     setCartListingItems([[]]);
   };
 
-  const updateCustName = () => {
+  const updateCartCust = () => {
     if (customerName !== cartListingItems?.cust_name) {
-      updateCustNameFunc(customerName);
+      updateCartData(customerName, selectedPurity, setUpdatedPurity);
     }
   };
+
+  const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPurity(e.target.value);
+  };
+
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -126,32 +140,50 @@ const CartListing = () => {
           <div className="border p-3">
             <div className="d-flex justify-content-between">
               <div>
-                <div className="mt-2">
-                  <label>Customer Name: </label>
-                  <input type="text" className="mx-2" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                <div className="mt-2 row">
+                  <label className="col-md-4">Customer Name: </label>
+
+                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                  <div className="col-md-1"></div>
+                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
+                    Update
+                  </button>
+                </div>
+                <div className="mt-2 row">
+                  <label className="col-md-4">Order Purity:</label>
+
+                  <span className="col-md-8">{updatedPurity}</span>
+                </div>
+                <div className="mt-2 row">
+                  <label className="col-md-4">Update Purity:</label>
+                  <select
+                    className=" col-md-5"
+                    // value={selectedPurity}
+                    onChange={updatePurity}
+                    placeholder="text"
+                  >
+                    {modifiedPurity.map((item: any, index: any) => {
+                      if (!item) return null;
+                      return (
+                        <option key={index} value={item?.name}>
+                          {item?.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="col-md-1"></div>
                   <button
-                    onClick={updateCustName}
-                    className="ms-2"
-                    style={{
-                      color: 'blue',
-                      marginTop: '12px',
-                      backgroundColor: 'white',
-                      border: 'none',
-                      fontSize: '13px',
-                    }}
+                    onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
+                    className={`col-md-2 ${styles.update_btn}`}
                   >
                     Update
                   </button>
                 </div>
-                <div className="mt-2">
-                  <label>Order Purity:</label>
-                  <span style={{ marginLeft: '36px' }}>{cartListingItems?.purity}</span>
-                </div>
-                <div className="mt-2">
-                  <label>Delivery Date: </label>
+                <div className="mt-2 row">
+                  <label className="col-md-4">Delivery Date: </label>
                   <input
                     type="date"
-                    style={{ marginLeft: '26px' }}
+                    className="col-md-5"
                     value={deliveryDate}
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}

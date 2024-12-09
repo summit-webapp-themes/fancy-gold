@@ -49,16 +49,13 @@ const ProductDetails = ({
               />
               <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
             </div>
-            <PrevNextButtons data={productDetailData}/>
+            <PrevNextButtons data={productDetailData} />
           </div>
         </div>
       );
     }
-    if(Object.keys(productDetailData).length === 0 && !isLoading){
-      return(
-
-        <NoDataFound title="Details Not Found!" message="Sorry for inconvenience. Please try again later." />
-      )
+    if (Object.keys(productDetailData).length === 0 && !isLoading) {
+      return <NoDataFound title="Details Not Found!" message="Sorry for inconvenience. Please try again later." />;
     }
   };
   return <div className="container ">{handledataRendering()}</div>;
