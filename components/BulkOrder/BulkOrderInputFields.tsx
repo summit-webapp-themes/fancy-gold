@@ -25,7 +25,13 @@ const BulkOrderInputFields = ({ formData, handleChange, purityList }: any) => {
             </select>
             <div>
               <div className="fs-14 pt-1">Description</div>
-              <input type="text" name="description" className="w-100 px-1" value={formData?.description} onChange={handleChange} />
+              <input
+                type="text"
+                name="description"
+                className={`w-100 ${styles.input_type_select} px-1`}
+                value={formData?.description}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
@@ -35,7 +41,7 @@ const BulkOrderInputFields = ({ formData, handleChange, purityList }: any) => {
             <input
               type="text"
               name="customer"
-              className="w-100 px-1"
+              className={`w-100 ${styles.input_type_select} px-1`}
               value={formData?.customer}
               onChange={handleChange}
               onKeyDown={(e: any) => {
@@ -53,7 +59,7 @@ const BulkOrderInputFields = ({ formData, handleChange, purityList }: any) => {
             <input
               type="date"
               name="transaction_date"
-              className={`w-100 ${styles.input_type_select}  px-1`}
+              className={`w-100 ${styles.input_type_select} px-1`}
               value={formData?.transaction_date}
               onChange={handleChange}
             />

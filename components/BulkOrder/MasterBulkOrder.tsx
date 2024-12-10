@@ -19,7 +19,7 @@ const MasterBulkOrder = () => {
     addBunchOrderRow,
     deleteBunchOrderRow,
     deleteCustomMarketOrderRow,
-    handleSubmit,
+    handleSaveBtn,
     itemList,
     itemListBunch,
     itemListCustom,
@@ -88,7 +88,7 @@ const MasterBulkOrder = () => {
 
           <div className="row">
             <div className="col-md-6">
-              <button onClick={handleSubmit} className={styles.btn_save_bulk_order}>
+              <button onClick={handleSaveBtn} className={styles.btn_save_bulk_order}>
                 Save
               </button>
             </div>
