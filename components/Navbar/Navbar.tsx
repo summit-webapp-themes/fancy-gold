@@ -237,6 +237,11 @@ const Navbar = () => {
                           Quick Order
                         </NavDropdown.Item>
                       </Link>
+                      <Link href="/bulk-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
+                          Bulk Order
+                        </NavDropdown.Item>
+                      </Link>
                       {/* <Link href="/bulk-order" passHref className="text-decoration-none">
                         <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Bulk Order
