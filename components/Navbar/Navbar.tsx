@@ -225,8 +225,7 @@ const Navbar = () => {
                     <NavDropdown
                       title={party_name}
                       id="basic-nav-dropdown"
-                      className={`text-center ${stylesNavbar.order_list_dropdown} dropdown-menu-end dropleft`}
-                      drop="start"
+                      className={`text-center ${stylesNavbar.order_list_dropdown} dropdown-menu-end `}
                     >
                       <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                         {user}
