@@ -35,8 +35,12 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
             <div className="col-lg-2 col-2 border py-1">{item?.colour}</div>
             <div className="col-lg-3 col-3 border py-1">{item?.size}</div>
             <div className="col-lg-3 col-3 border p-0 py-1">
-              <span onClick={() => handleIncrement(index, data)}>
-                <FaPlus className="px-1 fs-2 " />
+              <span
+                onClick={() => {
+                  handleDecrement(index, data);
+                }}
+              >
+                <FaMinus className="px-1 fs-2" />
               </span>
               <input
                 type="text"
@@ -46,12 +50,8 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
                   handleQtyChange(index, data, e);
                 }}
               />
-              <span
-                onClick={() => {
-                  handleDecrement(index, data);
-                }}
-              >
-                <FaMinus className="px-1 fs-2" />
+              <span onClick={() => handleIncrement(index, data)}>
+                <FaPlus className="px-1 fs-2 " />
               </span>
             </div>
             <div className="col-lg-3 col-3 border py-1">{item?.weight}gm</div>
