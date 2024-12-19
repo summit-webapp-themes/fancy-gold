@@ -40,6 +40,9 @@ const Purity = () => {
     fetchValues();
     const localPurity = localStorage.getItem('localPurity');
 
+    if (localPurity === null) {
+      localStorage.setItem('localPurity', '22KT');
+    }
     setSelectedPurity(localPurity || '22KT');
   }, []);
 
