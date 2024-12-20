@@ -137,3 +137,12 @@ body {
 .toast-container-below-navbar {
   margin-top: 70px;
 }
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #111180;
+}
+.form-select:focus {
+  box-shadow: none;
+  border-color: #111180;
+}
