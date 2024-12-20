@@ -199,50 +199,52 @@ const CartListing = () => {
             <hr className="mt-3" />
             {cartListingItems?.categories?.length > 0 &&
               cartListingItems?.categories?.map((category: any, categoryIndex: number) => (
-                <div className="p-3" key={categoryIndex}>
-                  <h5 className="py-2">
+                <>
+                  <h5 className="py-2 ps-1">
                     {category?.category} | Total Weight: {category?.total_weight}gm
                   </h5>
-                  <div className={`row ${styles?.table_header}`}>
-                    <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
-                    <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
-                    <div className="col-lg-5 col-md-5 col-12"></div>
+                  <div className="p-3" key={categoryIndex}>
+                    <div className={`row ${styles?.table_header}`}>
+                      <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
+                      <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
+                      <div className="col-lg-5 col-md-5 col-12"></div>
+                    </div>
+                    <div className="row">
+                      {category?.orders?.length > 0 &&
+                        category?.orders?.map((order: any, orderIndex: any) => (
+                          <>
+                            <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
+                              <CartProductDetail
+                                data={order}
+                                onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
+                                handleEditWastage={handleUpdateListData}
+                              />
+                            </div>
+                            <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
+                              <SizeQtyTable
+                                data={order}
+                                onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
+                                  handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
+                                }
+                                onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                              />
+                            </div>
+                            <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
+                              <button
+                                className="btn btn-link text-decoration-none text-dark"
+                                onClick={() => {
+                                  handleDeleteRow(order?.item_code);
+                                }}
+                                disabled={disableRemove}
+                              >
+                                <RxCross2 />
+                              </button>
+                            </div>
+                          </>
+                        ))}
+                    </div>
                   </div>
-                  <div className="row">
-                    {category?.orders?.length > 0 &&
-                      category?.orders?.map((order: any, orderIndex: any) => (
-                        <>
-                          <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
-                            <CartProductDetail
-                              data={order}
-                              onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
-                              handleEditWastage={handleUpdateListData}
-                            />
-                          </div>
-                          <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
-                            <SizeQtyTable
-                              data={order}
-                              onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
-                                handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
-                              }
-                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
-                            />
-                          </div>
-                          <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
-                            <button
-                              className="btn btn-link text-decoration-none text-dark"
-                              onClick={() => {
-                                handleDeleteRow(order?.item_code);
-                              }}
-                              disabled={disableRemove}
-                            >
-                              <RxCross2 />
-                            </button>
-                          </div>
-                        </>
-                      ))}
-                  </div>
-                </div>
+                </>
               ))}
             <hr />
             <div className="d-flex justify-content-between">

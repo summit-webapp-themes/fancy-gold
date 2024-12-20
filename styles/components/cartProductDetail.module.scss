@@ -67,9 +67,10 @@
 }
 
 .update_btn {
-  color: 'blue';
+  color: #CD8825;
   margin-top: '12px';
-  background-color: 'white';
-  border: 'none';
-  font-size: '13px';
+  background-color: transparent;
+  border:1px solid #CD8825;
+  border-radius: 7px;
+  font-size: 13px;
 }
