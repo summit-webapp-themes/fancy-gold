@@ -5,19 +5,26 @@ import { useEffect, useState } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
 import logo from '../../public/assets/images/logo.png';
-import { clearToken } from '../../store/slices/auth/token-login-slice';
+import { clearToken, get_access_token } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 import { resetStore } from '../../store/slices/auth/logout-slice';
+import axios from 'axios';
+import fetchSearchDataAPI from '../../services/api/general-apis/search-api';
+import { CONSTANTS } from '../../services/config/app-config';
 
 const Navbar = () => {
+  const { SUMMIT_APP_CONFIG } = CONSTANTS;
+  const TokenFromStore: any = useSelector(get_access_token);
+
   const { navbarData, isLoading, errorMessage, selectedCurrencyValue, handleLogoutUser } = useNavbar();
+
   const dispatch = useDispatch();
   const { wishlistCount } = useWishlist();
   const { cartCount, cartListingItems } = useFetchCartItems();
@@ -30,7 +37,15 @@ const Navbar = () => {
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (searchTerm !== '') {
-      router.push('/product/' + searchTerm);
+      const getSearchData = async () => {
+        const searchAPIRes = await fetchSearchDataAPI(SUMMIT_APP_CONFIG, TokenFromStore?.token, searchTerm);
+        if (searchAPIRes?.status === 200 && searchAPIRes?.data?.message?.data?.length > 0) {
+          const saveProduct = searchAPIRes?.data?.message?.data[0]?.product;
+          // console.log('getSearchData', saveProduct);
+          router.push(`/${saveProduct}`);
+        }
+      };
+      getSearchData();
     }
   };
   const handleKeyDown = (e: any) => {
