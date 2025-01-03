@@ -54,21 +54,19 @@ const ProductListingMaster = () => {
       <section className="listing-page ">
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild w-100">
-          <div className="w-100">
-            <div className="row ps-lg-5 pe-lg-4 w-100">
-              <div className="col-12 col-sm-4 col-md-3 col-lg-2">
-                <WebFilters
-                  searchFilterValue={searchFilterValue}
-                  handleFilterSearchFun={handleFilterSearchFun}
-                  handleFilterSearchBtn={handleFilterSearchBtn}
-                  hideFilterSection={hideFilterSection}
-                  setHideFilterSection={setHideFilterSection}
-                />
-              </div>
+          <div className="row ps-lg-5 pe-lg-4 ps-2 w-100">
+            <div className="col-12 col-sm-4 col-md-4 col-lg-2">
+              <WebFilters
+                searchFilterValue={searchFilterValue}
+                handleFilterSearchFun={handleFilterSearchFun}
+                handleFilterSearchBtn={handleFilterSearchBtn}
+                hideFilterSection={hideFilterSection}
+                setHideFilterSection={setHideFilterSection}
+              />
+            </div>
 
-              <div className="container-md col-lg-10 col-md-8 col-sm-8">
-                <div className="row mt-2 mt-sm-0 product-listing-row">{handleDisplayOfProductsList()}</div>
-              </div>
+            <div className=" col-lg-10 col-md-8 col-sm-8">
+              <div className="row mt-2 mt-sm-0 product-listing-row">{handleDisplayOfProductsList()}</div>
             </div>
           </div>
         </div>
