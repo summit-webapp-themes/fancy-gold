@@ -64,7 +64,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
             </button>
           )}
         </div> */}
-        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>;
+        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>
       </div>
     </div>
   );
