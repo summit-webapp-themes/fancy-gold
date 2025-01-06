@@ -72,9 +72,8 @@ const MarketOrderTable = ({ formData, addMarketOrderRow, handleChangeMarketOrder
                     {formData?.marketOrderDetails[index]?.qty.map((item: any, subIndex: number) => (
                       <td key={subIndex}>
                         <input
-                          type="number"
                           name={`qty-${index}-${subIndex}`}
-                          value={item.qty}
+                          value={Number(item.qty) === 0 ? '' : Number(item.qty)}
                           className={`${styles.input_type_number}  w-100 px-1`}
                           onChange={(e) => handleChangeMarketOrder(e, index, 'qty', subIndex)}
                         />

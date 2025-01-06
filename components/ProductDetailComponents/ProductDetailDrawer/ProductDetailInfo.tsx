@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import useAddToCartHook from '../../../hooks/CartPageHook/useCartFunctions';
+import { get_access_token } from '../../../store/slices/auth/token-login-slice';
+import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
+import styles from '../../../styles/components/productCard.module.scss';
+import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callPostAPI } from '../../../utils/http-methods';
-import useAddToCartHook from '../../../hooks/CartPageHook/useCartFunctions';
-import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
-import { get_access_token } from '../../../store/slices/auth/token-login-slice';
-import productDetailStyles from '../../../styles/components/productDetail.module.scss';
-import styles from '../../../styles/components/productCard.module.scss';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
@@ -19,50 +19,46 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const purity = localStorage.getItem('localPurity');
-  const initialState = {
+  const initialState: any = {
     colour: colour,
     size: '',
     quantity: '',
     remark: '',
   };
+
   const [sizeTable, setSizeTable] = useState([initialState]);
-  const [reject, setReject] = useState(false);
   const [cartProductsData, setCartProductsData] = useState({
     wastage: '',
     remark: '',
     rejection_note: '',
   });
-
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
+  const [reject, setReject] = useState(false);
+  const idxRef = useRef<number | null>(null);
+
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
   };
+
   const handleDeleteRow = (index: number) => {
     const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
 
-  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (index: number, event: any) => {
+    idxRef.current = index;
     const { name, value } = event.target;
-    const updatedSizeTable = sizeTable.map((row, i) => (i === index ? { ...row, [name]: value } : row));
+    const updatedSizeTable = sizeTable.map((row, i) => {
+      if (i === index) {
+        const updatedRow = { ...row, [name]: value };
+        return updatedRow;
+      }
+      return row;
+    });
+
     setSizeTable(updatedSizeTable);
   };
-  const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size) {
-      const newRow = { ...initialState, size: size.toString() };
-      setSizeTable([...sizeTable, newRow]);
-    } else {
-      const updatedSizeTable = sizeTable.map((row, i) => (i === sizeTable.length - 1 ? { ...row, size: size.toString() } : row));
-      setSizeTable(updatedSizeTable);
-    }
-  };
-  const handleRemarkChange = (event: any) => {
-    const { name, value } = event.target;
-
-    setCartProductsData({ ...cartProductsData, [name]: value });
-  };
-
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -87,6 +83,15 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       } else {
         toast.error('Failed to Reject Product');
       }
+    }
+  };
+  const handleSizeButtonClick = (size: number) => {
+    if (sizeTable[sizeTable.length - 1]?.size) {
+      const newRow = { ...initialState, size: size.toString() };
+      setSizeTable([...sizeTable, newRow]);
+    } else {
+      const updatedSizeTable = sizeTable.map((row, i) => (i === sizeTable.length - 1 ? { ...row, size: size.toString() } : row));
+      setSizeTable(updatedSizeTable);
     }
   };
 
@@ -143,11 +148,18 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {[8.5, 22, 20, 8, 24].map((size, index) => (
-            <button key={index} className={productDetailStyles.size_button} onClick={() => handleSizeButtonClick(size)}>
-              {size}
-            </button>
-          ))}
+          {[8.5, 22, 20, 8, 24].map((size, index) => {
+            const isActive = sizeTable.some((item: any) => item?.size === size.toString());
+            return (
+              <button
+                key={index}
+                className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
+                onClick={() => handleSizeButtonClick(size)}
+              >
+                {size}
+              </button>
+            );
+          })}
           <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
             Add Custom Size
           </button>
@@ -156,18 +168,21 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className="col-3 border text-center py-1">Colour</div>
-          <div className="col-3 border text-center py-1">Size(inch)</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Colour</div>
+          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'} border text-center py-1`}>
+            Size(inch)
+          </div>
           <div className="col-3 border text-center py-1">Quantity</div>
           <div className="col border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className="col-3 border py-1">
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border py-1`}>
               <select
                 name="colour"
-                value={row?.colour || colour}
+                value={row.colour || colour}
                 onChange={(e) => handleInputChange(index, e)}
                 className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
               >
@@ -176,7 +191,20 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
+            {data?.custom_factory === 'ARC ERP Software' && (
+              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+                <input
+                  name="weight"
+                  className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
+                  value={Math.floor((data?.weight_per_unit / data?.length) * row.size) || ''}
+                />
+              </div>
+            )}
+            <div
+              className={`${
+                data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'
+              } border d-flex justify-content-center py-1 flex-column`}
+            >
               <input
                 type="text"
                 name="size"
@@ -194,7 +222,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
-              <span>{errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}</span>
+              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
             <div className="col border p-1">
               <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} onClick={() => handleDeleteRow(index)} />
@@ -208,27 +236,25 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-          onChange={(e) => handleRemarkChange(e)}
+          onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
           rows={1}
         ></textarea>
-        <div>
+        <textarea
+          name="remark"
+          value={cartProductsData?.remark}
+          placeholder="Enter note"
+          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+          onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
+        ></textarea>
+        {reject && (
           <textarea
-            name="remark"
-            value={cartProductsData?.remark}
-            placeholder="Enter note"
+            name="rejection_note"
+            value={cartProductsData?.rejection_note}
+            placeholder="Enter rejection note"
             className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-            onChange={(e) => handleRemarkChange(e)}
+            onChange={(e) => setCartProductsData({ ...cartProductsData, rejection_note: e.target.value })}
           ></textarea>
-          {reject && (
-            <textarea
-              name="rejection_note"
-              value={cartProductsData?.rejection_note}
-              placeholder="Enter rejection note"
-              className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-              onChange={(e) => handleRemarkChange(e)}
-            ></textarea>
-          )}
-        </div>
+        )}
       </div>
       {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
