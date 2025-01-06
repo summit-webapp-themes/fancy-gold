@@ -22,7 +22,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const initialState: any = {
     colour: colour,
     size: '',
-    weight: '',
     quantity: '',
     remark: '',
   };
@@ -45,21 +44,16 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
-  // const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-  //   const { name, value } = event.target;
-  //   const updatedSizeTable = sizeTable.map((row, i) => (i === index ? { ...row, [name]: value } : row));
-  //   setSizeTable(updatedSizeTable);
-  // };
+
   const handleInputChange = (index: number, event: any) => {
     idxRef.current = index;
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
       if (i === index) {
         const updatedRow = { ...row, [name]: value };
-        if (name === 'size') {
+        if (name === 'size' && data?.custom_factory === 'ARC ERP Software') {
           updatedRow.weight = ((data?.weight_per_unit / parseFloat(data?.length)) * value).toFixed(2);
         }
-
         return updatedRow;
       }
       return row;
@@ -128,16 +122,18 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className="col-2 border text-center py-1">Colour</div>
-          <div className="col-2 border text-center py-1">Weight</div>
-          <div className="col-2 border text-center px-0 py-1">Size(inch)</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Colour</div>
+          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'} border text-center py-1`}>
+            Size(inch)
+          </div>
           <div className="col-3 border text-center py-1">Quantity</div>
           <div className="col border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className="col-2 border py-1">
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border py-1`}>
               <select
                 name="colour"
                 value={row.colour || colour}
@@ -149,16 +145,22 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
-            <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
-              <input
-                type="text"
-                name="weight"
-                className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
-                onChange={(e) => handleInputChange(index, e)}
-                value={row.weight}
-              />
-            </div>
-            <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+            {data?.custom_factory === 'ARC ERP Software' && (
+              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+                <input
+                  type="text"
+                  name="weight"
+                  className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
+                  onChange={(e) => handleInputChange(index, e)}
+                  value={row.weight}
+                />
+              </div>
+            )}
+            <div
+              className={`${
+                data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'
+              } border d-flex justify-content-center py-1 flex-column`}
+            >
               <input
                 type="text"
                 name="size"
