@@ -246,6 +246,15 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
         ></textarea>
+        {reject && (
+          <textarea
+            name="rejection_note"
+            value={cartProductsData?.rejection_note}
+            placeholder="Enter rejection note"
+            className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+            onChange={(e) => setCartProductsData({ ...cartProductsData, rejection_note: e.target.value })}
+          ></textarea>
+        )}
       </div>
       {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
