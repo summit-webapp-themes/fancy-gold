@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -19,75 +19,53 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
   const purity = localStorage.getItem('localPurity');
-  const initialState = {
+  const initialState: any = {
     colour: colour,
     size: '',
+    weight: '',
     quantity: '',
     remark: '',
   };
+
   const [sizeTable, setSizeTable] = useState([initialState]);
-  const [reject, setReject] = useState(false);
   const [cartProductsData, setCartProductsData] = useState({
     wastage: '',
     remark: '',
     rejection_note: '',
   });
-
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
-  const [customerError, setCustomerError] = useState('');
+  const [reject, setReject] = useState(false);
+  const idxRef = useRef<number | null>(null);
+
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
   };
+
   const handleDeleteRow = (index: number) => {
     const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
-
-  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  // const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = event.target;
+  //   const updatedSizeTable = sizeTable.map((row, i) => (i === index ? { ...row, [name]: value } : row));
+  //   setSizeTable(updatedSizeTable);
+  // };
+  const handleInputChange = (index: number, event: any) => {
+    idxRef.current = index;
     const { name, value } = event.target;
-    const updatedSizeTable = sizeTable.map((row, i) => (i === index ? { ...row, [name]: value } : row));
-    setSizeTable(updatedSizeTable);
-  };
-  const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size) {
-      const newRow = { ...initialState, size: size.toString() };
-      setSizeTable([...sizeTable, newRow]);
-    } else {
-      const updatedSizeTable = sizeTable.map((row, i) => (i === sizeTable.length - 1 ? { ...row, size: size.toString() } : row));
-      setSizeTable(updatedSizeTable);
-    }
-  };
-  const handleRemarkChange = (event: any) => {
-    const { name, value } = event.target;
+    const updatedSizeTable = sizeTable.map((row, i) => {
+      if (i === index) {
+        const updatedRow = { ...row, [name]: value };
+        if (name === 'size') {
+          updatedRow.weight = ((data?.weight_per_unit / parseFloat(data?.length)) * value).toFixed(2);
+        }
 
-    setCartProductsData({ ...cartProductsData, [name]: value });
-  };
-
-  const postRejectionNoteAPI = (params: any) => {
-    const version = CONSTANTS?.ARC_APP_CONFIG?.version;
-    const method = 'reject_new_arrival_item';
-    const entity = 'product_list';
-    const apiSDKName = CONSTANTS?.ARC_APP_CONFIG?.app_name;
-    const url = `${CONSTANTS?.API_BASE_URL}${apiSDKName}?version=${version}&method=${method}&entity=${entity}&item_code=${params?.item_code}&rejection_note=${params?.rejection_note}&reject_status=1`;
-    const postNote = callPostAPI(url, undefined, TokenFromStore?.token);
-    return postNote;
-  };
-  const handleRejectionNote = async () => {
-    const params = {
-      item_code: data?.name,
-      rejection_note: cartProductsData?.rejection_note,
-    };
-    if (cartProductsData?.rejection_note && cartProductsData?.rejection_note !== '') {
-      const postNote = await postRejectionNoteAPI(params);
-      if (postNote?.data?.message?.msg === 'success') {
-        setReject(false);
-        setCartProductsData({ ...cartProductsData, rejection_note: '' });
-        toast.success('Product rejected successfully');
-        getProductDetailData(data?.name);
-      } else {
-        toast.error('Failed to Reject Product');
+        return updatedRow;
       }
-    }
+      return row;
+    });
+
+    setSizeTable(updatedSizeTable);
   };
 
   const handleAddToCart = () => {
@@ -123,20 +101,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       user: user,
     };
     if (cust_name !== '' && cust_name !== null) {
-      setCustomerError('');
       addToCartItem(addToCartParams);
     } else {
-      setCustomerError('Customer name is empty!');
+      toast.error('Customer name is empty!');
     }
-    setCartProductsData({
-      wastage: '',
-      remark: '',
-      rejection_note: '',
-    });
-    setSizeTable([initialState]);
-  };
-  const isVariantInCart = (variant_code: any) => {
-    return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
   return (
     <div className="w-100">
@@ -144,7 +112,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
           {[8.5, 22, 20, 8, 24].map((size, index) => (
-            <button key={index} className={productDetailStyles.size_button} onClick={() => handleSizeButtonClick(size)}>
+            <button
+              key={index}
+              className={productDetailStyles.size_button}
+              onClick={() => handleInputChange(index, { target: { name: 'size', value: size.toString() } })}
+            >
               {size}
             </button>
           ))}
@@ -156,18 +128,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className="col-3 border text-center py-1">Colour</div>
-          <div className="col-3 border text-center py-1">Size(inch)</div>
+          <div className="col-2 border text-center py-1">Colour</div>
+          <div className="col-2 border text-center py-1">Weight</div>
+          <div className="col-2 border text-center px-0 py-1">Size(inch)</div>
           <div className="col-3 border text-center py-1">Quantity</div>
           <div className="col border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className="col-3 border py-1">
+            <div className="col-2 border py-1">
               <select
                 name="colour"
-                value={row?.colour || colour}
+                value={row.colour || colour}
                 onChange={(e) => handleInputChange(index, e)}
                 className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
               >
@@ -176,7 +149,16 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
+            <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+              <input
+                type="text"
+                name="weight"
+                className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
+                onChange={(e) => handleInputChange(index, e)}
+                value={row.weight}
+              />
+            </div>
+            <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
               <input
                 type="text"
                 name="size"
@@ -194,7 +176,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
-              <span>{errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}</span>
+              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
             <div className="col border p-1">
               <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} onClick={() => handleDeleteRow(index)} />
@@ -208,45 +190,23 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-          onChange={(e) => handleRemarkChange(e)}
+          onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
           rows={1}
         ></textarea>
-        <div>
-          <textarea
-            name="remark"
-            value={cartProductsData?.remark}
-            placeholder="Enter note"
-            className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-            onChange={(e) => handleRemarkChange(e)}
-          ></textarea>
-          {reject && (
-            <textarea
-              name="rejection_note"
-              value={cartProductsData?.rejection_note}
-              placeholder="Enter rejection note"
-              className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-              onChange={(e) => handleRemarkChange(e)}
-            ></textarea>
-          )}
-        </div>
+        <textarea
+          name="remark"
+          value={cartProductsData?.remark}
+          placeholder="Enter note"
+          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+          onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
+        ></textarea>
       </div>
-      {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
-        {isVariantInCart(data?.name) ? (
-          <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>
-            Added
-          </button>
-        ) : (
-          <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
-            Add To Cart
-          </button>
-        )}
-        {data?.reject_button_value === 1 ? (
-          <button className={`${productDetailStyles.reject_btn} `} disabled>
-            Rejected
-          </button>
-        ) : (
-          <button className={`${productDetailStyles.reject_btn} `} onClick={() => (reject ? handleRejectionNote() : setReject(true))}>
+        <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
+          Add To Cart
+        </button>
+        {reject && (
+          <button className={`${productDetailStyles.reject_btn}`} onClick={() => setReject(false)}>
             Reject
           </button>
         )}
