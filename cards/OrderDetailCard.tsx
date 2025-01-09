@@ -147,6 +147,7 @@ const OrderDetailCard = ({
                     <th>Size(Inch)</th>
                     <th>Qty</th>
                     <th>Weight(gm)</th>
+                    <th>status</th>
                   </tr>
                   {order.length > 0 &&
                     order.map((data: any, index: any) => {
@@ -156,6 +157,7 @@ const OrderDetailCard = ({
                           <td>{data.size} inch</td>
                           <td>{data.qty}</td>
                           <td className="text-right">{data.weight}gm</td>
+                          <td className="text-right">{data.item_status}</td>
                         </tr>
                       );
                     })}
