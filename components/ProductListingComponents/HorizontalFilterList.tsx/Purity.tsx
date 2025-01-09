@@ -56,7 +56,7 @@ const Purity = () => {
   };
 
   return (
-    <div className="justify-content-center" style={{ height: '100%' }}>
+    <div className="d-flex justify-content-center" style={{ height: '100%' }}>
       {purityValues?.map((purity: any) => (
         <>
           <button
