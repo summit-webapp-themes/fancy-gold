@@ -157,7 +157,7 @@ const OrderDetailCard = ({
                           <td>{data.size} inch</td>
                           <td>{data.qty}</td>
                           <td className="text-right">{data.weight}gm</td>
-                          <td className="text-right">{data?.item_status}</td>
+                          <td className="text-right">{data?.custom_oms_status}</td>
                         </tr>
                       );
                     })}
