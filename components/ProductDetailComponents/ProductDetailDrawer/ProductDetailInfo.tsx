@@ -148,7 +148,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {[8.5, 22, 20, 8, 24].map((size, index) => {
+          {[8, 20, 22, 24].map((size, index) => {
             const isActive = sizeTable.some((item: any) => item?.size === size.toString());
             return (
               <button

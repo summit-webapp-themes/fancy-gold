@@ -9,6 +9,7 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
   const { query } = useRouter();
   const cartList = useSelector(selectCart)?.items;
   const [showVariants, setShowVariants] = useState([]);
+  console.log(variantsData, showVariants, 'data111');
   const getVariantStrings = () => {
     return (
       variantsData?.length > 0 &&
@@ -47,7 +48,7 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
       {loading ? (
         <div className={styles.productCode}>
           <span className="spinner-grow spinner-grow-sm px-2" role="status" aria-hidden="true"></span>
-         Product Variants Loading...
+          Product Variants Loading...
         </div>
       ) : (
         <>
