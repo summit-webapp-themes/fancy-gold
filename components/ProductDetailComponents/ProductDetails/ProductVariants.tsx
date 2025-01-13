@@ -9,24 +9,26 @@ const ProductVariants = ({ productDetail, variantsData, attributesData, getProdu
   const { query } = useRouter();
   const cartList = useSelector(selectCart)?.items;
   const [showVariants, setShowVariants] = useState([]);
-  console.log(variantsData, showVariants, 'data111');
   const getVariantStrings = () => {
     return (
       variantsData?.length > 0 &&
-      variantsData?.map((variant: any) => {
-        let variantStringParts: any[] = [];
-        attributesData.forEach((attribute: any) => {
-          if (attribute.field_name in variant && variant[attribute.field_name] !== null) {
-            variantStringParts.push(variant[attribute.field_name]);
-          }
-        });
-        return {
-          variant_code: variant.variant_code,
-          variant_string: variantStringParts.join('-'),
-        };
-      })
+      variantsData
+        .map((variant: any) => {
+          let variantStringParts: any[] = [];
+          attributesData.forEach((attribute: any) => {
+            if (attribute.field_name in variant && variant[attribute.field_name] !== null) {
+              variantStringParts.push(variant[attribute.field_name]);
+            }
+          });
+          return {
+            variant_code: variant.variant_code,
+            variant_string: Number(variantStringParts.join('-')),
+          };
+        })
+        .sort((a: any, b: any) => a.variant_string - b.variant_string) // Sort numerically
     );
   };
+
   const handleProductVariant = (variant_code: any) => {
     if (query?.productId) {
       router.push({

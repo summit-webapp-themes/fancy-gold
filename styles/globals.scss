@@ -146,3 +146,43 @@ body {
   box-shadow: none;
   border-color: #111180;
 }
+// Image slideshow
+.img-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.left {
+  display: flex;
+  height: 50vh;
+  gap: 10px;
+}
+.left_1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.img_wrap {
+  max-width: 80px !important;
+  max-height: 80px !important;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+.img_wrap img {
+  max-width: 70px !important;
+  max-height: 70px !important;
+  object-fit: contain;
+}
+.left_2 img {
+  width: 500px;
+  height: 100%;
+  object-fit: contain;
+}
+.active {
+  border: 2px solid #e77600;
+}
+
+.magnified-image {
+  min-width: 300% !important;
+  min-height: 300% !important;
+  object-fit: contain !important;
+}
