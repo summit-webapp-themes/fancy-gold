@@ -28,7 +28,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
             Product Code : <br />
             {data?.item_code}
             <br />
-            BOM Factory Code : {data?.bom_factory_code}
+            <span className={styles.bom_factory_code}>BOM Factory Code : {data?.bom_factory_code}</span>
             <br />
             Weight :{data?.weight_per_unit} gm
           </p>
