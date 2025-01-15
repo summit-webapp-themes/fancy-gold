@@ -55,8 +55,8 @@ const ProductImage = ({ Imageslideshow }: any) => {
               },
               largeImage: {
                 src: API_BASE_URL + img,
-                width: 1200,
-                height: 1200,
+                width: 1600,
+                height: 1600,
               },
 
               enlargedImageClassName: 'magnified-image',
