@@ -12,6 +12,7 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
+import Image from 'next/image';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
@@ -71,6 +72,9 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setProductDetail([]);
     }, 1000);
   };
+  const imageLoader = ({ src, width, quality }: any) => {
+    return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
+  };
   useEffect(() => {
     console.log('data', data);
     if (data?.productName) {
@@ -104,7 +108,14 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
             />
             <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
             <div className="mt-2">
-              <ProductImage image={productDetail?.image} />
+              <Image
+                src={productDetail?.image}
+                alt="product-image"
+                className="w-100 img-fluid"
+                width={100}
+                height={100}
+                loader={imageLoader}
+              />
             </div>
           </>
         ) : (
