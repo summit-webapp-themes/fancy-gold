@@ -35,7 +35,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
-  const idxRef = useRef<number | null>(null);
+  const inputRefs = useRef<any[]>([]);
 
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -45,9 +45,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
-
+  const handleKeyDown = (event: any) => {
+    event.preventDefault();
+    console.log(event, 'data111');
+    if (event?.key === 'Enter' || event?.keyCode === 13) {
+      handleAddRow();
+      setTimeout(() => {
+        // Focus on the size input of the last row
+        const lastIndex = sizeTable.length;
+        inputRefs.current[lastIndex]?.focus();
+      }, 0);
+    }
+  };
   const handleInputChange = (index: number, event: any) => {
-    idxRef.current = index;
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
       if (i === index) {
@@ -211,6 +221,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
                 value={row.size}
                 onChange={(e) => handleInputChange(index, e)}
+                ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
               />
               {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
@@ -224,21 +235,27 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col border p-1">
-              <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} onClick={() => handleDeleteRow(index)} />
+            <div className="col-1 text-center border p-1">
+              <button
+                className="border-0 bg-light p-0 text-center"
+                onClick={() => handleDeleteRow(index)}
+                onKeyDown={(e) => handleKeyDown(e)}
+              >
+                <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+              </button>
             </div>
           </div>
         ))}
       </div>
       <div className="">
-        <textarea
+        {/* <textarea
           name="wastage"
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
           rows={1}
-        ></textarea>
+        ></textarea> */}
         <textarea
           name="remark"
           value={cartProductsData?.remark}
