@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { CONSTANTS } from '../../../services/config/app-config';
-import { callPostAPI } from '../../../utils/http-methods';
+import { callGetAPI, callPostAPI } from '../../../utils/http-methods';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
@@ -35,7 +35,17 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
+  const [cuttingTypeValues, setCuttingTypeValues] = useState([]);
   const inputRefs = useRef<any[]>([]);
+  const getCuttingTypeValues = async () => {
+    const url = `${CONSTANTS.API_BASE_URL}/api/resource/Cutting Type`;
+    const fetchCuttingTypeValues = await callGetAPI(url, TokenFromStore.token);
+    return fetchCuttingTypeValues;
+  };
+  const fetchCuttingTypeValues = async () => {
+    const values = await getCuttingTypeValues();
+    setCuttingTypeValues(values?.data?.data);
+  };
 
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -153,6 +163,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
+  useEffect(() => {
+    fetchCuttingTypeValues();
+  }, []);
   return (
     <div className="w-100">
       <div className="py-2">
