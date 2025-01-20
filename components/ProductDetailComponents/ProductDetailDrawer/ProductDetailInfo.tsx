@@ -9,6 +9,7 @@ import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { callGetAPI, callPostAPI } from '../../../utils/http-methods';
+import BulkDropdownInput from '../../BulkOrder/BulkDropdown';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
@@ -24,6 +25,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     size: '',
     quantity: '',
     remark: '',
+    design_style: '',
   };
 
   const [sizeTable, setSizeTable] = useState([initialState]);
@@ -36,6 +38,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
   const [cuttingTypeValues, setCuttingTypeValues] = useState([]);
+  const [seletedCuttingType, setSelectedCuttingType] = useState('');
   const inputRefs = useRef<any[]>([]);
   const getCuttingTypeValues = async () => {
     const url = `${CONSTANTS.API_BASE_URL}/api/resource/Cutting Type`;
@@ -142,7 +145,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       purity: purity,
       cust_name: cust_name,
       colour: colour,
-      wastage: cartProductsData.wastage,
+      // wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
       user: user,
@@ -191,18 +194,17 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Colour</div>
+          <div className={`col-2 border text-center py-1`}>Colour</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Design Style</div>
           {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'} border text-center py-1`}>
-            Size(inch)
-          </div>
-          <div className="col-3 border text-center py-1">Quantity</div>
+          <div className={`col-2 px-0 border text-center py-1`}>Size(inch)</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-1' : 'col-2'} border text-center p-0 px-1 py-1`}>Qty</div>
           <div className="col border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border py-1`}>
+            <div className={`col-2 border py-1`}>
               <select
                 name="colour"
                 value={row.colour || colour}
@@ -214,6 +216,25 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-1' : 'col-3'} border text-center py-1 `}>
+              <select
+                name="design_style"
+                value={row.design_style}
+                onChange={(e) => handleInputChange(index, e)}
+                className={`border-0 form-control selectpicker p-0 text-center ${styles.tableFontSize}`}
+              >
+                <option value="" selected></option>
+                {cuttingTypeValues?.length > 0 && cuttingTypeValues?.map((item: any) => <option value={item?.name}>{item?.name}</option>)}
+              </select>
+              {/* <BulkDropdownInput
+                dropdownData={cuttingTypeValues?.map((item: any) => item?.name)}
+                inputValue={seletedCuttingType}
+                setInputValue={setSelectedCuttingType}
+                disabled={''}
+                name={'design_style'}
+                onChange={(e: any) => handleInputChange(index, { target: { value: e } })}
+              /> */}
+            </div>
             {data?.custom_factory === 'ARC ERP Software' && (
               <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
                 <input
@@ -224,9 +245,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               </div>
             )}
             <div
-              className={`${
-                data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'
-              } border d-flex justify-content-center py-1 flex-column`}
+              className={`
+                col-2 px-0 border d-flex justify-content-center py-1 flex-column`}
             >
               <input
                 type="text"
@@ -238,17 +258,21 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               />
               {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
+            <div
+              className={`${
+                data?.custom_factory === 'ARC ERP Software' ? 'col-1' : 'col-2'
+              } border d-flex justify-content-center p-0 px-1 py-1 flex-column`}
+            >
               <input
                 type="text"
                 name="quantity"
-                className={`${productDetailStyles.qty_input} form-control ${styles.tableFontSize}`}
+                className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col-1 text-center border p-1">
+            <div className="col text-center border p-1">
               <button
                 className="border-0 bg-light p-0 text-center"
                 onClick={() => handleDeleteRow(index)}
