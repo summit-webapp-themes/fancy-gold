@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -8,7 +8,8 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { CONSTANTS } from '../../../services/config/app-config';
-import { callPostAPI } from '../../../utils/http-methods';
+import { callGetAPI, callPostAPI } from '../../../utils/http-methods';
+import BulkDropdownInput from '../../BulkOrder/BulkDropdown';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
@@ -24,6 +25,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     size: '',
     quantity: '',
     remark: '',
+    design_style: '',
   };
 
   const [sizeTable, setSizeTable] = useState([initialState]);
@@ -35,7 +37,18 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
-  const idxRef = useRef<number | null>(null);
+  const [cuttingTypeValues, setCuttingTypeValues] = useState([]);
+  const [seletedCuttingType, setSelectedCuttingType] = useState('');
+  const inputRefs = useRef<any[]>([]);
+  const getCuttingTypeValues = async () => {
+    const url = `${CONSTANTS.API_BASE_URL}/api/resource/Cutting Type`;
+    const fetchCuttingTypeValues = await callGetAPI(url, TokenFromStore.token);
+    return fetchCuttingTypeValues;
+  };
+  const fetchCuttingTypeValues = async () => {
+    const values = await getCuttingTypeValues();
+    setCuttingTypeValues(values?.data?.data);
+  };
 
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -45,9 +58,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
-
+  const handleKeyDown = (event: any) => {
+    event.preventDefault();
+    console.log(event, 'data111');
+    if (event?.key === 'Enter' || event?.keyCode === 13) {
+      handleAddRow();
+      setTimeout(() => {
+        // Focus on the size input of the last row
+        const lastIndex = sizeTable.length;
+        inputRefs.current[lastIndex]?.focus();
+      }, 0);
+    }
+  };
   const handleInputChange = (index: number, event: any) => {
-    idxRef.current = index;
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
       if (i === index) {
@@ -122,7 +145,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       purity: purity,
       cust_name: cust_name,
       colour: colour,
-      wastage: cartProductsData.wastage,
+      // wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
       user: user,
@@ -143,6 +166,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
+  useEffect(() => {
+    fetchCuttingTypeValues();
+  }, []);
   return (
     <div className="w-100">
       <div className="py-2">
@@ -168,18 +194,17 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Colour</div>
+          <div className={`col-2 border text-center py-1`}>Colour</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border text-center py-1`}>Design Style</div>
           {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'} border text-center py-1`}>
-            Size(inch)
-          </div>
-          <div className="col-3 border text-center py-1">Quantity</div>
+          <div className={`col-2 px-0 border text-center py-1`}>Size(inch)</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-1' : 'col-2'} border text-center p-0 px-1 py-1`}>Qty</div>
           <div className="col border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
             <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-3'} border py-1`}>
+            <div className={`col-2 border py-1`}>
               <select
                 name="colour"
                 value={row.colour || colour}
@@ -191,6 +216,25 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 <option value="White">White</option>
               </select>
             </div>
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-1' : 'col-3'} border text-center py-1 `}>
+              <select
+                name="design_style"
+                value={row.design_style}
+                onChange={(e) => handleInputChange(index, e)}
+                className={`border-0 form-control selectpicker p-0 text-center ${styles.tableFontSize}`}
+              >
+                <option value="" selected></option>
+                {cuttingTypeValues?.length > 0 && cuttingTypeValues?.map((item: any) => <option value={item?.name}>{item?.name}</option>)}
+              </select>
+              {/* <BulkDropdownInput
+                dropdownData={cuttingTypeValues?.map((item: any) => item?.name)}
+                inputValue={seletedCuttingType}
+                setInputValue={setSelectedCuttingType}
+                disabled={''}
+                name={'design_style'}
+                onChange={(e: any) => handleInputChange(index, { target: { value: e } })}
+              /> */}
+            </div>
             {data?.custom_factory === 'ARC ERP Software' && (
               <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
                 <input
@@ -201,9 +245,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               </div>
             )}
             <div
-              className={`${
-                data?.custom_factory === 'ARC ERP Software' ? 'col-2 px-0' : 'col-3'
-              } border d-flex justify-content-center py-1 flex-column`}
+              className={`
+                col-2 px-0 border d-flex justify-content-center py-1 flex-column`}
             >
               <input
                 type="text"
@@ -211,34 +254,45 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
                 value={row.size}
                 onChange={(e) => handleInputChange(index, e)}
+                ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
               />
               {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
-            <div className="col-3 border d-flex justify-content-center py-1 flex-column">
+            <div
+              className={`${
+                data?.custom_factory === 'ARC ERP Software' ? 'col-1' : 'col-2'
+              } border d-flex justify-content-center p-0 px-1 py-1 flex-column`}
+            >
               <input
                 type="text"
                 name="quantity"
-                className={`${productDetailStyles.qty_input} form-control ${styles.tableFontSize}`}
+                className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col border p-1">
-              <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} onClick={() => handleDeleteRow(index)} />
+            <div className="col text-center border p-1">
+              <button
+                className="border-0 bg-light p-0 text-center"
+                onClick={() => handleDeleteRow(index)}
+                onKeyDown={(e) => handleKeyDown(e)}
+              >
+                <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+              </button>
             </div>
           </div>
         ))}
       </div>
       <div className="">
-        <textarea
+        {/* <textarea
           name="wastage"
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
           rows={1}
-        ></textarea>
+        ></textarea> */}
         <textarea
           name="remark"
           value={cartProductsData?.remark}
