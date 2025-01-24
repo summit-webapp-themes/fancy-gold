@@ -62,6 +62,7 @@ const OrderDetailCard = ({
       handleReviewSubmitBtn();
     }
   };
+  console.log(status, showButtons, 'data111');
   return (
     <>
       <div className="content-prev">
@@ -122,7 +123,7 @@ const OrderDetailCard = ({
                   </p>
                 </div>
                 <div className="col-3 text-center">
-                  {showButtons && status === 'pending' && (
+                  {showButtons && (status === 'pending' || status === 'Accepted' || status === 'WIP') && (
                     <>
                       <div className="m-2">
                         <button className={`${orderDetailStyles.readyToDispatch}`} onClick={() => handleReadyToDispatch(name)}>
