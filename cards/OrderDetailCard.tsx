@@ -62,7 +62,6 @@ const OrderDetailCard = ({
       handleReviewSubmitBtn();
     }
   };
-  console.log(status, showButtons, 'data111');
   return (
     <>
       <div className="content-prev">
