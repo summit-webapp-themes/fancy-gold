@@ -1,15 +1,17 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
+import { useRouter } from 'next/router';
+import { catalogPageViewTracking } from '../../utils/socket-functions';
 const HorizontalFilter = dynamic(() => import('../ProductListingComponents/HorizontalFilterList.tsx/HorizontalFilter'));
 const ProductGridViewMaster = dynamic(() => import('../ProductListingComponents/ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
 
 function CatalogProductListingMaster() {
+  const { query }: any = useRouter();
   const { productListingData, isLoading, handlePaginationBtn, productListTotalCount, sortBy, handleSortBy } = useProductListing();
   const wishlistData = useSelector(selectWishlist)?.items;
   const cartData = useSelector(selectCart)?.items;
@@ -38,6 +40,20 @@ function CatalogProductListingMaster() {
       />
     );
   };
+
+  useEffect(() => {
+    console.log('productListingData', query, productListingData);
+    const extractCatalogNameFromURL = location.pathname.split('/')[2];
+    const userContactDetails = new URL(window.location.href);
+    const qValue: string | null = userContactDetails.searchParams.get('q'); // Extracts "Anurag-9090897867"
+    const [name, phone]: any = qValue?.split('-');
+
+    const userObj = {
+      name: name,
+      phone: phone,
+    };
+    if (!isLoading) catalogPageViewTracking(query.category, productListingData, userObj);
+  });
   return (
     <div>
       <section className="listing-page ">
