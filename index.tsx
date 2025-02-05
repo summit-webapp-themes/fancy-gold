@@ -2,8 +2,23 @@ import type { NextPage } from 'next';
 import HomePage from '../components/HomePage/HomePage';
 import MetaTag from '../services/api/general-apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
+import { returnLastPageViewedData, setRecentPageData } from '../utils/get-last-page-viewed-data';
+import { useEffect } from 'react';
+import { pageViewTracker } from '../utils/socket-functions';
 
 const Home: NextPage = () => {
+  const getLastViewedPage = returnLastPageViewedData();
+  setRecentPageData('Home Page', 'home');
+
+  const userName = localStorage.getItem('party_name');
+
+  useEffect(() => {
+    const userObj = {
+      name: userName,
+      phone: '',
+    };
+    pageViewTracker('Home Page', 'home page', 'Page View', getLastViewedPage?.reference_type, getLastViewedPage?.reference_id, userObj);
+  }, []);
   return (
     <div>
       <HomePage />

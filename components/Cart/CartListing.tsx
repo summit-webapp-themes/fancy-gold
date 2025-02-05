@@ -7,7 +7,6 @@ import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { useSelector } from 'react-redux';
-import OrderDetail from '../OrderDetail/OrderDetail';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -101,6 +100,7 @@ const CartListing = () => {
     const params = {
       order_id: cartListingItems?.name,
       party_name: partyName,
+      payment_date: deliveryDate,
     };
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
