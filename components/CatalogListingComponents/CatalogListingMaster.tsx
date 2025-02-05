@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { FaArrowRightLong } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
+import noImage from '../../public/assets/images/no_image.png';
 import { CONSTANTS } from '../../services/config/app-config';
 import { get_access_token } from '../../store/slices/auth/token-login-slice';
-import { callGetAPI } from '../../utils/http-methods';
 import styles from '../../styles/components/catalog.module.scss';
-import { FaArrowRightLong } from 'react-icons/fa6';
-import noImage from '../../public/assets/images/no_image.png';
+import { callGetAPI } from '../../utils/http-methods';
 
 function CatalogListingMaster() {
   const router = useRouter();
@@ -35,7 +35,6 @@ function CatalogListingMaster() {
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
-  console.log(catalogList, 'data111');
   useEffect(() => {
     fetchCatalogListValues();
     router.push({
