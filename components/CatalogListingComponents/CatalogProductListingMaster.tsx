@@ -8,7 +8,7 @@ function CatalogProductListingMaster() {
       <div className="d-flex justify-content-center pt-5 mt-5 vh-100">
         <div>
           <Image src={image} alt="" className="img-fluid" width={450} height={695} />
-          <h4 className="text-center pt-3">This page is under maintainance.</h4>
+          <h4 className="text-center pt-3">This page is under maintenance.</h4>
         </div>
       </div>
     </div>
