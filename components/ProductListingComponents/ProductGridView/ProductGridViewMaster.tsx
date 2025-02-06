@@ -14,7 +14,9 @@ const ProductGridViewMaster = ({
   cartData,
 }: any) => {
   const { query } = useRouter();
-  const pageOffset = Number(query?.page) - 1;
+
+  const pageOffset = query?.page ? Number(query?.page) - 1 : 0;
+
   const handlePageClick = (event: any) => {
     handlePaginationBtn(event?.selected);
   };
@@ -40,7 +42,6 @@ const ProductGridViewMaster = ({
           handleShow={handleShow}
           wishlistData={wishlistData}
           cartData={cartData}
-
         />
       );
     }
