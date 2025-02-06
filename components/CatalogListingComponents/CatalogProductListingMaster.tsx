@@ -50,4 +50,5 @@ function CatalogProductListingMaster() {
     </div>
   );
 }
+
 export default CatalogProductListingMaster;
