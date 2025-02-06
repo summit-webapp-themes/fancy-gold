@@ -42,7 +42,7 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
       <h2 className="theme-blue text-center mt-4">{title}</h2>
       <div className="mt-3 ">
         <OrderReportFilters
-          data={getUniqueValues(['transaction_date', 'customer_name', 'item_name', 'delivery_date'])}
+          data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name'])}
           handleFilterChange={handleFilterChange}
         />
       </div>

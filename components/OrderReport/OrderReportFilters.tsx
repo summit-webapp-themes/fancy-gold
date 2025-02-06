@@ -5,7 +5,7 @@ function OrderReportFilters({ data, handleFilterChange }: any) {
     <div className="row">
       {data?.length > 0 &&
         data?.map((filter: any, index: number) => (
-          <div className="col-6 col-md-4 col-lg-3 col-xl-2 pe-1 pe-md-3 " key={index}>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 pe-1 pe-md-3 " key={index}>
             <div>
               <label htmlFor={filter?.label} className="fw-bold">
                 {filter?.label}
