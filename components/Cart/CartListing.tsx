@@ -1,13 +1,12 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
-import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
-import { useSelector } from 'react-redux';
-import OrderDetail from '../OrderDetail/OrderDetail';
+import styles from '../../styles/components/cartProductDetail.module.scss';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -138,26 +137,31 @@ const CartListing = () => {
       return (
         <>
           <div className="border p-3">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-md-between flex-column flex-md-row ">
               <div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Customer Name: </label>
+                <div className="d-flex">
+                  <label className="col-6 col-sm-5 col-md-4">Customer Name: </label>
 
-                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                  <div className="col-md-1"></div>
-                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
+                  <input
+                    type="text"
+                    className="form-control form-control-sm "
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
+
+                  <button onClick={updateCartCust} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
                     Update
                   </button>
                 </div>
                 <div className="mt-2 row">
-                  <label className="col-md-4">Order Purity:</label>
+                  <label className="col-6 col-sm-5 col-md-4">Order Purity:</label>
 
-                  <span className="col-md-8">{updatedPurity}</span>
+                  <span className=" col-6 col-sm-7 col-md-6">{updatedPurity}</span>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Update Purity:</label>
+                <div className="mt-2 d-flex">
+                  <label className="col-6 col-sm-5 col-md-4">Update Purity:</label>
                   <select
-                    className=" col-md-5"
+                    className=" form-control form-control-sm "
                     // value={selectedPurity}
                     onChange={updatePurity}
                     placeholder="text"
@@ -171,27 +175,27 @@ const CartListing = () => {
                       );
                     })}
                   </select>
-                  <div className="col-md-1"></div>
+
                   <button
                     onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
-                    className={`col-md-2 ${styles.update_btn}`}
+                    className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}
                   >
                     Update
                   </button>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Delivery Date: </label>
+                <div className="mt-2 d-flex">
+                  <label className="col-6 col-sm-5 col-md-4">Delivery Date: </label>
                   <input
                     type="date"
-                    className="col-md-5"
+                    className="form-control form-control-sm w-auto"
                     value={deliveryDate}
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}
                   />
                 </div>
               </div>
-              <div className={`${styles.place_order_container}`}>
-                <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+              <div className={` mt-2 mt-md-0 d-flex justify-content-end`}>
+                <button className={`${styles?.place_order_btn} m-0 me-md-2 `} onClick={handlePlaceOrder}>
                   Place Order
                 </button>
               </div>
@@ -204,7 +208,8 @@ const CartListing = () => {
                     {category?.category} | Total Weight: {category?.total_weight}gm
                   </h5>
                   <div className={`row ${styles?.table_header}`}>
-                    <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
+                    <div className="col-md-2 col-2 text-center"></div>
+                    <div className="col-md-3 col-4 text-center">Products</div>
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
