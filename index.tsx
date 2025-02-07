@@ -4,7 +4,7 @@ import MetaTag from '../services/api/general-apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
 import { returnLastPageViewedData, setRecentPageData } from '../utils/get-last-page-viewed-data';
 import { useEffect } from 'react';
-import { pageViewTracker } from '../utils/socket-functions';
+import { eventTracker } from '../utils/socket-functions';
 
 const Home: NextPage = () => {
   const getLastViewedPage = returnLastPageViewedData();
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       name: userName,
       phone: '',
     };
-    pageViewTracker('Home Page', 'home page', 'Page View', getLastViewedPage?.reference_type, getLastViewedPage?.reference_id, userObj);
+    eventTracker('Home Page', 'home page', 'Page View', getLastViewedPage?.reference_type, getLastViewedPage?.reference_id, userObj);
   }, []);
   return (
     <div>
