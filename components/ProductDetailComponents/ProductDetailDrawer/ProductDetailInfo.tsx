@@ -24,7 +24,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     size: '',
     quantity: '',
     remark: '',
-    design_style: '',
   };
 
   const [sizeTable, setSizeTable] = useState([initialState]);
@@ -60,9 +59,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const handleInputChange = (index: number, event: any) => {
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
-      if (i === index) {
-        const updatedRow = { ...row, [name]: value };
-        return updatedRow;
+      if (name === 'quantity' && value >= 0) {
+        if (i === index) {
+          const updatedRow = { ...row, [name]: value };
+          return updatedRow;
+        }
       }
       return row;
     });
@@ -231,6 +232,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
+                min={0}
+                inputMode="numeric"
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
