@@ -82,6 +82,11 @@ const Navbar = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (cartListingItems && cartListingItems?.cust_name) {
+      localStorage.setItem('cust_name', cartListingItems?.cust_name);
+    }
+  }, [cartListingItems]);
 
   return (
     <>
