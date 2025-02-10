@@ -22,6 +22,7 @@ const CartListing = () => {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
+  const [customerError, setCustomerError] = useState('');
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
@@ -121,15 +122,22 @@ const CartListing = () => {
   };
 
   const updateCartCust = () => {
-    if (customerName !== cartListingItems?.cust_name) {
-      updateCartData(customerName, selectedPurity, setUpdatedPurity);
+    if (customerName !== '') {
+      if (customerName !== cartListingItems?.cust_name) {
+        updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      }
+    } else {
+      setCustomerError('Customer Name cannot be empty.');
     }
   };
 
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
-
+  const handleCustomerNameChange = (value: any) => {
+    setCustomerName(value);
+    setCustomerError('');
+  };
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -143,12 +151,13 @@ const CartListing = () => {
                 <div className="mt-2 row">
                   <label className="col-md-4">Customer Name: </label>
 
-                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => handleCustomerNameChange(e.target.value)} />
                   <div className="col-md-1"></div>
                   <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
                     Update
                   </button>
                 </div>
+                {customerError !== '' && <p className="text-danger">{customerError}</p>}
                 <div className="mt-2 row">
                   <label className="col-md-4">Order Purity:</label>
 
