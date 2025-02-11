@@ -59,16 +59,30 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   };
   const handleInputChange = (index: number, event: any) => {
     const { name, value } = event.target;
-    const updatedSizeTable = sizeTable.map((row, i) => {
-      if (i === index) {
-        const updatedRow = { ...row, [name]: value };
-        return updatedRow;
-      }
-      return row;
-    });
+
+    // Update the sizeTable
+    const updatedSizeTable = sizeTable.map((row, i) => (i === index ? { ...row, [name]: value } : row));
 
     setSizeTable(updatedSizeTable);
+
+    // Remove the error for this field if it exists
+    setErrors((prevErrors) => {
+      const updatedErrors: any = { ...prevErrors };
+
+      if (updatedErrors[index]) {
+        // Remove specific field error when user provides input
+        delete updatedErrors[index][name];
+
+        // If the object is empty after deletion, remove the index itself
+        if (Object.keys(updatedErrors[index]).length === 0) {
+          delete updatedErrors[index];
+        }
+      }
+
+      return updatedErrors;
+    });
   };
+
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -202,7 +216,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             </div>
 
             {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+              <div className="col-2 border px-0 py-1 ">
                 <input
                   name="weight"
                   className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
@@ -212,7 +226,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             )}
             <div
               className={`
-                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
+                col-3 px-0 border d-flex py-1 flex-column`}
             >
               <input
                 type="text"
@@ -222,9 +236,13 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 onChange={(e) => handleInputChange(index, e)}
                 ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
               />
-              {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
+              {errors[index]?.size && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].size}
+                </small>
+              )}
             </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
+            <div className={`col-2 border d-flex  p-0 px-1 py-1 flex-column`}>
               <input
                 type="text"
                 name="quantity"
@@ -232,7 +250,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
               />
-              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
+              {errors[index]?.quantity && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].quantity}
+                </small>
+              )}
             </div>
             <div className="col text-center border p-1">
               <button
