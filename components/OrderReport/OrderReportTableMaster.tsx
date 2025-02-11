@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 import { Table } from 'react-bootstrap';
 import styles from '../../styles/components/orderReport.module.scss';
-import Link from 'next/link';
-import OrderReportFilters from './OrderReportFilters';
+import OrderFilters from './OrderFilters';
+
 const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
   const tableHeaderArray = [
     'Sr.No',
@@ -41,7 +42,7 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
     <div className="container-fluid">
       <h2 className="theme-blue text-center mt-4">{title}</h2>
       <div className="mt-3 ">
-        <OrderReportFilters
+        <OrderFilters
           data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name'])}
           handleFilterChange={handleFilterChange}
         />

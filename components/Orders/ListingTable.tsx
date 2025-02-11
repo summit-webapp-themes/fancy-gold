@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import stylesListing from '../../styles/components/_listingTable.module.scss';
+import OrderFilters from '../OrderReport/OrderFilters';
+import { Table } from 'react-bootstrap';
 
 const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder }: any) => {
   const router = useRouter();
   const pathParts = router.asPath.split('/');
   const heading = pathParts[pathParts.length - 1];
+  const [filters, setFilters] = useState<any>({});
+  function getUniqueValues(keys: any) {
+    let result = keys.map((key: any) => ({
+      label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '),
+      key: key,
+      options: Array.from(new Set(tableData.map((item: any) => item[key]))),
+    }));
+    return result;
+  }
+  const handleFilterChange = (key: string, value: string) => {
+    setFilters((prevFilters: any) => ({
+      ...prevFilters,
+      [key]: value,
+    }));
+  };
+
+  const filteredData = tableData?.filter((item: any) => {
+    return Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]);
+  });
 
   return (
     <>
@@ -22,13 +43,26 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
             Cancel
           </button>
         </div>
-        <table className="table table-sm table-bordered table-hover">
+        <div className="mt-2 mb-3">
+          <OrderFilters
+            data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name'])}
+            handleFilterChange={handleFilterChange}
+          />
+        </div>
+        <Table striped responsive>
           <thead>
-            <tr className="text-center">{headers?.length > 0 && headers.map((header: any) => <th scope="col">{header}</th>)}</tr>
+            <tr className="text-center">
+              {headers?.length > 0 &&
+                headers.map((header: any) => (
+                  <th scope="col" className={stylesListing.table_header}>
+                    {header}
+                  </th>
+                ))}
+            </tr>
           </thead>
           <tbody>
-            {tableData?.length > 0 &&
-              tableData.map((data: any, index: any) => {
+            {filteredData?.length > 0 &&
+              filteredData.map((data: any, index: any) => {
                 return (
                   <>
                     <tr className={`text-center ${stylesListing.table_row}`} key={index}>
@@ -50,7 +84,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </div>
     </>
   );
