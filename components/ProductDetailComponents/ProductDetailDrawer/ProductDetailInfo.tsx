@@ -69,7 +69,25 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     });
 
     setSizeTable(updatedSizeTable);
+
+    // Remove the error for this field if it exists
+    setErrors((prevErrors) => {
+      const updatedErrors: any = { ...prevErrors };
+
+      if (updatedErrors[index]) {
+        // Remove specific field error when user provides input
+        delete updatedErrors[index][name];
+
+        // If the object is empty after deletion, remove the index itself
+        if (Object.keys(updatedErrors[index]).length === 0) {
+          delete updatedErrors[index];
+        }
+      }
+
+      return updatedErrors;
+    });
   };
+
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -97,7 +115,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     }
   };
   const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size) {
+    if (sizeTable[sizeTable.length - 1]?.size || sizeTable?.length === 0) {
       const newRow = { ...initialState, size: size.toString() };
       setSizeTable([...sizeTable, newRow]);
     } else {
@@ -141,6 +159,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
       addToCartItem(addToCartParams);
+      setSizeTable([initialState]);
     } else {
       setCustomerError('Customer name is empty!');
     }
@@ -149,7 +168,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       remark: '',
       rejection_note: '',
     });
-    setSizeTable([initialState]);
   };
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
@@ -160,18 +178,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {[8, 20, 22, 24].map((size, index) => {
-            const isActive = sizeTable.some((item: any) => item?.size === size.toString());
-            return (
-              <button
-                key={index}
-                className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
-                onClick={() => handleSizeButtonClick(size)}
-              >
-                {size}
-              </button>
-            );
-          })}
+          {data?.category_size?.length > 0 &&
+            data?.category_size?.map((size: any, index: number) => {
+              const isActive = sizeTable.some((item: any) => item?.size === size.toString());
+              return (
+                <button
+                  key={index}
+                  className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
+                  onClick={() => handleSizeButtonClick(size)}
+                >
+                  {size}
+                </button>
+              );
+            })}
           <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
             Add Custom Size
           </button>
@@ -203,7 +222,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             </div>
 
             {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+              <div className="col-2 border px-0 py-1 ">
                 <input
                   name="weight"
                   className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
@@ -213,7 +232,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             )}
             <div
               className={`
-                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
+                col-3 px-0 border d-flex py-1 flex-column`}
             >
               <input
                 type="text"
@@ -223,9 +242,13 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 onChange={(e) => handleInputChange(index, e)}
                 ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
               />
-              {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
+              {errors[index]?.size && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].size}
+                </small>
+              )}
             </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
+            <div className={`col-2 border d-flex  p-0 px-1 py-1 flex-column`}>
               <input
                 type="text"
                 name="quantity"
@@ -235,7 +258,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 min={0}
                 inputMode="numeric"
               />
-              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
+              {errors[index]?.quantity && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].quantity}
+                </small>
+              )}
             </div>
             <div className="col text-center border p-1">
               <button
