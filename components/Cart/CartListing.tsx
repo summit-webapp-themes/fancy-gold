@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { RxCross2 } from 'react-icons/rx';
+import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
@@ -140,7 +140,7 @@ const CartListing = () => {
             <div className="d-flex justify-content-md-between flex-column flex-md-row ">
               <div>
                 <div className="d-flex">
-                  <label className="col-6 col-sm-5 col-md-4">Customer Name: </label>
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Customer Name: </label>
 
                   <input
                     type="text"
@@ -154,12 +154,12 @@ const CartListing = () => {
                   </button>
                 </div>
                 <div className="mt-2 row">
-                  <label className="col-6 col-sm-5 col-md-4">Order Purity:</label>
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Order Purity:</label>
 
                   <span className=" col-6 col-sm-7 col-md-6">{updatedPurity}</span>
                 </div>
                 <div className="mt-2 d-flex">
-                  <label className="col-6 col-sm-5 col-md-4">Update Purity:</label>
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Update Purity:</label>
                   <select
                     className=" form-control form-control-sm "
                     // value={selectedPurity}
@@ -184,7 +184,7 @@ const CartListing = () => {
                   </button>
                 </div>
                 <div className="mt-2 d-flex">
-                  <label className="col-6 col-sm-5 col-md-4">Delivery Date: </label>
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Delivery Date: </label>
                   <input
                     type="date"
                     className="form-control form-control-sm w-auto"
@@ -207,24 +207,24 @@ const CartListing = () => {
                   <h5 className="py-2">
                     {category?.category} | Total Weight: {category?.total_weight}gm
                   </h5>
-                  <div className={`row ${styles?.table_header}`}>
+                  <div className={`row border py-2 bg-secondary bg-opacity-10 d-none d-lg-flex`}>
                     <div className="col-md-2 col-2 text-center"></div>
-                    <div className="col-md-3 col-4 text-center">Products</div>
+                    <div className="col-md-3 col-4 text-start">Products</div>
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
-                  <div className="row">
+                  <div className="row border border-top-0">
                     {category?.orders?.length > 0 &&
                       category?.orders?.map((order: any, orderIndex: any) => (
                         <>
-                          <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
+                          <div className={`col-lg-7  col-12 border-bottom border-top border-md-`}>
                             <CartProductDetail
                               data={order}
                               onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
                               handleEditWastage={handleUpdateListData}
                             />
                           </div>
-                          <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
+                          <div className={`col-lg-4 col-11 p-0`}>
                             <SizeQtyTable
                               data={order}
                               onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
@@ -233,15 +233,15 @@ const CartListing = () => {
                               onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
-                          <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
+                          <div className={`col-1 border-bottom border-left text-center d-flex justify-content-center align-items-center`}>
                             <button
-                              className="btn btn-link text-decoration-none text-dark"
+                              className="btn btn-link text-decoration-none text-dark p-0"
                               onClick={() => {
                                 handleDeleteRow(order?.item_code);
                               }}
                               disabled={disableRemove}
                             >
-                              <RxCross2 />
+                              <RiDeleteBin7Fill />
                             </button>
                           </div>
                         </>
@@ -250,11 +250,11 @@ const CartListing = () => {
                 </div>
               ))}
             <hr />
-            <div className="d-flex justify-content-between">
-              <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
+            <div className="d-flex justify-content-end">
+              {/* <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
               <div className={`${styles.place_order_container}`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
-                <div className="d-flex justify-content-end w-100">
+                <div className="d-flex w-100 justify-content-end">
                   <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
                     Place Order
                   </button>
@@ -287,7 +287,7 @@ const CartListing = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container-xl">
       <h2 className="theme-blue text-center my-3">My Shopping Cart</h2>
       {handleDataRendering()}
     </div>
