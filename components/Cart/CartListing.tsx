@@ -7,6 +7,7 @@ import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
+import { Spinner } from 'react-bootstrap';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -15,11 +16,14 @@ const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData, isUpdateCartLoading } =
+    useAddToCartHook();
   const [updatedPurity, setUpdatedPurity] = useState('');
   const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [isCustomerNameUpdateLoading, setCustomerNameUpdateLoading] = useState(false);
+  const [isHandlePlaceOrderLoading, setIsHandlePlaceOrderLoading] = useState(false);
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
@@ -91,20 +95,35 @@ const CartListing = () => {
     setCartListingItems(updatedItems);
     handleUpdateListData(data);
   };
+
   const handlePlaceOrder = async () => {
+    if (isHandlePlaceOrderLoading) return; // Prevent multiple clicks while loading
+    setIsHandlePlaceOrderLoading(true); // Start loader
+
     const selectedDate = new Date(deliveryDate);
     const minDate = new Date();
     minDate.setDate(minDate.getDate() + 15);
     selectedDate.setHours(0, 0, 0, 0);
     minDate.setHours(0, 0, 0, 0);
+
     const params = {
       order_id: cartListingItems?.name,
       party_name: partyName,
     };
+
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
-    } else {
-      placeOrderAPIFunc(params, setCartListingItems);
+      setIsHandlePlaceOrderLoading(false); // Stop loader if validation fails
+      return;
+    }
+
+    try {
+      await placeOrderAPIFunc(params, setCartListingItems);
+      toast.success('Order placed successfully!');
+    } catch (error) {
+      toast.error('Failed to place order. Please try again.');
+    } finally {
+      setIsHandlePlaceOrderLoading(false); // Stop loader after API call
     }
   };
 
@@ -119,9 +138,17 @@ const CartListing = () => {
     setCartListingItems([[]]);
   };
 
-  const updateCartCust = () => {
+  const updateCartCust = async () => {
+    if (isLoading) return; // Prevent multiple clicks
+
     if (customerName !== cartListingItems?.cust_name) {
-      updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      setCustomerNameUpdateLoading(true);
+      try {
+        await updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      } catch (error) {
+        console.error('Error updating cart:', error);
+      }
+      setCustomerNameUpdateLoading(false);
     }
   };
 
@@ -150,7 +177,13 @@ const CartListing = () => {
                   />
 
                   <button onClick={updateCartCust} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
-                    Update
+                    {isCustomerNameUpdateLoading ? (
+                      <span className="mx-3 ps-1">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Update</span>
+                    )}
                   </button>
                 </div>
                 <div className="mt-2 row">
@@ -180,7 +213,13 @@ const CartListing = () => {
                     onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
                     className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}
                   >
-                    Update
+                    {isUpdateCartLoading ? (
+                      <span className="mx-3 ps-1">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Update</span>
+                    )}
                   </button>
                 </div>
                 <div className="mt-2 d-flex">
@@ -196,7 +235,13 @@ const CartListing = () => {
               </div>
               <div className={` mt-2 mt-md-0 d-flex justify-content-end`}>
                 <button className={`${styles?.place_order_btn} m-0 me-md-2 `} onClick={handlePlaceOrder}>
-                  Place Order
+                  {isHandlePlaceOrderLoading ? (
+                    <span className="mx-4 px-2 ">
+                      <Spinner animation="border" size="sm" />
+                    </span>
+                  ) : (
+                    <span>Place Order</span>
+                  )}
                 </button>
               </div>
             </div>
@@ -256,7 +301,13 @@ const CartListing = () => {
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
                 <div className="d-flex w-100 justify-content-end">
                   <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                    Place Order
+                    {isHandlePlaceOrderLoading ? (
+                      <span className="mx-3 ps-1">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Place Order</span>
+                    )}
                   </button>
                 </div>
               </div>
