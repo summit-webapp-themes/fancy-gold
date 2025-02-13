@@ -7,6 +7,8 @@ import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { useSelector } from 'react-redux';
+import OrderDetail from '../OrderDetail/OrderDetail';
+import { number } from 'yup';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -21,6 +23,7 @@ const CartListing = () => {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
+  const [customerError, setCustomerError] = useState('');
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
@@ -45,10 +48,11 @@ const CartListing = () => {
     }
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
-  const handleDeleteRow = (itemCode: string) => {
+  const handleDeleteRow = (itemCode: string, size?: string | number) => {
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
+      ...(size && { size: Number(size) }),
     };
     RemoveItemCartAPIFunc(params, setCartListingItems);
   };
@@ -121,15 +125,22 @@ const CartListing = () => {
   };
 
   const updateCartCust = () => {
-    if (customerName !== cartListingItems?.cust_name) {
-      updateCartData(customerName, selectedPurity, setUpdatedPurity);
+    if (customerName !== '') {
+      if (customerName !== cartListingItems?.cust_name) {
+        updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      }
+    } else {
+      setCustomerError('Customer Name cannot be empty.');
     }
   };
 
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
-
+  const handleCustomerNameChange = (value: any) => {
+    setCustomerName(value);
+    setCustomerError('');
+  };
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -143,12 +154,13 @@ const CartListing = () => {
                 <div className="mt-2 row">
                   <label className="col-md-4">Customer Name: </label>
 
-                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => handleCustomerNameChange(e.target.value)} />
                   <div className="col-md-1"></div>
                   <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
                     Update
                   </button>
                 </div>
+                {customerError !== '' && <p className="text-danger">{customerError}</p>}
                 <div className="mt-2 row">
                   <label className="col-md-4">Order Purity:</label>
 
@@ -225,7 +237,8 @@ const CartListing = () => {
                               onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
                                 handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                               }
-                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                              onDelete={handleDeleteRow}
+                              // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
                           <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>

@@ -10,3 +10,7 @@
 .filteredLabel {
   font-size: 0.7rem;
 }
+.filter_disabled {
+  pointer-events: none;
+  cursor: crosshair;
+}
