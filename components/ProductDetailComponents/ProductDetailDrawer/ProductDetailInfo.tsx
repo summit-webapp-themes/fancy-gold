@@ -9,8 +9,10 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
+import useGetPageURLData from '../../../hooks/GetPageURLData/useGetPageURLData';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
+  const { base_page, pageTypeData, page_category } = useGetPageURLData();
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -137,9 +139,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       remark: cartProductsData.remark,
       user: user,
     };
+    const socketData = { page_type: pageTypeData?.page_type, page_id: page_category };
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
-      addToCartItem(addToCartParams);
+      addToCartItem(addToCartParams, undefined, socketData);
     } else {
       setCustomerError('Customer name is empty!');
     }

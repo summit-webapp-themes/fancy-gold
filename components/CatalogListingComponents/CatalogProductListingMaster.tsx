@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
-import { useRouter } from 'next/router';
-import { pageViewTracker } from '../../utils/socket-functions';
-import { returnLastPageViewedData, setRecentPageData } from '../../utils/get-last-page-viewed-data';
 const HorizontalFilter = dynamic(() => import('../ProductListingComponents/HorizontalFilterList.tsx/HorizontalFilter'));
 const ProductGridViewMaster = dynamic(() => import('../ProductListingComponents/ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));

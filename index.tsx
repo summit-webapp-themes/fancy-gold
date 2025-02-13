@@ -4,9 +4,12 @@ import MetaTag from '../services/api/general-apis/meta-tag-api';
 import { CONSTANTS } from '../services/config/app-config';
 import { returnLastPageViewedData, setRecentPageData } from '../utils/get-last-page-viewed-data';
 import { useEffect } from 'react';
-import { eventTracker } from '../utils/socket-functions';
+import { emitSocketEvent } from '../utils/http-methods';
+import { useHandleClientInteractivity } from '../hooks/SocketHooks/useHandleClientInteractivity';
 
 const Home: NextPage = () => {
+  const { userEventRegistered, handleVisibilityChange } = useHandleClientInteractivity();
+
   const getLastViewedPage = returnLastPageViewedData();
   setRecentPageData('Home Page', 'home');
 
@@ -17,8 +20,29 @@ const Home: NextPage = () => {
       name: userName,
       phone: '',
     };
-    eventTracker('Home Page', 'home page', 'Page View', getLastViewedPage?.reference_type, getLastViewedPage?.reference_id, userObj);
+    const eventData = {
+      page_type: 'Home Page',
+      page_id: 'home',
+      action: 'Page View',
+      reference_type: getLastViewedPage?.reference_type,
+      reference_id: getLastViewedPage?.reference_id,
+      user_data: userObj,
+      is_active: true,
+    };
+    emitSocketEvent(eventData);
+    userEventRegistered();
   }, []);
+
+  useEffect(() => {
+    function handleClientVisibility(documentVisibility: any) {
+      handleVisibilityChange(documentVisibility);
+    }
+    document.addEventListener('visibilitychange', () => handleClientVisibility(document.visibilityState));
+    return () => {
+      // window.removeEventListener('beforeunload', () => handleSiteInSleepMode(name));
+      document.removeEventListener('visibilitychange', handleClientVisibility);
+    };
+  }, [document.visibilityState]);
   return (
     <div>
       <HomePage />
