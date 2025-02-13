@@ -8,6 +8,7 @@ import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { Spinner } from 'react-bootstrap';
+import ClearCartModal from './ClearCartModal';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -16,18 +17,22 @@ const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
   const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
-  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData, isUpdateCartLoading } =
-    useAddToCartHook();
+  const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
   const [updatedPurity, setUpdatedPurity] = useState('');
   const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [isCustomerNameUpdateLoading, setCustomerNameUpdateLoading] = useState(false);
+  const [isPurityUpdateLoading, setIsPurityUpdateLoading] = useState(false);
   const [isHandlePlaceOrderLoading, setIsHandlePlaceOrderLoading] = useState(false);
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
+  const [showClearCartModal, setShowClearCartModal] = useState(false);
+
+  const handleCloseClearCartModal = () => setShowClearCartModal(false);
+  const handleShowClearCartModal = () => setShowClearCartModal(true);
 
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
@@ -152,6 +157,16 @@ const CartListing = () => {
     }
   };
 
+  const handleUpdatePurity = async () => {
+    if (isPurityUpdateLoading) return; // Prevent multiple clicks while loading
+    setIsPurityUpdateLoading(true); // Start loader
+    try {
+      await updateCartData(customerName, selectedPurity, setUpdatedPurity);
+    } finally {
+      setIsPurityUpdateLoading(false); // Stop loader after API call
+    }
+  };
+
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
@@ -209,11 +224,8 @@ const CartListing = () => {
                     })}
                   </select>
 
-                  <button
-                    onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
-                    className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}
-                  >
-                    {isUpdateCartLoading ? (
+                  <button onClick={() => handleUpdatePurity()} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
+                    {isPurityUpdateLoading ? (
                       <span className="mx-3 ps-1">
                         <Spinner animation="border" size="sm" />
                       </span>
@@ -302,7 +314,7 @@ const CartListing = () => {
                 <div className="d-flex w-100 justify-content-end">
                   <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
                     {isHandlePlaceOrderLoading ? (
-                      <span className="mx-3 ps-1">
+                      <span className="mx-4 px-2 ">
                         <Spinner animation="border" size="sm" />
                       </span>
                     ) : (
@@ -313,20 +325,25 @@ const CartListing = () => {
               </div>
             </div>
           </div>
-          <div className="container p-2">
-            <div className="row my-2 w-100 p-0 text-center">
-              <div className="offset-6 col-md-6 col-6 text-end p-lg-0">
-                <button
-                  className={`${styles.clear_cart_btn}`}
-                  data-toggle="modal"
-                  data-target="#confirmationModal"
-                  onClick={handleClearCart}
-                >
-                  Clear Cart
-                </button>
-              </div>
+          <div className="container-xl p-3">
+            <div className="d-flex justify-content-end">
+              <button
+                className={`${styles.clear_cart_btn} me-2`}
+                data-toggle="modal"
+                data-target="#confirmationModal"
+                onClick={handleShowClearCartModal}
+              >
+                Clear Cart
+              </button>
             </div>
           </div>
+          <ClearCartModal
+            show={showClearCartModal}
+            handleClose={handleCloseClearCartModal}
+            onConfirmDelete={handleClearCart}
+            title={'Clear Cart'}
+            message={'Are you sure you want to clear the cart?'}
+          />
         </>
       );
     }
