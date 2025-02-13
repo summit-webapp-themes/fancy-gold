@@ -16,6 +16,7 @@ import { get_access_token } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
+import selectedMultilanguageSlice from '../../store/slices/general_slices/selected-multilanguage-slice';
 
 const Navbar = () => {
   const { SUMMIT_APP_CONFIG } = CONSTANTS;
@@ -51,7 +52,7 @@ const Navbar = () => {
       handleSearch(e);
     }
   };
-
+  const handleCloseSidebar = () => setIsSidebarOpen(false);
   const navMenuclick = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -244,7 +245,16 @@ const Navbar = () => {
         </nav>
       </header>
       {isMobile ? (
-        <MobSideNavbar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} navbarData={navbarData} />
+        <MobSideNavbar
+          isLoading={isLoading}
+          show={isSidebarOpen}
+          handleClose={handleCloseSidebar}
+          navbarData={navbarData}
+          setIsSidebarOpen={setIsSidebarOpen}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          handleSearch={handleSearch}
+        />
       ) : (
         <HeaderCategories
           navbarData={navbarData}
