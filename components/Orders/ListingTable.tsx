@@ -114,7 +114,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
                   </Link>
                 </td>
                 <td>{data.customer_name}</td>
-                <td>{data.customer_name}</td>
+                <td>{data.purity}</td>
                 <td>{data?.total_weight?.toFixed(3)}</td>
                 <td>{data.delivery_date}</td>
                 <td>{data.status}</td>
