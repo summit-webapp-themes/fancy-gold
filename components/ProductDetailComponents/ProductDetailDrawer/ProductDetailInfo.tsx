@@ -139,7 +139,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     };
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
-      addToCartItem(addToCartParams, undefined, socketData);
+      addToCartItem(addToCartParams);
       setSizeTable([initialState]);
     } else {
       setCustomerError('Customer name is empty!');
