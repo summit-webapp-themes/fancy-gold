@@ -74,6 +74,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
             onClick={() => {
+              // window.location.href = `${data?.url}`;
               router.push(`${data?.url}`);
             }}
           >
@@ -111,7 +112,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
           <div className="d-flex justify-content-between align-items-center">

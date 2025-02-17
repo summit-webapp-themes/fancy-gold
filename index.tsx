@@ -6,19 +6,23 @@ import { returnLastPageViewedData, setRecentPageData } from '../utils/get-last-p
 import { useEffect } from 'react';
 import { emitSocketEvent } from '../utils/http-methods';
 import { useHandleClientInteractivity } from '../hooks/SocketHooks/useHandleClientInteractivity';
+import { userMovingForward } from '../utils/socket-functions';
 
 const Home: NextPage = () => {
   const { userEventRegistered, handleVisibilityChange } = useHandleClientInteractivity();
+  const socketData = localStorage.getItem('socket_data');
 
   const getLastViewedPage = returnLastPageViewedData();
   setRecentPageData('Home Page', 'home');
 
   const userName = localStorage.getItem('party_name');
+  const userEmailId = localStorage.getItem('user');
 
   useEffect(() => {
     const userObj = {
       name: userName,
       phone: '',
+      emailID: userEmailId,
     };
     const eventData = {
       page_type: 'Home Page',
@@ -29,7 +33,14 @@ const Home: NextPage = () => {
       user_data: userObj,
       is_active: true,
     };
-    emitSocketEvent(eventData);
+    // Async function to ensure proper order
+    async function handleSocketEvents(socketData: any, eventData: any) {
+      if (socketData) {
+        await userMovingForward(JSON.parse(socketData)); // Wait for server acknowledgment
+      }
+      emitSocketEvent(eventData); // Now emit the event after completion
+    }
+    handleSocketEvents(socketData, eventData);
     userEventRegistered();
   }, []);
 
