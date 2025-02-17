@@ -84,7 +84,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
                   <div className="d-flex align-items-center justify-content-center">
                     {headerItem?.header}
                     {index !== 0 && (
-                      <span className="ms-2">
+                      <span className="ms-2" style={{ cursor: 'pointer' }}>
                         {sortKey === headerItem?.field_name?.toLowerCase().replace(/ /g, '_') ? (
                           sortOrder === 'asc' ? (
                             <FaSortUp />
