@@ -9,6 +9,7 @@ import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { useSelector } from 'react-redux';
 import OrderDetail from '../OrderDetail/OrderDetail';
 import { number } from 'yup';
+import useGetPageURLData from '../../hooks/GetPageURLData/useGetPageURLData';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -16,6 +17,7 @@ const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
 const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
+  const { base_page, pageTypeData, page_category } = useGetPageURLData();
   const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
   const [updatedPurity, setUpdatedPurity] = useState('');
@@ -96,6 +98,7 @@ const CartListing = () => {
     handleUpdateListData(data);
   };
   const handlePlaceOrder = async () => {
+    const socketData = { page_type: pageTypeData?.page_type, page_id: page_category };
     const selectedDate = new Date(deliveryDate);
     const minDate = new Date();
     minDate.setDate(minDate.getDate() + 15);
@@ -104,11 +107,12 @@ const CartListing = () => {
     const params = {
       order_id: cartListingItems?.name,
       party_name: partyName,
+      payment_date: deliveryDate,
     };
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
     } else {
-      placeOrderAPIFunc(params, setCartListingItems);
+      placeOrderAPIFunc(params, setCartListingItems, socketData);
     }
   };
 
