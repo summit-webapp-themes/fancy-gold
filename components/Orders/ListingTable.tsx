@@ -37,7 +37,6 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
   };
 
   const filteredData = tableData?.filter((item: any) => Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]));
-  console.log(filteredData, 'data111');
   const sortedData = filteredData.sort((a: any, b: any) => {
     if (!sortKey) return 0;
 
@@ -114,6 +113,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
                     {data.name}
                   </Link>
                 </td>
+                <td>{data.customer_name}</td>
                 <td>{data.customer_name}</td>
                 <td>{data?.total_weight?.toFixed(3)}</td>
                 <td>{data.delivery_date}</td>
