@@ -1,7 +1,6 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
@@ -38,6 +37,7 @@ function CatalogProductListingMaster() {
       />
     );
   };
+
   return (
     <div>
       <section className="listing-page ">
@@ -50,4 +50,5 @@ function CatalogProductListingMaster() {
     </div>
   );
 }
+
 export default CatalogProductListingMaster;
