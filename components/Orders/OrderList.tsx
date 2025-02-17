@@ -9,8 +9,16 @@ import OrderReportLoadingSkeleton from '../OrderReport/OrderReportLoadingSkeleto
 
 const OrderList = () => {
   const { orderListData, isLoading, errorMessage, handleSelectOrder, deleteBulkOrder }: any = useOrderListHook();
-
-  const headers: any = ['', 'Order Date ', 'Order Id', 'Customer Name', 'Total Ordered Weight', 'Due Date', 'Status'];
+  console.log(orderListData, 'data111');
+  const headers = [
+    { field_name: '', header: '' },
+    { field_name: 'transaction_date', header: 'Order Date' },
+    { field_name: 'name', header: 'Order Id' },
+    { field_name: 'customer_name', header: 'Customer Name' },
+    { field_name: 'total_weight', header: 'Total Ordered Weight' },
+    { field_name: 'delivery_date', header: 'Due Date' },
+    { field_name: 'status', header: 'Status' },
+  ];
 
   const showOrderListingSection: any = () => {
     if (isLoading) {
