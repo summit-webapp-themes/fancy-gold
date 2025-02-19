@@ -17,6 +17,7 @@ import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
 import selectedMultilanguageSlice from '../../store/slices/general_slices/selected-multilanguage-slice';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const { SUMMIT_APP_CONFIG } = CONSTANTS;
@@ -38,10 +39,13 @@ const Navbar = () => {
     if (searchTerm !== '') {
       const getSearchData = async () => {
         const searchAPIRes = await fetchSearchDataAPI(SUMMIT_APP_CONFIG, TokenFromStore?.token, searchTerm);
-        if (searchAPIRes?.status === 200 && searchAPIRes?.data?.message?.data?.length > 0) {
-          const saveProduct = searchAPIRes?.data?.message?.data[0]?.product;
-          // console.log('getSearchData', saveProduct);
-          router.push(`/${saveProduct}`);
+        if (searchAPIRes?.status === 200) {
+          if (searchAPIRes?.data?.message?.status === 'success' && searchAPIRes?.data?.message?.data?.length > 0) {
+            const saveProduct = searchAPIRes?.data?.message?.data[0]?.product;
+            router.push(`/${saveProduct}`);
+          } else if (searchAPIRes?.data?.message?.msg === 'error') {
+            toast.error(searchAPIRes?.data?.message?.error);
+          }
         }
       };
       getSearchData();
