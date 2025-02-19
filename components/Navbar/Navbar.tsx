@@ -6,6 +6,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
@@ -16,7 +17,6 @@ import { get_access_token } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
-import selectedMultilanguageSlice from '../../store/slices/general_slices/selected-multilanguage-slice';
 
 const Navbar = () => {
   const { SUMMIT_APP_CONFIG } = CONSTANTS;
@@ -39,10 +39,14 @@ const Navbar = () => {
     if (searchTerm !== '') {
       const getSearchData = async () => {
         const searchAPIRes = await fetchSearchDataAPI(SUMMIT_APP_CONFIG, TokenFromStore?.token, searchTerm);
-        if (searchAPIRes?.status === 200 && searchAPIRes?.data?.message?.data?.length > 0) {
-          const saveProduct = searchAPIRes?.data?.message?.data[0]?.product;
-          // console.log('getSearchData', saveProduct);
-          router.push(`/${saveProduct}`);
+        if (searchAPIRes?.status === 200) {
+          if (searchAPIRes?.data?.message?.status === 'success' && searchAPIRes?.data?.message?.data?.length > 0) {
+            const saveProduct = searchAPIRes?.data?.message?.data[0]?.product;
+            router.push(`/${saveProduct}`);
+            setSearchTerm('');
+          } else if (searchAPIRes?.data?.message?.msg === 'error') {
+            toast.error(searchAPIRes?.data?.message?.error);
+          }
         }
       };
       getSearchData();
@@ -114,6 +118,7 @@ const Navbar = () => {
                     <input
                       type="text"
                       className={`form-control ${stylesNavbar.search_bar_input}`}
+                      value={searchTerm}
                       placeholder="Search here"
                       aria-label="Search"
                       aria-describedby="basic-addon1"
