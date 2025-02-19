@@ -1,15 +1,14 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { RxCross2 } from 'react-icons/rx';
+import { RiDeleteBin7Fill } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
-import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
-import { useSelector } from 'react-redux';
-import OrderDetail from '../OrderDetail/OrderDetail';
-import { number } from 'yup';
-import useGetPageURLData from '../../hooks/GetPageURLData/useGetPageURLData';
+import styles from '../../styles/components/cartProductDetail.module.scss';
+import { Spinner } from 'react-bootstrap';
+import ClearCartModal from './ClearCartModal';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -17,18 +16,23 @@ const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
 const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
-  const { base_page, pageTypeData, page_category } = useGetPageURLData();
   const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
   const [updatedPurity, setUpdatedPurity] = useState('');
   const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [isCustomerNameUpdateLoading, setCustomerNameUpdateLoading] = useState(false);
+  const [isPurityUpdateLoading, setIsPurityUpdateLoading] = useState(false);
+  const [isHandlePlaceOrderLoading, setIsHandlePlaceOrderLoading] = useState(false);
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
-  const [customerError, setCustomerError] = useState('');
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
+  const [showClearCartModal, setShowClearCartModal] = useState(false);
+
+  const handleCloseClearCartModal = () => setShowClearCartModal(false);
+  const handleShowClearCartModal = () => setShowClearCartModal(true);
 
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
@@ -50,11 +54,10 @@ const CartListing = () => {
     }
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
-  const handleDeleteRow = (itemCode: string, size?: string | number) => {
+  const handleDeleteRow = (itemCode: string) => {
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
-      ...(size && { size: Number(size) }),
     };
     RemoveItemCartAPIFunc(params, setCartListingItems);
   };
@@ -97,22 +100,35 @@ const CartListing = () => {
     setCartListingItems(updatedItems);
     handleUpdateListData(data);
   };
+
   const handlePlaceOrder = async () => {
-    const socketData = { page_type: pageTypeData?.page_type, page_id: page_category };
+    if (isHandlePlaceOrderLoading) return; // Prevent multiple clicks while loading
+    setIsHandlePlaceOrderLoading(true); // Start loader
+
     const selectedDate = new Date(deliveryDate);
     const minDate = new Date();
     minDate.setDate(minDate.getDate() + 15);
     selectedDate.setHours(0, 0, 0, 0);
     minDate.setHours(0, 0, 0, 0);
+
     const params = {
       order_id: cartListingItems?.name,
       party_name: partyName,
-      payment_date: deliveryDate,
     };
+
     if (selectedDate < minDate) {
       toast.error('Delivery date cannot be before 15 days from the transaction date.');
-    } else {
-      placeOrderAPIFunc(params, setCartListingItems, socketData);
+      setIsHandlePlaceOrderLoading(false); // Stop loader if validation fails
+      return;
+    }
+
+    try {
+      await placeOrderAPIFunc(params, setCartListingItems);
+      toast.success('Order placed successfully!');
+    } catch (error) {
+      toast.error('Failed to place order. Please try again.');
+    } finally {
+      setIsHandlePlaceOrderLoading(false); // Stop loader after API call
     }
   };
 
@@ -127,23 +143,34 @@ const CartListing = () => {
     setCartListingItems([[]]);
   };
 
-  const updateCartCust = () => {
-    if (customerName !== '') {
-      if (customerName !== cartListingItems?.cust_name) {
-        updateCartData(customerName, selectedPurity, setUpdatedPurity);
+  const updateCartCust = async () => {
+    if (isLoading) return; // Prevent multiple clicks
+
+    if (customerName !== cartListingItems?.cust_name) {
+      setCustomerNameUpdateLoading(true);
+      try {
+        await updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      } catch (error) {
+        console.error('Error updating cart:', error);
       }
-    } else {
-      setCustomerError('Customer Name cannot be empty.');
+      setCustomerNameUpdateLoading(false);
+    }
+  };
+
+  const handleUpdatePurity = async () => {
+    if (isPurityUpdateLoading) return; // Prevent multiple clicks while loading
+    setIsPurityUpdateLoading(true); // Start loader
+    try {
+      await updateCartData(customerName, selectedPurity, setUpdatedPurity);
+    } finally {
+      setIsPurityUpdateLoading(false); // Stop loader after API call
     }
   };
 
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
-  const handleCustomerNameChange = (value: any) => {
-    setCustomerName(value);
-    setCustomerError('');
-  };
+
   const handleDataRendering = () => {
     if (isLoading) {
       return <CartSkeleton />;
@@ -152,27 +179,37 @@ const CartListing = () => {
       return (
         <>
           <div className="border p-3">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-md-between flex-column flex-md-row ">
               <div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Customer Name: </label>
+                <div className="d-flex">
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Customer Name: </label>
 
-                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => handleCustomerNameChange(e.target.value)} />
-                  <div className="col-md-1"></div>
-                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
-                    Update
+                  <input
+                    type="text"
+                    className="form-control form-control-sm "
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
+
+                  <button onClick={updateCartCust} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
+                    {isCustomerNameUpdateLoading ? (
+                      <span className="mx-3 ps-1">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Update</span>
+                    )}
                   </button>
                 </div>
-                {customerError !== '' && <p className="text-danger">{customerError}</p>}
                 <div className="mt-2 row">
-                  <label className="col-md-4">Order Purity:</label>
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Order Purity:</label>
 
-                  <span className="col-md-8">{updatedPurity}</span>
+                  <span className=" col-6 col-sm-7 col-md-6">{updatedPurity}</span>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Update Purity:</label>
+                <div className="mt-2 d-flex">
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Update Purity:</label>
                   <select
-                    className=" col-md-5"
+                    className=" form-control form-control-sm "
                     // value={selectedPurity}
                     onChange={updatePurity}
                     placeholder="text"
@@ -186,28 +223,37 @@ const CartListing = () => {
                       );
                     })}
                   </select>
-                  <div className="col-md-1"></div>
-                  <button
-                    onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
-                    className={`col-md-2 ${styles.update_btn}`}
-                  >
-                    Update
+
+                  <button onClick={() => handleUpdatePurity()} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
+                    {isPurityUpdateLoading ? (
+                      <span className="mx-3 ps-1">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Update</span>
+                    )}
                   </button>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Delivery Date: </label>
+                <div className="mt-2 d-flex">
+                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Delivery Date: </label>
                   <input
                     type="date"
-                    className="col-md-5"
+                    className="form-control form-control-sm w-auto"
                     value={deliveryDate}
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}
                   />
                 </div>
               </div>
-              <div className={`${styles.place_order_container}`}>
-                <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                  Place Order
+              <div className={` mt-2 mt-md-0 d-flex justify-content-end`}>
+                <button className={`${styles?.place_order_btn} m-0 me-md-2 `} onClick={handlePlaceOrder}>
+                  {isHandlePlaceOrderLoading ? (
+                    <span className="mx-4 px-2 ">
+                      <Spinner animation="border" size="sm" />
+                    </span>
+                  ) : (
+                    <span>Place Order</span>
+                  )}
                 </button>
               </div>
             </div>
@@ -218,41 +264,41 @@ const CartListing = () => {
                   <h5 className="py-2">
                     {category?.category} | Total Weight: {category?.total_weight}gm
                   </h5>
-                  <div className={`row ${styles?.table_header}`}>
-                    <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
+                  <div className={`row border py-2 bg-secondary bg-opacity-10 d-none d-lg-flex`}>
+                    <div className="col-md-2 col-2 text-center"></div>
+                    <div className="col-md-3 col-4 text-start">Products</div>
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
-                  <div className="row">
+                  <div className="row border border-top-0">
                     {category?.orders?.length > 0 &&
                       category?.orders?.map((order: any, orderIndex: any) => (
                         <>
-                          <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
+                          <div className={`col-lg-7  col-12 border-bottom border-top border-md-`}>
                             <CartProductDetail
                               data={order}
                               onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
                               handleEditWastage={handleUpdateListData}
                             />
                           </div>
-                          <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
+                          <div className={`col-lg-4 col-11 p-0`}>
                             <SizeQtyTable
                               data={order}
                               onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
                                 handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                               }
-                              onDelete={handleDeleteRow}
-                              // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
-                          <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
+                          <div className={`col-1 border-bottom border-left text-center d-flex justify-content-center align-items-center`}>
                             <button
-                              className="btn btn-link text-decoration-none text-dark"
+                              className="btn btn-link text-decoration-none text-dark p-0"
                               onClick={() => {
                                 handleDeleteRow(order?.item_code);
                               }}
                               disabled={disableRemove}
                             >
-                              <RxCross2 />
+                              <RiDeleteBin7Fill />
                             </button>
                           </div>
                         </>
@@ -261,32 +307,43 @@ const CartListing = () => {
                 </div>
               ))}
             <hr />
-            <div className="d-flex justify-content-between">
-              <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
+            <div className="d-flex justify-content-end">
+              {/* <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
               <div className={`${styles.place_order_container}`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
-                <div className="d-flex justify-content-end w-100">
+                <div className="d-flex w-100 justify-content-end">
                   <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                    Place Order
+                    {isHandlePlaceOrderLoading ? (
+                      <span className="mx-4 px-2 ">
+                        <Spinner animation="border" size="sm" />
+                      </span>
+                    ) : (
+                      <span>Place Order</span>
+                    )}
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container p-2">
-            <div className="row my-2 w-100 p-0 text-center">
-              <div className="offset-6 col-md-6 col-6 text-end p-lg-0">
-                <button
-                  className={`${styles.clear_cart_btn}`}
-                  data-toggle="modal"
-                  data-target="#confirmationModal"
-                  onClick={handleClearCart}
-                >
-                  Clear Cart
-                </button>
-              </div>
+          <div className="container-xl p-3">
+            <div className="d-flex justify-content-end">
+              <button
+                className={`${styles.clear_cart_btn} me-2`}
+                data-toggle="modal"
+                data-target="#confirmationModal"
+                onClick={handleShowClearCartModal}
+              >
+                Clear Cart
+              </button>
             </div>
           </div>
+          <ClearCartModal
+            show={showClearCartModal}
+            handleClose={handleCloseClearCartModal}
+            onConfirmDelete={handleClearCart}
+            title={'Clear Cart'}
+            message={'Are you sure you want to clear the cart?'}
+          />
         </>
       );
     }
@@ -298,7 +355,7 @@ const CartListing = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container-xl">
       <h2 className="theme-blue text-center my-3">My Shopping Cart</h2>
       {handleDataRendering()}
     </div>
