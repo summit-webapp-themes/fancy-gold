@@ -6,6 +6,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
 import useWishlist from '../../hooks/WishlistHooks/useWishlistHook';
@@ -16,8 +17,6 @@ import { get_access_token } from '../../store/slices/auth/token-login-slice';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
 import HeaderCategories from './HeaderCategories';
 import MobSideNavbar from './MobSideNavbar';
-import selectedMultilanguageSlice from '../../store/slices/general_slices/selected-multilanguage-slice';
-import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const { SUMMIT_APP_CONFIG } = CONSTANTS;
