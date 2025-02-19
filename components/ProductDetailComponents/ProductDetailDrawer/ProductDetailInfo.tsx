@@ -9,9 +9,10 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
-import { Spinner } from 'react-bootstrap';
+import useGetPageURLData from '../../../hooks/GetPageURLData/useGetPageURLData';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
+  const { base_page, pageTypeData, page_category } = useGetPageURLData();
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -25,7 +26,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     size: '',
     quantity: '',
     remark: '',
-    design_style: '',
   };
 
   const [sizeTable, setSizeTable] = useState([initialState]);
@@ -37,7 +37,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
-  const [addtoCartBtnLoader, setAddtoCartButtonLoader] = useState<boolean>(false);
   const inputRefs = useRef<any[]>([]);
 
   const handleAddRow = () => {
@@ -62,15 +61,35 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const handleInputChange = (index: number, event: any) => {
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
-      if (i === index) {
-        const updatedRow = { ...row, [name]: value };
-        return updatedRow;
+      if (name === 'quantity' && value >= 0) {
+        if (i === index) {
+          const updatedRow = { ...row, [name]: value };
+          return updatedRow;
+        }
       }
       return row;
     });
 
     setSizeTable(updatedSizeTable);
+
+    // Remove the error for this field if it exists
+    setErrors((prevErrors) => {
+      const updatedErrors: any = { ...prevErrors };
+
+      if (updatedErrors[index]) {
+        // Remove specific field error when user provides input
+        delete updatedErrors[index][name];
+
+        // If the object is empty after deletion, remove the index itself
+        if (Object.keys(updatedErrors[index]).length === 0) {
+          delete updatedErrors[index];
+        }
+      }
+
+      return updatedErrors;
+    });
   };
+
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -98,7 +117,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     }
   };
   const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size) {
+    if (sizeTable[sizeTable.length - 1]?.size || sizeTable?.length === 0) {
       const newRow = { ...initialState, size: size.toString() };
       setSizeTable([...sizeTable, newRow]);
     } else {
@@ -107,10 +126,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     }
   };
 
-  const handleAddToCart = async () => {
-    if (addtoCartBtnLoader) return; // Prevent multiple clicks
-
-    setAddtoCartButtonLoader(true);
+  const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
 
@@ -128,7 +144,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     setErrors(newErrors);
 
     if (!valid) {
-      setAddtoCartButtonLoader(false);
       return;
     }
 
@@ -138,31 +153,25 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       purity: purity,
       cust_name: cust_name,
       colour: colour,
+      // wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
       user: user,
     };
-
+    const socketData = { page_type: pageTypeData?.page_type, page_id: page_category };
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
-      try {
-        await addToCartItem(addToCartParams);
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-      }
+      addToCartItem(addToCartParams, undefined, socketData);
+      setSizeTable([initialState]);
     } else {
       setCustomerError('Customer name is empty!');
     }
-
     setCartProductsData({
       wastage: '',
       remark: '',
       rejection_note: '',
     });
-    setSizeTable([initialState]);
-    setAddtoCartButtonLoader(false);
   };
-
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
@@ -172,18 +181,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {[8, 20, 22, 24].map((size, index) => {
-            const isActive = sizeTable.some((item: any) => item?.size === size.toString());
-            return (
-              <button
-                key={index}
-                className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
-                onClick={() => handleSizeButtonClick(size)}
-              >
-                {size}
-              </button>
-            );
-          })}
+          {data?.category_size?.length > 0 &&
+            data?.category_size?.map((size: any, index: number) => {
+              const isActive = sizeTable.some((item: any) => item?.size === size.toString());
+              return (
+                <button
+                  key={index}
+                  className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
+                  onClick={() => handleSizeButtonClick(size)}
+                >
+                  {size}
+                </button>
+              );
+            })}
           <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
             Add Custom Size
           </button>
@@ -215,7 +225,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             </div>
 
             {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+              <div className="col-2 border px-0 py-1 ">
                 <input
                   name="weight"
                   className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
@@ -225,7 +235,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             )}
             <div
               className={`
-                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
+                col-3 px-0 border d-flex py-1 flex-column`}
             >
               <input
                 type="text"
@@ -235,17 +245,27 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 onChange={(e) => handleInputChange(index, e)}
                 ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
               />
-              {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
+              {errors[index]?.size && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].size}
+                </small>
+              )}
             </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
+            <div className={`col-2 border d-flex  p-0 px-1 py-1 flex-column`}>
               <input
                 type="text"
                 name="quantity"
                 className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
                 value={row.quantity}
                 onChange={(e) => handleInputChange(index, e)}
+                min={0}
+                inputMode="numeric"
               />
-              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
+              {errors[index]?.quantity && (
+                <small className="text-danger text-center" style={{ fontSize: '12px' }}>
+                  {errors[index].quantity}
+                </small>
+              )}
             </div>
             <div className="col text-center border p-1">
               <button
@@ -289,17 +309,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
           <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>
-            {addtoCartBtnLoader ? <Spinner animation="border" size="sm" className="mx-4" /> : <span>Added</span>}
+            Added
           </button>
         ) : (
-          <button className={`${productDetailStyles.add_to_cart_btn} ms-1`} onClick={handleAddToCart}>
-            {addtoCartBtnLoader ? (
-              <span className="px-4 ">
-                <Spinner animation="border" size="sm" />
-              </span>
-            ) : (
-              <span>Add To Cart</span>
-            )}
+          <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
+            Add To Cart
           </button>
         )}
         {data?.reject_button_value === 1 ? (
