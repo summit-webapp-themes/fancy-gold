@@ -42,7 +42,7 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                   Inch Qty<span className="text-danger">*</span>
                 </th>
                 <th>
-                  Bulk Order<span className="text-danger">*</span>
+                  Color<span className="text-danger">*</span>
                 </th>
                 <th></th>
               </tr>
@@ -98,10 +98,10 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                   <td>
                     <input
                       type="text"
-                      name={`bulk_order${index}`}
+                      name={`color${index}`}
                       className={`w-100 px-1 ${styles.input_type_number}`}
-                      value={row.bulk_order}
-                      onChange={(e) => handleChangeArrayCustom(e, index, 'bulk_order')}
+                      value={row.color}
+                      onChange={(e) => handleChangeArrayCustom(e, index, 'color')}
                     />
                   </td>
 
