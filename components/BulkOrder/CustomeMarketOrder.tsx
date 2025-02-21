@@ -41,6 +41,9 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                 <th>
                   Inch Qty<span className="text-danger">*</span>
                 </th>
+                <th>
+                  Bulk Order<span className="text-danger">*</span>
+                </th>
                 <th></th>
               </tr>
             </thead>
@@ -91,6 +94,15 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                         />
                       </React.Fragment>
                     ))}
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name={`bulk_order${index}`}
+                      className={`w-100 px-1 ${styles.input_type_number}`}
+                      value={row.bulk_order}
+                      onChange={(e) => handleChangeArrayCustom(e, index, 'bulk_order')}
+                    />
                   </td>
 
                   <td className="text-end">
