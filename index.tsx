@@ -12,9 +12,6 @@ const Home: NextPage = () => {
   const { userEventRegistered, handleVisibilityChange } = useHandleClientInteractivity();
   const socketData = localStorage.getItem('socket_data');
 
-  const getLastViewedPage = returnLastPageViewedData();
-  setRecentPageData('Home Page', 'home');
-
   const userName = localStorage.getItem('party_name');
   const userEmailId = localStorage.getItem('user');
 
@@ -28,8 +25,8 @@ const Home: NextPage = () => {
       page_type: 'Home Page',
       page_id: 'home',
       action: 'Page View',
-      reference_type: getLastViewedPage?.reference_type,
-      reference_id: getLastViewedPage?.reference_id,
+      reference_type: 'Home Page',
+      reference_id: 'home',
       user_data: userObj,
       is_active: true,
     };
