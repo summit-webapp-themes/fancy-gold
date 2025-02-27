@@ -65,7 +65,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
       </div>
       <div className="mt-2 mb-3">
         <OrderFilters
-          data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name'])}
+          data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name', 'purity'])}
           handleFilterChange={handleFilterChange}
         />
       </div>
