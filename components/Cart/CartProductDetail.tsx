@@ -1,10 +1,19 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import { FaEye } from 'react-icons/fa6';
 import { CONSTANTS } from '../../services/config/app-config';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
   const [editWastage, setEsditWastage] = useState(false);
+  const [imagePreview, setImagePreview] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handlePreviewModal = () => {
+    console.log('data111');
+    setImagePreview(true);
+  };
 
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
@@ -66,6 +75,20 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
         </div> */}
         <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>
       </div>
+      <Modal show={imagePreview} onHide={() => setImagePreview(false)} centered size="lg">
+        <Modal.Header closeButton />
+        <Modal.Body className="d-flex justify-content-center align-items-center">
+          <Image
+            loader={imageLoader}
+            src={data?.image !== null && data?.image}
+            width={500} // Adjust as needed
+            height={500}
+            sizes="100vw"
+            alt="Item-Image-Preview"
+            className="w-100 img-fluid"
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
