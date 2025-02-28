@@ -67,7 +67,7 @@ const OrderDetailCard = ({
       <div className="content-prev">
         <div className="col-12">
           <div className="row ">
-            <div className="col-7 text-center d-flex flex-column justify-content-center text-center">
+            <div className="col-lg-7 col-12 text-center d-flex flex-column justify-content-center text-center">
               <div className="row align-items-center border">
                 <div className="col-2 ">
                   <div className="img-wrap text-center" style={{ height: '110px' }}>
@@ -75,7 +75,7 @@ const OrderDetailCard = ({
                       loader={imageLoader}
                       className={`d-block w-100`}
                       src={image !== null ? image : noImage}
-                      alt="Barcode image"
+                      alt="Product image"
                       priority
                       width={100}
                       height={100}
@@ -108,15 +108,15 @@ const OrderDetailCard = ({
                 <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
                   <p>{purity}</p>
                 </div>
-                <div className="col-1 text-start">
-                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
+                {/* <div className="col-1 text-start">
+                  <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
-                  </p> */}
+                  </p>
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {remark}
                   </p>
-                </div>
-                <div className="col-1">
+                </div> */}
+                <div className="col-2">
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
                   </p>
@@ -141,7 +141,7 @@ const OrderDetailCard = ({
                 )}
               </div>
             </div>
-            <div className="col-5 border p-0">
+            <div className="col-lg-5 col-12 border p-0">
               <div className={`${orderDetailStyles.order_detail_table}`}>
                 <table style={{ height: '100%' }}>
                   <tr>

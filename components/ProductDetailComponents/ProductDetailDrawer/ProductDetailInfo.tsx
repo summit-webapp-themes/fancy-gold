@@ -9,6 +9,7 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
+import { Spinner } from 'react-bootstrap';
 
 const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const cartList = useSelector(selectCart)?.items;
@@ -36,6 +37,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
+  const [addtoCartBtnLoader, setAddtoCartButtonLoader] = useState<boolean>(false);
   const inputRefs = useRef<any[]>([]);
 
   const handleAddRow = () => {
@@ -105,7 +107,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    if (addtoCartBtnLoader) return; // Prevent multiple clicks
+
+    setAddtoCartButtonLoader(true);
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
 
@@ -123,6 +128,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     setErrors(newErrors);
 
     if (!valid) {
+      setAddtoCartButtonLoader(false);
       return;
     }
 
@@ -132,24 +138,31 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       purity: purity,
       cust_name: cust_name,
       colour: colour,
-      // wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
       user: user,
     };
+
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
-      addToCartItem(addToCartParams);
-      setSizeTable([initialState]);
+      try {
+        await addToCartItem(addToCartParams);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+      }
     } else {
       setCustomerError('Customer name is empty!');
     }
+
     setCartProductsData({
       wastage: '',
       remark: '',
       rejection_note: '',
     });
+    setSizeTable([initialState]);
+    setAddtoCartButtonLoader(false);
   };
+
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
@@ -277,11 +290,17 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
           <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>
-            Added
+            {addtoCartBtnLoader ? <Spinner animation="border" size="sm" className="mx-4" /> : <span>Added</span>}
           </button>
         ) : (
-          <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
-            Add To Cart
+          <button className={`${productDetailStyles.add_to_cart_btn} ms-1`} onClick={handleAddToCart}>
+            {addtoCartBtnLoader ? (
+              <span className="px-4 ">
+                <Spinner animation="border" size="sm" />
+              </span>
+            ) : (
+              <span>Add To Cart</span>
+            )}
           </button>
         )}
         {data?.reject_button_value === 1 ? (
