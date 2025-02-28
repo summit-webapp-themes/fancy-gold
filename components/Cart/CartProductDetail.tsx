@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import { CONSTANTS } from '../../services/config/app-config';
-import styles from '../../styles/components/cartProductDetail.module.scss';
 import { Modal } from 'react-bootstrap';
 import { FaEye } from 'react-icons/fa6';
+import { CONSTANTS } from '../../services/config/app-config';
+import styles from '../../styles/components/cartProductDetail.module.scss';
 
 const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
   const [editWastage, setEsditWastage] = useState(false);
@@ -14,12 +14,13 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
     console.log('data111');
     setImagePreview(true);
   };
+
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
   return (
     <div className={`row ${styles?.font_12}`}>
-      <div className="col-lg-4 p-3 text-center">
+      <div className="col-lg-4 p-3 text-center  ">
         <div
           className="d-inline-block position-relative cursor-pointer"
           style={{ width: '100px', height: '100px' }}
