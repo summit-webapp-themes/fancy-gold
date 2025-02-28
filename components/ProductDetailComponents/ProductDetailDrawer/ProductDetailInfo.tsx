@@ -172,18 +172,19 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {[8, 20, 22, 24].map((size, index) => {
-            const isActive = sizeTable.some((item: any) => item?.size === size.toString());
-            return (
-              <button
-                key={index}
-                className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
-                onClick={() => handleSizeButtonClick(size)}
-              >
-                {size}
-              </button>
-            );
-          })}
+          {data?.category_size?.length > 0 &&
+            data?.category_size?.map((size: any, index: number) => {
+              const isActive = sizeTable.some((item: any) => item?.size === size.toString());
+              return (
+                <button
+                  key={index}
+                  className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
+                  onClick={() => handleSizeButtonClick(size)}
+                >
+                  {size}
+                </button>
+              );
+            })}
           <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
             Add Custom Size
           </button>
