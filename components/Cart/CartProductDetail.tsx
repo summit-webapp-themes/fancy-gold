@@ -20,21 +20,8 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
   };
   return (
     <div className={`row ${styles?.font_12}`}>
-      <div className="col-lg-4 p-3 text-center  ">
-        <div
-          className="d-inline-block position-relative cursor-pointer"
-          style={{ width: '100px', height: '100px' }}
-          onClick={() => handlePreviewModal()}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
-          {isHovered && (
-            <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center">
-              <FaEye size={24} className="text-white" />
-            </div>
-          )}
-        </div>
+      <div className="col-4 p-3 d-flex justify-content-center">
+        <Image loader={imageLoader} src={data?.image !== null && data?.image} width={100} height={100} sizes="100vw" alt="Item Image" />
       </div>
       <div className="col-lg-4 d-flex justify-content-center">
         <div className="mt-2">
