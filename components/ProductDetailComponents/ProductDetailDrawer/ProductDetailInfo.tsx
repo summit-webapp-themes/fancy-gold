@@ -104,7 +104,6 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       setSizeTable(updatedSizeTable);
     }
   };
-  console.log(data, 'data111');
 
   const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
