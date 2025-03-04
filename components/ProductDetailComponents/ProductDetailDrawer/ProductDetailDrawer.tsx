@@ -12,6 +12,7 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
+import noImage from '../../../public/assets/images/no_image.png';
 
 const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
@@ -111,14 +112,18 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
               referenceTrackerData={referenceTrackerData}
             />
             <div className="mt-2">
-              <Image
-                src={productDetail?.image}
-                alt="product-image"
-                className="w-100 img-fluid"
-                width={100}
-                height={100}
-                loader={imageLoader}
-              />
+              {data?.iamge && data?.image !== null ? (
+                <Image
+                  src={productDetail?.image}
+                  alt="product-image"
+                  className="w-100 img-fluid"
+                  width={100}
+                  height={100}
+                  loader={imageLoader}
+                />
+              ) : (
+                <Image src={noImage} alt="product-image" className="w-100 img-fluid" width={100} height={100} />
+              )}
             </div>
           </>
         ) : (
