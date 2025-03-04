@@ -40,7 +40,6 @@ const ProductGridViewMaster = ({
           handleShow={handleShow}
           wishlistData={wishlistData}
           cartData={cartData}
-
         />
       );
     }
