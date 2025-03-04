@@ -10,6 +10,7 @@ import { selectReferenceTracker } from '../../store/slices/reference-tracking-sl
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
 const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
+import styles from '../../styles/components/filterSidebar.module.scss';
 const ProductListingMaster = () => {
   const {
     productListingData,
@@ -57,7 +58,7 @@ const ProductListingMaster = () => {
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild w-100">
           <div className="row ps-lg-5 pe-lg-4 ps-2 w-100">
-            <div className="col-12 col-sm-4 col-md-4 col-lg-2">
+            <div className={`col-12 col-sm-4 col-md-4 col-lg-2 ${isLoading && styles.filter_disabled}`}>
               <WebFilters
                 searchFilterValue={searchFilterValue}
                 handleFilterSearchFun={handleFilterSearchFun}
