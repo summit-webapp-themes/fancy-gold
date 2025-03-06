@@ -66,7 +66,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
         return (
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-            onClick={() => handleShow(data?.name, data?.variant_of)}
+            onClick={() => handleShow(data?.name, data?.variant_of, data?.slug)}
           >
             {btnAction}
             <IoCart className={ProductCardStyles.icon_margin} />
@@ -77,6 +77,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
             onClick={() => {
+              // window.location.href = `${data?.url}`;
               router.push(`${data?.url}`);
             }}
           >
@@ -88,7 +89,10 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
       return (
         <button
           className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
-          onClick={() => handleShow(data?.name, data?.variant_of)}
+          onClick={() => {
+            console.log(data?.slug);
+            handleShow(data?.name, data?.variant_of, data?.slug);
+          }}
         >
           Added
         </button>
@@ -99,7 +103,6 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-
         <div
           className="text-decoration-none text-dark"
           onClick={() => handlePreviewModal(data)}
@@ -126,7 +129,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
           <div className="d-flex justify-content-between align-items-center">

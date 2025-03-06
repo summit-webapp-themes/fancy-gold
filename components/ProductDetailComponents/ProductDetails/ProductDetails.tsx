@@ -14,6 +14,7 @@ const ProductDetails = ({
   errorMessage,
   variantLoading,
   isLoading,
+  referenceTrackerData,
 }: any) => {
   const handledataRendering = () => {
     if (isLoading) {
@@ -47,7 +48,11 @@ const ProductDetails = ({
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
+              <ProductDetailInfo
+                data={productDetailData}
+                getProductDetailData={fetchProductDetailDataAPI}
+                referenceTrackerData={referenceTrackerData}
+              />
             </div>
             <PrevNextButtons data={productDetailData} />
           </div>
