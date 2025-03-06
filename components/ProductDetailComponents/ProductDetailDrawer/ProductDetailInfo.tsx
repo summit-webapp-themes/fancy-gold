@@ -143,6 +143,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       reference_page: referenceTrackerData?.reference_page || 'Category',
       reference_id: referenceTrackerData?.reference_id || data?.category_slug,
     };
+    console.log('addToCartParams', addToCartParams);
 
     const socketData = { page_type: 'Product', page_id: data?.slug };
     if (cust_name !== '' && cust_name !== null) {

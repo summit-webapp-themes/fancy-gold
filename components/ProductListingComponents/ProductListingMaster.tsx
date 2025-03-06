@@ -35,7 +35,6 @@ const ProductListingMaster = () => {
     setShow(false);
   };
   const handleShow = (productName: string, variantOf: string, slug: string) => {
-    console.log('productName', productName, 'variantOf', variantOf, 'slug', slug);
     setDrawerData((prev: any) => ({ ...prev, productName: productName, variantOf: variantOf, slug: slug }));
     setShow(true);
   };
