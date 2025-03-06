@@ -6,6 +6,7 @@ import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-loca
 import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
+import ImagePreviewModal from './ProductGridView/ImagePreviewModal';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
 const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
@@ -26,6 +27,13 @@ const ProductListingMaster = () => {
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
+  const [imagePreview, setImagePreview] = useState(false);
+  const [previewData, setPreviewData] = useState([]);
+
+  const handlePreviewModal = (data: any) => {
+    setImagePreview(true);
+    setPreviewData(data);
+  };
 
   const handleClose = () => {
     setDrawerData({ productName: '', variantOf: '' });
@@ -46,6 +54,7 @@ const ProductListingMaster = () => {
         handleShow={handleShow}
         wishlistData={wishlistData}
         cartData={cartData}
+        handlePreviewModal={handlePreviewModal}
       />
     );
   };
@@ -71,6 +80,7 @@ const ProductListingMaster = () => {
           </div>
         </div>
         <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+        <ImagePreviewModal imagePreview={imagePreview} setImagePreview={setImagePreview} data={previewData} />
       </section>
     </div>
   );
