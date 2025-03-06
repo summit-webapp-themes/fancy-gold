@@ -15,10 +15,10 @@ function CatalogProductListingMaster() {
   const cartData = useSelector(selectCart)?.items;
   const referenceTrackerData = useSelector(selectReferenceTracker);
   const [show, setShow] = useState(false);
-  const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
+  const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '', slug: '' });
 
   const handleClose = () => {
-    setDrawerData({ productName: '', variantOf: '' });
+    setDrawerData({ productName: '', variantOf: '', slug: '' });
     setShow(false);
   };
   const handleShow = (productName: string, variantOf: string, slug: string) => {
