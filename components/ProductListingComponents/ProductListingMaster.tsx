@@ -1,16 +1,18 @@
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import dynamic from 'next/dynamic';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
-import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
-import WebFilters from './FilterView/WebFilters';
-import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import { selectReferenceTracker } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
+import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
+import styles from '../../styles/components/filterSidebar.module.scss';
+import WebFilters from './FilterView/WebFilters';
+import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
+import ImagePreviewModal from './ProductGridView/ImagePreviewModal';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
 const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
-import styles from '../../styles/components/filterSidebar.module.scss';
+
 const ProductListingMaster = () => {
   const {
     productListingData,
@@ -28,6 +30,14 @@ const ProductListingMaster = () => {
   const referenceTrackerData = useSelector(selectReferenceTracker);
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
   const [show, setShow] = useState(false);
+
+  const [imagePreview, setImagePreview] = useState(false);
+  const [previewData, setPreviewData] = useState([]);
+
+  const handlePreviewModal = (data: any) => {
+    setImagePreview(true);
+    setPreviewData(data);
+  };
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '', slug: '' });
 
   const handleClose = () => {
@@ -49,6 +59,7 @@ const ProductListingMaster = () => {
         handleShow={handleShow}
         wishlistData={wishlistData}
         cartData={cartData}
+        handlePreviewModal={handlePreviewModal}
       />
     );
   };
@@ -73,6 +84,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
+        <ImagePreviewModal imagePreview={imagePreview} setImagePreview={setImagePreview} data={previewData} />
         <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} referenceTrackerData={referenceTrackerData} />
       </section>
     </div>
