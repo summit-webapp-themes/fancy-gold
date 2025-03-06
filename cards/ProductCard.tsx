@@ -63,7 +63,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
         return (
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-            onClick={() => handleShow(data?.name, data?.variant_of)}
+            onClick={() => handleShow(data?.name, data?.variant_of, data?.slug)}
           >
             {btnAction}
             <IoCart className={ProductCardStyles.icon_margin} />
@@ -86,7 +86,10 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
       return (
         <button
           className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
-          onClick={() => handleShow(data?.name, data?.variant_of)}
+          onClick={() => {
+            console.log(data?.slug);
+            handleShow(data?.name, data?.variant_of, data?.slug);
+          }}
         >
           Added
         </button>
@@ -97,7 +100,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-        <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">
+        <Link href={`${data?.url}`} className="text-decoration-none text-dark">
           <Image
             loader={data.image !== null ? imageLoader : undefined}
             src={data.image !== null ? data.image : noImage}
