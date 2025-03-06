@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaArrowRightLong } from 'react-icons/fa6';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import noImage from '../../public/assets/images/no_image.png';
 import { CONSTANTS } from '../../services/config/app-config';
 import { get_access_token } from '../../store/slices/auth/token-login-slice';
@@ -11,8 +11,10 @@ import styles from '../../styles/components/catalog.module.scss';
 import { callGetAPI } from '../../utils/http-methods';
 import ErrorStyles from '../../styles/components/errorboundary.module.scss';
 import image from '../../public/assets/images/api_error_img.webp';
+import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 
 function CatalogListingMaster() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const TokenFromStore: any = useSelector(get_access_token);
   const isCatalogUser = localStorage.getItem('isCatalogUser');
@@ -34,6 +36,14 @@ function CatalogListingMaster() {
   const fetchCatalogListValues = async () => {
     const values = await getCatalogListValues();
     setCatalogList(values?.data?.data);
+  };
+  const handleClickCatalogName = async (slug: string) => {
+    dispatch(
+      AddReference({
+        reference_page: 'Catalog',
+        reference_id: slug,
+      })
+    );
   };
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
@@ -91,7 +101,11 @@ function CatalogListingMaster() {
                     </div>
                   )}
                   <div className="d-flex justify-content-center">
-                    <Link href={{ pathname: `/catalog/${catalog?.slug}`, query: { page: 1 } }} className={`${styles.catalog_list_btn}`}>
+                    <Link
+                      href={{ pathname: `/catalog/${catalog?.slug}`, query: { page: 1 } }}
+                      className={`${styles.catalog_list_btn}`}
+                      onClick={() => handleClickCatalogName(catalog?.slug)}
+                    >
                       <span>{catalog?.name}</span>
                       <span className="ps-2">
                         <FaArrowRightLong />

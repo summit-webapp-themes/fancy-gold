@@ -12,8 +12,9 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
+import noImage from '../../../public/assets/images/no_image.png';
 
-const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
+const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const { SUMMIT_APP_CONFIG }: any = CONSTANTS;
   const [productDetail, setProductDetail] = useState<any>({});
@@ -106,16 +107,24 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
               errorMessage={errorMessage}
               loading={loading}
             />
-            <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
+            <ProductDetailInfo
+              data={productDetail}
+              getProductDetailData={getProductDetailData}
+              referenceTrackerData={referenceTrackerData}
+            />
             <div className="mt-2">
-              <Image
-                src={productDetail?.image}
-                alt="product-image"
-                className="w-100 img-fluid"
-                width={100}
-                height={100}
-                loader={imageLoader}
-              />
+              {data?.iamge && data?.image !== null ? (
+                <Image
+                  src={productDetail?.image}
+                  alt="product-image"
+                  className="w-100 img-fluid"
+                  width={100}
+                  height={100}
+                  loader={imageLoader}
+                />
+              ) : (
+                <Image src={noImage} alt="product-image" className="w-100 img-fluid" width={100} height={100} />
+              )}
             </div>
           </>
         ) : (
