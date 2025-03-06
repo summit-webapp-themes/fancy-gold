@@ -21,8 +21,8 @@ function CatalogProductListingMaster() {
     setDrawerData({ productName: '', variantOf: '' });
     setShow(false);
   };
-  const handleShow = (productName: string, variantOf: string) => {
-    setDrawerData((prev: any) => ({ ...prev, productName: productName, variantOf: variantOf }));
+  const handleShow = (productName: string, variantOf: string, slug: string) => {
+    setDrawerData((prev: any) => ({ ...prev, productName: productName, variantOf: variantOf, slug: slug }));
     setShow(true);
   };
 

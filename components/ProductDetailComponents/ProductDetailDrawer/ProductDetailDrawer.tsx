@@ -46,9 +46,10 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
       setVariantsData([]);
     }
   };
-  const getProductDetailData = async (productName: string) => {
+  const getProductDetailData = async (productName: string, slug: string) => {
     const requestParams = {
       item: productName,
+      slug: slug,
       currency: 'INR',
     };
     setDetailLoading(true);
@@ -77,7 +78,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
   };
   useEffect(() => {
     if (data?.productName) {
-      getProductDetailData(data?.productName);
+      getProductDetailData(data?.productName, data?.slug);
     }
     if (data?.variantOf) {
       getVariantsData();

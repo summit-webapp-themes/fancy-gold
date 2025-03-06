@@ -144,10 +144,11 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       reference_id: referenceTrackerData?.reference_id || data?.category_slug,
     };
 
+    const socketData = { page_type: 'Product', page_id: data?.slug };
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
       try {
-        await addToCartItem(addToCartParams);
+        await addToCartItem(addToCartParams, undefined, socketData);
       } catch (error) {
         console.error('Error adding to cart:', error);
       }
