@@ -11,7 +11,7 @@ import productDetailStyles from '../../../styles/components/productDetail.module
 import { callPostAPI } from '../../../utils/http-methods';
 import { Spinner } from 'react-bootstrap';
 
-const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
+const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }: any) => {
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -131,7 +131,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       setAddtoCartButtonLoader(false);
       return;
     }
-
     const addToCartParams = {
       item_code: data?.name,
       party_name: party_name,
@@ -141,6 +140,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       qty_size_list: sizeTable,
       remark: cartProductsData.remark,
       user: user,
+      reference_page: referenceTrackerData?.reference_page || 'Category',
+      reference_id: referenceTrackerData?.reference_id || data?.category_slug,
     };
 
     if (cust_name !== '' && cust_name !== null) {

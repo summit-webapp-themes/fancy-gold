@@ -6,6 +6,7 @@ import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-loca
 import WebFilters from './FilterView/WebFilters';
 import HorizontalFilter from './HorizontalFilterList.tsx/HorizontalFilter';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
+import { selectReferenceTracker } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 const ProductCardSkeleton = dynamic(() => import('./../../cards/ProductCardSkeleton'));
 const ProductGridViewMaster = dynamic(() => import('./ProductGridView/ProductGridViewMaster'));
 const ProductDetailDrawer = dynamic(() => import('../ProductDetailComponents/ProductDetailDrawer/ProductDetailDrawer'));
@@ -24,6 +25,7 @@ const ProductListingMaster = () => {
   } = useProductListing();
   const wishlistData = useSelector(selectWishlist)?.items;
   const cartData = useSelector(selectCart)?.items;
+  const referenceTrackerData = useSelector(selectReferenceTracker);
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
   const [show, setShow] = useState(false);
   const [drawerData, setDrawerData] = useState({ productName: '', variantOf: '' });
@@ -71,7 +73,7 @@ const ProductListingMaster = () => {
             </div>
           </div>
         </div>
-        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} referenceTrackerData={referenceTrackerData} />
       </section>
     </div>
   );
