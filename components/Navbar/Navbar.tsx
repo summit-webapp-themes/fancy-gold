@@ -82,6 +82,11 @@ const Navbar = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (cartListingItems && cartListingItems?.cust_name) {
+      localStorage.setItem('cust_name', cartListingItems?.cust_name);
+    }
+  }, [cartListingItems]);
 
   return (
     <>
@@ -254,6 +259,11 @@ const Navbar = () => {
                       <Link href="/bulk-order" passHref className="text-decoration-none">
                         <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
                           Bulk Order
+                        </NavDropdown.Item>
+                      </Link>
+                      <Link href="/arc-casting" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
+                          ARC Casting
                         </NavDropdown.Item>
                       </Link>
                       {/* <Link href="/bulk-order" passHref className="text-decoration-none">
