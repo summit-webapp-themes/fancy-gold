@@ -98,7 +98,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     }
   };
   const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size) {
+    if (sizeTable[sizeTable.length - 1]?.size || sizeTable?.length === 0) {
       const newRow = { ...initialState, size: size.toString() };
       setSizeTable([...sizeTable, newRow]);
     } else {
