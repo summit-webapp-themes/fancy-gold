@@ -1,14 +1,12 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import useAddToCartHook from '../../hooks/CartPageHook/useCartFunctions';
 import useCartPageHook from '../../hooks/CartPageHook/useFetchCartItems';
-import styles from '../../styles/components/cartProductDetail.module.scss';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
-import { useSelector } from 'react-redux';
-import OrderDetail from '../OrderDetail/OrderDetail';
-import { number } from 'yup';
+import styles from '../../styles/components/cartProductDetail.module.scss';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
