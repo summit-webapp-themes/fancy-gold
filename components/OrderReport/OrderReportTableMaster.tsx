@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Table } from 'react-bootstrap';
 import styles from '../../styles/components/orderReport.module.scss';
 import OrderFilters from './OrderFilters';
+
 const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
   const tableHeaderArray = [
     'Sr.No',
