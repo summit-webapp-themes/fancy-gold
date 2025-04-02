@@ -126,7 +126,6 @@ const CartListing = () => {
 
     try {
       await placeOrderAPIFunc(params, setCartListingItems);
-      toast.success('Order placed successfully!');
     } catch (error) {
       toast.error('Failed to place order. Please try again.');
     } finally {
