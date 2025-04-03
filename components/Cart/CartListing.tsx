@@ -56,7 +56,6 @@ const CartListing = () => {
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
   const handleDeleteRow = (itemCode: string, size?: string | number) => {
-    console.log(itemCode, size, 'data111');
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
