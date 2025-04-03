@@ -9,6 +9,7 @@ import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { Spinner } from 'react-bootstrap';
 import ClearCartModal from './ClearCartModal';
+import { it } from 'node:test';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -54,10 +55,11 @@ const CartListing = () => {
     }
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
-  const handleDeleteRow = (itemCode: string) => {
+  const handleDeleteRow = (itemCode: string, size?: string | number) => {
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
+      ...(size && { size: Number(size) }),
     };
     RemoveItemCartAPIFunc(params, setCartListingItems);
   };
@@ -126,7 +128,6 @@ const CartListing = () => {
 
     try {
       await placeOrderAPIFunc(params, setCartListingItems);
-      toast.success('Order placed successfully!');
     } catch (error) {
       toast.error('Failed to place order. Please try again.');
     } finally {
@@ -289,7 +290,8 @@ const CartListing = () => {
                               onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
                                 handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                               }
-                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                              onDelete={handleDeleteRow}
+                              // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
                           <div className={`col-1 border-bottom border-left text-center d-flex justify-content-center align-items-center`}>

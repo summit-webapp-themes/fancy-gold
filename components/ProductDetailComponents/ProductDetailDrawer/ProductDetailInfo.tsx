@@ -143,7 +143,6 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       reference_page: referenceTrackerData?.reference_page || 'Category',
       reference_id: referenceTrackerData?.reference_id || data?.category_slug,
     };
-    console.log('addToCartParams', addToCartParams);
 
     const socketData = { page_type: 'Product', page_id: data?.slug };
     if (cust_name !== '' && cust_name !== null) {
@@ -169,7 +168,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
-  console.log(data?.category_size, 'data111');
+
   return (
     <div className="w-100">
       <div className="py-2">
