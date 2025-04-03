@@ -21,7 +21,6 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
           }}
         >
           <option value="Yellow">Yellow</option>
-          <option value="Rose">Rose</option>
           <option value="White">White</option>
           <option value="Pink">Pink</option>
         </select>

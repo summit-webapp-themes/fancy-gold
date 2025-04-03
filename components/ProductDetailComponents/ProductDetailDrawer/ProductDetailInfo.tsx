@@ -216,7 +216,6 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
                 className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
               >
                 <option value="Yellow">Yellow</option>
-                <option value="Rose">Rose</option>
                 <option value="White">White</option>
                 <option value="Pink">Pink</option>
               </select>
