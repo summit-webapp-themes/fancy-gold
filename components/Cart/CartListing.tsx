@@ -9,6 +9,7 @@ import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../styles/components/cartProductDetail.module.scss';
 import { Spinner } from 'react-bootstrap';
 import ClearCartModal from './ClearCartModal';
+import { it } from 'node:test';
 const ApiErrorPage = dynamic(() => import('../ApiErrorPage'));
 const CartSkeleton = dynamic(() => import('./CartSkeleton'));
 const CartProductDetail = dynamic(() => import('./CartProductDetail'));
@@ -54,10 +55,12 @@ const CartListing = () => {
     }
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
 
-  const handleDeleteRow = (itemCode: string) => {
+  const handleDeleteRow = (itemCode: string, size?: string | number) => {
+    console.log(itemCode, size, 'data111');
     const params = {
       item_code: itemCode,
       quotation_id: cartListingItems?.name,
+      ...(size && { size: Number(size) }),
     };
     RemoveItemCartAPIFunc(params, setCartListingItems);
   };
@@ -288,7 +291,8 @@ const CartListing = () => {
                               onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
                                 handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                               }
-                              onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                              onDelete={handleDeleteRow}
+                              // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
                           <div className={`col-1 border-bottom border-left text-center d-flex justify-content-center align-items-center`}>
