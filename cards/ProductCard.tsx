@@ -119,20 +119,12 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
               {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
               ) : null}
-
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
               {(data?.level_2_category === 'MANGALSUTRA' ||
                 data?.level_2_category === 'IMP PREMIUM' ||
                 data?.item_group === 'STONE CHAINS') && (
-                <>
-                  <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
-                  {data?.bom_factory_code !== '' && data?.bom_factory_code !== null && (
-                    <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>
-                      BOM Code: {data?.bom_factory_code}
-                    </Card.Text>
-                  )}
-                </>
+                <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
               )}
             </div>
             <div>{handleRenderAddToCartBtn()}</div>
