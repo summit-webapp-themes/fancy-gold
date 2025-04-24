@@ -7,7 +7,7 @@ const ProductCode = ({ data }: any) => {
       <br />
       <b>Gross weight</b> : {Number(data?.weight_per_unit).toFixed(2)}gm
       <br />
-      <b>BOM Factory Code</b> : {data?.bom_factory_code}
+      <b>BOM Factory Code</b> : <span>{data?.bom_factory_code} </span>
     </p>
   );
 };
