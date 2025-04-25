@@ -28,7 +28,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   };
 
   const [sizeTable, setSizeTable] = useState([initialState]);
-  const [cartProductsData, setCartProductsData] = useState({
+  const [cartProductsData, setCartProductsData] = useState<any>({
     wastage: '',
     remark: '',
     rejection_note: '',
@@ -68,6 +68,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     });
 
     setSizeTable(updatedSizeTable);
+  };
+  const handleCartData = (field: string, value: any) => {
+    setCartProductsData((prev: any) => ({ ...prev, [field]: value }));
   };
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
@@ -159,25 +162,31 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {Array.isArray(data?.item_characteristics?.Size) &&
-            data?.item_characteristics?.Size?.length > 0 &&
-            [...data.item_characteristics?.Size]
-              .sort((a: any, b: any) => a - b) // Adjust sorting logic as needed
-              .map((size: any, index: number) => {
-                const isActive = sizeTable.some((item: any) => item?.size === size.toString());
-                return (
-                  <button
-                    key={index}
-                    className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
-                    onClick={() => handleSizeButtonClick(size)}
-                  >
-                    {size}
-                  </button>
-                );
-              })}
-          <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
-            Add Custom Size
-          </button>
+          {Array.isArray(data?.item_characteristics?.Size) && data?.item_characteristics?.Size.length > 0 && (
+            <>
+              {[...data.item_characteristics.Size]
+                .filter((size: any) => typeof size === 'number')
+                .sort((a: any, b: any) => a - b)
+                .map((size: number, index: number) => {
+                  const isActive = sizeTable.some((item: any) => item?.size === size.toString());
+                  return (
+                    <button
+                      key={index}
+                      className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
+                      onClick={() => handleSizeButtonClick(size)}
+                    >
+                      {size}
+                    </button>
+                  );
+                })}
+
+              {data.item_characteristics.Size.includes('custom_size') && (
+                <button className={`btn btn-link theme-blue mt-3 ${styles.tableFontSize}`} onClick={handleAddRow}>
+                  Add Custom Size
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
       <div className="mb-2">
@@ -275,6 +284,72 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             onChange={(e) => setCartProductsData({ ...cartProductsData, rejection_note: e.target.value })}
           ></textarea>
         )}
+      </div>
+      <div className="row">
+        {Object.entries(data?.item_characteristics || {})
+          .filter(([key]) => key.toLowerCase() !== 'size') // skip "Size"
+          .map(([key, config]: [string, any], index: number) => {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+            const value = cartProductsData?.[key] || '';
+
+            return (
+              <div key={index} className="col-12">
+                {/* <label className="form-label">{label}</label> */}
+
+                {Array.isArray(config) ? (
+                  // Handle dropdown for 'select'
+                  <select name={key} className="form-select" value={value} onChange={(e) => handleInputChange(index, e.target.value)}>
+                    <option value="">Select {label}</option>
+                    {config.map((option: string, idx: number) => (
+                      <option key={idx} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                ) : config === 'textfield' ? (
+                  <textarea
+                    name={key}
+                    value={value}
+                    placeholder={key}
+                    className={`p-2 ms-1 border w-100 ${styles.tableFontSize}`}
+                    onChange={(e) => handleCartData(key, e.target.value)}
+                  ></textarea>
+                ) : config === 'checkbox' ? (
+                  <div className="form-check">
+                    <input
+                      name={key}
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={value}
+                      onChange={(e) => handleCartData(key, e.target.checked)}
+                    />
+                    <label className="form-check-label">Check</label>
+                  </div>
+                ) : config === 'buttons' ? (
+                  <div className="d-flex flex-wrap gap-2">
+                    {['Option 1', 'Option 2', 'Option 3'].map((btn, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        className={`btn btn-sm ${value === btn ? 'btn-primary' : 'btn-outline-primary'}`}
+                        onClick={() => handleCartData(key, btn)}
+                      >
+                        {btn}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <input
+                    name={key}
+                    type="text"
+                    className="form-control"
+                    value={value}
+                    onChange={(e) => handleCartData(key, e.target.value)}
+                  />
+                )}
+              </div>
+            );
+          })}
       </div>
       {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
