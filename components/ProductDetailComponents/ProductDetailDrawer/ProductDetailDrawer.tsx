@@ -71,6 +71,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
     setTimeout(() => {
       setProductDetail({});
       setVariantsData([]);
+      setAttributesData([]);
     }, 400);
   };
   const imageLoader = ({ src, width, quality }: any) => {
