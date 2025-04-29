@@ -367,72 +367,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
             );
           })}
       </div>
-      <div className="row">
-        {Object.entries(data?.item_characteristics || {})
-          .filter(([key]) => key.toLowerCase() !== 'size') // skip "Size"
-          .map(([key, config]: [string, any], index: number) => {
-            const label = key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
-            const value = cartProductsData?.[key] || '';
 
-            return (
-              <div key={index} className="col-12">
-                {/* <label className="form-label">{label}</label> */}
-
-                {Array.isArray(config) ? (
-                  // Handle dropdown for 'select'
-                  <select name={key} className="form-select" value={value} onChange={(e) => handleInputChange(index, e.target.value)}>
-                    <option value="">Select {label}</option>
-                    {config.map((option: string, idx: number) => (
-                      <option key={idx} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ) : config === 'textfield' ? (
-                  <textarea
-                    name={key}
-                    value={value}
-                    placeholder={key}
-                    className={`p-2 ms-1 border w-100 ${styles.tableFontSize}`}
-                    onChange={(e) => handleCartData(key, e.target.value)}
-                  ></textarea>
-                ) : config === 'checkbox' ? (
-                  <div className="form-check">
-                    <input
-                      name={key}
-                      className="form-check-input"
-                      type="checkbox"
-                      checked={value}
-                      onChange={(e) => handleCartData(key, e.target.checked)}
-                    />
-                    <label className="form-check-label">Check</label>
-                  </div>
-                ) : config === 'buttons' ? (
-                  <div className="d-flex flex-wrap gap-2">
-                    {['Option 1', 'Option 2', 'Option 3'].map((btn, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        className={`btn btn-sm ${value === btn ? 'btn-primary' : 'btn-outline-primary'}`}
-                        onClick={() => handleCartData(key, btn)}
-                      >
-                        {btn}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <input
-                    name={key}
-                    type="text"
-                    className="form-control"
-                    value={value}
-                    onChange={(e) => handleCartData(key, e.target.value)}
-                  />
-                )}
-              </div>
-            );
-          })}
-      </div>
       {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
