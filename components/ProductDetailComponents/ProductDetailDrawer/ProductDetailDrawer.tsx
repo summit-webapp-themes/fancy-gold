@@ -69,6 +69,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     setTimeout(() => {
       setProductDetail({});
       setVariantsData([]);
+      setAttributesData([]);
     }, 400);
   };
   const imageLoader = ({ src, width, quality }: any) => {
