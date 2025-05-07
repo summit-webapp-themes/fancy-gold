@@ -48,7 +48,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
   };
   const getProductDetailData = async (productName: string, slug: string) => {
     const requestParams = {
-      item: productName,
+      item: slug,
       slug: slug,
       currency: 'INR',
     };
