@@ -54,7 +54,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     const productDetailData = await fetchProductDetailData(SUMMIT_APP_CONFIG, requestParams, TokenFromStore?.token);
     if (productDetailData?.data?.message?.msg === 'Success') {
       if (productDetailData?.data?.message?.data?.length !== 0) {
-        setProductDetail(productDetailData?.data?.message?.data[0]);
+        setProductDetail(productDetailData?.data?.message?.data);
         setDetailLoading(false);
       } else {
         setProductDetail({});
