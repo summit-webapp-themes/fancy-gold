@@ -4,6 +4,7 @@ import { Offcanvas } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import fetchProductDetailData from '../../../services/api/product-detail-page-apis/get-product-detail';
 import fetchProductVariant from '../../../services/api/product-detail-page-apis/get-product-variants';
+import noImage from '../../../public/assets/images/no_image.png';
 import { CONSTANTS } from '../../../services/config/app-config';
 import { get_access_token } from '../../../store/slices/auth/token-login-slice';
 import NoDataFound from '../../NoDataFound';
@@ -63,6 +64,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
     }
     setDetailLoading(false);
   };
+
   const onHide = () => {
     handleClose();
     setErrorMessageMsg('');
@@ -109,7 +111,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
             <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
             <div className="mt-2">
               <Image
-                src={productDetail?.image}
+                src={productDetail?.image ? productDetail?.image : noImage}
                 alt="product-image"
                 className="w-100 img-fluid"
                 width={100}
