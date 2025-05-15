@@ -116,7 +116,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
           </Link>
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              {/* {data?.bom_factory_code ? (
+              {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
               ) : null}
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
@@ -125,7 +125,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
                 data?.level_2_category === 'MANGALSUTRA (92)' ||
                 data?.item_group === 'STONE CHAINS') && (
                 <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
-              )} */}
+              )} 
               {data?.item_description?.length > 0 &&
                 data?.item_description.map((item: any, index: any) => (
                   <Card.Text key={index} className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>
