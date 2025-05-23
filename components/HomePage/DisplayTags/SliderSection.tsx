@@ -35,7 +35,7 @@ const SliderSection = ({ data }: any) => {
   }, []);
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: data.value?.length > 1,
     slidesPerRow: 1,
     slidesToShow: data.value?.length > 4 ? 4 : data.value?.length,
     slidesToScroll: 1,

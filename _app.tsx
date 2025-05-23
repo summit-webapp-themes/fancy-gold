@@ -20,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
+import Routes from '../routes/Routes';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -43,12 +44,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                 pauseOnHover
               />
               {/* Below condition is to check whether give complete access of site to guest user or user can access site only after authentication */}
-              {CONSTANTS.ALLOW_GUEST_TO_ACCESS_SITE_EVEN_WITHOUT_AUTHENTICATION ? (
-                <Component {...pageProps} />
-              ) : (
-                <ProtectedRoute>
+              {CONSTANTS.ALLOW_GUEST_TO_ACCESS_SITE_EVEN_WITHOUT_AUTHENTICATION ? ( 
                   <Component {...pageProps} />
-                </ProtectedRoute>
+              ) : (
+               <Routes>
+                 <Component {...pageProps} />
+               </Routes>
               )}
             </Layout>
           </ErrorBoundary>
