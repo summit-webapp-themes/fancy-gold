@@ -13,7 +13,7 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
-import noImage from '../../../public/assets/images/no_image.png';
+// import noImage from '../../../public/assets/images/no_image.png';
 
 const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
