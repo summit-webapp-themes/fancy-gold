@@ -41,6 +41,9 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                 <th>
                   Inch Qty<span className="text-danger">*</span>
                 </th>
+                <th>
+                  Color<span className="text-danger">*</span>
+                </th>
                 <th></th>
               </tr>
             </thead>
@@ -91,6 +94,15 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                         />
                       </React.Fragment>
                     ))}
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name={`color${index}`}
+                      className={`w-100 px-1 ${styles.input_type_number}`}
+                      value={row.color}
+                      onChange={(e) => handleChangeArrayCustom(e, index, 'color')}
+                    />
                   </td>
 
                   <td className="text-end">
