@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../../../styles/components/productCard.module.scss';
 const ProductCode = ({ data }: any) => {
   return (
+
     <p className={styles.productCode}>
       <b>Product Code</b> : {data?.name}
       <br />

@@ -22,6 +22,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
   const handleRenderIcon = () => {
+    const socketData = { page_type: 'Product', page_id: data?.slug };
     {
       wishlistData?.length > 0 &&
         wishlistData?.map((item: any, index: number) => {
@@ -33,7 +34,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     if (!wishProducts) {
       return (
         <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          <FaRegHeart onClick={() => handleAddToWishList(data)} />
+          <FaRegHeart onClick={() => handleAddToWishList(data, socketData)} />
         </span>
       );
     } else {
