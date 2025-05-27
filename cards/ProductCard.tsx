@@ -120,7 +120,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
               ) : null}
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text> */}
-              <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
+              {/* <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text> */}
               {/* {(data?.level_2_category === 'MANGALSUTRA (75)' ||
                 data?.level_2_category === 'MANGALSUTRA (92)' ||
                 data?.item_group === 'STONE CHAINS') && (
