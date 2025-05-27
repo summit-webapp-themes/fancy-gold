@@ -9,10 +9,13 @@ import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
+import { FaEye } from 'react-icons/fa';
+import { useState } from 'react';
 
-const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, handlePreviewModal }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
+  const [isHovered, setIsHovered] = useState(false);
   let wishProducts: any;
   let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
@@ -101,7 +104,13 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-        <Link href={`${data?.url}`} className="text-decoration-none text-dark">
+        <div
+          className="text-decoration-none text-dark"
+          onClick={() => handlePreviewModal(data)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {data?.image && data?.image !== null}
           <Image
             loader={data.image !== null ? imageLoader : undefined}
             src={data.image !== null ? data.image : noImage}
@@ -112,7 +121,12 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
             style={{ width: '100%', height: '100%' }}
             priority={true}
           />
-        </Link>
+          {isHovered && (
+            <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center">
+              <FaEye size={24} className="text-white" />
+            </div>
+          )}
+        </div>
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
@@ -121,24 +135,22 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
           </Link>
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              {data?.bom_factory_code ? (
+              {/* {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
               ) : null}
-
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text>
               <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text>
-              {(data?.level_2_category === 'MANGALSUTRA' ||
-                data?.level_2_category === 'IMP PREMIUM' ||
+              {(data?.level_2_category === 'MANGALSUTRA (75)' ||
+                data?.level_2_category === 'MANGALSUTRA (92)' ||
                 data?.item_group === 'STONE CHAINS') && (
-                <>
-                  <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
-                  {data?.bom_factory_code !== '' && data?.bom_factory_code !== null && (
-                    <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>
-                      BOM Code: {data?.bom_factory_code}
-                    </Card.Text>
-                  )}
-                </>
-              )}
+                <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
+              )} */}
+              {data?.item_description?.length > 0 &&
+                data?.item_description.map((item: any, index: any) => (
+                  <Card.Text key={index} className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>
+                    {item?.label_name}: {item.value ? item.value : '--'}
+                  </Card.Text>
+                ))}
             </div>
             <div>{handleRenderAddToCartBtn()}</div>
           </div>

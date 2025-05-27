@@ -48,7 +48,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
   };
   const getProductDetailData = async (productName: string, slug: string) => {
     const requestParams = {
-      item: productName,
+      item: slug,
       slug: slug,
       currency: 'INR',
     };
@@ -56,7 +56,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
     const productDetailData = await fetchProductDetailData(SUMMIT_APP_CONFIG, requestParams, TokenFromStore?.token);
     if (productDetailData?.data?.message?.msg === 'Success') {
       if (productDetailData?.data?.message?.data?.length !== 0) {
-        setProductDetail(productDetailData?.data?.message?.data[0]);
+        setProductDetail(productDetailData?.data?.message?.data);
         setDetailLoading(false);
       } else {
         setProductDetail({});
@@ -71,6 +71,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
     setTimeout(() => {
       setProductDetail({});
       setVariantsData([]);
+      setAttributesData([]);
     }, 400);
   };
   const imageLoader = ({ src, width, quality }: any) => {

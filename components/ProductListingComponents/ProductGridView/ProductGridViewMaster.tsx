@@ -12,6 +12,7 @@ const ProductGridViewMaster = ({
   handleShow,
   wishlistData,
   cartData,
+  handlePreviewModal,
 }: any) => {
   const { query } = useRouter();
 
@@ -42,6 +43,7 @@ const ProductGridViewMaster = ({
           handleShow={handleShow}
           wishlistData={wishlistData}
           cartData={cartData}
+          handlePreviewModal={handlePreviewModal}
         />
       );
     }
