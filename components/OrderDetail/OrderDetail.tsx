@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaPrint } from 'react-icons/fa';
 import useOrderDetailHook from '../../hooks/OrderDetailHook/useOrderDetailHook';
@@ -6,6 +6,7 @@ import OrderDetailCard from '../../cards/OrderDetailCard';
 import orderDetailStyles from '../../styles/components/orderDetail.module.scss';
 import CartSkeleton from '../Cart/CartSkeleton';
 import ApiErrorPage from '../ApiErrorPage';
+import { Spinner } from 'react-bootstrap';
 
 const OrderDetail = () => {
   const { query } = useRouter();
@@ -19,6 +20,27 @@ const OrderDetail = () => {
   const printPage = () => {
     window.print();
   };
+  const [isReorderLoading, setIsReorderLoading] = useState(false);
+  const [isCancelOrderLoading, setIsCancelOrderLoading] = useState(false);
+
+  const handleReorderFun = async (cust_name: any) => {
+    if (isReorderLoading) return;
+    setIsReorderLoading(true);
+    try {
+      await handleReorder(cust_name);
+    } finally {
+      setIsReorderLoading(false);
+    }
+  };
+  const handleCancelOrderFun = async () => {
+    if (isCancelOrderLoading) return true;
+    setIsCancelOrderLoading(true);
+    try {
+      await handleCancelOrder();
+    } finally {
+      setIsCancelOrderLoading(false);
+    }
+  };
 
   const handleDataRendering: any = () => {
     if (isLoading) {
@@ -31,27 +53,34 @@ const OrderDetail = () => {
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className="container mt-3">
-          <div className="container mt-4 mb-2" id="section-to-print">
+        <div className="mt-3">
+          <div className=" mt-4 mb-2" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
             </div>
             <div className="row">
-              <div className="col-6 p-0">
-                <div className={`${orderDetailStyles.order_block} `}>
-                  <p className="cust-name">Customer Name : {orderData.cust_name}</p>
-                </div>
-              </div>
-              <div className="col-6 text-end">
+              <div className="offset-lg-6 col-12 col-lg-6 text-end">
                 <div className="d-flex justify-content-end align-items-center">
                   <div className="mx-2">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorder(orderData.cust_name)}>
-                      Reorder
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorderFun(orderData.cust_name)}>
+                      {isReorderLoading ? (
+                        <span className="mx-3 ps-1">
+                          <Spinner animation="border" size="sm" />
+                        </span>
+                      ) : (
+                        <span>Reorder</span>
+                      )}
                     </button>
                   </div>
                   <div className="mx-2">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
-                      Cancel
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrderFun}>
+                      {isCancelOrderLoading ? (
+                        <span className="mx-3 ps-1">
+                          <Spinner animation="border" size="sm" />
+                        </span>
+                      ) : (
+                        <span>Cancel</span>
+                      )}
                     </button>
                   </div>
                   <div className={`mx-2 ${orderDetailStyles.print_order} `}>
@@ -65,13 +94,13 @@ const OrderDetail = () => {
             {orderData.data?.length > 0 &&
               orderData.data.map((item: any) => (
                 <div
-                  className="container m-top content-prev"
+                  className="m-top content-prev"
                   style={{
                     marginTop: '5px',
                     pageBreakBefore: 'always',
                   }}
                 >
-                  <h2 className={`pt-4 ${orderDetailStyles.categoryLabel} `}>
+                  <h2 className={`${orderDetailStyles.categoryLabel} `}>
                     {item.level_2_category} | Total Weight : {item.level_2_total_weight.toFixed(2)}
                   </h2>
 
@@ -100,8 +129,8 @@ const OrderDetail = () => {
                               <div className="row">
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
-                                <div className="col-1  text-start">Note</div>
-                                <div className="col-1  text-center">Status</div>
+                                {/* <div className="col-1  text-start">Note</div> */}
+                                <div className="col-2  text-center">Status</div>
                                 <div className="col-2"></div>
                               </div>
                             </div>
@@ -150,7 +179,7 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="container mb-4 content-prev">
+          <div className="mb-4 content-prev">
             <div className="row border">
               <div className="col-6 text-start p-2">
                 <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
@@ -171,7 +200,7 @@ const OrderDetail = () => {
 
   return (
     <>
-      <div className="container">{handleDataRendering()}</div>
+      <div className="container-xl">{handleDataRendering()}</div>
     </>
   );
 };
