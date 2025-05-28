@@ -30,7 +30,7 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
           onChange={(e) => handleSortBy(e.target.value)}
         >
           <option value="latest" selected>
-            Latest Produts
+            Latest Products
           </option>
           <option value="oldest">Oldest Products</option>
           <option value="sequence">Sequence</option>

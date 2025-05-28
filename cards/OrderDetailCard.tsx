@@ -125,7 +125,7 @@ const OrderDetailCard = ({
                   <div className="col-3 text-center">
                     {[
                       {
-                        label: 'Ready to Dispatch',
+                        label: 'Completed',
                         className: orderDetailStyles.readyToDispatch,
                         onClick: () => handleReadyToDispatch(name),
                       },
