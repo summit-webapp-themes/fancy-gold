@@ -12,7 +12,7 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
   };
   return (
     <>
-      <div className="d-flex justify-content-center ">
+      <div className="d-flex flex-wrap justify-content-start gap-1 gap-sm-0 ">
         <select
           className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}
           defaultValue={colour}

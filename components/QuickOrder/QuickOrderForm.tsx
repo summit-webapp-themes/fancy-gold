@@ -101,10 +101,10 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
       <div className="text-center mt-5" style={{ height: '40px' }}>
         <Purity />
       </div>
-      <div className="mt-4 row justify-content-center">
-        <div className="col-lg-10 col-12 mx-auto">
-          <div className="row justify-content-center">
-            <div className="col-lg-3 col-md-3 col-6">
+      <div className="mt-4 row m-0">
+        <div className="col-lg-10 col-12">
+          <div className="row">
+            <div className="col-lg-3 col-md-3 col-6 px-2">
               <input
                 type="text"
                 className="form-control"
@@ -117,10 +117,10 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
                   }
                 }}
               />
-              <p style={{ fontSize: '12px', color: '#f00' }}>*Add customer name first and press Enter</p>
+              <p style={{ fontSize: '12px', color: '#f00', margin: 0 }}>*Add customer name first and press Enter</p>
             </div>
 
-            <div className="col-lg-3 col-md-3 col-6">
+            <div className="col-lg-3 col-md-3 col-6 px-2">
               <SearchableDropdown
                 dropdownData={refCodesList}
                 inputValue={inputValue}
@@ -129,7 +129,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               />
             </div>
 
-            <div className="col-lg-3 col-md-3 col-12">
+            <div className="col-lg-3 col-md-3 col-12 mt-2 mt-md-0 px-2">
               <input
                 type="text"
                 className="form-control"
@@ -144,12 +144,10 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               />
             </div>
 
-            <div className="col-lg-1 col-md-1 col-6 mt-lg-0 mt-2 text-center">
+            <div className="d-flex justify-content-start align-items-start col-lg-3 col-md-3 col-12 text-center mt-2 mt-md-0 px-2">
               <button type="button" className="btn btn-primary mx-1" onClick={handleSaveBtn}>
                 Save
               </button>
-            </div>
-            <div className="col-lg-1 col-md-1 col-6 mt-lg-0 mt-2 text-center">
               <button type="button" className="btn btn-primary mx-1" onClick={handleSubmitBtn}>
                 Submit
               </button>

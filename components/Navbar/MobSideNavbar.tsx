@@ -5,6 +5,8 @@ import { NavDropdown } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import stylesMobnavbar from '../../styles/components/mobNavbar.module.scss';
 import stylesNavbar from '../../styles/components/navbar.module.scss';
+import { set } from 'react-ga';
+import { setIn } from 'formik';
 
 const MobSideNavbar = ({
   navbarData,
@@ -20,22 +22,33 @@ const MobSideNavbar = ({
   isOpen,
   toggleSidebar,
 }: any) => {
-  const [arrowIndex, setArrowIndex] = useState<number | null>(null);
+  const [arrowIndex, setArrowIndex] = useState<string | null>(null);
   const [indexVal, setIndexVal] = useState<number | null>(null);
   const [rotatedIndex, setRotatedIndex] = useState<number | null>(null);
 
   const onClickCloseNav = () => {
-    setClicks(!clicks);
+    // setClicks(!clicks);
+    setIndexVal(null);
+    setArrowIndex(null);
     toggleSidebar(false);
   };
 
   const mobileHandle = (i: any) => {
     if (indexVal === i) {
       setIndexVal(null);
+      setArrowIndex(null);
     } else {
       setIndexVal(i);
     }
   };
+
+  const handleSubItemClick = (index: number, subIndex: number) => {
+    if (arrowIndex === `${index}-${subIndex}`) {
+      setArrowIndex(null);
+    } else {
+      setArrowIndex(`${index}-${subIndex}`);
+    }
+  }
 
   const handleCaretClick = (index: number) => {
     if (rotatedIndex === index) {
@@ -65,9 +78,8 @@ const MobSideNavbar = ({
                         width="16"
                         height="16"
                         fill="currentColor"
-                        className={`bi ${stylesMobnavbar.bi_chevron_right} ${rotatedIndex === index ? `${stylesMobnavbar.rotate}` : ''}`}
+                        className={`bi ${stylesMobnavbar.bi_chevron_right} ${indexVal === index ? `${stylesMobnavbar.rotate}` : ''}`}
                         viewBox="0 0 16 16"
-                        onClick={() => handleCaretClick(index)}
                       >
                         <path d="M11.854 7.646a.5.5 0 0 0 0-.708L8.707 3.5a.5.5 0 0 0-.854.354v7a.5.5 0 0 0 .854.354l3.147-3.5z" />
                       </svg>
@@ -88,11 +100,23 @@ const MobSideNavbar = ({
                           }}
                           legacyBehavior
                         >
-                          <a className="text-dark d-flex justify-content-around">
+                          <a href='#' className="text-dark d-flex justify-content-around" onClick={() => handleSubItemClick(index, subIndex)}>
                             <span className="w-75">{subItem?.label}</span>
+                            <span>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className={`bi ${stylesMobnavbar.bi_chevron_right} ${arrowIndex === `${index}-${subIndex}` ? `${stylesMobnavbar.rotate}` : ''}`}
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M11.854 7.646a.5.5 0 0 0 0-.708L8.707 3.5a.5.5 0 0 0-.854.354v7a.5.5 0 0 0 .854.354l3.147-3.5z" />
+                              </svg>
+                            </span>
                           </a>
                         </Link>
-                        <ul style={{ display: arrowIndex === subIndex ? 'block' : 'none' }}>
+                        <ul style={{ display: arrowIndex === `${index}-${subIndex}` ? 'block' : 'none' }}>
                           {subItem?.values?.map((subSubItem: any, subSubIndex: number) => (
                             <li key={subSubIndex}>
                               <Link
@@ -107,7 +131,7 @@ const MobSideNavbar = ({
                                 }}
                                 legacyBehavior
                               >
-                                <a className="text-dark" onClick={onClickCloseNav}>
+                                <a className="text-dark d-flex justify-content-start ps-5" onClick={onClickCloseNav}>
                                   <span className="pt-2">{subSubItem?.label}</span>
                                 </a>
                               </Link>

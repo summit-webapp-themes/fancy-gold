@@ -15,7 +15,7 @@ const ProductsGridView = ({
   return (
     <>
       {productListingData.map((item: any, index: any) => (
-        <div key={index} className="col-sm-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-4">
+        <div key={index} className="col-md-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-4">
           <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} cartData={cartData} />
         </div>
       ))}
@@ -23,7 +23,6 @@ const ProductsGridView = ({
         previousLabel={'Prev'}
         nextLabel={'Next'}
         pageCount={productListTotalCount / 12}
-        pageRangeDisplayed={3}
         onPageChange={handlePageClick}
         containerClassName={`${paginationStyle.paginationBttns}`}
         previousLinkClassName={pageOffset === 0 ? paginationStyle.paginationDisabled : paginationStyle.previousBttn}

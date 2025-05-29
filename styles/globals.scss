@@ -192,3 +192,14 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+.form-check-input:focus  {
+  box-shadow: none;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+}
+.form-check-input:active {
+  border: 1px solid #e77600;
+}
+.form-check-input:checked {
+  background-color: #e77600;
+  border: 1px solid #e77600;
+}

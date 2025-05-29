@@ -138,10 +138,10 @@ const CartListing = () => {
       return (
         <>
           <div className="border p-3">
-            <div className="d-flex justify-content-between">
-              <div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Customer Name: </label>
+            <div className="row ">
+              <div className=' col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-md-4 px-0 px-md-3">Customer Name: </label>
 
                   <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
                   <div className="col-md-1"></div>
@@ -149,13 +149,13 @@ const CartListing = () => {
                     Update
                   </button>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Order Purity:</label>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-md-4 px-0 px-md-3">Order Purity:</label>
 
                   <span className="col-md-8">{updatedPurity}</span>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-md-4">Update Purity:</label>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-md-4 px-0 px-md-3">Update Purity:</label>
                   <select
                     className=" col-md-5"
                     // value={selectedPurity}
@@ -179,7 +179,7 @@ const CartListing = () => {
                     Update
                   </button>
                 </div>
-                <div className="mt-2 row">
+                <div className="mt-2 mx-0 row">
                   <label className="col-md-4">Delivery Date: </label>
                   <input
                     type="date"
@@ -190,7 +190,8 @@ const CartListing = () => {
                   />
                 </div>
               </div>
-              <div className={`${styles.place_order_container}`}>
+              <div className='col-0 col-md-1 col-lg-3 col-xl-4 col-xxl-5'></div>
+              <div className={`${styles.place_order_container} col-md-3 col-lg-2 mt-3 mt-md-0`}>
                 <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
                   Place Order
                 </button>
@@ -247,7 +248,7 @@ const CartListing = () => {
               ))}
             <hr />
             <div className="d-flex justify-content-between">
-              <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
+              <textarea className="w-50 me-3 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
               <div className={`${styles.place_order_container}`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
                 <div className="d-flex justify-content-end w-100">
@@ -283,7 +284,7 @@ const CartListing = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container-lg">
       <h2 className="theme-blue text-center my-3">My Shopping Cart</h2>
       {handleDataRendering()}
     </div>

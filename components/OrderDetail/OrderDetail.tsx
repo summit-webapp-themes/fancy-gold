@@ -31,7 +31,7 @@ const OrderDetail = () => {
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className="container mt-3">
+        <div className="container-lg mt-3">
           <div className="container mt-4 mb-2" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
@@ -96,7 +96,7 @@ const OrderDetail = () => {
                             className={`row black border content-prev ${orderDetailStyles.table_header}`}
                             style={{ width: 'calc(100% + 23px)' }}
                           >
-                            <div className="col-7 border-bottom border-top p-0 col-bg">
+                            <div className="col-md-7 border-bottom border-top p-0 col-bg">
                               <div className="row">
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
@@ -105,7 +105,7 @@ const OrderDetail = () => {
                                 <div className="col-2"></div>
                               </div>
                             </div>
-                            <div className="col-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
+                            <div className="col-md-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
                           </div>
                         </div>
                       </div>
@@ -171,7 +171,7 @@ const OrderDetail = () => {
 
   return (
     <>
-      <div className="container">{handleDataRendering()}</div>
+      <div className="container-lg">{handleDataRendering()}</div>
     </>
   );
 };

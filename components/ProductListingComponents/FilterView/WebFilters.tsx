@@ -2,6 +2,7 @@ import { FaAlignJustify } from 'react-icons/fa6';
 import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
 import filterStyles from '../../../styles/components/filterSidebar.module.scss';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
+import { FaSearch } from 'react-icons/fa';
 const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
   const purity = localStorage.getItem('localPurity') || '22KT';
@@ -30,7 +31,7 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
                   onChange={handleFilterSearchFun}
                 />
                 <span className="input-group-text" id="inputGroup-sizing-sm" onClick={handleFilterSearchBtn}>
-                  <FaAlignJustify />
+                  <FaSearch />
                 </span>
               </div>
               {filtersData?.filters?.length > 0 &&
