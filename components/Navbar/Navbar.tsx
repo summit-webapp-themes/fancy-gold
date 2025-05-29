@@ -125,14 +125,14 @@ const Navbar = () => {
                 </div>
               )}
               <div className={` ${stylesNavbar.inlineList} `}>
-                <ul className={`nav  list-inline d-flex justify-content-end ${stylesNavbar.mobnavbar}`}>
+                <ul className={`nav  list-inline d-flex justify-content-end gap-2 gap-md-0 ${stylesNavbar.mobnavbar}`}>
                   <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
-                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
+                          <span className={` theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>
@@ -143,7 +143,7 @@ const Navbar = () => {
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
-                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
+                          <span className={` theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
                       </a>
                     </Link>

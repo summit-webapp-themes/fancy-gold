@@ -92,22 +92,20 @@
   }
 }
 @media (max-width: 767px) {
+  .inlineList {
+    padding-right: 8px;
+  }
+
   .list_inline_item {
     margin-top: 10px;
-    width: 30px;
+    width: fit-content;
+    min-width: 50px;
   }
   .badge {
-    bottom: 17px !important;
-    right: -15px !important;
+    right: 0px !important;
   }
   .mobnavbar {
     justify-content: end !important;
-  }
-  .list_inline_item_cart {
-    padding-right: 2.5rem !important;
-  }
-  .list_inline_item_wishlist {
-    padding-right: 1.5rem !important;
   }
 }
 

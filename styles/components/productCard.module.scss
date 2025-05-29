@@ -33,7 +33,7 @@
   background-color: #184f2f;
 }
 .icon_margin {
-  margin-left: 0.7rem;
+  margin-left: 0.5rem;
 }
 .add_to_cart_btn:hover {
   background-color: #1a1a49;
@@ -62,6 +62,7 @@
   font-size: 22px;
   top: -8px !important;
   cursor: pointer;
+  z-index: 1;
 }
 
 .product_code_img {
@@ -75,12 +76,11 @@
   transform: scale(1.4); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .content_wrap {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  padding: 10px 8px !important;
   text-align: left;
 }
 .product_content_wrap {
-  height: 80px;
+  // height: 80px;
 }
 .product_card:hover {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);

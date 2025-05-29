@@ -51,7 +51,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
   });
 
   return (
-    <div className="container">
+    <div className="container-lg">
       <h4 className="text-center my-4 fw-bold">
         {heading
           ?.split('-')

@@ -52,9 +52,9 @@ any) => {
     <>
       <div className="row mt-4">
         <div className="col-md-9">
-          <p className="fs-14">Bunch Orders Details</p>
+          <p className="fs-14 mb-2 mb-md-3">Bunch Orders Details</p>
         </div>
-        <div className="col-md-3 d-flex justify-content-end h-75">
+        <div className="col-md-3 d-flex justify-content-start justify-content-md-end h-75 mb-3">
           <button className={styles.btn_save_bulk_order} onClick={addBunchOrderRow}>
             Add More
           </button>
@@ -62,7 +62,7 @@ any) => {
       </div>
       <div className={styles.table_container}>
         <div className={styles.table_wrapper}>
-          <table className="table table-bordered ">
+          <table className="table table-bordered m-0">
             <thead className={styles.fixed_header}>
               <tr>
                 <th className="">
