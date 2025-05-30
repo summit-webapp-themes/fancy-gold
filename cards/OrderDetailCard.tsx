@@ -147,7 +147,7 @@ const OrderDetailCard = ({
                   <tr>
                     <th>Color</th>
                     <th>Size(Inch)</th>
-                    <th>Ready Qty</th>
+                    <th>Dispatch Qty</th>
                     <th>Qty</th>
                     <th>Weight(gm)</th>
                     <th>status</th>
