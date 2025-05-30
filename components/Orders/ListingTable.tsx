@@ -80,7 +80,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
                   className={stylesListing.table_header}
                   onClick={() => handleSort(headerItem?.field_name?.toLowerCase().replace(/ /g, '_'))}
                 >
-                  <div className="d-flex align-items-center justify-content-center">
+                  <div className="d-flex align-items-center justify-content-start">
                     {headerItem?.header}
                     {index !== 0 && (
                       <span className="ms-2" style={{ cursor: 'pointer' }}>
@@ -103,7 +103,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
         <tbody>
           {sortedData?.length > 0 &&
             sortedData.map((data: any, index: number) => (
-              <tr className={`text-center ${stylesListing.table_row}`} key={index}>
+              <tr className={`text-start ${stylesListing.table_row}`} key={index}>
                 <td>
                   <input type="checkbox" onClick={() => handleSelectOrder(data?.name)} />
                 </td>

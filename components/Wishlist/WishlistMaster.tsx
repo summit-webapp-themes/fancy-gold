@@ -40,7 +40,7 @@ const WishlistMaster = () => {
         <div className="row">
           {wishlistData?.length > 0 &&
             wishlistData?.map((item: any, index: number) => (
-              <div key={index} className="col-sm-6 col-md-4 col-xl-3 col-xxl-3 text-center mb-4 px-3 d-flex d-sm-block justify-content-center">
+              <div key={index} className="col-6 col-md-4 col-xl-3 col-xxl-3 text-center mb-4 px-2 px-sm-3">
                 <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} cartData={cartData} />
               </div >
             ))}

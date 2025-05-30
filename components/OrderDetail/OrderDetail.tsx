@@ -63,8 +63,9 @@ const OrderDetail = () => {
           </div>
           <div className="content-prev">
             {orderData.data?.length > 0 &&
-              orderData.data.map((item: any) => (
+              orderData.data.map((item: any, i: number) => (
                 <div
+                  key={`${item.level_2_category}-${i}`}
                   className="container m-top content-prev"
                   style={{
                     marginTop: '5px',
