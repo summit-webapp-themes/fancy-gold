@@ -38,7 +38,7 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
     return Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]);
   });
   return (
-    <div className="container-fluid">
+    <div className="container-lg">
       <h2 className="theme-blue text-center mt-4">{title}</h2>
       <div className="mt-3 ">
         <OrderFilters

@@ -145,7 +145,7 @@ const CartListing = () => {
 
                   <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
                   <div className="col-md-1"></div>
-                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
+                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2 mt-2 mt-md-0`}>
                     Update
                   </button>
                 </div>
@@ -174,13 +174,13 @@ const CartListing = () => {
                   <div className="col-md-1"></div>
                   <button
                     onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
-                    className={`col-md-2 ${styles.update_btn}`}
+                    className={`col-md-2 mt-2 mt-md-0 ${styles.update_btn}`}
                   >
                     Update
                   </button>
                 </div>
                 <div className="mt-2 mx-0 row">
-                  <label className="col-md-4">Delivery Date: </label>
+                  <label className="col-md-4 px-0 px-md-3">Delivery Date: </label>
                   <input
                     type="date"
                     className="col-md-5"
@@ -209,10 +209,9 @@ const CartListing = () => {
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
-                  <div className="row">
                     {category?.orders?.length > 0 &&
                       category?.orders?.map((order: any, orderIndex: any) => (
-                        <>
+                        <div key={orderIndex} className="row">
                           <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
                             <CartProductDetail
                               data={order}
@@ -241,9 +240,8 @@ const CartListing = () => {
                               <RxCross2 />
                             </button>
                           </div>
-                        </>
+                        </div>
                       ))}
-                  </div>
                 </div>
               ))}
             <hr />
