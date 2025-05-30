@@ -147,6 +147,7 @@ const OrderDetailCard = ({
                   <tr>
                     <th>Color</th>
                     <th>Size(Inch)</th>
+                    <th>Dispatch Qty</th>
                     <th>Qty</th>
                     <th>Weight(gm)</th>
                     <th>status</th>
@@ -157,6 +158,7 @@ const OrderDetailCard = ({
                         <tr key={index}>
                           <td>{data.colour}</td>
                           <td>{data.size} inch</td>
+                          <td>{data.ready_quantity}</td>
                           <td>{data.qty}</td>
                           <td className="text-right">{data.weight}gm</td>
                           <td className="text-right">{data?.custom_oms_status}</td>
