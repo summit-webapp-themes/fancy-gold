@@ -54,7 +54,7 @@ const ProductListingMaster = () => {
       <section className="listing-page ">
         <HorizontalFilter sortBy={sortBy} handleSortBy={handleSortBy} />
         <div className="container-fuild w-100">
-          <div className="row ps-lg-5 pe-lg-4 ps-2 w-100">
+          <div className="row m-0 ps-lg-5 pe-lg-4 ps-0 w-100">
             <div className="col-12 col-sm-4 col-md-4 col-lg-2">
               <WebFilters
                 searchFilterValue={searchFilterValue}

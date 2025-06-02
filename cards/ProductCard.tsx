@@ -93,7 +93,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
     }
   };
   return (
-    <Card className={` ${ProductCardStyles.product_card} pt-2 px-1 px-sm-4`}>
+    <Card className={` ${ProductCardStyles.product_card}`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
         <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">

@@ -37,24 +37,24 @@ const OrderDetail = () => {
               <h2>Order</h2>
             </div>
             <div className="row">
-              <div className="col-6 p-0">
+              <div className="col-sm-6 p-0 mb-2 mb-sm-0">
                 <div className={`${orderDetailStyles.order_block} `}>
                   <p className="cust-name">Customer Name : {orderData.cust_name}</p>
                 </div>
               </div>
-              <div className="col-6 text-end">
-                <div className="d-flex justify-content-end align-items-center">
-                  <div className="mx-2">
+              <div className="col-sm-6 text-end">
+                <div className="d-flex justify-content-start justify-content-sm-end gap-2 align-items-center">
+                  <div className="">
                     <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorder(orderData.cust_name)}>
                       Reorder
                     </button>
                   </div>
-                  <div className="mx-2">
+                  <div className="">
                     <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
                       Cancel
                     </button>
                   </div>
-                  <div className={`mx-2 ${orderDetailStyles.print_order} `}>
+                  <div className={` ${orderDetailStyles.print_order} `}>
                     <FaPrint onClick={printPage} />
                   </div>
                 </div>
@@ -94,15 +94,14 @@ const OrderDetail = () => {
                         </div>
                         <div className="col-12">
                           <div
-                            className={`row black border content-prev ${orderDetailStyles.table_header}`}
-                            style={{ width: 'calc(100% + 23px)' }}
+                            className={`row border content-prev ${orderDetailStyles.table_header}`}
                           >
-                            <div className="col-md-7 border-bottom border-top p-0 col-bg">
-                              <div className="row">
+                            <div className="col-md-7 border-bottom border-top p-0">
+                              <div className="row m-0">
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
                                 <div className="col-1  text-start">Note</div>
-                                <div className="col-1  text-center">Status</div>
+                                <div className="col-2  text-center">Status</div>
                                 <div className="col-2"></div>
                               </div>
                             </div>
@@ -151,13 +150,13 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="container mb-4 content-prev">
+          <div className="container-lg mb-4 content-prev mt-4">
             <div className="row border">
               <div className="col-6 text-start p-2">
-                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
               <div className="col-6 text-end">
-                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
               </div>
             </div>
           </div>

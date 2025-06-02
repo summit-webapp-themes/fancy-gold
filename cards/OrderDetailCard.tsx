@@ -67,25 +67,26 @@ const OrderDetailCard = ({
       <div className="content-prev">
         <div className="col-12">
           <div className="row border">
-            <div className="col-md-7 text-center">
-              <div className="row border-end">
-                <div className='col-6 row'>
-                  <div className="col-md-4 pe-0">
-                    <div className="img-wrap text-center" style={{ height: '110px' }}>
+            <div className="col-md-7 border-end p-0 text-center">
+              <div className="row m-0 ">
+                <div className='col-6 row m-0'>
+                  <div className="col-md-4 p-0">
+                    <div className="img-wrap text-center position-relative my-1" style={{ height: '110px' }}>
                       <Image
                         loader={imageLoader}
-                        className={`d-block w-100`}
+                        className={`d-block w-100 object-fit-contain position-absolute`}
                         src={image !== null ? image : noImage}
-                        alt="Barcode image"
+                        alt="Product image"
                         priority
-                        width={100}
-                        height={100}
+                        fill
+                        // width={100}
+                        // height={100}
                       />
                     </div>
                   </div>
                   <div className="col-md-8 pe-0 text-start">
                     <div className={`${orderDetailStyles.order_detail_block}`}>
-                      <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={180} height={70} />
+                      <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={100} height={30} />
                       <p className="mb-0">Product code:{name}</p>
                       {bom_factory_code !== null && <p className="mb-0">BOM Factory Code: {bom_factory_code}</p>}
                       {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
@@ -118,14 +119,14 @@ const OrderDetailCard = ({
                     {remark}
                   </p>
                 </div>
-                <div className="col-1">
+                <div className="col-2">
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
                   </p>
                 </div>
-                <div className='col-3'>
+                <div className='col-2'>
                   {/* {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
-                    <div className="col-3 text-center">
+                    <div className="text-center">
                       {[
                         {
                           label: 'Completed',
@@ -150,10 +151,10 @@ const OrderDetailCard = ({
                 <table style={{ height: '100%' }}>
                   <tr>
                     <th>Color</th>
-                    <th>Size(Inch)</th>
+                    <th>Size (Inch)</th>
                     <th>Dispatch Qty</th>
                     <th>Qty</th>
-                    <th>Weight(gm)</th>
+                    <th>Weight (gm)</th>
                     <th>status</th>
                   </tr>
                   {order.length > 0 &&
