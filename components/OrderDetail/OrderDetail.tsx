@@ -33,6 +33,8 @@ const OrderDetail = () => {
       return (
         <div className=" mt-3">
           <div className="container mt-4 mb-2 px-0" id="section-to-print">
+        <div className=" mt-3">
+          <div className="container mt-4 mb-2 px-0" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
             </div>

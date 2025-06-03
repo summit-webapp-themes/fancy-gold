@@ -280,3 +280,20 @@ body {
     gap: 10px;
   }
 }
+
+.product-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Or whatever layout you need */
+  height: 600px; /* Set a specific height */
+}
+
+.left_2 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* You might need to add this to ensure the ReactImageMagnify component fills the space */
+.left_2 > div {
+  height: 100%;
+}
