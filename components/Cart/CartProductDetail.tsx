@@ -86,7 +86,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
             </button>
           )}
         </div> */}
-        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>;
+        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>
       </div>
       <Modal show={imagePreview} onHide={() => setImagePreview(false)} centered size="lg">
         <Modal.Header closeButton />

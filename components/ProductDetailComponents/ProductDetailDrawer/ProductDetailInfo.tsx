@@ -160,8 +160,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   return (
     <div className="w-100">
       <div className="py-2">
-        <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
-        <div className="d-flex">
+        <h6 className={`${styles.productCode} fw-bold mb-3`}>This product is available in below sizes :</h6>
+        <div className="d-flex flex-wrap gap-2">
           {Array.isArray(data?.item_characteristics?.Size) && data?.item_characteristics?.Size.length > 0 && (
             <>
               {[...data.item_characteristics.Size]
@@ -181,7 +181,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 })}
 
               {data.item_characteristics.Size.includes('custom_size') && (
-                <button className={`btn btn-link theme-blue mt-3 ${styles.tableFontSize}`} onClick={handleAddRow}>
+                <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
                   Add Custom Size
                 </button>
               )}
@@ -192,11 +192,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           <div className="col-2 border text-center py-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'}  border text-center py-1`}>Colour</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border text-center py-1`}>Colour</div>
           {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
           <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
           <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div>
-          <div className="col border"></div>
+          <div className="col-1 border"></div>
         </div>
         {sizeTable.map((row, index) => (
           <div className="row mx-1" key={index}>
@@ -247,7 +247,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col text-center border p-1">
+            <div className="col-1 text-center border p-1">
               <button
                 className="border-0 bg-light p-0 text-center"
                 onClick={() => handleDeleteRow(index)}

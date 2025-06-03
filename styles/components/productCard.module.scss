@@ -2,7 +2,7 @@
   position: relative;
   border: 1px solid #9696967a;
   font-weight: 300;
-  padding: 40px 10px 10px;
+  padding: 20px 24px 10px;
   height: 100%;
 }
 .product_card_img {
@@ -76,7 +76,7 @@
   transform: scale(1.4); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .content_wrap {
-  padding: 10px 8px !important;
+  padding: 10px 0px !important;
   text-align: left;
 }
 .product_content_wrap {
@@ -95,4 +95,10 @@
 }
 .tableFontSize {
   font-size: 0.8rem;
+}
+
+@media screen and (max-width: 768px) {
+  .product_card {
+    padding: 12px 12px 0;
+  }
 }
