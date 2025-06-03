@@ -77,3 +77,19 @@
 .bom_factory_code {
   font-weight: 900;
 }
+
+@media screen and (max-width: 768px) {
+  .place_order_container {
+    justify-content: center;
+    align-items: start;
+    padding: 0;
+  }
+
+  .place_order_container > h3 {
+    margin-top: 0.5rem;
+  }
+  
+  .place_order_btn {
+    margin-right: 0;
+  }
+}

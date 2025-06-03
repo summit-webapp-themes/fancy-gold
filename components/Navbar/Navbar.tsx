@@ -97,20 +97,22 @@ const Navbar = () => {
       <header className={stylesNavbar.header}>
         <nav>
           <div className={`${stylesNavbar.navbar} ps-lg-5 pe-lg-4`}>
-            <div className="w-100 d-flex justify-content-between pt-3">
-              <div className="mobile-nav d-flex justify-content-sm-between px-2">
-                <Link href="#" legacyBehavior>
-                  <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
-                    <FaAlignJustify className="icon" />
-                  </a>
-                </Link>
-              </div>
-              <div className="col-1 col-md-2">
-                <Link href="/" legacyBehavior>
-                  <a>
-                    <Image className="pb-2 mb-1" src={logo} alt="logo" width={50} />
-                  </a>
-                </Link>
+            <div className="w-100 d-flex justify-content-between gap-4 pt-3">
+              <div className=' d-flex align-items-start gap-2'>
+                <div className="mobile-nav d-flex justify-content-sm-between px-2">
+                  <Link href="#" legacyBehavior>
+                    <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
+                      <FaAlignJustify className="icon" />
+                    </a>
+                  </Link>
+                </div>
+                <div className={stylesNavbar.logo}>
+                  <Link href="/" legacyBehavior>
+                    <a>
+                      <Image className="pb-2 mb-1" src={logo} alt="logo" width={50} />
+                    </a>
+                  </Link>
+                </div>
               </div>
               {!isMobile && (
                 <div className={`d-block ${stylesNavbar.search_bar}`}>
@@ -129,15 +131,15 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
-              <div className={` `}>
-                <ul className={`nav  list-inline d-flex justify-content-end ${stylesNavbar.mobnavbar}`}>
+              <div className={` ${stylesNavbar.inlineList} `}>
+                <ul className={`nav list-inline d-flex justify-content-end gap-3 pe-0 pe-md-3 flex-nowrap ${stylesNavbar.mobnavbar}`}>
                   <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
-                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
-                          <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
+                          <span className={`${stylesNavbar.cart_badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
+                          <span className={` theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>

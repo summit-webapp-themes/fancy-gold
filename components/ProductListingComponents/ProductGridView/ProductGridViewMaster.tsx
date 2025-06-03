@@ -24,9 +24,9 @@ const ProductGridViewMaster = ({
   const handleDataRendering = () => {
     if (isLoading) {
       return (
-        <div className="row ">
+        <div className="row m-0">
           {[...Array(10)].map((_, index) => (
-            <div key={index} className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
+            <div key={index} className="col-md-3 col-lg-3 col-6 mb-3 px-0">
               <ProductCardSkeleton />
             </div>
           ))}

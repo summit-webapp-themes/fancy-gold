@@ -311,8 +311,8 @@ const CartListing = () => {
                 </div>
               ))}
             <hr />
-            <div className="d-flex justify-content-end">
-              {/* <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
+            <div className="row m-0">
+              {/* <textarea className="col-md-6 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
               <div className={`${styles.place_order_container}`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
                 <div className="d-flex w-100 justify-content-end">
@@ -329,16 +329,18 @@ const CartListing = () => {
               </div>
             </div>
           </div>
-          <div className="container-xl p-3">
-            <div className="d-flex justify-content-end">
-              <button
-                className={`${styles.clear_cart_btn} me-2`}
-                data-toggle="modal"
-                data-target="#confirmationModal"
-                onClick={handleShowClearCartModal}
-              >
-                Clear Cart
-              </button>
+          <div className="container p-3">
+            <div className="flex justify-content-end my-2 w-100 p-0 text-center">
+              <div className="text-end">
+                <button
+                  className={`${styles.clear_cart_btn}`}
+                  data-toggle="modal"
+                  data-target="#confirmationModal"
+                  onClick={handleShowClearCartModal}
+                >
+                  Clear Cart
+                </button>
+              </div>
             </div>
           </div>
           <ClearCartModal

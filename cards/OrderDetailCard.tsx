@@ -66,44 +66,47 @@ const OrderDetailCard = ({
     <>
       <div className="content-prev">
         <div className="col-12">
-          <div className="row ">
-            <div className="col-lg-7 col-12 text-center d-flex flex-column justify-content-center text-center">
-              <div className="row align-items-center border">
-                <div className="col-2 ">
-                  <div className="img-wrap text-center" style={{ height: '110px' }}>
-                    <Image
-                      loader={imageLoader}
-                      className={`d-block w-100`}
-                      src={image !== null ? image : noImage}
-                      alt="Product image"
-                      priority
-                      width={100}
-                      height={100}
-                    />
+          <div className="row border mx-0">
+            <div className="col-md-7 border-end p-0 text-center">
+              <div className="row m-0 ">
+                <div className='col-6 row m-0'>
+                  <div className="col-md-4 p-0">
+                    <div className="img-wrap text-center position-relative my-1" style={{ height: '110px' }}>
+                      <Image
+                        loader={imageLoader}
+                        className={`d-block w-100 object-fit-contain position-absolute`}
+                        src={image !== null ? image : noImage}
+                        alt="Product image"
+                        priority
+                        fill
+                        // width={100}
+                        // height={100}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="col-4 text-start">
-                  <div className={`${orderDetailStyles.order_detail_block}`}>
-                    <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={180} height={70} />
-                    <p className="mb-0">Product code:{name}</p>
-                    {bom_factory_code !== null && <p>BOM Factory Code: {bom_factory_code}</p>}
-                    {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
-                    <p className="mb-0">Weight: {parseInt(weight)} gm</p>
-                    {(level_2_category === 'MANGALSUTRA' || level_2_category === 'IMP PREMIUM') && (
-                      <p className="mb-2">Net Wt. {parseInt(net_weight)}gm</p>
+                  <div className="col-md-8 pe-0 text-start">
+                    <div className={`${orderDetailStyles.order_detail_block}`}>
+                      <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={100} height={30} />
+                      <p className="mb-0">Product code:{name}</p>
+                      {bom_factory_code !== null && <p className="mb-0">BOM Factory Code: {bom_factory_code}</p>}
+                      {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
+                      <p className="mb-0">Weight: {parseInt(weight)} gm</p>
+                      {(level_2_category === 'MANGALSUTRA' || level_2_category === 'IMP PREMIUM') && (
+                        <p className="mb-2">Net Wt. {parseInt(net_weight)}gm</p>
+                      )}
+                    </div>
+                    {status === 'Pending For Confirmation' && getOrderStatusValueFromURL === null ? (
+                      <div className="">
+                        <div>
+                          <button className={`mt-3 mb-3 ${orderDetailStyles.order_detail_review_btn}`} onClick={showReviewModal}>
+                            Add Review
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      ''
                     )}
                   </div>
-                  {status === 'Pending For Confirmation' && getOrderStatusValueFromURL === null ? (
-                    <div className="">
-                      <div>
-                        <button className={`mt-3 mb-3 ${orderDetailStyles.order_detail_review_btn}`} onClick={showReviewModal}>
-                          Add Review
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    ''
-                  )}
                 </div>
                 <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
                   <p>{purity}</p>

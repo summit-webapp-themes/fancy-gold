@@ -37,10 +37,10 @@ const WishlistMaster = () => {
     }
     if (wishlistData?.length > 0) {
       return (
-        <div className="d-flex flex-wrap ">
+        <div className="row mx-0">
           {wishlistData?.length > 0 &&
             wishlistData?.map((item: any, index: number) => (
-              <div key={index} className="col-sm-6 col-lg-3 col-xl-3 col-xxl-3 text-center mb-4 px-3">
+              <div key={index} className="col-6 col-md-4 col-xl-3 col-xxl-3 text-center mb-4 p-end">
                 <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} cartData={cartData} />
               </div >
             ))}
@@ -52,7 +52,7 @@ const WishlistMaster = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container p-start">
       <h2 className="theme-blue text-center my-3">My Wishlist</h2>
       {handleDataRendering()}
       <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />

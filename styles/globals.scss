@@ -178,13 +178,15 @@ body {
   object-fit: contain;
 }
 .left_2 img {
-  width: 500px;
+  // max-width: 400px !important;
+  max-height: 400px !important;
+  width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.active {
-  border: 2px solid #e77600;
-}
+// .active {
+//   border: 2px solid #e77600;
+// }
 .magnified-image {
   min-width: 300% !important;
   min-height: 300% !important;
@@ -207,6 +209,80 @@ body {
   position: relative;
 }
 
+.product-image {
+  max-width: 400px !important;
+  max-height: 400px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mobile-img-magnify {
+  display: none;
+}
+
+.desktop-img-magnify {
+  display: block;
+}
+
+.p-end {
+  padding-right: 12px !important;
+}
+
+.p-start {
+  padding-left: 12px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .left {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .left_1 {
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .left_2 img {
+    max-width: 400px !important;
+    max-height: 400px !important;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .mobile-img-magnify {
+    display: block;
+  }
+
+  .desktop-img-magnify {
+    display: none;
+  }
+
+  .p-end {
+    padding-right: 0 !important;
+  }
+
+  .p-start {
+    padding-left: 0 !important;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .left {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .left_1 {
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    gap: 10px;
+  }
+}
 /* You might need to add this to ensure the ReactImageMagnify component fills the space */
 .left_2 > div {
   height: 100%;
