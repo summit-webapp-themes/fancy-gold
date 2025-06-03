@@ -19,7 +19,7 @@ function CustomerOrderTable({
 
   return (
     <>
-      <div className="row mt-4">
+      <div className="row mt-3 mt-md-4">
         <div className="col-md-9">
           <p className="fs-14 m-0 mb-2 mb-md-3">Custom Market Order Details</p>
         </div>

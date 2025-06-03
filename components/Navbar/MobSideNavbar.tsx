@@ -100,7 +100,7 @@ const MobSideNavbar = ({
                           }}
                           legacyBehavior
                         >
-                          <a href='#' className="text-dark d-flex justify-content-around" onClick={() => handleSubItemClick(index, subIndex)}>
+                          <a href='#' className="text-dark d-flex justify-content-between ps-3 ms-1" onClick={() => handleSubItemClick(index, subIndex)}>
                             <span className="w-75">{subItem?.label}</span>
                             <span>
                               <svg
@@ -131,7 +131,7 @@ const MobSideNavbar = ({
                                 }}
                                 legacyBehavior
                               >
-                                <a className="text-dark d-flex justify-content-start ps-5" onClick={onClickCloseNav}>
+                                <a className="text-dark d-flex justify-content-start ps-4 ms-1" onClick={onClickCloseNav}>
                                   <span className="pt-2">{subSubItem?.label}</span>
                                 </a>
                               </Link>

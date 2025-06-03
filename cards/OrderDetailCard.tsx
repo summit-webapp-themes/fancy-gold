@@ -66,7 +66,7 @@ const OrderDetailCard = ({
     <>
       <div className="content-prev">
         <div className="col-12">
-          <div className="row border">
+          <div className="row border mx-0">
             <div className="col-md-7 border-end p-0 text-center">
               <div className="row m-0 ">
                 <div className='col-6 row m-0'>

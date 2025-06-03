@@ -98,13 +98,13 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
 
   return (
     <div>
-      <div className="text-center mt-5" style={{ height: '40px' }}>
+      <div className="text-center mt-5">
         <Purity />
       </div>
       <div className="mt-4 row m-0">
         <div className="col-lg-10 col-12">
           <div className="row">
-            <div className="col-lg-3 col-md-3 col-6 px-2">
+            <div className="col-lg-3 col-md-3 col-sm-6 pe-2 ps-0">
               <input
                 type="text"
                 className="form-control"
@@ -120,7 +120,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               <p style={{ fontSize: '12px', color: '#f00', margin: 0 }}>*Add customer name first and press Enter</p>
             </div>
 
-            <div className="col-lg-3 col-md-3 col-6 px-2">
+            <div className="col-lg-3 col-md-3 col-sm-6 pe-2 ps-0">
               <SearchableDropdown
                 dropdownData={refCodesList}
                 inputValue={inputValue}
@@ -129,7 +129,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               />
             </div>
 
-            <div className="col-lg-3 col-md-3 col-12 mt-2 mt-md-0 px-2">
+            <div className="col-lg-3 col-md-3 col-12 mt-2 mt-md-0 pe-2 ps-0">
               <input
                 type="text"
                 className="form-control"
@@ -144,7 +144,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               />
             </div>
 
-            <div className="d-flex justify-content-start align-items-start col-lg-3 col-md-3 col-12 text-center mt-2 mt-md-0 px-2">
+            <div className="d-flex justify-content-start align-items-start col-lg-3 col-md-3 col-12 text-center mt-2 mt-md-0 pe-2 ps-0">
               <button type="button" className="btn btn-primary mx-1" onClick={handleSaveBtn}>
                 Save
               </button>
