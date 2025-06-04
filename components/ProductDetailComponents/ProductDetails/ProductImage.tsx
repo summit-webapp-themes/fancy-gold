@@ -30,6 +30,9 @@ const ProductImage = ({ Imageslideshow }: any) => {
       setImg(Imageslideshow[0]);
     }
   }, [Imageslideshow]);
+  const imageWidth = 400;
+  const aspectRatio = 1.3; // width/height ratio of your image
+  const imageHeight = imageWidth / aspectRatio;
   return (
     <div className="img-container">
       <div className="left">
@@ -43,26 +46,23 @@ const ProductImage = ({ Imageslideshow }: any) => {
         </div>
 
         {/* Main Magnified Image */}
-        <div className="left_2">
-          <ReactImageMagnify
-            {...{
-              smallImage: {
-                alt: 'Product image',
-                isFluidWidth: false,
-                width: 400,
-                height: 400,
-                src: API_BASE_URL + img,
-              },
-              largeImage: {
-                src: API_BASE_URL + img,
-                width: 1600,
-                height: 1600,
-              },
-
-              enlargedImageClassName: 'magnified-image',
-            }}
-          />
-        </div>
+        <ReactImageMagnify
+          {...{
+            smallImage: {
+              alt: 'Product image',
+              isFluidWidth: false,
+              width: imageWidth,
+              height: imageHeight,
+              src: API_BASE_URL + img,
+            },
+            largeImage: {
+              src: API_BASE_URL + img,
+              width: 1600,
+              height: 1600,
+            },
+            enlargedImageClassName: 'magnified-image',
+          }}
+        />
       </div>
     </div>
   );
