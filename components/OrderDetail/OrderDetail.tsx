@@ -31,13 +31,13 @@ const OrderDetail = () => {
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className="container-lg mt-3">
-          <div className="container mt-4 mb-2" id="section-to-print">
+        <div className=" mt-3">
+          <div className="container mt-4 mb-2 px-0" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
             </div>
             <div className="row">
-              <div className="col-sm-6 p-0 mb-2 mb-sm-0">
+              <div className="col-sm-6 mb-2 mb-sm-0">
                 <div className={`${orderDetailStyles.order_block} `}>
                   <p className="cust-name">Customer Name : {orderData.cust_name}</p>
                 </div>
@@ -66,23 +66,23 @@ const OrderDetail = () => {
               orderData.data.map((item: any, i: number) => (
                 <div
                   key={`${item.level_2_category}-${i}`}
-                  className="container m-top content-prev"
+                  className="m-top content-prev p-0"
                   style={{
                     marginTop: '5px',
                     pageBreakBefore: 'always',
                   }}
                 >
-                  <h2 className={`pt-4 ${orderDetailStyles.categoryLabel} `}>
+                  <h2 className={`pt-4 px-0 px-md-3 ${orderDetailStyles.categoryLabel} `}>
                     {item.level_2_category} | Total Weight : {item.level_2_total_weight.toFixed(2)}
                   </h2>
 
-                  <div className="row">
+                  <div className="row mx-0">
                     <div className="col-12">
                       <div className="row">
-                        <div className="col-12">
+                        <div className="col-12 px-0">
                           <div className="row">
                             <div className="col-8">
-                              <div className={`${orderDetailStyles.order_block} pb-2`}>
+                              <div className={`${orderDetailStyles.order_block} pb-2 px-md-3`}>
                                 <p>Customer Name : {orderData?.cust_name}</p>
                                 <p>Order Date: {item.transaction_date}</p>
                                 <p>Order Id: {query?.orderId}</p>
@@ -150,13 +150,13 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="container-lg mb-4 content-prev mt-4">
+          <div className="container-lg my-2 content-prev my-md-4">
             <div className="row border">
               <div className="col-6 text-start p-2">
-                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
+                <h6 className={`my-1 my-md-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
               <div className="col-6 text-end">
-                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
+                <h6 className={`my-1 my-md-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
               </div>
             </div>
           </div>

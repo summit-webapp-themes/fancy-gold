@@ -62,7 +62,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
       if (btnAction === 'Add') {
         return (
           <button
-            className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
+            className={`btn btn-outline-primary text-uppercase mb-0 ${ProductCardStyles.add_to_cart_btn} `}
             onClick={() => handleShow(data?.slug, data?.variant_of)}
           >
             {btnAction}
@@ -114,7 +114,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
           <Link href={`${data?.url}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
             <div>
               {/* {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
@@ -133,7 +133,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: an
                   </Card.Text>
                 ))}
             </div>
-            <div>{handleRenderAddToCartBtn()}</div>
+            <div className='d-flex justify-content-end' >{handleRenderAddToCartBtn()}</div>
           </div>
         </div>
       </Card.Body>
