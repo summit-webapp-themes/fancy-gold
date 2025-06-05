@@ -32,8 +32,8 @@ const CartSkeleton = () => {
         </div>
       </div>
 
-      {[...Array(3)].map(() => (
-        <>
+      {[...Array(3)].map((_, i: number) => (
+        <div key={`cart-skeleton${i}`} className="px-3">
           <div className="px-3">
             <div className={`row  ${styles.border} `}>
               <div className={`col-lg-2 p-2`}>
@@ -73,7 +73,7 @@ const CartSkeleton = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

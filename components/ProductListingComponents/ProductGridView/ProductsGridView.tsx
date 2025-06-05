@@ -16,7 +16,7 @@ const ProductsGridView = ({
   return (
     <>
       {productListingData.map((item: any, index: any) => (
-        <div key={index} className="col-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-4">
+        <div key={index} className="col-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-3 mb-md-4 p-end">
           <ProductCard
             data={item}
             handleShow={handleShow}

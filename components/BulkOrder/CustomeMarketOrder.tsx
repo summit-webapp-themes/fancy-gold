@@ -18,7 +18,7 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
         <div className="col-md-9 mb-2 mb-md-3">
           <p className="fs-14 mb-0">Custom Market Order Details</p>
         </div>
-        <div className="col-md-3 d-flex justify-content-end h-75">
+        <div className="col-md-3 d-flex justify-content-start justify-content-md-end h-75 mb-3">
           <button className={styles.btn_save_bulk_order} onClick={addCustomMarketOrderRow}>
             Add More
           </button>

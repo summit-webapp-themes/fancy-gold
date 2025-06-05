@@ -101,7 +101,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     }
   };
   return (
-    <Card className={` ${ProductCardStyles.product_card} pt-2`}>
+    <Card className={` ${ProductCardStyles.product_card}`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
         <div

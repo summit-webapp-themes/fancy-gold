@@ -30,20 +30,7 @@
   bottom: 35px !important;
   height: 1.1rem;
   position: absolute;
-  right: 0;
-  text-align: center;
-  width: 1.1rem;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.cart_badge {
-  background: red;
-  border-radius: 50% !important;
-  bottom: 35px !important;
-  height: 1.1rem;
-  position: absolute;
-  right: -12px !important;
+  right: 6px !important;
   text-align: center;
   width: 1.1rem;
   font-size: 12px;
@@ -70,7 +57,7 @@
   cursor: pointer;
 }
 .list_inline_item {
-  width: fit-content;
+  width: 60px;
 }
 .order_list_dropdown {
   text-align: center;
@@ -109,7 +96,7 @@
 @media (max-width: 767px) {
   .list_inline_item {
     margin-top: 10px;
-    width: 30px;
+    width: 50px;
   }
   .badge, .cart_badge {
     right: 0px !important;
@@ -123,12 +110,6 @@
   .search_bar {
     width: 100%;
     max-width: 100%;
-  }
-  .list_inline_item_cart {
-    padding-right: 2.5rem !important;
-  }
-  .list_inline_item_wishlist {
-    padding-right: 1.5rem !important;
   }
 }
 

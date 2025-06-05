@@ -144,15 +144,15 @@ const OrderDetailCard = ({
                 )}
               </div>
             </div>
-            <div className="col-lg-5 col-12 border p-0">
+            <div className="col-md-5 p-0">
               <div className={`${orderDetailStyles.order_detail_table}`}>
                 <table style={{ height: '100%' }}>
                   <tr>
                     <th>Color</th>
-                    <th>Size(Inch)</th>
+                    <th>Size (Inch)</th>
                     <th>Dispatch Qty</th>
                     <th>Qty</th>
-                    <th>Weight(gm)</th>
+                    <th>Weight (gm)</th>
                     <th>status</th>
                   </tr>
                   {order.length > 0 &&
@@ -163,7 +163,7 @@ const OrderDetailCard = ({
                           <td>{data.size} inch</td>
                           <td>{data.ready_quantity}</td>
                           <td>{data.qty}</td>
-                          <td className="text-right">{data.weight}gm</td>
+                          <td className="text-right">{data.weight.toFixed(2)}gm</td>
                           <td className="text-right">{data?.custom_oms_status}</td>
                         </tr>
                       );
