@@ -139,28 +139,35 @@ const CartListing = () => {
         <>
           <div className="border p-3">
             <div className="row ">
-              <div className=' col-md-8 col-lg-7 col-xl-6 col-xxl-5'>
+              <div className='col-lg-10'>
                 <div className="mt-2 mx-0 row">
-                  <label className="col-md-4 px-0 px-md-3">Customer Name: </label>
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Customer Name: </label>
 
-                  <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                  <div className="col-md-1"></div>
-                  <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2 mt-2 mt-md-0`}>
+                  <input
+                    type="text"
+                    className="form-control form-control-sm col-4 col-lg-3"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    style={{ maxWidth: '220px'}}
+                  />
+                  <div className='col-0 col-lg-2'></div>
+                  <button onClick={updateCartCust} className={`${styles.update_btn} col-4 btn btn-secondary py-0 mt-2 mt-sm-0 `} style={{ maxWidth: 'fit-content'}}>
                     Update
                   </button>
                 </div>
                 <div className="mt-2 mx-0 row">
-                  <label className="col-md-4 px-0 px-md-3">Order Purity:</label>
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Order Purity:</label>
 
-                  <span className="col-md-8">{updatedPurity}</span>
+                  <span className="col-md-9">{updatedPurity}</span>
                 </div>
                 <div className="mt-2 mx-0 row">
-                  <label className="col-md-4 px-0 px-md-3">Update Purity:</label>
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Update Purity:</label>
                   <select
-                    className=" col-md-5"
+                    className=" form-control form-control-sm col-4 col-lg-3 "
                     // value={selectedPurity}
                     onChange={updatePurity}
                     placeholder="text"
+                    style={{ maxWidth: '220px'}}
                   >
                     {modifiedPurity.map((item: any, index: any) => {
                       if (!item) return null;
@@ -171,28 +178,27 @@ const CartListing = () => {
                       );
                     })}
                   </select>
-                  <div className="col-md-1"></div>
+                  <div className='col-0 col-lg-2'></div>
                   <button
                     onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
-                    className={`col-md-2 mt-2 mt-md-0 ${styles.update_btn}`}
+                    className={`${styles.update_btn} col-4 col-lg-3 btn btn-secondary py-0 mt-2 mt-sm-0`} 
+                    style={{ maxWidth: 'fit-content'}}
                   >
-                    Update
-                  </button>
+                    Update                  </button>
                 </div>
                 <div className="mt-2 mx-0 row">
-                  <label className="col-md-4 px-0 px-md-3">Delivery Date: </label>
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Delivery Date: </label>
                   <input
                     type="date"
-                    className="col-md-5"
+                    className="form-control form-control-sm w-auto col-md-9"
                     value={deliveryDate}
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}
                   />
                 </div>
               </div>
-              <div className='col-0 col-md-1 col-lg-3 col-xl-4 col-xxl-5'></div>
-              <div className={`${styles.place_order_container} col-md-3 col-lg-2 mt-3 mt-md-0`}>
-                <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+              <div className={`${styles.place_order_container} col-lg-2 mt-3 mt-lg-0`}>
+                <button className={`${styles?.place_order_btn} m-0 me-md-2 `} onClick={handlePlaceOrder}>
                   Place Order
                 </button>
               </div>
@@ -204,15 +210,16 @@ const CartListing = () => {
                   <h5 className="py-2">
                     {category?.category} | Total Weight: {category?.total_weight}gm
                   </h5>
-                  <div className={`row ${styles?.table_header}`}>
-                    <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
+                  <div className={`row border py-2 bg-secondary bg-opacity-10 d-none d-lg-flex`}>
+                    <div className="col-md-2 col-2 text-center"></div>
+                    <div className="col-4 col-lg-3 col-4 text-start">Products</div>
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
                     {category?.orders?.length > 0 &&
                       category?.orders?.map((order: any, orderIndex: any) => (
                         <div key={orderIndex} className="row">
-                          <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
+                          <div className={`col-lg-7  col-12 border-bottom border-top border-md-`}>
                             <CartProductDetail
                               data={order}
                               onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}

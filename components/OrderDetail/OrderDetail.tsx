@@ -31,9 +31,7 @@ const OrderDetail = () => {
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className=" mt-3">
-          <div className="container mt-4 mb-2 px-0" id="section-to-print">
-        <div className=" mt-3">
+        <div className="container-lg mt-3">
           <div className="container mt-4 mb-2 px-0" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
@@ -44,19 +42,19 @@ const OrderDetail = () => {
                   <p className="cust-name">Customer Name : {orderData.cust_name}</p>
                 </div>
               </div>
-              <div className="col-sm-6 text-end">
-                <div className="d-flex justify-content-start justify-content-sm-end gap-2 align-items-center">
-                  <div className="">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorder(orderData.cust_name)}>
+              <div className="col-sm-6 mb-2 mb-sm-0">
+                <div className="d-flex justify-content-end align-items-center">
+                  <div className="mx-2">
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorderFun(orderData.cust_name)}>
                       Reorder
                     </button>
                   </div>
                   <div className="">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrderFun}>
                       Cancel
                     </button>
                   </div>
-                  <div className={` ${orderDetailStyles.print_order} `}>
+                  <div className={`${orderDetailStyles.print_order} `}>
                     <FaPrint onClick={printPage} />
                   </div>
                 </div>
@@ -152,13 +150,13 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="container-lg my-2 content-prev my-md-4">
+          <div className="container-lg mb-4 content-prev mt-4">
             <div className="row border">
               <div className="col-6 text-start p-2">
-                <h6 className={`my-1 my-md-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
               <div className="col-6 text-end">
-                <h6 className={`my-1 my-md-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
               </div>
             </div>
           </div>

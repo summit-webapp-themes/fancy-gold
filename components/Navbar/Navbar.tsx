@@ -93,14 +93,14 @@ const Navbar = () => {
       <header className={stylesNavbar.header}>
         <nav>
           <div className={`${stylesNavbar.navbar} ps-lg-5 pe-lg-4`}>
-            <div className="w-100 d-flex justify-content-between gap-4 pt-3">
+            <div className="w-100 d-flex justify-content-between gap-3 gap-md-4 pt-3">
               <div className=' d-flex align-items-start gap-2'>
                 <div className="mobile-nav d-flex justify-content-sm-between px-2">
-                  <Link href="#" legacyBehavior>
+                  <div>
                     <a className="mobile-menu-toggle  w-icon-hamburger" aria-label="menu-toggle" onClick={navMenuclick}>
                       <FaAlignJustify className="icon" />
                     </a>
-                  </Link>
+                  </div>
                 </div>
                 <div className={stylesNavbar.logo}>
                   <Link href="/" legacyBehavior>
@@ -127,32 +127,32 @@ const Navbar = () => {
                 </div>
               )}
               <div className={` ${stylesNavbar.inlineList} `}>
-                <ul className={`nav list-inline d-flex justify-content-end gap-3 pe-0 pe-md-3 flex-nowrap ${stylesNavbar.mobnavbar}`}>
+                <ul className={`nav list-inline d-flex justify-content-end gap-3 gap-md-1 pe-3 flex-nowrap ${stylesNavbar.mobnavbar}`}>
                   <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaCartPlus className="icon" />
-                          <span className={`${stylesNavbar.cart_badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
+                          <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
                           <span className={` theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>
                   </li>
-                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_wishlist}`}>
+                  <li className={`me-md-2 ${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_wishlist}`}>
                     <Link href="/wishlist " legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
                           <FaHeart className="icon" />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
-                          <span className={` theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
+                          <span className={`theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
                       </a>
                     </Link>
                   </li>
                   {!isMobile && (
                     <>
-                      <li className={stylesNavbar.list_inline_item}>
+                      <li className={`me-3 ${stylesNavbar.list_inline_item} d-none d-md-block`} style={{ width: '70px'}}>
                         <div className={stylesNavbar.icon_container}>
                           <FaRegCalendar className="icon " />
                         </div>
