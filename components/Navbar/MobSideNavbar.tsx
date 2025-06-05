@@ -44,7 +44,7 @@ const MobSideNavbar = ({ isLoading, show, handleClose, navbarData, setIsSidebarO
                 {categoriesData?.length > 0 &&
                   categoriesData?.map((itemL1: any, indexL1: number) => (
                     <Accordion.Item eventKey={`${indexL1}`} className="border-0" key={indexL1}>
-                      <Accordion.Header className="fs-16 ">
+                      <Accordion.Header className="fs-16 text-dark ">
                         <div>
                           <b>{itemL1?.label}</b>
                         </div>
@@ -78,7 +78,7 @@ const MobSideNavbar = ({ isLoading, show, handleClose, navbarData, setIsSidebarO
                                               pathname: `${itemL3?.url}`,
                                               query: { page: '1', sort_by: 'latest', currency: 'INR' },
                                             }}
-                                            className="text-decoration-none text-dark"
+                                            className="text-decoration-none text-dark fw-bold fs-14"
                                             onClick={() => setIsSidebarOpen(false)}
                                           >
                                             <p className="px-5 py-3 m-0 ">{itemL3?.label}</p>

@@ -320,7 +320,6 @@ body {
 }
 .accordion-button {
   font-size: 14px;
-  color: #3d1d15 !important;
   font-weight: 600 !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -329,4 +328,8 @@ body {
 
 .accordion-button.collapsed {
   border: 0 !important;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #1a1a49 !important;
 }
