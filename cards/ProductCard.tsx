@@ -101,7 +101,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     }
   };
   return (
-    <Card className={` ${ProductCardStyles.product_card} pt-2`}>
+    <Card className={` ${ProductCardStyles.product_card}`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
         <div
@@ -133,7 +133,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
           <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
             <div>
               {/* {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
@@ -152,7 +152,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
                   </Card.Text>
                 ))}
             </div>
-            <div>{handleRenderAddToCartBtn()}</div>
+            <div className='d-flex justify-content-end' >{handleRenderAddToCartBtn()}</div>
           </div>
         </div>
       </Card.Body>

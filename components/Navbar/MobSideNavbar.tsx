@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Accordion, Offcanvas } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../../public/assets/images/logo.png';
+import styles from '../../styles/components/navbar.module.scss';
 
 const MobSideNavbar = ({ isLoading, show, handleClose, navbarData, setIsSidebarOpen, searchTerm, setSearchTerm, handleSearch }: any) => {
   const handleDataRendering = () => {
@@ -23,32 +24,32 @@ const MobSideNavbar = ({ isLoading, show, handleClose, navbarData, setIsSidebarO
             </div>{' '}
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <div className="d-flex ">
-              <input
-                type="text"
-                className="form-control "
-                name="search"
-                id="search"
-                placeholder="Search here"
-                value={searchTerm}
-                onChange={(e: any) => setSearchTerm(e.target.value)}
-                required
-              />
-              <button className="border-0 text-secondary" type="submit" onClick={handleSearch}>
-                <FaSearch />
-              </button>
+            <div className={`d-block ${styles.search_bar}`}>
+              <div className="search-input position-relative ">
+                <input
+                  type="text"
+                  className={`form-control ${styles.search_bar_input}`}
+                  name="search"
+                  id="search"
+                  placeholder="Search here"
+                  value={searchTerm}
+                  onChange={(e: any) => setSearchTerm(e.target.value)}
+                  required
+                />
+                <FaSearch className={styles.search_icon} onClick={handleSearch} />
+              </div>
             </div>
-            <div className="nav-sidebar pt-3">
+            <div className="nav-sidebar ">
               <Accordion>
                 {categoriesData?.length > 0 &&
                   categoriesData?.map((itemL1: any, indexL1: number) => (
                     <Accordion.Item eventKey={`${indexL1}`} className="border-0" key={indexL1}>
-                      <Accordion.Header className=" border-bottom fs-16 ">
+                      <Accordion.Header className="fs-16 ">
                         <div>
                           <b>{itemL1?.label}</b>
                         </div>
                       </Accordion.Header>
-                      <Accordion.Body>
+                      <Accordion.Body className='p-0'>
                         {itemL1?.values?.length > 0 &&
                           itemL1?.values !== null &&
                           itemL1?.values.map((itemL2: any, indexL2: number) => {
@@ -56,19 +57,31 @@ const MobSideNavbar = ({ isLoading, show, handleClose, navbarData, setIsSidebarO
                               <div className="nav-sidebar2" key={indexL2}>
                                 <Accordion>
                                   <Accordion.Item eventKey={`${indexL2}`} className="border-0">
-                                    <Accordion.Header className="border-bottom">
-                                      <span className="px-3 ">{itemL2?.label}</span>
+                                    <Accordion.Header>
+                                      <Link
+                                        href={{
+                                          pathname: `${itemL2?.url}`,
+                                          query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                                        }}
+                                        className="px-3 text-decoration-none text-dark"
+                                        onClick={() => setIsSidebarOpen(false)}
+                                      >
+                                        {itemL2?.label}
+                                      </Link>
                                     </Accordion.Header>
-                                    <Accordion.Body>
+                                    <Accordion.Body className='p-0'>
                                       {itemL2?.values?.length > 0 &&
                                         itemL2?.values?.map((itemL3: any, indexL3: number) => (
                                           <Link
                                             key={indexL3}
-                                            href={{ pathname: `${itemL3?.url}`, query: { page: '1', currency: 'INR' } }}
+                                            href={{
+                                              pathname: `${itemL3?.url}`,
+                                              query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                                            }}
                                             className="text-decoration-none text-dark"
                                             onClick={() => setIsSidebarOpen(false)}
                                           >
-                                            <p className="px-3  py-3  m-0 border-bottom">{itemL3?.label}</p>
+                                            <p className="px-5 py-3 m-0 ">{itemL3?.label}</p>
                                           </Link>
                                         ))}
                                     </Accordion.Body>

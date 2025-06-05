@@ -46,23 +46,41 @@ const ProductImage = ({ Imageslideshow }: any) => {
         </div>
 
         {/* Main Magnified Image */}
-        <ReactImageMagnify
-          {...{
-            smallImage: {
-              alt: 'Product image',
-              isFluidWidth: false,
-              width: imageWidth,
-              height: imageHeight,
-              src: API_BASE_URL + img,
-            },
-            largeImage: {
-              src: API_BASE_URL + img,
-              width: 1600,
-              height: 1600,
-            },
-            enlargedImageClassName: 'magnified-image',
-          }}
-        />
+        <div className="left_2">
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: 'Product image',
+                isFluidWidth: true,
+                src: API_BASE_URL + img,
+              },
+              largeImage: {
+                src: API_BASE_URL + img,
+                width: 1600,
+                height: 1600,
+              },
+              enlargedImageClassName: 'magnified-image',
+            }}
+            className='desktop-img-magnify'
+          />
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: 'Product image',
+                isFluidWidth: true,
+                src: API_BASE_URL + img,
+              },
+              largeImage: {
+                src: API_BASE_URL + img,
+                width: 1600,
+                height: 1600,
+              },
+              enlargedImageClassName: 'magnified-image',
+            }}
+            enlargedImagePosition="over"
+            className='mobile-img-magnify'
+          />
+        </div>
       </div>
     </div>
   );

@@ -182,19 +182,20 @@ const CartListing = () => {
       return (
         <>
           <div className="border p-3">
-            <div className="d-flex justify-content-md-between flex-column flex-md-row ">
-              <div>
-                <div className="d-flex">
-                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Customer Name: </label>
+            <div className="row ">
+              <div className='col-lg-10'>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Customer Name: </label>
 
                   <input
                     type="text"
-                    className="form-control form-control-sm "
+                    className="form-control form-control-sm col-4 col-lg-3"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
+                    style={{ maxWidth: '220px'}}
                   />
-
-                  <button onClick={updateCartCust} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
+                  <div className='col-0 col-lg-2'></div>
+                  <button onClick={updateCartCust} className={`${styles.update_btn} col-4 btn btn-secondary py-0 mt-2 mt-sm-0 `} style={{ maxWidth: 'fit-content'}}>
                     {isCustomerNameUpdateLoading ? (
                       <span className="mx-3 ps-1">
                         <Spinner animation="border" size="sm" />
@@ -204,18 +205,19 @@ const CartListing = () => {
                     )}
                   </button>
                 </div>
-                <div className="mt-2 row">
-                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Order Purity:</label>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Order Purity:</label>
 
-                  <span className=" col-6 col-sm-7 col-md-6">{updatedPurity}</span>
+                  <span className="col-md-9">{updatedPurity}</span>
                 </div>
-                <div className="mt-2 d-flex">
-                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Update Purity:</label>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Update Purity:</label>
                   <select
-                    className=" form-control form-control-sm "
+                    className=" form-control form-control-sm col-4 col-lg-3 "
                     // value={selectedPurity}
                     onChange={updatePurity}
                     placeholder="text"
+                    style={{ maxWidth: '220px'}}
                   >
                     {modifiedPurity.map((item: any, index: any) => {
                       if (!item) return null;
@@ -226,10 +228,10 @@ const CartListing = () => {
                       );
                     })}
                   </select>
-
-                  <button onClick={() => handleUpdatePurity()} className={`${styles.update_btn} btn btn-secondary py-0 ms-3`}>
+                  <div className='col-0 col-lg-2'></div>
+                  <button onClick={() => handleUpdatePurity()} className={`${styles.update_btn} col-4 col-lg-3 btn btn-secondary py-0 mt-2 mt-sm-0`} style={{ maxWidth: 'fit-content'}}>
                     {isPurityUpdateLoading ? (
-                      <span className="mx-3 ps-1">
+                      <span className="mx-3">
                         <Spinner animation="border" size="sm" />
                       </span>
                     ) : (
@@ -237,18 +239,18 @@ const CartListing = () => {
                     )}
                   </button>
                 </div>
-                <div className="mt-2 d-flex">
-                  <label className="col-6 col-sm-5 col-md-4 fw-bold">Delivery Date: </label>
+                <div className="mt-2 mx-0 row">
+                  <label className="col-4 col-lg-3 px-0 px-lg-3">Delivery Date: </label>
                   <input
                     type="date"
-                    className="form-control form-control-sm w-auto"
+                    className="form-control form-control-sm w-auto col-md-9"
                     value={deliveryDate}
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}
                   />
                 </div>
               </div>
-              <div className={` mt-2 mt-md-0 d-flex justify-content-end`}>
+              <div className={`${styles.place_order_container} col-lg-2 mt-3 mt-lg-0`}>
                 <button className={`${styles?.place_order_btn} m-0 me-md-2 `} onClick={handlePlaceOrder}>
                   {isHandlePlaceOrderLoading ? (
                     <span className="mx-4 px-2 ">
@@ -269,14 +271,14 @@ const CartListing = () => {
                   </h5>
                   <div className={`row border py-2 bg-secondary bg-opacity-10 d-none d-lg-flex`}>
                     <div className="col-md-2 col-2 text-center"></div>
-                    <div className="col-md-3 col-4 text-start">Products</div>
+                    <div className="col-4 col-lg-3 col-4 text-start">Products</div>
                     <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
                     <div className="col-lg-5 col-md-5 col-12"></div>
                   </div>
                   <div className="row border border-top-0">
                     {category?.orders?.length > 0 &&
                       category?.orders?.map((order: any, orderIndex: any) => (
-                        <>
+                        <div key={orderIndex} className="row">
                           <div className={`col-lg-7  col-12 border-bottom border-top border-md-`}>
                             <CartProductDetail
                               data={order}
@@ -305,14 +307,14 @@ const CartListing = () => {
                               <RiDeleteBin7Fill />
                             </button>
                           </div>
-                        </>
+                        </div>
                       ))}
                   </div>
                 </div>
               ))}
             <hr />
-            <div className="d-flex justify-content-end">
-              {/* <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
+            <div className="row m-0">
+              {/* <textarea className="col-md-6 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
               <div className={`${styles.place_order_container}`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
                 <div className="d-flex w-100 justify-content-end">
@@ -329,16 +331,18 @@ const CartListing = () => {
               </div>
             </div>
           </div>
-          <div className="container-xl p-3">
-            <div className="d-flex justify-content-end">
-              <button
-                className={`${styles.clear_cart_btn} me-2`}
-                data-toggle="modal"
-                data-target="#confirmationModal"
-                onClick={handleShowClearCartModal}
-              >
-                Clear Cart
-              </button>
+          <div className="container p-3">
+            <div className="flex justify-content-end my-2 w-100 p-0 text-center">
+              <div className="text-end">
+                <button
+                  className={`${styles.clear_cart_btn}`}
+                  data-toggle="modal"
+                  data-target="#confirmationModal"
+                  onClick={handleShowClearCartModal}
+                >
+                  Clear Cart
+                </button>
+              </div>
             </div>
           </div>
           <ClearCartModal
@@ -359,7 +363,7 @@ const CartListing = () => {
     }
   };
   return (
-    <div className="container-xl">
+    <div className="container-lg">
       <h2 className="theme-blue text-center my-3">My Shopping Cart</h2>
       {handleDataRendering()}
     </div>

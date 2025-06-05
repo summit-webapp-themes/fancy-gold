@@ -55,15 +55,15 @@ const OrderDetail = () => {
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className="mt-3">
-          <div className=" mt-4 mb-2" id="section-to-print">
+        <div className="container-lg mt-3">
+          <div className="container mt-4 mb-2 px-0" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
             </div>
             <div className="row">
-              <div className="offset-lg-6 col-12 col-lg-6 text-end">
-                <div className="d-flex justify-content-end align-items-center">
-                  <div className="mx-2">
+              <div className="col-12 text-end">
+                <div className="d-flex justify-content-start justify-content-sm-end gap-2 align-items-center">
+                  <div className="">
                     <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorderFun(orderData.cust_name)}>
                       {isReorderLoading ? (
                         <span className="mx-3 ps-1">
@@ -74,7 +74,7 @@ const OrderDetail = () => {
                       )}
                     </button>
                   </div>
-                  <div className="mx-2">
+                  <div className="">
                     <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrderFun}>
                       {isCancelOrderLoading ? (
                         <span className="mx-3 ps-1">
@@ -85,7 +85,7 @@ const OrderDetail = () => {
                       )}
                     </button>
                   </div>
-                  <div className={`mx-2 ${orderDetailStyles.print_order} `}>
+                  <div className={`${orderDetailStyles.print_order} `}>
                     <FaPrint onClick={printPage} />
                   </div>
                 </div>
@@ -94,25 +94,26 @@ const OrderDetail = () => {
           </div>
           <div className="content-prev">
             {orderData.data?.length > 0 &&
-              orderData.data.map((item: any) => (
+              orderData.data.map((item: any, i: number) => (
                 <div
-                  className="m-top content-prev"
+                  key={`${item.level_2_category}-${i}`}
+                  className="m-top content-prev p-0"
                   style={{
                     marginTop: '5px',
                     pageBreakBefore: 'always',
                   }}
                 >
-                  <h2 className={`${orderDetailStyles.categoryLabel} `}>
+                  <h2 className={`pt-4 px-0 px-md-3 ${orderDetailStyles.categoryLabel} `}>
                     {item.level_2_category} | Total Weight : {item.level_2_total_weight.toFixed(2)}
                   </h2>
 
-                  <div className="row">
+                  <div className="row mx-0">
                     <div className="col-12">
                       <div className="row">
-                        <div className="col-12">
+                        <div className="col-12 px-0">
                           <div className="row">
                             <div className="col-8">
-                              <div className={`${orderDetailStyles.order_block} pb-2`}>
+                              <div className={`${orderDetailStyles.order_block} pb-2 px-md-3`}>
                                 <p>Customer Name : {orderData?.cust_name}</p>
                                 <p>Order Date: {item.transaction_date}</p>
                                 <p>Order Id: {query?.orderId}</p>
@@ -125,10 +126,9 @@ const OrderDetail = () => {
                         <div className="col-12">
                           <div
                             className={`row black border content-prev ${orderDetailStyles.table_header}`}
-                            style={{ width: 'calc(100% + 23px)' }}
                           >
-                            <div className="col-7 border-bottom border-top p-0 col-bg">
-                              <div className="row">
+                            <div className="col-md-7 border-bottom border-top p-0">
+                              <div className="row m-0">
                                 <div className="col-6 border-end text-center">Products</div>
                                 <div className="col-1 border-end text-center ">Purity</div>
                                 {/* <div className="col-1  text-start">Note</div> */}
@@ -136,7 +136,7 @@ const OrderDetail = () => {
                                 <div className="col-2"></div>
                               </div>
                             </div>
-                            <div className="col-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
+                            <div className="col-md-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
                           </div>
                         </div>
                       </div>
@@ -182,13 +182,13 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="mb-4 content-prev">
+          <div className="container-lg mb-4 content-prev mt-4">
             <div className="row border">
               <div className="col-6 text-start p-2">
-                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
               <div className="col-6 text-end">
-                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
+                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@ const OrderDetail = () => {
 
   return (
     <>
-      <div className="container-xl">{handleDataRendering()}</div>
+      <div className="container-lg">{handleDataRendering()}</div>
     </>
   );
 };
