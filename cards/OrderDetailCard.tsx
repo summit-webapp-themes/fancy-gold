@@ -16,6 +16,7 @@ const OrderDetailCard = ({
   order,
   remark,
   totalWeight,
+  totalDispatched,
   wastage,
   barcodeimage,
   bom_factory_code,
@@ -148,6 +149,7 @@ const OrderDetailCard = ({
                     <th>Color</th>
                     <th>Size(Inch)</th>
                     <th>Dispatch Qty</th>
+                    <th>Dispatch Wt</th>
                     <th>Qty</th>
                     <th>Weight(gm)</th>
                     <th>status</th>
@@ -159,6 +161,7 @@ const OrderDetailCard = ({
                           <td>{data.colour}</td>
                           <td>{data.size} inch</td>
                           <td>{data.ready_quantity}</td>
+                          <td>{data.dispatch_weight}</td>
                           <td>{data.qty}</td>
                           <td className="text-right">{data.weight}gm</td>
                           <td className="text-right">{data?.custom_oms_status}</td>
@@ -168,9 +171,19 @@ const OrderDetailCard = ({
                   <tr>
                     <td style={{ fontSize: '10px !important' }}>Total Weight:</td>
                     <td className="text-right" colSpan={3}>
-                      {totalWeight.toFixed(2)} gm
+                      {totalWeight?.toFixed(2)} gm
                     </td>
                   </tr>
+                  {
+                    totalDispatched ? 
+                    <tr>
+                      <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
+                      <td className="text-right" colSpan={3}>
+                        {totalDispatched?.toFixed(2)} gm
+                      </td>
+                    </tr> : ""
+                  }
+
 
                   {issue_weight !== null && issue_weight !== '' && (
                     <tr>

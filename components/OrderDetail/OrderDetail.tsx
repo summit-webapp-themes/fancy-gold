@@ -51,6 +51,8 @@ const OrderDetail = () => {
       );
     }
 
+    console.log({orderData })
+
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
         <div className="mt-3">
@@ -157,6 +159,7 @@ const OrderDetail = () => {
                         remark={ord?.remark}
                         wastage={ord?.wastage}
                         totalWeight={ord?.total_weight}
+                        totalDispatched = {ord?.total_dispatch_weight}
                         status={ord.item_status}
                         // setReviewState={setReviewState}
                         // callAddReviewAPI={callAddReviewAPI}
