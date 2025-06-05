@@ -149,7 +149,7 @@ const OrderDetailCard = ({
                     <th>Color</th>
                     <th>Size(Inch)</th>
                     <th>Dispatch Qty</th>
-                    <th>Dispatched Wt</th>
+                    <th>Dispatch Wt</th>
                     <th>Qty</th>
                     <th>Weight(gm)</th>
                     <th>status</th>
@@ -177,7 +177,7 @@ const OrderDetailCard = ({
                   {
                     totalDispatched ? 
                     <tr>
-                      <td style={{ fontSize: '10px !important' }}>Total Dispatched Wt:</td>
+                      <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
                       <td className="text-right" colSpan={3}>
                         {totalDispatched?.toFixed(2)} gm
                       </td>
