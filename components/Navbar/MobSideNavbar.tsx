@@ -91,12 +91,7 @@ const MobSideNavbar = ({
                         <Link
                           href={{
                             pathname: `${subItem?.url}`,
-                            query: {
-                              page: '1',
-                              filter: '[{"name":"Purity","value":["22KT"]}]',
-                              sort_by: 'latest',
-                              currency: selectedCurrencyValue,
-                            },
+                            query: { page: '1', sort_by: 'latest', currency: 'INR' },
                           }}
                           legacyBehavior
                         >
@@ -122,12 +117,7 @@ const MobSideNavbar = ({
                               <Link
                                 href={{
                                   pathname: `${subSubItem?.url}`,
-                                  query: {
-                                    page: '1',
-                                    filter: '[{"name":"Purity","value":["22KT"]}]',
-                                    sort_by: 'latest',
-                                    currency: selectedCurrencyValue,
-                                  },
+                                  query: { page: '1', sort_by: 'latest', currency: 'INR' },
                                 }}
                                 legacyBehavior
                               >

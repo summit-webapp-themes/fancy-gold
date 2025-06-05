@@ -69,8 +69,9 @@ const OrderDetailCard = ({
           <div className="row border mx-0">
             <div className="col-md-7 border-end p-0 text-center">
               <div className="row m-0 ">
-                <div className='col-6 row m-0'>
-                  <div className="col-md-4 p-0">
+                <div className='col-sm-6 px-0 row m-0'>
+                  <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Products</div>
+                  <div className="col-md-4">
                     <div className="img-wrap text-center position-relative my-1" style={{ height: '110px' }}>
                       <Image
                         loader={imageLoader}
@@ -84,7 +85,7 @@ const OrderDetailCard = ({
                       />
                     </div>
                   </div>
-                  <div className="col-md-8 pe-0 text-start">
+                  <div className="col-md-8 text-start">
                     <div className={`${orderDetailStyles.order_detail_block}`}>
                       <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={100} height={30} />
                       <p className="mb-0">Product code:{name}</p>
@@ -108,23 +109,27 @@ const OrderDetailCard = ({
                     )}
                   </div>
                 </div>
-                <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
-                  <p>{purity}</p>
+                <div className={`col-sm-2 px-0 `}>
+                  <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Purity</div>
+                  <p className='mb-0' style={{ fontSize: '14px' }}>{purity}</p>
                 </div>
-                <div className="col-1 text-start">
+                <div className="col-sm-1 px-0 text-start">
+                  <div className={`text-center ${orderDetailStyles.table_header}`}>Note</div>
                   {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
                   </p> */}
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {remark}
                   </p>
-                </div>
-                <div className="col-2">
-                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                </div> 
+                <div className="col-sm-2 px-0">
+                  <div className={`text-center ${orderDetailStyles.table_header}`}>Status</div>
+                  <p className="text-dark mb-0" style={{ fontSize: '14px' }}>
                     {status}
                   </p>
                 </div>
-                <div className='col-2'>
+                <div className='col-sm-2 px-0'>
+                  <div className={`text-center d-none d-sm-block ${orderDetailStyles.table_header}`}></div>
                   {/* {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
                     <div className="text-center">
                       {[
@@ -147,26 +152,27 @@ const OrderDetailCard = ({
               </div>
             </div>
             <div className="col-md-5 p-0">
-              <div className={`${orderDetailStyles.order_detail_table}`}>
+              <div className={`text-center d-none d-md-block  ${orderDetailStyles.table_header}`}></div>
+              <div className={`${orderDetailStyles.order_detail_table} overflow-x-auto`}>
                 <table style={{ height: '100%' }}>
-                  <tr>
-                    <th>Color</th>
-                    <th>Size (Inch)</th>
-                    <th>Dispatch Qty</th>
-                    <th>Qty</th>
-                    <th>Weight (gm)</th>
-                    <th>status</th>
+                  <tr className='text-nowrap text-md-wrap'>
+                    <th className='px-1'>Color</th>
+                    <th className='px-1'>Size (Inch)</th>
+                    <th className='px-1'>Dispatch Qty</th>
+                    <th className='px-1'>Qty</th>
+                    <th className='px-1'>Weight (gm)</th>
+                    <th className='px-1'>status</th>
                   </tr>
                   {order.length > 0 &&
                     order.map((data: any, index: any) => {
                       return (
                         <tr key={index}>
-                          <td>{data.colour}</td>
-                          <td>{data.size} inch</td>
-                          <td>{data.ready_quantity}</td>
-                          <td>{data.qty}</td>
-                          <td className="text-right">{data.weight.toFixed(2)}gm</td>
-                          <td className="text-right">{data?.custom_oms_status}</td>
+                          <td className='px-1'>{data.colour}</td>
+                          <td className='px-1'>{data.size} inch</td>
+                          <td className='px-1'>{data.ready_quantity}</td>
+                          <td className='px-1'>{data.qty}</td>
+                          <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
+                          <td className="text-right px-1">{data?.custom_oms_status}</td>
                         </tr>
                       );
                     })}
