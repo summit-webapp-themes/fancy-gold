@@ -37,6 +37,10 @@
   vertical-align: middle;
 }
 
+.order_detail_table th:last-child {
+  border-right: 0px !important;
+}
+
 .order_detail_table td:last-child {
   border-right: 0px !important;
 }
@@ -72,7 +76,8 @@
 
 .table_header {
   background-color: #e3e0e0;
-  border: 1px solid rgb(216, 216, 216) !important;
+  min-height: 26px;
+  border-bottom: 1px solid rgb(216, 216, 216) !important;
 }
 
 .print_order {
