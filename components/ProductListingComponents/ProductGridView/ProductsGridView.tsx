@@ -22,7 +22,6 @@ const ProductsGridView = ({
             wishlistData={wishlistData}
             btnAction={'Add'}
             cartData={cartData}
-            handlePreviewModal={handlePreviewModal}
           />
         </div>
       ))}

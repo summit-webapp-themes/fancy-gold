@@ -45,12 +45,12 @@ const OrderDetail = () => {
               <div className="col-sm-6 mb-2 mb-sm-0">
                 <div className="d-flex justify-content-end align-items-center">
                   <div className="mx-2">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorderFun(orderData.cust_name)}>
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorder(orderData.cust_name)}>
                       Reorder
                     </button>
                   </div>
                   <div className="">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrderFun}>
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
                       Cancel
                     </button>
                   </div>

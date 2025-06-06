@@ -128,7 +128,7 @@ const OrderDetailCard = ({
                     {status}
                   </p>
                 </div>
-                <div className='col-sm-2 px-0'>
+                <div className='col-sm-1 px-0'>
                   <div className={`text-center d-none d-sm-block ${orderDetailStyles.table_header}`}></div>
                   {/* {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
                     <div className="text-center">

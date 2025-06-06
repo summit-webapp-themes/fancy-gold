@@ -260,7 +260,7 @@ const CartListing = () => {
             <hr />
             <div className="row m-0">
               <textarea className="col-md-6 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
-              <div className={`${styles.place_order_container} col-md-6`}>
+              <div className={`${styles.place_order_container} col-md-6 ps-0 py-2 py-md-0 ps-md-3`}>
                 <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
                 <div className="d-flex justify-content-end w-100">
                   <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
