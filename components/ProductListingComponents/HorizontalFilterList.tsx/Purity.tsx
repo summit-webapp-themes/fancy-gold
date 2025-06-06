@@ -56,7 +56,7 @@ const Purity = () => {
   };
 
   return (
-    <div className="d-flex justify-content-start flex-wrap gap-2" >
+    <div className="d-flex justify-content-centerstart flex-wrap gap-2">
       {purityValues?.map((purity: any) => (
         <>
           <button

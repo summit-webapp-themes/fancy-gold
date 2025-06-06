@@ -7,6 +7,7 @@ import { get_access_token } from '../../store/slices/auth/token-login-slice';
 import { callGetAPI } from '../../utils/http-methods';
 import Purity from '../ProductListingComponents/HorizontalFilterList.tsx/Purity';
 import SearchableDropdown from '../SearchableDropdown';
+import styles from '../../styles/components/orderDetail.module.scss';
 
 const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
   const { API_BASE_URL,ARC_APP_CONFIG  } = CONSTANTS;
@@ -144,11 +145,11 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
               />
             </div>
 
-            <div className="d-flex justify-content-start align-items-start col-lg-3 col-md-3 col-12 text-center mt-2 mt-md-0 pe-2 ps-0">
-              <button type="button" className="btn btn-primary mx-1" onClick={handleSaveBtn}>
+            <div className="d-flex justify-content-start gap-2 justify-content-md-end align-items-start col-lg-3 col-md-3 col-12 text-center mt-2 mt-md-0 pe-2 ps-0">
+              <button type="button" className={styles.quick_order_btn} onClick={handleSaveBtn}>
                 Save
               </button>
-              <button type="button" className="btn btn-primary mx-1" onClick={handleSubmitBtn}>
+              <button type="button" className={styles.quick_order_btn} onClick={handleSubmitBtn}>
                 Submit
               </button>
             </div>

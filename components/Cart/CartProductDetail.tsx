@@ -36,7 +36,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
           )}
         </div>
       </div>
-      <div className="col-lg-4 d-flex justify-content-center">
+      <div className="col-lg-4">
         <div className="mt-2">
           <Image
             loader={imageLoader}

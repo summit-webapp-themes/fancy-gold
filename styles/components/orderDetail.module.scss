@@ -41,6 +41,10 @@
   vertical-align: middle;
 }
 
+.order_detail_table th:last-child {
+  border-right: 0px !important;
+}
+
 .order_detail_table td:last-child {
   border-right: 0px !important;
 }
@@ -76,7 +80,8 @@
 
 .table_header {
   background-color: #e3e0e0;
-  border: 1px solid rgb(216, 216, 216) !important;
+  min-height: 26px;
+  border-bottom: 1px solid rgb(216, 216, 216) !important;
 }
 
 .print_order {
@@ -115,4 +120,18 @@
   font-weight: 300;
   font-size: 10px;
   padding: 7px 7px !important;
+}
+
+.quick_order_btn {
+  width: 80px;
+  height: 38px;
+  background: #ecf0f1;
+  border: 1px solid #030f27;
+  color: #030f27;
+  font-size: 14px;
+  border-radius: 6px;
+}
+.quick_order_btn:hover {
+  background: #030f27;
+  color: #ffffff;
 }

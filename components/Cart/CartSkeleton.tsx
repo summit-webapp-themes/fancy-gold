@@ -34,41 +34,43 @@ const CartSkeleton = () => {
 
       {[...Array(3)].map((_, i: number) => (
         <div key={`cart-skeleton${i}`} className="px-3">
-          <div className={`row  ${styles.border} `}>
-            <div className={`col-lg-2 p-2`}>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder style={{ width: '70%', height: 70 }} />
-              </Placeholder>
-            </div>
-            <div className={`col-lg-3 `}>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={7} size="xs" />
-              </Placeholder>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={4} size="xs" />
-              </Placeholder>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={3} size="xs" />
-              </Placeholder>
-            </div>
-            <div className="col-lg-2">
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={6} size="xs" />
-              </Placeholder>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={4} size="xs" />
-              </Placeholder>
-            </div>
-            <div className={`col-lg-4 `}>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={7} size="xs" />
-              </Placeholder>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={6} size="xs" />
-              </Placeholder>
-              <Placeholder as={Card.Title} animation="glow">
-                <Placeholder xs={5} size="xs" />
-              </Placeholder>
+          <div className="px-3">
+            <div className={`row  ${styles.border} `}>
+              <div className={`col-lg-2 p-2`}>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder style={{ width: '70%', height: 70 }} />
+                </Placeholder>
+              </div>
+              <div className={`col-lg-3 `}>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={7} size="xs" />
+                </Placeholder>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={4} size="xs" />
+                </Placeholder>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={3} size="xs" />
+                </Placeholder>
+              </div>
+              <div className="col-lg-2">
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={6} size="xs" />
+                </Placeholder>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={4} size="xs" />
+                </Placeholder>
+              </div>
+              <div className={`col-lg-4 `}>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={7} size="xs" />
+                </Placeholder>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={6} size="xs" />
+                </Placeholder>
+                <Placeholder as={Card.Title} animation="glow">
+                  <Placeholder xs={5} size="xs" />
+                </Placeholder>
+              </div>
             </div>
           </div>
         </div>

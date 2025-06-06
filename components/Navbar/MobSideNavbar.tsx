@@ -70,7 +70,7 @@ const MobSideNavbar = ({
             {categoriesData?.map((item: any, index: number) => (
               <ul className={stylesMobnavbar.mobile_menu} key={index}>
                 <li className="bg-light">
-                  <a href="#" className="text-dark d-flex justify-content-between" onClick={() => mobileHandle(index)}>
+                  <a className="text-dark d-flex justify-content-between" onClick={() => mobileHandle(index)}>
                     <span>{item.label}</span>
                     <span>
                       <svg
@@ -88,53 +88,57 @@ const MobSideNavbar = ({
                   <ul style={{ display: indexVal === index ? 'block' : 'none' }}>
                     {item?.values?.map((subItem: any, subIndex: number) => (
                       <li key={subIndex}>
-                        <Link
-                          href={{
-                            pathname: `${subItem?.url}`,
-                            query: {
-                              page: '1',
-                              filter: '[{"name":"Purity","value":["22KT"]}]',
-                              sort_by: 'latest',
-                              currency: selectedCurrencyValue,
-                            },
-                          }}
-                          legacyBehavior
-                        >
-                          <a href='#' className="text-dark d-flex justify-content-between ps-3 ms-1" onClick={() => handleSubItemClick(index, subIndex)}>
-                            <span className="w-75">{subItem?.label}</span>
-                            <span>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                className={`bi ${stylesMobnavbar.bi_chevron_right} ${arrowIndex === `${index}-${subIndex}` ? `${stylesMobnavbar.rotate}` : ''}`}
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M11.854 7.646a.5.5 0 0 0 0-.708L8.707 3.5a.5.5 0 0 0-.854.354v7a.5.5 0 0 0 .854.354l3.147-3.5z" />
-                              </svg>
-                            </span>
-                          </a>
-                        </Link>
+                        <a className="text-dark d-flex justify-content-between ps-3 ms-1" onClick={() => handleSubItemClick(index, subIndex)}>
+                          <Link
+                            href={{
+                              pathname: `${subItem?.url}`,
+                              query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                            }}
+                            legacyBehavior
+                          >
+                            <a 
+                              className='p-0' 
+                              onClick={() => { 
+                                handleSubItemClick(index, subIndex)
+                                onClickCloseNav()
+                              }}
+                            >
+                              {subItem?.label}
+                            </a>
+                          </Link>
+                          <span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className={`bi ${stylesMobnavbar.bi_chevron_right} ${arrowIndex === `${index}-${subIndex}` ? `${stylesMobnavbar.rotate}` : ''}`}
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M11.854 7.646a.5.5 0 0 0 0-.708L8.707 3.5a.5.5 0 0 0-.854.354v7a.5.5 0 0 0 .854.354l3.147-3.5z" />
+                            </svg>
+                          </span>
+                        </a>
                         <ul style={{ display: arrowIndex === `${index}-${subIndex}` ? 'block' : 'none' }}>
                           {subItem?.values?.map((subSubItem: any, subSubIndex: number) => (
                             <li key={subSubIndex}>
-                              <Link
-                                href={{
-                                  pathname: `${subSubItem?.url}`,
-                                  query: {
-                                    page: '1',
-                                    filter: '[{"name":"Purity","value":["22KT"]}]',
-                                    sort_by: 'latest',
-                                    currency: selectedCurrencyValue,
-                                  },
-                                }}
-                                legacyBehavior
+                              <a
+                                className="text-dark ps-3 ms-1 p-0"
+                                style={{ padding: '0px' }}
+                                onClick={onClickCloseNav}
                               >
-                                <a className="text-dark d-flex justify-content-start ps-4 ms-1" onClick={onClickCloseNav}>
-                                  <span className="pt-2">{subSubItem?.label}</span>
-                                </a>
-                              </Link>
+                                <Link 
+                                  href={{
+                                    pathname: `${subSubItem?.url}`,
+                                    query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                                  }}
+                                  legacyBehavior
+                                  className="w-100"
+                                  style={{ padding: '0px' }}
+                                >
+                                  {subSubItem?.label}
+                                </Link>
+                              </a>
                             </li>
                           ))}
                         </ul>
@@ -217,11 +221,11 @@ const MobSideNavbar = ({
       <div className={stylesMobnavbar.mobile_menu_overlay}></div>
       <div className={`${stylesMobnavbar.mobile_menu_container} scrollable bg-light`}>
         <div className="d-flex justify-content-end mb-1">
-          <Link href="#" legacyBehavior>
+          <div>
             <a onClick={() => toggleSidebar(false)}>
               <i className="btn-close btn_close_btn"></i>
             </a>
-          </Link>
+          </div>
         </div>
 
         <div className={`d-block w-100 ${stylesNavbar.search_bar}`}>
@@ -234,7 +238,7 @@ const MobSideNavbar = ({
               aria-describedby="basic-addon1"
               onChange={(e: any) => setSearchValue(e.target.value)}
             />
-            <FaSearch className={stylesNavbar.search_icon} onClick={(e) => handleSearch(e)} />
+            <FaSearch className={stylesNavbar.search_icon} />
           </div>
         </div>
 

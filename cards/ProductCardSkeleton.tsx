@@ -3,7 +3,7 @@ import Placeholder from 'react-bootstrap/Placeholder';
 import Card from 'react-bootstrap/Card';
 const ProductCardSkeleton = () => {
   return (
-    <Card className={`text-left mx-2 h-100 p-0 mb-3`}>
+    <Card className={`text-left me-2 h-100 p-0 mb-3`}>
       <Placeholder as={Card.Title} animation="glow">
         <Placeholder style={{ width: '100%', height: 200 }} />
       </Placeholder>

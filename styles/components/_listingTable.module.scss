@@ -16,10 +16,6 @@
   font-size: 14px !important;
   text-align: start;
   align-content: first baseline !important;
+  text-wrap: nowrap !important;
 }
 
-@media screen and (max-width: 768px) {
-  .table_header {
-    text-wrap: nowrap !important;
-  }
-}
