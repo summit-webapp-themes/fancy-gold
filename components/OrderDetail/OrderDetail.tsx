@@ -123,22 +123,6 @@ const OrderDetail = () => {
                             {/* {toShowDispatchBtn(item.orders, query.orderId)} */}
                           </div>
                         </div>
-                        <div className="col-12">
-                          <div
-                            className={`row black border content-prev ${orderDetailStyles.table_header}`}
-                          >
-                            <div className="col-md-7 border-bottom border-top p-0">
-                              <div className="row m-0">
-                                <div className="col-6 border-end text-center">Products</div>
-                                <div className="col-1 border-end text-center ">Purity</div>
-                                {/* <div className="col-1  text-start">Note</div> */}
-                                <div className="col-2  text-center">Status</div>
-                                <div className="col-2"></div>
-                              </div>
-                            </div>
-                            <div className="col-md-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
