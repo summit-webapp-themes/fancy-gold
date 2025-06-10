@@ -32,8 +32,8 @@ function LoginComponent() {
         {({ handleChange, handleBlur, values }) => (
           <FormikForm>
             <div className="form-wrapper" id="wrapper-login">
-              <div className="content-wrapper" id="content-signin">
-                <div className="row justify-content-center">
+              <div className="content-wrapper p-3" id="content-signin">
+                <div className="row justify-content-center m-0">
                   <div className={`col-lg-3 col-md-4 ${LoginStyles.main_column}`}>
                     <div className="row ">
                       <div className="col-12">
