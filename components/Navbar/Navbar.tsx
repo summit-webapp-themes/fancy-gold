@@ -132,7 +132,7 @@ const Navbar = () => {
                 </div>
               )}
               <div className={` ${stylesNavbar.inlineList} `}>
-                <ul className={`nav list-inline d-flex justify-content-end gap-3 gap-md-1 pe-3 flex-nowrap ${stylesNavbar.mobnavbar}`}>
+                <ul className={`nav list-inline d-flex justify-content-end gap-2 gap-md-1 pe-3 flex-nowrap ${stylesNavbar.mobnavbar}`}>
                   <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
