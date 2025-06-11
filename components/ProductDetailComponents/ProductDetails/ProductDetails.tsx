@@ -33,7 +33,7 @@ const ProductDetails = ({
     if (Object.keys(productDetailData).length !== 0) {
       return (
         <div className="row ">
-          <div className="col-12 col-md-6 pb-3 pb-md-0">
+          <div className="col-12 col-md-6 pb-3 pb-lg-0">
             <ProductImage Imageslideshow={productDetailData?.slide_img} />
           </div>
           <div className="col-12 col-md-6 ">
