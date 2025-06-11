@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
