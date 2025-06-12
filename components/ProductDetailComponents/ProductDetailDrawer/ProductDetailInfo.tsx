@@ -160,8 +160,8 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   return (
     <div className="w-100">
       <div className="py-2">
-        <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
-        <div className="d-flex">
+        <h6 className={`${styles.productCode} fw-bold mb-3`}>This product is available in below sizes :</h6>
+        <div className="d-flex flex-wrap gap-2">
           {Array.isArray(data?.item_characteristics?.Size) && data?.item_characteristics?.Size.length > 0 && (
             <>
               {[...data.item_characteristics.Size]
@@ -181,7 +181,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                 })}
 
               {data.item_characteristics.Size.includes('custom_size') && (
-                <button className={`btn btn-link theme-blue mt-3 ${styles.tableFontSize}`} onClick={handleAddRow}>
+                <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
                   Add Custom Size
                 </button>
               )}
@@ -190,18 +190,18 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         </div>
       </div>
       <div className="mb-2">
-        <div className={`row mx-1 ${styles.tableRow}`}>
-          <div className="col-2 border text-center py-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'}  border text-center py-1`}>Colour</div>
-          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
-          <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
-          <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div>
-          <div className="col border"></div>
+        <div className={`row mx-0 ${styles.tableRow}`}>
+          <div className="col-2 border text-center p-1">Purity</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border text-center p-1`}>Colour</div>
+          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center p-1">Weight</div>}
+          <div className={`col-3 px-0 border text-center p-1 text-break`}>Size (inch)</div>
+          <div className={`col-2 border text-center p-0 px-1 p-1`}>Qty</div>
+          <div className="col-1 border"></div>
         </div>
         {sizeTable.map((row, index) => (
-          <div className="row mx-1" key={index}>
-            <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border py-1`}>
+          <div className="row mx-0" key={index}>
+            <div className={`col-2 border text-center p-1  ${styles.tableFontSize}`}>{purity}</div>
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border p-1`}>
               <select
                 name="colour"
                 value={row.colour || colour}
@@ -215,7 +215,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             </div>
 
             {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
+              <div className="col-2 border d-flex justify-content-center px-0 p-1 flex-column">
                 <input
                   name="weight"
                   className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
@@ -225,7 +225,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             )}
             <div
               className={`
-                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
+                col-3 px-0 border d-flex justify-content-center p-1 flex-column`}
             >
               <input
                 type="text"
@@ -237,7 +237,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               />
               {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
+            <div className={`col-2 border d-flex justify-content-center p-0 px-1 p-1 flex-column`}>
               <input
                 type="text"
                 name="quantity"
@@ -247,7 +247,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col text-center border p-1">
+            <div className="col-1 text-center border p-1">
               <button
                 className="border-0 bg-light p-0 text-center"
                 onClick={() => handleDeleteRow(index)}
@@ -272,7 +272,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
           name="remark"
           value={cartProductsData?.remark}
           placeholder="Enter note"
-          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+          className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
         ></textarea>
         {reject && (
@@ -280,7 +280,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             name="rejection_note"
             value={cartProductsData?.rejection_note}
             placeholder="Enter rejection note"
-            className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+            className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
             onChange={(e) => setCartProductsData({ ...cartProductsData, rejection_note: e.target.value })}
           ></textarea>
         )}
@@ -311,7 +311,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                     name={key}
                     value={value}
                     placeholder={key}
-                    className={`p-2 ms-1 border w-100 ${styles.tableFontSize}`}
+                    className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
                     onChange={(e) => handleCartData(key, e.target.value)}
                   ></textarea>
                 ) : config === 'checkbox' ? (
