@@ -143,7 +143,7 @@ const OrderDetail = () => {
                         remark={ord?.remark}
                         wastage={ord?.wastage}
                         totalWeight={ord?.total_weight}
-                        totalDispatched = {ord?.total_dispatch_weight}
+                        totalDispatch = {ord?.total_dispatch_weight}
                         status={ord.item_status}
                         // setReviewState={setReviewState}
                         // callAddReviewAPI={callAddReviewAPI}

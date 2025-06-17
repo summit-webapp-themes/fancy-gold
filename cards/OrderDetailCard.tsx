@@ -16,7 +16,7 @@ const OrderDetailCard = ({
   order,
   remark,
   totalWeight,
-  totalDispatched,
+  totalDispatch,
   wastage,
   barcodeimage,
   bom_factory_code,
@@ -156,26 +156,26 @@ const OrderDetailCard = ({
               <div className={`text-center d-none d-md-block  ${orderDetailStyles.table_header}`}></div>
               <div className={`${orderDetailStyles.order_detail_table} overflow-x-auto`}>
                 <table style={{ height: '100%' }}>
-                  <tr className='text-nowrap text-md-wrap'>
-                    <th className='px-1'>Color</th>
-                    <th className='px-1'>Size (Inch)</th>
-                    <th className='px-1'>Dispatch Qty</th>
-                    <th className='px-1'>Dispatch Wt</th>
-                    <th className='px-1'>Qty</th>
-                    <th className='px-1'>Weight (gm)</th>
-                    <th className='px-1'>status</th>
+                  <tr>
+                    <th>Color</th>
+                    <th>Size(Inch)</th>
+                    <th>Dispatch Qty</th>
+                    <th>Dispatch Wt</th>
+                    <th>Qty</th>
+                    <th>Weight(gm)</th>
+                    <th>status</th>
                   </tr>
                   {order.length > 0 &&
                     order.map((data: any, index: any) => {
                       return (
                         <tr key={index}>
-                          <td className='px-1'>{data.colour}</td>
-                          <td className='px-1'>{data.size} inch</td>
-                          <td className='px-1'>{data.ready_quantity}</td>
-                          <td className='px-1'>{data.dispatch_weight}</td>
-                          <td className='px-1'>{data.qty}</td>
-                          <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
-                          <td className="text-right px-1">{data?.custom_oms_status}</td>
+                          <td>{data.colour}</td>
+                          <td>{data.size} inch</td>
+                          <td>{data.ready_quantity}</td>
+                          <td>{data.dispatch_weight}</td>
+                          <td>{data.qty}</td>
+                          <td className="text-right">{data.weight}gm</td>
+                          <td className="text-right">{data?.custom_oms_status}</td>
                         </tr>
                       );
                     })}
@@ -185,16 +185,15 @@ const OrderDetailCard = ({
                       {totalWeight?.toFixed(2)} gm
                     </td>
                   </tr>
-                  {
-                    totalDispatched ? 
+                     {
+                    totalDispatch ? 
                     <tr>
                       <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
                       <td className="text-right" colSpan={3}>
-                        {totalDispatched?.toFixed(2)} gm
+                        {totalDispatch?.toFixed(2)} gm
                       </td>
                     </tr> : ""
                   }
-
 
                   {issue_weight !== null && issue_weight !== '' && (
                     <tr>

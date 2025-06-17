@@ -9,9 +9,9 @@ import { selectCart } from '../../../store/slices/cart-slices/cart-local-slice';
 import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
-import { Spinner } from 'react-bootstrap';
 
-const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }: any) => {
+const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
+
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -37,7 +37,6 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
   const [errors, setErrors] = useState<{ [key: number]: { size?: string; quantity?: string } }>({});
   const [customerError, setCustomerError] = useState('');
   const [reject, setReject] = useState(false);
-  const [addtoCartBtnLoader, setAddtoCartButtonLoader] = useState<boolean>(false);
   const inputRefs = useRef<any[]>([]);
 
   const handleAddRow = () => {
@@ -59,6 +58,8 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       }, 0);
     }
   };
+
+
   const handleInputChange = (index: number, event: any) => {
     const { name, value } = event.target;
     const updatedSizeTable = sizeTable.map((row, i) => {
@@ -71,6 +72,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
 
     setSizeTable(updatedSizeTable);
   };
+
   const handleCartData = (field: string, value: any) => {
     setCartProductsData((prev: any) => ({ ...prev, [field]: value }));
   };
@@ -100,6 +102,8 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       }
     }
   };
+
+
   const handleSizeButtonClick = (size: number) => {
     if (sizeTable[sizeTable.length - 1]?.size || sizeTable?.length === 0) {
       const newRow = { ...initialState, size: size.toString() };
@@ -110,13 +114,10 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     }
   };
 
-  const handleAddToCart = async () => {
-    if (addtoCartBtnLoader) return; // Prevent multiple clicks
-
-    setAddtoCartButtonLoader(true);
+  const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
-
+    
     sizeTable.forEach((row, index) => {
       if (!row.size) {
         newErrors[index] = { ...newErrors[index], size: 'Size is required' };
@@ -131,56 +132,125 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     setErrors(newErrors);
 
     if (!valid) {
-      setAddtoCartButtonLoader(false);
       return;
     }
+
     const addToCartParams = {
       item_code: data?.name,
       party_name: party_name,
       purity: purity,
       cust_name: cust_name,
       colour: colour,
+      // wastage: cartProductsData.wastage,
       qty_size_list: sizeTable,
-      remark: cartProductsData.Note,
-      wastage: cartProductsData.Wastage,
+      remark: cartProductsData.remark,
       user: user,
-      reference_page: referenceTrackerData?.reference_page || 'Category',
-      reference_id: referenceTrackerData?.reference_id || data?.category_slug,
     };
 
-    const socketData = { page_type: 'Product', page_id: data?.slug };
+
+
+
+
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
-      try {
-        await addToCartItem(addToCartParams, undefined, socketData);
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-      }
+      addToCartItem(addToCartParams);
+      setSizeTable([initialState]);
     } else {
       setCustomerError('Customer name is empty!');
     }
-
     setCartProductsData({
       wastage: '',
       remark: '',
       rejection_note: '',
     });
-    setSizeTable([initialState]);
-    setAddtoCartButtonLoader(false);
   };
-
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
 
+
+
+  function evaluateScopedFormula(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
+    const formula = [...value, ...value_2].join(" ");
+    const replaced = formula.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
+      if (value.includes(token)) return data?.[token] ?? 0;
+      if (value_2.includes(token)) return row?.[token] ?? 0;
+      return token;
+    });
+    try {
+      return Number(eval(replaced)).toFixed(3);
+    } catch {
+      return "--";
+    }
+  }
+
+  function capitalizeFirstLetter(str:string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+  const computeFormulFieldaValue = (itemForTable: any, index: number, row: any) => {
+    switch (itemForTable.data_type) {
+      case "custom":
+        return (
+          <div className='col-2 border  py-1' key={index}>
+            <input
+              type="text"
+              name={itemForTable.specification.toLowerCase()}
+              className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
+              value={row[itemForTable.specification.toLowerCase()]}
+              onChange={(e) => handleInputChange(index, e)}
+              ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
+            />
+          </div>
+        )
+      case "fetch":
+        return (
+          <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data[itemForTable.value.toLowerCase()]}</div>
+        )
+      case "select":
+        return (
+          <div className={`col-2 border py-1`}>
+            <select
+              name={itemForTable.specification.toLowerCase()}
+              value={row.colour || colour}
+              onChange={(e) => handleInputChange(index, e)}
+              className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
+            >
+              {
+                itemForTable.value.map((option: string, idx: number) => (
+                  <option key={idx} value={option}>
+                    {option}
+                  </option>
+                ))
+              }
+            </select>
+          </div>
+        )
+      case "formula":
+        return (
+          <div className='col-2 border py-1 text-center'>
+            <div>
+              {
+                // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
+                evaluateScopedFormula(itemForTable.value, itemForTable.value_2, data, row)
+
+              }
+            </div>
+
+          </div>
+        )
+    }
+  }
+
   return (
     <div className="w-100">
       <div className="py-2">
-        <h6 className={`${styles.productCode} fw-bold mb-3`}>This product is available in below sizes :</h6>
-        <div className="d-flex flex-wrap gap-2">
-          {Array.isArray(data?.item_characteristics?.Size) && data?.item_characteristics?.Size.length > 0 && (
+        <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
+        <div className="d-flex">
+          {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size.length > 0 && (
             <>
-              {[...data.item_characteristics.Size]
+              {[...data.item_characteristics.size]
                 .filter((size: any) => typeof size === 'number')
                 .sort((a: any, b: any) => a - b)
                 .map((size: number, index: number) => {
@@ -191,13 +261,13 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
                       className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
                       onClick={() => handleSizeButtonClick(size)}
                     >
-                      {size}
+                      { size }
                     </button>
                   );
                 })}
 
-              {data.item_characteristics.Size.includes('custom_size') && (
-                <button className={`btn btn-link theme-blue ${styles.tableFontSize}`} onClick={handleAddRow}>
+              {data.item_characteristics.size.includes('custom_size') && (
+                <button className={`btn btn-link theme-blue mt-3 ${styles.tableFontSize}`} onClick={handleAddRow}>
                   Add Custom Size
                 </button>
               )}
@@ -206,18 +276,29 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
         </div>
       </div>
       <div className="mb-2">
-        <div className={`row mx-0 ${styles.tableRow}`}>
-          <div className="col-2 border text-center p-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border text-center p-1`}>Colour</div>
-          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center p-1">Weight</div>}
-          <div className={`col-3 px-0 border text-center p-1 text-break`}>Size (inch)</div>
-          <div className={`col-2 border text-center p-0 px-1 p-1`}>Qty</div>
-          <div className="col-1 border"></div>
+        <div className={`row mx-1 ${styles.tableRow}`}>
+          {/* <div className="col-2 border text-center py-1">Purity</div>
+          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'}  border text-center py-1`}>Colour</div>
+          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
+          <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
+          <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div> */}
+          {
+         data?.category_specification?.length > 0 ?   data?.category_specification.map((itemForTable: any, index: number) => {
+              return (
+                <div className="col-2 border text-center py-1" key={index}>
+                  {
+                    capitalizeFirstLetter(itemForTable?.specification)
+                  }
+                </div>
+              )
+            }) : <></>
+          }
+          {/* <div className="col border"></div> */}
         </div>
         {sizeTable.map((row, index) => (
-          <div className="row mx-0" key={index}>
-            <div className={`col-2 border text-center p-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border p-1`}>
+          <div className="" key={index}>
+            {/* <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
+            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border py-1`}>
               <select
                 name="colour"
                 value={row.colour || colour}
@@ -231,7 +312,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
             </div>
 
             {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 p-1 flex-column">
+              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
                 <input
                   name="weight"
                   className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
@@ -239,9 +320,9 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
                 />
               </div>
             )}
-            <div
+            <di
               className={`
-                col-3 px-0 border d-flex justify-content-center p-1 flex-column`}
+                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
             >
               <input
                 type="text"
@@ -253,7 +334,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
               />
               {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
             </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 p-1 flex-column`}>
+            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
               <input
                 type="text"
                 name="quantity"
@@ -263,7 +344,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
               />
               {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
             </div>
-            <div className="col-1 text-center border p-1">
+            <div className="col text-center border p-1">
               <button
                 className="border-0 bg-light p-0 text-center"
                 onClick={() => handleDeleteRow(index)}
@@ -271,24 +352,63 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
               >
                 <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
               </button>
+            </div> */}
+            {
+           data?.category_specification?.length > 0 ? 
+                 <div className="row mx-1">
+              {
+                    data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
+                  return (
+                    // <div className='col-2 border p-0 px-1 py-1' key={index}>
+                    //   {
+                    //     <input
+                    //       type="text"
+                    //       name={itemForTable.specification}
+                    //       className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
+                    //       value={row[itemForTable.specification] || data[itemForTable.value] || ''}
+                    //       onChange={(e) => handleInputChange(index, e)}
+                    //       ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
+                    //     />
+                    //   }
+                    // </div>
+                    <>
+                      {
+                        computeFormulFieldaValue(itemForTable, index, row)
+                      }
+
+                    </>
+                  )
+                }) 
+              }
+              <div className="col-2 text-center border p-1">
+                <button
+                  className="border-0 bg-light p-0 text-center"
+                  onClick={() => handleDeleteRow(index)}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                >
+                  <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+                </button>
+              </div>
             </div>
+           :  <></>
+            }
           </div>
         ))}
       </div>
-      {/* <div className="">
-        <textarea
+      <div className="">
+        {/* <textarea
           name="wastage"
           value={cartProductsData?.wastage}
           placeholder="Wastage"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
           rows={1}
-        ></textarea>
+        ></textarea> */}
         <textarea
           name="remark"
           value={cartProductsData?.remark}
           placeholder="Enter note"
-          className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
+          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
         ></textarea>
         {reject && (
@@ -296,11 +416,11 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
             name="rejection_note"
             value={cartProductsData?.rejection_note}
             placeholder="Enter rejection note"
-            className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
+            className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
             onChange={(e) => setCartProductsData({ ...cartProductsData, rejection_note: e.target.value })}
           ></textarea>
         )}
-      </div> */}
+      </div>
       <div className="row">
         {Object.entries(data?.item_characteristics || {})
           .filter(([key]) => key.toLowerCase() !== 'size') // skip "Size"
@@ -327,7 +447,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
                     name={key}
                     value={value}
                     placeholder={key}
-                    className={`p-2 m-0 border w-100 ${styles.tableFontSize}`}
+                    className={`p-2 ms-1 border w-100 ${styles.tableFontSize}`}
                     onChange={(e) => handleCartData(key, e.target.value)}
                   ></textarea>
                 ) : config === 'checkbox' ? (
@@ -367,22 +487,15 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
             );
           })}
       </div>
-
       {customerError !== '' && <p className="text-danger">{customerError}</p>}
       <div className="d-flex justify-content-start gap-3 ml-1">
         {isVariantInCart(data?.name) ? (
           <button className={productDetailStyles.cart_add_to_cart_btn} onClick={handleAddToCart}>
-            {addtoCartBtnLoader ? <Spinner animation="border" size="sm" className="mx-4" /> : <span>Added</span>}
+            Added
           </button>
         ) : (
-          <button className={`${productDetailStyles.add_to_cart_btn} ms-1`} onClick={handleAddToCart}>
-            {addtoCartBtnLoader ? (
-              <span className="px-4 ">
-                <Spinner animation="border" size="sm" />
-              </span>
-            ) : (
-              <span>Add To Cart</span>
-            )}
+          <button className={productDetailStyles.add_to_cart_btn} onClick={handleAddToCart}>
+            Add To Cart
           </button>
         )}
         {data?.reject_button_value === 1 ? (
