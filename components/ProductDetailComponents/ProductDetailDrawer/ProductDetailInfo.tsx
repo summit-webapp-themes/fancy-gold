@@ -183,7 +183,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     try {
       return Number(eval(replaced)).toFixed(3);
     } catch {
-      return "00";
+      return "0.000";
     }
   }
 
