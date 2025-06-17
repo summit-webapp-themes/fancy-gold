@@ -231,8 +231,8 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
         )
       case "formula":
         return (
-          <div className='col-2 border py-1 text-center'>
-            <div>
+          <div className='col-2 border py-1 text-center '>
+            <div className={`${styles.tableFontSize}`}>
               {
                 // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
                 computeFormulFieldaValue(itemForTable.value, itemForTable.value_2, data, row)
