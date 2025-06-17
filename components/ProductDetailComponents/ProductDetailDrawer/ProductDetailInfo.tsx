@@ -189,7 +189,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
 }
 
 
-  const renderTableFields = (itemForTable: any, index: number, row: any) => {
+  const computeFormulFieldaValue = (itemForTable: any, index: number, row: any) => {
     switch (itemForTable.data_type) {
       case "custom":
         return (
@@ -240,13 +240,8 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
 
           </div>
         )
-
     }
-
-
   }
-
-
 
   return (
     <div className="w-100">
@@ -325,7 +320,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
                 />
               </div>
             )}
-            <div
+            <di
               className={`
                 col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
             >
@@ -378,11 +373,10 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
                     // </div>
                     <>
                       {
-                        renderTableFields(itemForTable, index, row)
+                        computeFormulFieldaValue(itemForTable, index, row)
                       }
 
                     </>
-
                   )
                 }) 
               }
@@ -398,12 +392,8 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
             </div>
            :  <></>
             }
-      
-
           </div>
         ))}
-
-
       </div>
       <div className="">
         {/* <textarea
