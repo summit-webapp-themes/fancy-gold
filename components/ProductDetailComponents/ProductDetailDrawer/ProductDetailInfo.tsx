@@ -173,7 +173,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
   };
 
- function computeFormulFieldaValue(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
+ function computeFormulaFieldValue(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
     const formula = [...value, ...value_2].join(" ");
     const replaced = formula.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
       if (value.includes(token)) return data?.[token] ?? 0;
@@ -235,7 +235,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
             <div className={`${styles.tableFontSize}`}>
               {
                 // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
-                computeFormulFieldaValue(itemForTable.value, itemForTable.value_2, data, row)
+                computeFormulaFieldValue(itemForTable.value, itemForTable.value_2, data, row)
               }
             </div>
 
@@ -321,7 +321,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
                 />
               </div>
             )}
-            <di
+            <div
               className={`
                 col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
             >
