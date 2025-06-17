@@ -1,23 +1,16 @@
 .paginationBttns {
   width: 100%;
+  height: 40px;
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1.5rem;
-  gap: 10px;
-}
-
-.paginationBttns li {
-  height: fit-content;
-  display: flex;
-  align-items: center;
+  margin-top: 2rem;
 }
 
 .paginationBttns a {
-  padding: 6px 16.5px;
+  padding: 10px 16.5px;
+  margin: 8px;
   border-radius: 20px;
-  background-color: #fff;
   border: 1px solid gray;
   color: gray;
   text-decoration: none;
@@ -69,10 +62,4 @@
 .nextBttn:not(.paginationDisabled):hover {
   color: red !important;
   background-color: white;
-}
-
-@media screen and (max-width: 768px) {
-  .paginationBttns {
-    margin-top: 0rem;
-  }
 }

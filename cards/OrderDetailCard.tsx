@@ -16,7 +16,7 @@ const OrderDetailCard = ({
   order,
   remark,
   totalWeight,
-  totalDispatched,
+  totalDispatch,
   wastage,
   barcodeimage,
   bom_factory_code,
@@ -67,134 +67,122 @@ const OrderDetailCard = ({
     <>
       <div className="content-prev">
         <div className="col-12">
-          <div className="row border mx-0">
-            <div className="col-md-7 border-end p-0 text-center">
-              <div className="row m-0 ">
-                <div className='col-sm-6 px-0 row m-0'>
-                  <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Products</div>
-                  <div className="col-md-4">
-                    <div className="img-wrap text-center position-relative my-1" style={{ height: '110px' }}>
-                      <Image
-                        loader={imageLoader}
-                        className={`d-block w-100 object-fit-contain position-absolute`}
-                        src={image !== null ? image : noImage}
-                        alt="Product image"
-                        priority
-                        fill
-                        // width={100}
-                        // height={100}
-                      />
-                    </div>
+          <div className="row ">
+            <div className="col-7 text-center d-flex flex-column justify-content-center text-center">
+              <div className="row align-items-center border">
+                <div className="col-2 ">
+                  <div className="img-wrap text-center" style={{ height: '110px' }}>
+                    <Image
+                      loader={imageLoader}
+                      className={`d-block w-100`}
+                      src={image !== null ? image : noImage}
+                      alt="Barcode image"
+                      priority
+                      width={100}
+                      height={100}
+                    />
                   </div>
-                  <div className="col-md-8 text-start">
-                    <div className={`${orderDetailStyles.order_detail_block}`}>
-                      <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={100} height={30} />
-                      <p className="mb-0">Product code:{name}</p>
-                      {bom_factory_code !== null && <p className="mb-0">BOM Factory Code: {bom_factory_code}</p>}
-                      {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
-                      <p className="mb-0">Weight: {parseInt(weight)} gm</p>
-                      {(level_2_category === 'MANGALSUTRA' || level_2_category === 'IMP PREMIUM') && (
-                        <p className="mb-2">Net Wt. {parseInt(net_weight)}gm</p>
-                      )}
-                    </div>
-                    {status === 'Pending For Confirmation' && getOrderStatusValueFromURL === null ? (
-                      <div className="">
-                        <div>
-                          <button className={`mt-3 mb-3 ${orderDetailStyles.order_detail_review_btn}`} onClick={showReviewModal}>
-                            Add Review
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      ''
+                </div>
+                <div className="col-4 text-start">
+                  <div className={`${orderDetailStyles.order_detail_block}`}>
+                    <Image loader={imageLoader} src={barcodeimage} alt="Barcode image" priority width={180} height={70} />
+                    <p className="mb-0">Product code:{name}</p>
+                    {bom_factory_code !== null && <p>BOM Factory Code: {bom_factory_code}</p>}
+                    {level_2_category === 'BALL CHAINS' && <p>Market Design Name:- {market_design_name}</p>}
+                    <p className="mb-0">Weight: {parseInt(weight)} gm</p>
+                    {(level_2_category === 'MANGALSUTRA' || level_2_category === 'IMP PREMIUM') && (
+                      <p className="mb-2">Net Wt. {parseInt(net_weight)}gm</p>
                     )}
                   </div>
+                  {status === 'Pending For Confirmation' && getOrderStatusValueFromURL === null ? (
+                    <div className="">
+                      <div>
+                        <button className={`mt-3 mb-3 ${orderDetailStyles.order_detail_review_btn}`} onClick={showReviewModal}>
+                          Add Review
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
-                <div className={`col-sm-2 px-0 `}>
-                  <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Purity</div>
-                  <p className='mb-0' style={{ fontSize: '14px' }}>{purity}</p>
+                <div className={`col-1 ${orderDetailStyles.order_detail_block}`}>
+                  <p>{purity}</p>
                 </div>
-                {/* <div className="col-sm-1 px-0 text-start">
-                  <div className={`text-center ${orderDetailStyles.table_header}`}>Note</div>
-                  <p className="text-dark" style={{ fontSize: '14px' }}>
+                <div className="col-1 text-start">
+                  {/* <p className="text-dark" style={{ fontSize: '14px' }}>
                     Wastage:-{wastage}
-                  </p>
+                  </p> */}
                   <p className="text-dark" style={{ fontSize: '14px' }}>
                     {remark}
                   </p>
-                </div> */}
-                <div className="col-sm-2 px-0">
-                  <div className={`text-center ${orderDetailStyles.table_header}`}>Status</div>
-                  <p className="text-dark mb-0" style={{ fontSize: '14px' }}>
+                </div>
+                <div className="col-1">
+                  <p className="text-dark" style={{ fontSize: '14px' }}>
                     {status}
                   </p>
                 </div>
-                <div className='col-sm-2 px-0'>
-                  <div className={`text-center d-none d-sm-block ${orderDetailStyles.table_header}`}></div>
-                  {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
-                    <div className="text-center">
-                      {[
-                        {
-                          label: 'Completed',
-                          className: orderDetailStyles.readyToDispatch,
-                          onClick: () => handleReadyToDispatch(name),
-                        },
-                        { label: 'Delete', className: orderDetailStyles.deletBtn, onClick: () => handleDeleteOrder(name) },
-                      ].map(({ label, className, onClick }) => (
-                        <div key={label} className="m-2">
-                          <button className={className} onClick={onClick}>
-                            {label}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
+                  <div className="col-3 text-center">
+                    {[
+                      {
+                        label: 'Completed',
+                        className: orderDetailStyles.readyToDispatch,
+                        onClick: () => handleReadyToDispatch(name),
+                      },
+                      { label: 'Delete', className: orderDetailStyles.deletBtn, onClick: () => handleDeleteOrder(name) },
+                    ].map(({ label, className, onClick }) => (
+                      <div key={label} className="m-2">
+                        <button className={className} onClick={onClick}>
+                          {label}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-            <div className="col-md-5 p-0">
-              <div className={`text-center d-none d-md-block  ${orderDetailStyles.table_header}`}></div>
-              <div className={`${orderDetailStyles.order_detail_table} overflow-x-auto`}>
+            <div className="col-5 border p-0">
+              <div className={`${orderDetailStyles.order_detail_table}`}>
                 <table style={{ height: '100%' }}>
-                  <tr className='text-nowrap text-md-wrap'>
-                    <th className='px-1'>Color</th>
-                    <th className='px-1'>Size (Inch)</th>
-                    <th className='px-1'>Dispatch Qty</th>
-                    <th className='px-1'>Dispatch Wt</th>
-                    <th className='px-1'>Qty</th>
-                    <th className='px-1'>Weight (gm)</th>
-                    <th className='px-1'>status</th>
+                  <tr>
+                    <th>Color</th>
+                    <th>Size(Inch)</th>
+                    <th>Dispatch Qty</th>
+                    <th>Dispatch Wt</th>
+                    <th>Qty</th>
+                    <th>Weight(gm)</th>
+                    <th>status</th>
                   </tr>
                   {order.length > 0 &&
                     order.map((data: any, index: any) => {
                       return (
                         <tr key={index}>
-                          <td className='px-1'>{data.colour}</td>
-                          <td className='px-1'>{data.size} inch</td>
-                          <td className='px-1'>{data.ready_quantity}</td>
-                          <td className='px-1'>{data.dispatch_weight}</td>
-                          <td className='px-1'>{data.qty}</td>
-                          <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
-                          <td className="text-right px-1">{data?.custom_oms_status}</td>
+                          <td>{data.colour}</td>
+                          <td>{data.size} inch</td>
+                          <td>{data.ready_quantity}</td>
+                          <td>{data.dispatch_weight}</td>
+                          <td>{data.qty}</td>
+                          <td className="text-right">{data.weight}gm</td>
+                          <td className="text-right">{data?.custom_oms_status}</td>
                         </tr>
                       );
                     })}
                   <tr>
                     <td style={{ fontSize: '10px !important' }}>Total Weight:</td>
                     <td className="text-right" colSpan={3}>
-                      {totalWeight?.toFixed(2)} gm
+                      {totalWeight.toFixed(2)} gm
                     </td>
                   </tr>
-                  {
-                    totalDispatched ? 
+                     {
+                    totalDispatch ? 
                     <tr>
                       <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
                       <td className="text-right" colSpan={3}>
-                        {totalDispatched?.toFixed(2)} gm
+                        {totalDispatch?.toFixed(2)} gm
                       </td>
                     </tr> : ""
                   }
-
 
                   {issue_weight !== null && issue_weight !== '' && (
                     <tr>

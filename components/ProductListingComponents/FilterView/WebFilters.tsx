@@ -2,14 +2,8 @@ import { FaAlignJustify } from 'react-icons/fa6';
 import useProductListingFilterHook from '../../../hooks/ProductListPageHooks/useProductListFilterHook';
 import filterStyles from '../../../styles/components/filterSidebar.module.scss';
 import FilterViewLoadingComponent from './FilterViewLoadingComponent';
-import { FaSearch } from 'react-icons/fa';
 const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue, handleFilterSearchFun, handleFilterSearchBtn }: any) => {
   const { filtersData, isLoading, errorMessage, handleFilterCheckFun, selectedFilters } = useProductListingFilterHook();
-  const handleKeyDownSearchFun = (event: any) => {
-    if (event.key === 'Enter') {
-      handleFilterSearchBtn();
-    }
-  };
   const purity = localStorage.getItem('localPurity') || '22KT';
   const showFilterSection: any = () => {
     if (isLoading) {
@@ -34,10 +28,9 @@ const WebFilters = ({ hideFilterSection, setHideFilterSection, searchFilterValue
                   autoComplete="off"
                   value={searchFilterValue}
                   onChange={handleFilterSearchFun}
-                  onKeyDown={(e) => handleKeyDownSearchFun(e)}
                 />
-                <span className="input-group-text cusrsor-pointer" id="inputGroup-sizing-sm" onClick={handleFilterSearchBtn}>
-                  <FaSearch />
+                <span className="input-group-text" id="inputGroup-sizing-sm" onClick={handleFilterSearchBtn}>
+                  <FaAlignJustify />
                 </span>
               </div>
               {filtersData?.filters?.length > 0 &&

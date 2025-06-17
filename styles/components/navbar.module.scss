@@ -7,8 +7,7 @@
 }
 
 .search_bar {
-  width: 40%;
-  max-width: 40%;
+  width: 60%;
   padding-bottom: 1.0625rem;
   text-transform: uppercase;
   flex: 2;
@@ -30,13 +29,12 @@
   bottom: 35px !important;
   height: 1.1rem;
   position: absolute;
-  right: 6px !important;
+  right: 18px !important;
   text-align: center;
   width: 1.1rem;
   font-size: 12px;
   font-weight: 600;
 }
-
 .list_inline_margin {
   margin-top: -2px;
 }
@@ -57,7 +55,7 @@
   cursor: pointer;
 }
 .list_inline_item {
-  width: 60px;
+  width: 90px;
 }
 .order_list_dropdown {
   text-align: center;
@@ -73,14 +71,14 @@
   padding: 3px;
 }
 .logo {
-  // flex: 1;
+  flex: 1;
 }
 .inlineList {
-  // flex: 2;
+  flex: 2;
 }
 @media (max-width: 1070px) {
   .search_bar {
-    width: 40%;
+    width: 45%;
   }
 }
 @media (max-width: 968px) {
@@ -96,20 +94,20 @@
 @media (max-width: 767px) {
   .list_inline_item {
     margin-top: 10px;
-    width: 50px;
+    width: 30px;
   }
-  .badge, .cart_badge {
-    right: 0px !important;
+  .badge {
+    bottom: 17px !important;
+    right: -15px !important;
   }
   .mobnavbar {
     justify-content: end !important;
   }
-  .logo {
-    flex: none;
+  .list_inline_item_cart {
+    padding-right: 2.5rem !important;
   }
-  .search_bar {
-    width: 100%;
-    max-width: 100%;
+  .list_inline_item_wishlist {
+    padding-right: 1.5rem !important;
   }
 }
 

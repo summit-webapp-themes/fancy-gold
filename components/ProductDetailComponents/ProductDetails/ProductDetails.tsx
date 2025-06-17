@@ -14,7 +14,6 @@ const ProductDetails = ({
   errorMessage,
   variantLoading,
   isLoading,
-  referenceTrackerData,
 }: any) => {
   const handledataRendering = () => {
     if (isLoading) {
@@ -34,11 +33,11 @@ const ProductDetails = ({
     if (Object.keys(productDetailData).length !== 0) {
       return (
         <div className="row ">
-          <div className="col-12 col-md-6 pb-3 pb-lg-0">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-6 p-3">
             <ProductImage Imageslideshow={productDetailData?.slide_img} />
           </div>
-          <div className="col-12 col-md-6 ">
-            <div className="p-2 p-md-3 w-100 border">
+          <div className="col-12 col-md-12 col-sm-12 col-lg-6 ">
+            <div className="p-3 w-100 border">
               <ProductCode data={productDetailData} />
               <ProductVariants
                 productDetail={productDetailData}
@@ -48,11 +47,7 @@ const ProductDetails = ({
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo
-                data={productDetailData}
-                getProductDetailData={fetchProductDetailDataAPI}
-                referenceTrackerData={referenceTrackerData}
-              />
+              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
             </div>
             <PrevNextButtons data={productDetailData} />
           </div>

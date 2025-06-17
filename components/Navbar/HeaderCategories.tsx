@@ -5,11 +5,8 @@ import { Overlay, Placeholder, Popover } from 'react-bootstrap';
 import ComponentErrorHandler from '../ComponentErrorHandler';
 import NavbarLoadingComponent from './NavbarLoadingComponent';
 import stylesHeader from '../../styles/components/header.module.scss';
-import { useDispatch } from 'react-redux';
-import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
-  const dispatch = useDispatch();
   const [showPopoverIndex, setShowPopoverIndex] = useState<number | null>(null);
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -19,15 +16,6 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   };
   const handleMouseLeave = () => {
     setShowPopoverIndex(null);
-  };
-  const handleClickCategory = (slug: string) => {
-    setShowPopoverIndex(null);
-    dispatch(
-      AddReference({
-        reference_page: 'Category',
-        reference_id: slug,
-      })
-    );
   };
   const popoverBottom = (item: any) => (
     <Popover id={`popover-${item.label}`} className={`p-2 ${stylesHeader.category_popover} shadow rounded`} onMouseLeave={handleMouseLeave}>
@@ -45,7 +33,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                       query: { page: '1', sort_by: 'latest', currency: 'INR' },
                     }}
                     className="label theme-blue text-decoration-none"
-                    onClick={() => handleClickCategory(itemL2?.slug)}
+                    onClick={() => setShowPopoverIndex(null)}
                   >
                     {itemL2?.label}
                   </Link>
@@ -62,7 +50,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                               query: { page: '1', sort_by: 'latest', currency: 'INR' },
                             }}
                             className={stylesHeader.heading_category_l3}
-                            onClick={() => handleClickCategory(itemL3?.slug)}
+                            onClick={() => setShowPopoverIndex(null)}
                           >
                             {itemL3?.label !== undefined ? itemL3?.label : `${idx}`}
                           </Link>

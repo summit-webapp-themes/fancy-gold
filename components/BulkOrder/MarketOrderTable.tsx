@@ -17,11 +17,11 @@ const MarketOrderTable = ({ formData, addMarketOrderRow, handleChangeMarketOrder
 
   return (
     <>
-      <div className="row mt-3 mt-md-4 mb-0">
+      <div className="row mt-4 mb-0">
         <div className="col-md-9">
-          <p className="fs-14 mb-2 mb-md-3">Market Order Details</p>
+          <p className="fs-14">Market Order Details</p>
         </div>
-        <div className="col-md-3 d-flex justify-content-start justify-content-md-end h-75 mb-3">
+        <div className="col-md-3 d-flex justify-content-end h-75">
           <button className={`${styles.btn_save_bulk_order}`} onClick={addMarketOrderRow}>
             Add More
           </button>
@@ -31,7 +31,7 @@ const MarketOrderTable = ({ formData, addMarketOrderRow, handleChangeMarketOrder
         <div className={styles.table_wrapper}>
           <table className="table table-bordered">
             <thead className={styles.fixed_header}>
-              <tr className=' text-nowrap'>
+              <tr>
                 <th colSpan={1}>
                   Design<span className={styles.name_th_pd}>Name</span>
                   <span className="text-danger p-0 m-0">*</span>

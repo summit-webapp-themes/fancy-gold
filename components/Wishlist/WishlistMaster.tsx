@@ -24,10 +24,10 @@ const WishlistMaster = () => {
   const handleDataRendering = () => {
     if (isLoading) {
       return (
-        <div className="row mx-0">
+        <div className="row ">
           {[...Array(10)].map(() => (
             <>
-              <div className="col-md-4 col-lg-3 col-6 mb-3 p-0">
+              <div className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
                 <ProductCardSkeleton />
               </div>
             </>
@@ -37,10 +37,10 @@ const WishlistMaster = () => {
     }
     if (wishlistData?.length > 0) {
       return (
-        <div className="row mx-0">
+        <div className="d-flex flex-wrap ">
           {wishlistData?.length > 0 &&
             wishlistData?.map((item: any, index: number) => (
-              <div key={index} className="col-6 col-md-4 col-xl-3 col-xxl-3 text-center mb-3 mb-md-4 p-start">
+              <div key={index} className="col-sm-6 col-lg-3 col-xl-3 col-xxl-3 text-center mb-4 px-3">
                 <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} cartData={cartData} />
               </div >
             ))}
@@ -52,7 +52,7 @@ const WishlistMaster = () => {
     }
   };
   return (
-    <div className="container pe-0" style={{ paddingLeft: '12px'}}>
+    <div className="container">
       <h2 className="theme-blue text-center my-3">My Wishlist</h2>
       {handleDataRendering()}
       <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />

@@ -9,20 +9,16 @@ import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
 import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
-import { FaEye } from 'react-icons/fa';
-import { useState } from 'react';
 
-const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, handlePreviewModal }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
-  const [isHovered, setIsHovered] = useState(false);
   let wishProducts: any;
   let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
   const handleRenderIcon = () => {
-    const socketData = { page_type: 'Product', page_id: data?.slug };
     {
       wishlistData?.length > 0 &&
         wishlistData?.map((item: any, index: number) => {
@@ -34,7 +30,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     if (!wishProducts) {
       return (
         <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          <FaRegHeart onClick={() => handleAddToWishList(data, socketData)} />
+          <FaRegHeart onClick={() => handleAddToWishList(data)} />
         </span>
       );
     } else {
@@ -67,7 +63,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
         return (
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
-            onClick={() => handleShow(data?.name, data?.variant_of, data?.slug)}
+            onClick={() => handleShow(data?.slug, data?.variant_of)}
           >
             {btnAction}
             <IoCart className={ProductCardStyles.icon_margin} />
@@ -78,7 +74,6 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
           <button
             className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.add_to_cart_btn} `}
             onClick={() => {
-              // window.location.href = `${data?.url}`;
               router.push(`${data?.url}`);
             }}
           >
@@ -90,10 +85,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
       return (
         <button
           className={`btn btn-outline-primary text-uppercase mb-0  ${ProductCardStyles.addded_to_cart_btn}`}
-          onClick={() => {
-            console.log(data?.slug);
-            handleShow(data?.name, data?.variant_of, data?.slug);
-          }}
+          onClick={() => handleShow(data?.slug, data?.variant_of)}
         >
           Added
         </button>
@@ -101,16 +93,10 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     }
   };
   return (
-    <Card className={` ${ProductCardStyles.product_card}`}>
+    <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-        <div
-          className="text-decoration-none text-dark"
-          onClick={() => handlePreviewModal(data)}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {data?.image && data?.image !== null}
+        <Link href={`${data?.url}`} target="_blank" className="text-decoration-none text-dark">
           <Image
             loader={data.image !== null ? imageLoader : undefined}
             src={data.image !== null ? data.image : noImage}
@@ -121,19 +107,14 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
             style={{ width: '100%', height: '100%' }}
             priority={true}
           />
-          {isHovered && (
-            <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center">
-              <FaEye size={24} className="text-white" />
-            </div>
-          )}
-        </div>
+        </Link>
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link href={`${data?.url}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+          <div className="d-flex justify-content-between align-items-center">
             <div>
               {/* {data?.bom_factory_code ? (
                 <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
@@ -152,7 +133,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
                   </Card.Text>
                 ))}
             </div>
-            <div className='d-flex justify-content-end' >{handleRenderAddToCartBtn()}</div>
+            <div>{handleRenderAddToCartBtn()}</div>
           </div>
         </div>
       </Card.Body>

@@ -14,7 +14,7 @@ import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
 
-const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: any) => {
+const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const { SUMMIT_APP_CONFIG }: any = CONSTANTS;
   const [productDetail, setProductDetail] = useState<any>({});
@@ -46,10 +46,9 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
       setVariantsData([]);
     }
   };
-  const getProductDetailData = async (productName: string, slug: string) => {
+  const getProductDetailData = async (productName: string) => {
     const requestParams = {
-      item: slug,
-      slug: slug,
+      item: productName,
       currency: 'INR',
     };
     setDetailLoading(true);
@@ -80,7 +79,7 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
   };
   useEffect(() => {
     if (data?.productName) {
-      getProductDetailData(data?.productName, data?.slug);
+      getProductDetailData(data?.productName);
     }
     if (data?.variantOf) {
       getVariantsData();
@@ -109,13 +108,8 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
               errorMessage={errorMessage}
               loading={loading}
             />
-            <ProductDetailInfo
-              data={productDetail}
-              getProductDetailData={getProductDetailData}
-              referenceTrackerData={referenceTrackerData}
-            />
+            <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
             <div className="mt-2">
-
               <Image
                 src={productDetail?.image ? productDetail?.image : noImage}
                 alt="product-image"
@@ -124,7 +118,6 @@ const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: 
                 height={100}
                 loader={imageLoader}
               />
-
             </div>
           </>
         ) : (

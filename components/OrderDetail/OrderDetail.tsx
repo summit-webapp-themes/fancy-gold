@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { FaPrint } from 'react-icons/fa';
 import useOrderDetailHook from '../../hooks/OrderDetailHook/useOrderDetailHook';
@@ -6,7 +6,6 @@ import OrderDetailCard from '../../cards/OrderDetailCard';
 import orderDetailStyles from '../../styles/components/orderDetail.module.scss';
 import CartSkeleton from '../Cart/CartSkeleton';
 import ApiErrorPage from '../ApiErrorPage';
-import { Spinner } from 'react-bootstrap';
 
 const OrderDetail = () => {
   const { query } = useRouter();
@@ -20,27 +19,6 @@ const OrderDetail = () => {
   const printPage = () => {
     window.print();
   };
-  const [isReorderLoading, setIsReorderLoading] = useState(false);
-  const [isCancelOrderLoading, setIsCancelOrderLoading] = useState(false);
-
-  const handleReorderFun = async (cust_name: any) => {
-    if (isReorderLoading) return;
-    setIsReorderLoading(true);
-    try {
-      await handleReorder(cust_name);
-    } finally {
-      setIsReorderLoading(false);
-    }
-  };
-  const handleCancelOrderFun = async () => {
-    if (isCancelOrderLoading) return true;
-    setIsCancelOrderLoading(true);
-    try {
-      await handleCancelOrder();
-    } finally {
-      setIsCancelOrderLoading(false);
-    }
-  };
 
   const handleDataRendering: any = () => {
     if (isLoading) {
@@ -51,41 +29,32 @@ const OrderDetail = () => {
       );
     }
 
-    console.log({orderData })
-
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
-        <div className="container-lg mt-3">
-          <div className="container mt-4 mb-2 px-0" id="section-to-print">
+        <div className="container mt-3">
+          <div className="container mt-4 mb-2" id="section-to-print">
             <div className={` ${orderDetailStyles.order_heading} text-center content-prev`}>
               <h2>Order</h2>
             </div>
             <div className="row">
-              <div className="col-12 text-end">
-                <div className="d-flex justify-content-start justify-content-sm-end gap-2 align-items-center">
-                  <div className="">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorderFun(orderData.cust_name)}>
-                      {isReorderLoading ? (
-                        <span className="mx-3 ps-1">
-                          <Spinner animation="border" size="sm" />
-                        </span>
-                      ) : (
-                        <span>Reorder</span>
-                      )}
+              <div className="col-6 p-0">
+                <div className={`${orderDetailStyles.order_block} `}>
+                  <p className="cust-name">Customer Name : {orderData.cust_name}</p>
+                </div>
+              </div>
+              <div className="col-6 text-end">
+                <div className="d-flex justify-content-end align-items-center">
+                  <div className="mx-2">
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={() => handleReorder(orderData.cust_name)}>
+                      Reorder
                     </button>
                   </div>
-                  <div className="">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrderFun}>
-                      {isCancelOrderLoading ? (
-                        <span className="mx-3 ps-1">
-                          <Spinner animation="border" size="sm" />
-                        </span>
-                      ) : (
-                        <span>Cancel</span>
-                      )}
+                  <div className="mx-2">
+                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
+                      Cancel
                     </button>
                   </div>
-                  <div className={`${orderDetailStyles.print_order} `}>
+                  <div className={`mx-2 ${orderDetailStyles.print_order} `}>
                     <FaPrint onClick={printPage} />
                   </div>
                 </div>
@@ -94,26 +63,25 @@ const OrderDetail = () => {
           </div>
           <div className="content-prev">
             {orderData.data?.length > 0 &&
-              orderData.data.map((item: any, i: number) => (
+              orderData.data.map((item: any) => (
                 <div
-                  key={`${item.level_2_category}-${i}`}
-                  className="m-top content-prev p-0"
+                  className="container m-top content-prev"
                   style={{
                     marginTop: '5px',
                     pageBreakBefore: 'always',
                   }}
                 >
-                  <h2 className={`pt-4 px-0 px-md-3 ${orderDetailStyles.categoryLabel} `}>
+                  <h2 className={`pt-4 ${orderDetailStyles.categoryLabel} `}>
                     {item.level_2_category} | Total Weight : {item.level_2_total_weight.toFixed(2)}
                   </h2>
 
-                  <div className="row mx-0">
+                  <div className="row">
                     <div className="col-12">
                       <div className="row">
-                        <div className="col-12 px-0">
+                        <div className="col-12">
                           <div className="row">
                             <div className="col-8">
-                              <div className={`${orderDetailStyles.order_block} pb-2 px-md-3`}>
+                              <div className={`${orderDetailStyles.order_block} pb-2`}>
                                 <p>Customer Name : {orderData?.cust_name}</p>
                                 <p>Order Date: {item.transaction_date}</p>
                                 <p>Order Id: {query?.orderId}</p>
@@ -121,6 +89,23 @@ const OrderDetail = () => {
                             </div>
 
                             {/* {toShowDispatchBtn(item.orders, query.orderId)} */}
+                          </div>
+                        </div>
+                        <div className="col-12">
+                          <div
+                            className={`row black border content-prev ${orderDetailStyles.table_header}`}
+                            style={{ width: 'calc(100% + 23px)' }}
+                          >
+                            <div className="col-7 border-bottom border-top p-0 col-bg">
+                              <div className="row">
+                                <div className="col-6 border-end text-center">Products</div>
+                                <div className="col-1 border-end text-center ">Purity</div>
+                                <div className="col-1  text-start">Note</div>
+                                <div className="col-1  text-center">Status</div>
+                                <div className="col-2"></div>
+                              </div>
+                            </div>
+                            <div className="col-5 black border-top border-start border-bottom border-end p-0 col-bg"></div>
                           </div>
                         </div>
                       </div>
@@ -143,7 +128,7 @@ const OrderDetail = () => {
                         remark={ord?.remark}
                         wastage={ord?.wastage}
                         totalWeight={ord?.total_weight}
-                        totalDispatched = {ord?.total_dispatch_weight}
+                        totalDispatch = {ord?.total_dispatch_weight}
                         status={ord.item_status}
                         // setReviewState={setReviewState}
                         // callAddReviewAPI={callAddReviewAPI}
@@ -166,13 +151,13 @@ const OrderDetail = () => {
               ))}
           </div>
 
-          <div className="container-lg mb-4 content-prev mt-4">
+          <div className="container mb-4 content-prev">
             <div className="row border">
               <div className="col-6 text-start p-2">
-                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
+                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
               <div className="col-6 text-end">
-                <h6 className={`my-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
+                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>{common_comment}</h6>
               </div>
             </div>
           </div>
@@ -187,7 +172,7 @@ const OrderDetail = () => {
 
   return (
     <>
-      <div className="container-lg">{handleDataRendering()}</div>
+      <div className="container">{handleDataRendering()}</div>
     </>
   );
 };

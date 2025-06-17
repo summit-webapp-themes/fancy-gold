@@ -12,9 +12,9 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
   };
   return (
     <>
-      <div className="d-flex flex-wrap justify-content-start gap-2">
+      <div className="d-flex justify-content-center ">
         <select
-          className={`form-select form-select ${horizontalFilterStyles.sort_by_select} mx-0`}
+          className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}
           defaultValue={colour}
           onChange={(e) => {
             setColournInLocalStorage(e.target.value);
@@ -25,7 +25,7 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
           <option value="Pink">Pink</option>
         </select>
         <select
-          className={`form-select form-select ${horizontalFilterStyles.sort_by_select} mx-0`}
+          className={`form-select form-select ${horizontalFilterStyles.sort_by_select} `}
           value={sortBy}
           onChange={(e) => handleSortBy(e.target.value)}
         >

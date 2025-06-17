@@ -12,21 +12,18 @@ const ProductGridViewMaster = ({
   handleShow,
   wishlistData,
   cartData,
-  handlePreviewModal,
 }: any) => {
   const { query } = useRouter();
-
-  const pageOffset = query?.page ? Number(query?.page) - 1 : 0;
-
+  const pageOffset = Number(query?.page) - 1;
   const handlePageClick = (event: any) => {
     handlePaginationBtn(event?.selected);
   };
   const handleDataRendering = () => {
     if (isLoading) {
       return (
-        <div className="row m-0">
+        <div className="row ">
           {[...Array(10)].map((_, index) => (
-            <div key={index} className="col-md-3 col-lg-3 col-6 mb-3 px-0">
+            <div key={index} className="col-md-3 col-lg-3 col-sm-6 mb-3 p-1">
               <ProductCardSkeleton />
             </div>
           ))}
@@ -43,7 +40,7 @@ const ProductGridViewMaster = ({
           handleShow={handleShow}
           wishlistData={wishlistData}
           cartData={cartData}
-          handlePreviewModal={handlePreviewModal}
+
         />
       );
     }

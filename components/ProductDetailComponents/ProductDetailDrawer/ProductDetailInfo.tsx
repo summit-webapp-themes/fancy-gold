@@ -10,7 +10,7 @@ import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
 
-const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
+const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
 
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
@@ -117,7 +117,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
   const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
-    
+
     sizeTable.forEach((row, index) => {
       if (!row.size) {
         newErrors[index] = { ...newErrors[index], size: 'Size is required' };
@@ -170,7 +170,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
 
 
 
-  function evaluateScopedFormula(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
+  function computeFormulFieldaValue(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
     const formula = [...value, ...value_2].join(" ");
     const replaced = formula.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
       if (value.includes(token)) return data?.[token] ?? 0;
@@ -184,12 +184,12 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
     }
   }
 
-  function capitalizeFirstLetter(str:string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+  function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
 
-  const computeFormulFieldaValue = (itemForTable: any, index: number, row: any) => {
+  const evaluateScopedFormula = (itemForTable: any, index: number, row: any) => {
     switch (itemForTable.data_type) {
       case "custom":
         return (
@@ -233,8 +233,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
             <div>
               {
                 // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
-                evaluateScopedFormula(itemForTable.value, itemForTable.value_2, data, row)
-
+                computeFormulFieldaValue(itemForTable.value, itemForTable.value_2, data, row)
               }
             </div>
 
@@ -261,7 +260,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
                       className={isActive ? productDetailStyles.size_button_active : productDetailStyles.size_button}
                       onClick={() => handleSizeButtonClick(size)}
                     >
-                      { size }
+                      {size}
                     </button>
                   );
                 })}
@@ -275,6 +274,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
           )}
         </div>
       </div>
+
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
           {/* <div className="col-2 border text-center py-1">Purity</div>
@@ -283,7 +283,7 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
           <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
           <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div> */}
           {
-         data?.category_specification?.length > 0 ?   data?.category_specification.map((itemForTable: any, index: number) => {
+            data?.category_specification?.length > 0 ? data?.category_specification.map((itemForTable: any, index: number) => {
               return (
                 <div className="col-2 border text-center py-1" key={index}>
                   {
@@ -354,47 +354,48 @@ const ProductDetailInfo = ({ data,getProductDetailData }: any) => {
               </button>
             </div> */}
             {
-           data?.category_specification?.length > 0 ? 
-                 <div className="row mx-1">
-              {
+              data?.category_specification?.length > 0 ?
+                <div className="row mx-1">
+                  {
                     data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
-                  return (
-                    // <div className='col-2 border p-0 px-1 py-1' key={index}>
-                    //   {
-                    //     <input
-                    //       type="text"
-                    //       name={itemForTable.specification}
-                    //       className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
-                    //       value={row[itemForTable.specification] || data[itemForTable.value] || ''}
-                    //       onChange={(e) => handleInputChange(index, e)}
-                    //       ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
-                    //     />
-                    //   }
-                    // </div>
-                    <>
-                      {
-                        computeFormulFieldaValue(itemForTable, index, row)
-                      }
+                      return (
+                        // <div className='col-2 border p-0 px-1 py-1' key={index}>
+                        //   {
+                        //     <input
+                        //       type="text"
+                        //       name={itemForTable.specification}
+                        //       className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
+                        //       value={row[itemForTable.specification] || data[itemForTable.value] || ''}
+                        //       onChange={(e) => handleInputChange(index, e)}
+                        //       ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
+                        //     />
+                        //   }
+                        // </div>
+                        <>
+                          {
+                            evaluateScopedFormula(itemForTable, index, row)
+                          }
 
-                    </>
-                  )
-                }) 
-              }
-              <div className="col-2 text-center border p-1">
-                <button
-                  className="border-0 bg-light p-0 text-center"
-                  onClick={() => handleDeleteRow(index)}
-                  onKeyDown={(e) => handleKeyDown(e)}
-                >
-                  <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
-                </button>
-              </div>
-            </div>
-           :  <></>
+                        </>
+                      )
+                    })
+                  }
+                  <div className="col-2 text-center border p-1">
+                    <button
+                      className="border-0 bg-light p-0 text-center"
+                      onClick={() => handleDeleteRow(index)}
+                      onKeyDown={(e) => handleKeyDown(e)}
+                    >
+                      <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+                    </button>
+                  </div>
+                </div>
+                : <></>
             }
           </div>
         ))}
       </div>
+
       <div className="">
         {/* <textarea
           name="wastage"
