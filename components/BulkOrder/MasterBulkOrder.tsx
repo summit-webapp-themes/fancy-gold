@@ -85,7 +85,7 @@ const MasterBulkOrder = () => {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mt-3">
             <div className="col-md-6">
               <button onClick={handleSaveBtn} className={styles.btn_save_bulk_order}>
                 Save

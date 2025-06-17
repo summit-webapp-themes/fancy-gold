@@ -19,11 +19,11 @@ function CustomerOrderTable({
 
   return (
     <>
-      <div className="row mt-4">
+      <div className="row mt-3 mt-md-4">
         <div className="col-md-9">
-          <p className="fs-14">Custom Market Order Details</p>
+          <p className="fs-14 m-0 mb-2 mb-md-3">Custom Market Order Details</p>
         </div>
-        <div className="col-md-3 d-flex justify-content-end h-75">
+        <div className="col-md-3 d-flex justify-content-start justify-content-md-end h-75 mb-3">
           <button className={styles.btn_save_bulk_order} onClick={addCustomMarketOrderRow}>
             Add More
           </button>
@@ -31,7 +31,7 @@ function CustomerOrderTable({
       </div>
       <div className={styles.table_container}>
         <div className={styles.table_wrapper}>
-          <table className="table ">
+          <table className="table m-0">
             <thead className={styles.fixed_header}>
               <tr>
                 <th>

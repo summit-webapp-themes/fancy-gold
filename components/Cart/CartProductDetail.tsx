@@ -36,7 +36,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
           )}
         </div>
       </div>
-      <div className="col-lg-4 d-flex justify-content-center">
+      <div className="col-lg-4">
         <div className="mt-2">
           <Image
             loader={imageLoader}
@@ -86,7 +86,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
             </button>
           )}
         </div> */}
-        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>;
+        <div className="d-flex justify-content-center align-items-center">{data?.remark}</div>
       </div>
       <Modal show={imagePreview} onHide={() => setImagePreview(false)} centered size="lg">
         <Modal.Header closeButton />
