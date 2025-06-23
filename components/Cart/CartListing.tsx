@@ -172,7 +172,7 @@ const CartListing = () => {
     if (customerName !== cartListingItems?.cust_name) {
       setCustomerNameUpdateLoading(true);
       try {
-        updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor);
+       await   updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor);
       } catch (error) {
         console.error('Error updating cart:', error);
       }
@@ -184,7 +184,7 @@ const CartListing = () => {
     if (isPurityUpdateLoading) return; // Prevent multiple clicks while loading
     setIsPurityUpdateLoading(true); // Start loader
     try {
-      updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor);
+     await updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor);
     } finally {
       setIsPurityUpdateLoading(false); // Stop loader after API call
     }
