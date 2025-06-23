@@ -14,13 +14,18 @@ const SizeQtyTable = dynamic(() => import('./SizeQtyTable'));
 const NoDataFound = dynamic(() => import('../NoDataFound'));
 
 const CartListing = () => {
-  const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity } = useCartPageHook();
+  const { cartListingItems, setCartListingItems, isLoading, errorMessage, purity, fetchCartListingData } = useCartPageHook();
   const { addToCartItem, placeOrderAPIFunc, RemoveItemCartAPIFunc, disableRemove, cLearCartAPIFunc, updateCartData } = useAddToCartHook();
   const [updatedPurity, setUpdatedPurity] = useState('');
   const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
+  const [selectedColor, setSelectedColor] = useState('')
+  const [updatedColor, setUpdatedColor] = useState("")
+  const [colorList, setColorList] = useState<any>([
+    "Yellow", "White", "Pink"
+  ])
   const { quotation_Id } = useSelector(selectCart);
   const user = localStorage.getItem('user');
   const partyName = localStorage.getItem('party_name');
@@ -33,6 +38,8 @@ const CartListing = () => {
     }
   }, [cartListingItems?.transaction_date]);
 
+
+
   useEffect(() => {
     if (cartListingItems?.cust_name) {
       setCustomerName(cartListingItems?.cust_name);
@@ -44,6 +51,24 @@ const CartListing = () => {
       setModifiedPurity([selectedPurity, ...purity.filter((item: any) => item.name !== cartListingItems?.purity)]);
     }
   }, [cartListingItems?.cust_name, cartListingItems?.purity, purity]);
+
+
+
+  useEffect(() => {
+    if (cartListingItems?.colour) {
+      const colorOfItems: string = cartListingItems.colour;
+      if (colorOfItems) {
+        setUpdatedColor(colorOfItems);
+        const updatedColors: any = [colorOfItems, ...colorList.filter((c: string) => c !== colorOfItems)];
+        setColorList(updatedColors);
+   
+      } else {
+        console.warn("Colour value is missing in the first order item.");
+      }
+    } else {
+      console.warn("Order data is incomplete or missing.");
+    }
+  }, [cartListingItems])
 
   const handleDeleteRow = (itemCode: string, size?: string | number) => {
     const params = {
@@ -122,13 +147,27 @@ const CartListing = () => {
 
   const updateCartCust = () => {
     if (customerName !== cartListingItems?.cust_name) {
-      updateCartData(customerName, selectedPurity, setUpdatedPurity);
+      updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor);
     }
   };
 
   const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedPurity(e.target.value);
   };
+
+  const updateColor = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedColor(e.target.value)
+  }
+
+
+  const updateColorButtonClick = async () => {
+    const update = await updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor)
+    if (update) {
+      fetchCartListingData()
+    }
+  }
+
+
 
   const handleDataRendering = () => {
     if (isLoading) {
@@ -173,7 +212,7 @@ const CartListing = () => {
                   </select>
                   <div className="col-md-1"></div>
                   <button
-                    onClick={() => updateCartData(customerName, selectedPurity, setUpdatedPurity)}
+                    onClick={() => updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor)}
                     className={`col-md-2 ${styles.update_btn}`}
                   >
                     Update
@@ -188,6 +227,34 @@ const CartListing = () => {
                     onChange={(e) => setDeliveryDate(e.target.value)}
                     min={deliveryDate}
                   />
+                </div>
+                <div className="mt-2 row">
+                  <label className="col-md-4">Color:</label>
+
+                  <span className="col-md-8">{updatedColor}</span>
+                </div>
+                <div className="mt-2 row">
+                  <label className="col-md-4">Update Color:</label>
+                  <select
+                    className=" col-md-5"
+                    onChange={updateColor}
+                    placeholder="text"
+                  >
+                    {colorList.map((item: any, index: any) => {
+                      return (
+                        <option key={index} value={item} >
+                          {item}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="col-md-1"></div>
+                  <button
+                    onClick={() => updateColorButtonClick()}
+                    className={`col-md-2 ${styles.update_btn}`}
+                  >
+                    Update
+                  </button>
                 </div>
               </div>
               <div className={`${styles.place_order_container}`}>
@@ -226,7 +293,7 @@ const CartListing = () => {
                                 handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
                               }
                               onDelete={handleDeleteRow}
-                              // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
+                            // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
                             />
                           </div>
                           <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
