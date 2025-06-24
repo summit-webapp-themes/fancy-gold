@@ -45,7 +45,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
   };
 
   const handleDeleteRow = (index: number) => {
-    const updatedSizeTable = sizeTable.filter((_, i) => i !== index);
+    const updatedSizeTable = sizeTable?.filter((_, i) => i !== index);
     setSizeTable(updatedSizeTable);
   };
   const handleKeyDown = (event: any) => {
@@ -54,14 +54,14 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       handleAddRow();
       setTimeout(() => {
         // Focus on the size input of the last row
-        const lastIndex = sizeTable.length;
+        const lastIndex = sizeTable?.length;
         inputRefs.current[lastIndex]?.focus();
       }, 0);
     }
   };
   const handleInputChange = (index: number, event: any) => {
     const { name, value } = event.target;
-    const updatedSizeTable = sizeTable.map((row, i) => {
+    const updatedSizeTable = sizeTable?.map((row, i) => {
       if (i === index) {
         const updatedRow = { ...row, [name]: value };
         return updatedRow;
@@ -101,11 +101,11 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     }
   };
   const handleSizeButtonClick = (size: number) => {
-    if (sizeTable[sizeTable.length - 1]?.size || sizeTable?.length === 0) {
+    if (sizeTable && (sizeTable[sizeTable.length - 1]?.size || sizeTable.length === 0)) {
       const newRow = { ...initialState, size: size.toString() };
       setSizeTable([...sizeTable, newRow]);
     } else {
-      const updatedSizeTable = sizeTable.map((row, i) => (i === sizeTable.length - 1 ? { ...row, size: size.toString() } : row));
+      const updatedSizeTable = sizeTable?.map((row, i) => (i === sizeTable.length - 1 ? { ...row, size: size.toString() } : row));
       setSizeTable(updatedSizeTable);
     }
   };
@@ -117,7 +117,7 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
 
-    sizeTable.forEach((row, index) => {
+    sizeTable?.forEach((row, index) => {
       if (!row.size) {
         newErrors[index] = { ...newErrors[index], size: 'Size is required' };
         valid = false;
@@ -135,17 +135,17 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
       return;
     }
     const addToCartParams = {
-      item_code: data?.name,
-      party_name: party_name,
-      purity: purity,
-      cust_name: cust_name,
-      colour: colour,
-      qty_size_list: sizeTable,
-      remark: cartProductsData.Note,
-      wastage: cartProductsData.Wastage,
-      user: user,
+      item_code: data?.name || '',
+      party_name: party_name || '',
+      purity: purity || '',
+      cust_name: cust_name || '',
+      colour: colour || '',
+      qty_size_list: sizeTable || [],
+      remark: cartProductsData?.Note || '',
+      wastage: cartProductsData?.Wastage || '',
+      user: user || '',
       reference_page: referenceTrackerData?.reference_page || 'Category',
-      reference_id: referenceTrackerData?.reference_id || data?.category_slug,
+      reference_id: referenceTrackerData?.reference_id || data?.category_slug || '',
     };
 
     const socketData = { page_type: 'Product', page_id: data?.slug };
@@ -174,33 +174,34 @@ const ProductDetailInfo = ({ data, getProductDetailData, referenceTrackerData }:
   };
 
  function computeFormulaFieldValue(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
-    const formula = [...value, ...value_2].join(" ");
-    const replaced = formula.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
-      if (value.includes(token)) return data?.[token] ?? 0;
-      if (value_2.includes(token)) return row?.[token] ?? 0;
-      return token;
+   const formula = value && value_2 && [...value, ...value_2].join(" ");
+   const replaced = formula?.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
+     if (value?.includes(token)) return data?.[token] ?? 0;
+     if (value_2?.includes(token)) return row?.[token] ?? 0;
+     return token;
     });
     try {
-      return Number(eval(replaced)).toFixed(3);
+      return Number(eval(replaced))?.toFixed(3);
     } catch {
       return "0.000";
     }
   }
 
 function capitalizeFirstLetter(str:string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str?.charAt(0).toUpperCase() + str?.slice(1);
 }
 
 const rendertTableFields = (itemForTable: any, index: number, row: any) => {
-    switch (itemForTable.data_type) {
+  // console.log(itemForTable, "Item for table data")
+    switch (itemForTable?.data_type) {
       case "custom":
         return (
           <div className='col-2 border  py-1' key={index}>
             <input
               type="text"
-              name={itemForTable.specification.toLowerCase()}
+              name={itemForTable.specification?.toLowerCase()}
               className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
-              value={row[itemForTable.specification.toLowerCase()]}
+              value={row[itemForTable.specification?.toLowerCase()]}
               onChange={(e) => handleInputChange(index, e)}
               ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
             />
@@ -208,19 +209,19 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
         )
       case "fetch":
         return (
-          <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data[itemForTable.value.toLowerCase()]}</div>
+          <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data[itemForTable.value?.toLowerCase()]}</div>
         )
       case "select":
         return (
           <div className={`col-2 border py-1`}>
             <select
-              name={itemForTable.specification.toLowerCase()}
-              value={row.colour || colour}
+              name={itemForTable.specification?.toLowerCase()}
+              value={row?.colour || colour}
               onChange={(e) => handleInputChange(index, e)}
               className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
             >
               {
-                itemForTable.value.map((option: string, idx: number) => (
+                itemForTable.value?.map((option: string, idx: number) => (
                   <option key={idx} value={option}>
                     {option}
                   </option>
@@ -284,7 +285,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
           <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
           <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div> */}
           {
-         data?.category_specification?.length > 0 ?   data?.category_specification.map((itemForTable: any, index: number) => {
+         data?.category_specification?.length > 0 ?   data.category_specification.map((itemForTable: any, index: number) => {
               return (
                 <div className="col-2 border text-center py-1" key={index}>
                   {
@@ -296,7 +297,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
           }
           {/* <div className="col border"></div> */}
         </div>
-        {sizeTable.map((row, index) => (
+        {sizeTable?.map((row, index) => (
           <div className="" key={index}>
             {/* <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
             <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border py-1`}>
@@ -426,7 +427,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
         {Object.entries(data?.item_characteristics || {})
           .filter(([key]) => key.toLowerCase() !== 'size') // skip "Size"
           .map(([key, config]: [string, any], index: number) => {
-            const label = key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+            const label = key?.replace(/_/g, ' ')?.replace(/\b\w/g, (l) => l.toUpperCase());
             const value = cartProductsData?.[key] || '';
 
             return (
@@ -437,13 +438,13 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
                   // Handle dropdown for 'select'
                   <select name={key} className="form-select" value={value} onChange={(e) => handleInputChange(index, e.target.value)}>
                     <option value="">Select {label}</option>
-                    {config.map((option: string, idx: number) => (
+                    {config?.map((option: string, idx: number) => (
                       <option key={idx} value={option}>
                         {option}
                       </option>
                     ))}
                   </select>
-                ) : config === 'textfield' ? (
+                ) : config && config === 'textfield' ? (
                   <textarea
                     name={key}
                     value={value}
@@ -462,7 +463,7 @@ const rendertTableFields = (itemForTable: any, index: number, row: any) => {
                     />
                     <label className="form-check-label">Check</label>
                   </div>
-                ) : config === 'buttons' ? (
+                ) : config && config === 'buttons' ? (
                   <div className="d-flex flex-wrap gap-2">
                     {['Option 1', 'Option 2', 'Option 3'].map((btn, idx) => (
                       <button
