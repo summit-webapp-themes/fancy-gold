@@ -130,15 +130,15 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     }
 
     const addToCartParams = {
-      item_code: data?.name,
-      party_name: party_name,
-      purity: purity,
-      cust_name: cust_name,
-      colour: colour,
-      // wastage: cartProductsData.wastage,
-      qty_size_list: sizeTable,
-      remark: cartProductsData.remark,
-      user: user,
+      item_code: data?.name || '',
+      party_name: party_name || '',
+      purity: purity || '',
+      cust_name: cust_name || '',
+      colour: colour || '',
+      // wastage: cartPrductsData.wastage,
+      qty_size_list: sizeTable || [],
+      remark: cartProductsData.remark || '',
+      user: user || '',
     };
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
@@ -155,6 +155,72 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   };
   const isVariantInCart = (variant_code: any) => {
     return cartList?.length > 0 && cartList?.some((cartItem: any) => cartItem === variant_code);
+  };
+
+  function computeFormulaFieldValue(value: any[], value_2: any[], data: Record<string | number, any>, row: any) {
+    const formula = value && value_2 && [...value, ...value_2].join(' ');
+    const replaced = formula?.replace(/\b[a-zA-Z_]\w*\b/g, (token) => {
+      if (value?.includes(token)) return data?.[token] ?? 0;
+      if (value_2?.includes(token)) return row?.[token] ?? 0;
+      return token;
+    });
+    try {
+      return Number(eval(replaced))?.toFixed(3);
+    } catch {
+      return '0.000';
+    }
+  }
+
+  function capitalizeFirstLetter(str: string) {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
+
+  const rendertTableFields = (itemForTable: any, index: number, row: any) => {
+    switch (itemForTable?.data_type) {
+      case 'custom':
+        return (
+          <div className="col-2 border  py-1" key={index}>
+            <input
+              type="text"
+              name={itemForTable.specification?.toLowerCase()}
+              className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
+              value={row[itemForTable.specification?.toLowerCase()]}
+              onChange={(e) => handleInputChange(index, e)}
+              ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
+            />
+          </div>
+        );
+      case 'fetch':
+        return <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{data[itemForTable.value?.toLowerCase()]}</div>;
+      case 'select':
+        return (
+          <div className={`col-2 border py-1`}>
+            <select
+              name={itemForTable.specification?.toLowerCase()}
+              value={row?.colour || colour}
+              onChange={(e) => handleInputChange(index, e)}
+              className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
+            >
+              {itemForTable.value?.map((option: string, idx: number) => (
+                <option key={idx} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        );
+      case 'formula':
+        return (
+          <div className="col-2 border py-1 text-center ">
+            <div className={`${styles.tableFontSize}`}>
+              {
+                // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
+                computeFormulaFieldValue(itemForTable.value, itemForTable.value_2, data, row)
+              }
+            </div>
+          </div>
+        );
+    }
   };
 
   return (
@@ -191,83 +257,46 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       </div>
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
-          <div className="col-2 border text-center py-1">Purity</div>
-          <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'}  border text-center py-1`}>Colour</div>
-          {data?.custom_factory === 'ARC ERP Software' && <div className="col-2 border text-center py-1">Weight</div>}
-          <div className={`col-3 px-0 border text-center py-1`}>Size(inch)</div>
-          <div className={`col-2 border text-center p-0 px-1 py-1`}>Qty</div>
-          <div className="col border"></div>
+     
+          {data?.category_specification?.length > 0 ? (
+            data.category_specification.map((itemForTable: any, index: number) => {
+              return (
+                <div className="col-2 border text-center py-1" key={index}>
+                  {capitalizeFirstLetter(itemForTable?.specification)}
+                </div>
+              );
+            })
+          ) : (
+            <></>
+          )}
+          {/* <div className="col border"></div> */}
         </div>
-        {sizeTable.map((row, index) => (
-          <div className="row mx-1" key={index}>
-            <div className={`col-2 border text-center py-1  ${styles.tableFontSize}`}>{purity}</div>
-            <div className={`${data?.custom_factory === 'ARC ERP Software' ? 'col-2' : 'col-4'} border py-1`}>
-              <select
-                name="colour"
-                value={row.colour || colour}
-                onChange={(e) => handleInputChange(index, e)}
-                className={`border-0 form-control p-0 text-center ${styles.tableFontSize}`}
-              >
-                <option value="Yellow">Yellow</option>
-                <option value="White">White</option>
-                <option value="Pink">Pink</option>
-              </select>
-            </div>
-
-            {data?.custom_factory === 'ARC ERP Software' && (
-              <div className="col-2 border d-flex justify-content-center px-0 py-1 flex-column">
-                <input
-                  name="weight"
-                  className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
-                  value={Math.floor((data?.weight_per_unit / data?.length) * row.size) || ''}
-                />
+        {sizeTable?.map((row, index) => (
+          <div className="" key={index}>
+            {data?.category_specification?.length > 0 ? (
+              <div className="row mx-1">
+                {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
+                  return (
+                    <>{rendertTableFields(itemForTable, index, row)}</>
+                  );
+                })}
+                <div className="col-2 text-center border p-1">
+                  <button
+                    className="border-0 bg-light p-0 text-center"
+                    onClick={() => handleDeleteRow(index)}
+                    onKeyDown={(e) => handleKeyDown(e)}
+                  >
+                    <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+                  </button>
+                </div>
               </div>
+            ) : (
+              <></>
             )}
-            <div
-              className={`
-                col-3 px-0 border d-flex justify-content-center py-1 flex-column`}
-            >
-              <input
-                type="text"
-                name="size"
-                className={`${productDetailStyles.qty_input} ${styles.tableFontSize} form-control`}
-                value={row.size}
-                onChange={(e) => handleInputChange(index, e)}
-                ref={(el) => (inputRefs.current[index] = el)} // Assign ref dynamically
-              />
-              {errors[index]?.size && <small className="text-danger">{errors[index].size}</small>}
-            </div>
-            <div className={`col-2 border d-flex justify-content-center p-0 px-1 py-1 flex-column`}>
-              <input
-                type="text"
-                name="quantity"
-                className={`${productDetailStyles.qty_input} form-control p-0 ${styles.tableFontSize}`}
-                value={row.quantity}
-                onChange={(e) => handleInputChange(index, e)}
-              />
-              {errors[index]?.quantity && <small className="text-danger">{errors[index].quantity}</small>}
-            </div>
-            <div className="col text-center border p-1">
-              <button
-                className="border-0 bg-light p-0 text-center"
-                onClick={() => handleDeleteRow(index)}
-                onKeyDown={(e) => handleKeyDown(e)}
-              >
-                <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
-              </button>
-            </div>
           </div>
         ))}
       </div>
       <div className="">
-        {/* <textarea
-          name="wastage"
-          value={cartProductsData?.wastage}
-          placeholder="Wastage"
-          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-          onChange={(e) => setCartProductsData({ ...cartProductsData, wastage: e.target.value })}
-          rows={1}
-        ></textarea> */}
         <textarea
           name="remark"
           value={cartProductsData?.remark}
