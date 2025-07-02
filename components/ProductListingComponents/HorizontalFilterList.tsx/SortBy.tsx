@@ -35,6 +35,7 @@ const SortBy = ({ sortBy, handleSortBy }: any) => {
           <option value="oldest">Oldest Products</option>
           <option value="sequence">Sequence</option>
           <option value="weight_range">Weight Range</option>
+          <option value="creation">Created On</option>
         </select>
       </div>
     </>
