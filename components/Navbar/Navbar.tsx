@@ -176,6 +176,16 @@ const Navbar = () => {
                           Cancelled Orders
                         </NavDropdown.Item>
                       </Link>
+                        <Link href="/order-history/accepted-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
+                          Accepted Orders
+                        </NavDropdown.Item>
+                      </Link>
+                        <Link href="/order-history/planned-order" passHref className="text-decoration-none">
+                        <NavDropdown.Item as="a" className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}>
+                          Planned Orders
+                        </NavDropdown.Item>
+                      </Link>
                     </NavDropdown>
                   </li>
                   <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin} d-none d-md-block`}>
