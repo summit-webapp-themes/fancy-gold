@@ -10,20 +10,29 @@ const ProductsGridView = ({
   handleShow,
   wishlistData,
   cartData,
+  handlePreviewModal,
 }: any) => {
   const isNextButtonDisabled: boolean = parseInt((productListTotalCount / 12).toString(), 10) === pageOffset;
   return (
     <>
       {productListingData.map((item: any, index: any) => (
-        <div key={index} className="col-sm-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-4">
-          <ProductCard data={item} handleShow={handleShow} wishlistData={wishlistData} btnAction={'Add'} cartData={cartData} />
+        <div key={index} className="col-6 col-lg-4 col-xl-3 col-xxl-3 text-center mb-3 mb-md-4 p-end">
+          <ProductCard
+            data={item}
+            handleShow={handleShow}
+            wishlistData={wishlistData}
+            btnAction={'Add'}
+            cartData={cartData}
+            handlePreviewModal={handlePreviewModal}
+          />
         </div>
       ))}
       <ReactPaginate
         previousLabel={'Prev'}
         nextLabel={'Next'}
-        pageCount={productListTotalCount / 12}
-        pageRangeDisplayed={3}
+        pageCount={Math.ceil(productListTotalCount / 12)}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={1}
         onPageChange={handlePageClick}
         containerClassName={`${paginationStyle.paginationBttns}`}
         previousLinkClassName={pageOffset === 0 ? paginationStyle.paginationDisabled : paginationStyle.previousBttn}

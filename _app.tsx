@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -10,6 +11,7 @@ const ProtectedRoute = dynamic(() => import('../routes/ProtectedRoute'));
 // import ProtectedRoute from '../routes/ProtectedRoute';
 import { CONSTANTS } from '../services/config/app-config';
 import { persistor, store } from '../store/store';
+import { useHandleClientInteractivity } from '../hooks/SocketHooks/useHandleClientInteractivity';
 
 // import 'bootstrap/dist/css/bootstrap-grid.min.css';
 // import 'bootstrap/dist/css/bootstrap-utilities.min.css';
@@ -22,6 +24,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { handleVisibilityChange } = useHandleClientInteractivity();
+
+  useEffect(() => {
+    function handleClientVisibility() {
+      const visibilityState = document.visibilityState;
+      handleVisibilityChange(visibilityState);
+    }
+
+    document.addEventListener('visibilitychange', handleClientVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleClientVisibility);
+    };
+  }, []);
   return (
     <div>
       <Head>

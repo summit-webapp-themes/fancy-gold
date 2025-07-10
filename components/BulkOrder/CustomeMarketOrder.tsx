@@ -14,11 +14,11 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
 
   return (
     <>
-      <div className="row mt-4">
-        <div className="col-md-9">
-          <p className="fs-14">Custom Market Order Details</p>
+      <div className="row mt-3 mt-md-4">
+        <div className="col-md-9 mb-2 mb-md-3">
+          <p className="fs-14 mb-0">Custom Market Order Details</p>
         </div>
-        <div className="col-md-3 d-flex justify-content-end h-75">
+        <div className="col-md-3 d-flex justify-content-start justify-content-md-end h-75 mb-3">
           <button className={styles.btn_save_bulk_order} onClick={addCustomMarketOrderRow}>
             Add More
           </button>
@@ -28,7 +28,7 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
         <div className={styles.table_wrapper}>
           <table className="table ">
             <thead className={styles.fixed_header}>
-              <tr>
+              <tr className=' text-nowrap'>
                 <th>
                   Design Name<span className="text-danger">*</span>
                 </th>
@@ -40,6 +40,9 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                 </th>
                 <th>
                   Inch Qty<span className="text-danger">*</span>
+                </th>
+                <th>
+                  Color<span className="text-danger">*</span>
                 </th>
                 <th></th>
               </tr>
@@ -91,6 +94,15 @@ const CustomeMarketOrder = ({ formData, addCustomMarketOrderRow, handleChangeArr
                         />
                       </React.Fragment>
                     ))}
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name={`color${index}`}
+                      className={`w-100 px-1 ${styles.input_type_number}`}
+                      value={row.color}
+                      onChange={(e) => handleChangeArrayCustom(e, index, 'color')}
+                    />
                   </td>
 
                   <td className="text-end">

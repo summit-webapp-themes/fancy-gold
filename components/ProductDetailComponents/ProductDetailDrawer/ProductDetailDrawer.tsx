@@ -14,7 +14,7 @@ import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
 
-const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
+const ProductDetailDrawer = ({ show, handleClose, data, referenceTrackerData }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
   const { SUMMIT_APP_CONFIG }: any = CONSTANTS;
   const [productDetail, setProductDetail] = useState<any>({});
@@ -46,9 +46,10 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setVariantsData([]);
     }
   };
-  const getProductDetailData = async (productName: string) => {
+  const getProductDetailData = async (productName: string, slug: string) => {
     const requestParams = {
-      item: productName,
+      item: slug,
+      slug: slug,
       currency: 'INR',
     };
     setDetailLoading(true);
@@ -79,7 +80,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   };
   useEffect(() => {
     if (data?.productName) {
-      getProductDetailData(data?.productName);
+      getProductDetailData(data?.productName, data?.slug);
     }
     if (data?.variantOf) {
       getVariantsData();
@@ -108,8 +109,13 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
               errorMessage={errorMessage}
               loading={loading}
             />
-            <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
+            <ProductDetailInfo
+              data={productDetail}
+              getProductDetailData={getProductDetailData}
+              referenceTrackerData={referenceTrackerData}
+            />
             <div className="mt-2">
+
               <Image
                 src={productDetail?.image ? productDetail?.image : noImage}
                 alt="product-image"
@@ -118,6 +124,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
                 height={100}
                 loader={imageLoader}
               />
+
             </div>
           </>
         ) : (
