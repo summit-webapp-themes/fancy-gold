@@ -68,7 +68,7 @@ const OrderDetailCard = ({
       <div className="content-prev">
         <div className="col-12">
           <div className="row ">
-            <div className="col-7 text-center d-flex flex-column justify-content-center text-center">
+            <div className="col-6 text-center d-flex flex-column justify-content-center text-center">
               <div className="row align-items-center border">
                 <div className="col-2 ">
                   <div className="img-wrap text-center" style={{ height: '110px' }}>
@@ -142,12 +142,13 @@ const OrderDetailCard = ({
                 )}
               </div>
             </div>
-            <div className="col-5 border p-0">
+            <div className="col-6 border p-0">
               <div className={`${orderDetailStyles.order_detail_table}`}>
                 <table style={{ height: '100%' }}>
                   <tr>
                     <th>Color</th>
                     <th>Size(Inch)</th>
+                    <th>Custom Size</th>
                     <th>Dispatch Qty</th>
                     <th>Dispatch Wt</th>
                     <th>Qty</th>
@@ -160,10 +161,11 @@ const OrderDetailCard = ({
                         <tr key={index}>
                           <td>{data.colour}</td>
                           <td>{data.size} inch</td>
+                          <td>{data.is_custom_size}</td>
                           <td>{data.ready_quantity}</td>
                           <td>{data.dispatch_weight}</td>
                           <td>{data.qty}</td>
-                          <td className="text-right">{data.weight}gm</td>
+                          <td className="text-right">{(data.weight)?.toFixed(2)}gm</td>
                           <td className="text-right">{data?.custom_oms_status}</td>
                         </tr>
                       );
@@ -174,14 +176,14 @@ const OrderDetailCard = ({
                       {totalWeight.toFixed(2)} gm
                     </td>
                   </tr>
-                     {
-                    totalDispatch ? 
-                    <tr>
-                      <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
-                      <td className="text-right" colSpan={3}>
-                        {totalDispatch?.toFixed(2)} gm
-                      </td>
-                    </tr> : ""
+                  {
+                    totalDispatch ?
+                      <tr>
+                        <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
+                        <td className="text-right" colSpan={3}>
+                          {totalDispatch?.toFixed(2)} gm
+                        </td>
+                      </tr> : ""
                   }
 
                   {issue_weight !== null && issue_weight !== '' && (
