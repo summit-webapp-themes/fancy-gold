@@ -42,7 +42,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                   <Link
                     href={{
                       pathname: `${itemL2?.url}`,
-                      query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                      query: { page: '1', sort_by: 'creation', currency: 'INR' },
                     }}
                     className="label theme-blue text-decoration-none"
                     onClick={() => handleClickCategory(itemL2?.slug)}
@@ -59,7 +59,7 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
                           <Link
                             href={{
                               pathname: `${itemL3?.url}`,
-                              query: { page: '1', sort_by: 'latest', currency: 'INR' },
+                              query: { page: '1', sort_by: 'creation', currency: 'INR' },
                             }}
                             className={stylesHeader.heading_category_l3}
                             onClick={() => handleClickCategory(itemL3?.slug)}

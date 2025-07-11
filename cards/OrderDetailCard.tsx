@@ -81,8 +81,8 @@ const OrderDetailCard = ({
                         alt="Product image"
                         priority
                         fill
-                        // width={100}
-                        // height={100}
+                      // width={100}
+                      // height={100}
                       />
                     </div>
                   </div>
@@ -176,7 +176,7 @@ const OrderDetailCard = ({
                           <td className='px-1'>{data.qty}</td>
                           <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
                           <td className="text-right px-1">{data?.custom_oms_status}</td>
-                        </tr>
+                        </tr >
                       );
                     })}
                   <tr>
@@ -186,29 +186,31 @@ const OrderDetailCard = ({
                     </td>
                   </tr>
                   {
-                    totalDispatched ? 
-                    <tr>
-                      <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
-                      <td className="text-right" colSpan={3}>
-                        {totalDispatched?.toFixed(2)} gm
-                      </td>
-                    </tr> : ""
+                    totalDispatched ?
+                      <tr>
+                        <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
+                        <td className="text-right" colSpan={3}>
+                          {totalDispatched?.toFixed(2)} gm
+                        </td>
+                      </tr> : ""
                   }
 
 
-                  {issue_weight !== null && issue_weight !== '' && (
-                    <tr>
-                      <td style={{ fontSize: '10px !important' }}>Issue Weight:</td>
-                      <td className="text-right" colSpan={3}>
-                        {parseInt(issue_weight)} gm
-                      </td>
-                    </tr>
-                  )}
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+                  {
+                    issue_weight !== null && issue_weight !== '' && (
+                      <tr>
+                        <td style={{ fontSize: '10px !important' }}>Issue Weight:</td>
+                        <td className="text-right" colSpan={3}>
+                          {parseInt(issue_weight)} gm
+                        </td>
+                      </tr>
+                    )
+                  }
+                </table >
+              </div >
+            </div >
+          </div >
+        </div >
 
         <div className="container">
           <div className="row">
@@ -236,7 +238,7 @@ const OrderDetailCard = ({
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };
