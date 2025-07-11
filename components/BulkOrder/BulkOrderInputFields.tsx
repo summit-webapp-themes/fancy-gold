@@ -10,10 +10,10 @@ const BulkOrderInputFields = ({ formData, handleChange, purityList }: any) => {
       <div className="row">
         <div className="col-md-6 col-lg-6 col-xl-6 col-xxl-6 ">
           <div>
-            <div className="fs-14 pt-1">
+            <div className="fs-14">
               Melting<span className="text-danger">*</span>
             </div>
-            <select name={`purity`} className={`w-100 ${styles.input_type_select} px-1`} value={formData?.purity} onChange={handleChange}>
+            <select name={`purity`} className={`w-100 form-control form-control-sm px-1`} value={formData?.purity} onChange={handleChange}>
               <option value="" className="px-1">
                 Select purity
               </option>

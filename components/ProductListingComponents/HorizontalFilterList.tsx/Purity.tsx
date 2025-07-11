@@ -56,14 +56,15 @@ const Purity = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center" style={{ height: '100%' }}>
+    <div className="d-flex justify-content-centerstart flex-wrap gap-2">
       {purityValues?.map((purity: any) => (
         <>
           <button
             className={`${
               selectedPurity === purity.name ? horizontalFilterStyles.purity_button_active : horizontalFilterStyles.purity_button
-            }`}
+            } mx-0`}
             onClick={(e) => handleSelectPurity(purity.name)}
+            style={{ padding: '3px 0'}}
           >
             {purity.name}
           </button>

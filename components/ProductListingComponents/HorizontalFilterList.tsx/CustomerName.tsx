@@ -14,7 +14,7 @@ const CustomerName = () => {
     setCustNameStatus(true);
   };
   return (
-    <div className="d-flex mx-2">
+    <div className="d-flex">
       <input
         type="text"
         className={`${horizontalFilterStyles.cust_name_input} form-control`}
