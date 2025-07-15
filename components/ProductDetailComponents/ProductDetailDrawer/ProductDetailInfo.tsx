@@ -228,9 +228,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       <div className="py-2">
         <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
         <div className="d-flex">
-          {Array.isArray(data?.item_characteristics?.Size) && data?.item_characteristics?.Size.length > 0 && (
+          {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size.length > 0 && (
             <>
-              {[...data.item_characteristics.Size]
+              {[...data.item_characteristics.size]
                 .filter((size: any) => typeof size === 'number')
                 .sort((a: any, b: any) => a - b)
                 .map((size: number, index: number) => {
@@ -246,7 +246,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                   );
                 })}
 
-              {data.item_characteristics.Size.includes('custom_size') && (
+              {data.item_characteristics.size.includes('custom_size') && (
                 <button className={`btn btn-link theme-blue mt-3 ${styles.tableFontSize}`} onClick={handleAddRow}>
                   Add Custom Size
                 </button>
