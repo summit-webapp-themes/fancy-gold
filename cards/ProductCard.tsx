@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Card from 'react-bootstrap/Card';
-import { FaHeart, FaRegHeart } from 'react-icons/fa6';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { IoCart } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
 import useAddToWishlist from '../hooks/WishlistHooks/useAddToWishlistHook';
@@ -34,7 +34,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     if (!wishProducts) {
       return (
         <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          <FaRegHeart onClick={() => handleAddToWishList(data)} />
+          <>{FaRegHeart && <FaRegHeart onClick={() => handleAddToWishList(data)} />}</>
         </span>
       );
     } else {
