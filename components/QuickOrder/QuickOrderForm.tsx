@@ -10,7 +10,7 @@ import SearchableDropdown from '../SearchableDropdown';
 import styles from '../../styles/components/orderDetail.module.scss';
 
 const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
-  const { API_BASE_URL,ARC_APP_CONFIG  } = CONSTANTS;
+  const { API_BASE_URL, ARC_APP_CONFIG } = CONSTANTS;
   const tokenFromStore = useSelector(get_access_token);
   const [inputValue, setInputValue] = useState('');
   const [qtySizeInput, setQtySizeInput] = useState('');
@@ -33,7 +33,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
   const getCustomerItemAPI = async () => {
     const version = ARC_APP_CONFIG?.version;
     const method = 'get_customer_item_by_customer_name_and_item_code';
-    const entity = 'customer_item_reference_code_api';
+    const entity = 'customer_item_reference_code';
     const url = `${API_BASE_URL}${ARC_APP_CONFIG?.app_name}?version=${version}&method=${method}&entity=${entity}&customer_name=${customerName}`;
     const response = callGetAPI(url, tokenFromStore?.token);
     return response;
@@ -78,7 +78,7 @@ const QuickOrderForm = ({ setQuickOrderData, quickOrderData }: any) => {
       .then((res: any) => {
         response = res;
       })
-      .catch((err: any) => {});
+      .catch((err: any) => { });
     return response;
   };
   const handleSubmitBtn = async () => {
