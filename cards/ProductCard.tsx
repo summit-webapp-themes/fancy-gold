@@ -33,8 +33,8 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     }
     if (!wishProducts) {
       return (
-        <span className={`${ProductCardStyles.wishlist_icon} text-danger `}>
-          <>{FaRegHeart && <FaRegHeart onClick={() => handleAddToWishList(data)} />}</>
+        <span className={`${ProductCardStyles.wishlist_icon} text-danger`}>
+          <>{FaRegHeart && <FaRegHeart onClick={() => handleAddToWishList(data, socketData)} />}</>
         </span>
       );
     } else {
