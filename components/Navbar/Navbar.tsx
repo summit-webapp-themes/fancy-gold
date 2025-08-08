@@ -125,23 +125,23 @@ const Navbar = () => {
                 </div>
               )}
               <div className={` ${stylesNavbar.inlineList} `}>
-                <ul className={`nav  list-inline d-flex justify-content-end ${stylesNavbar.mobnavbar}`}>
-                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart}`}>
+                <ul className={`nav list-inline d-flex justify-content-end gap-2 gap-md-1  flex-nowrap ${stylesNavbar.mobnavbar} `}>
+                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_cart} ${stylesNavbar.list_inline_margin}`}>
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
-                          <FaCartPlus className="icon" />
+                          <FaCartPlus className="icon" style={{ height: '24px'}} />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
                           <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
                       </a>
                     </Link>
                   </li>
-                  <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_wishlist}`}>
+                  <li className={`me-md-2 ${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_item_wishlist} ${stylesNavbar.list_inline_margin}`}>
                     <Link href="/wishlist " legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
-                          <FaHeart className="icon" />
+                          <FaHeart className="icon" style={{ height: '24px'}} />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
                           <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
@@ -151,11 +151,11 @@ const Navbar = () => {
 
                   {!isMobile && (
                     <>
-                      <li className={stylesNavbar.list_inline_item}>
-                        <div className={stylesNavbar.icon_container}>
+                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}  >
+                        <div className="text-center">
                           <FaRegCalendar className="icon " />
                         </div>
-                        <NavDropdown title="My Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                        <NavDropdown title="Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
                           <Link href="/order-history" passHref className="text-decoration-none">
                             <NavDropdown.Item
                               as="a"
@@ -237,7 +237,10 @@ const Navbar = () => {
                           </Link>
                         </NavDropdown>
                       </li>
-                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
+                      
+                    </>
+                  )}
+                  <li className={`${stylesNavbar.list_inline_margin}`}>
                         {/* <div className="text-center">
                           <FaRegCalendar className="icon " />
                         </div> */}
@@ -252,8 +255,6 @@ const Navbar = () => {
                           </a>
                         </Link>
                       </li>
-                    </>
-                  )}
                   <li className={stylesNavbar.list_inline_item}>
                     <div className={stylesNavbar.icon_container}>
                       <FaUserCircle className="icon" />
