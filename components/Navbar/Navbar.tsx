@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
-import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar } from 'react-icons/fa6';
+import { FaAlignJustify, FaCartPlus, FaHeart, FaRegCalendar, FaJxl } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import useFetchCartItems from '../../hooks/CartPageHook/useFetchCartItems';
 import useNavbar from '../../hooks/GeneralHooks/useNavbar';
@@ -148,6 +148,7 @@ const Navbar = () => {
                       </a>
                     </Link>
                   </li>
+
                   {!isMobile && (
                     <>
                       <li className={stylesNavbar.list_inline_item}>
@@ -235,6 +236,21 @@ const Navbar = () => {
                             </NavDropdown.Item>
                           </Link>
                         </NavDropdown>
+                      </li>
+                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
+                        {/* <div className="text-center">
+                          <FaRegCalendar className="icon " />
+                        </div> */}
+                        <Link href="/dashboard" legacyBehavior>
+                          <a className={`link-dark`}>
+                            <div className={stylesNavbar.icon_container}>
+                              <FaJxl className="icon" />
+                            </div>
+                            <div className='text-center'>
+                              <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Dashboard</span>
+                            </div>
+                          </a>
+                        </Link>
                       </li>
                     </>
                   )}
