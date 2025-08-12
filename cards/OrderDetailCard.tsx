@@ -68,7 +68,7 @@ const OrderDetailCard = ({
       <div className="content-prev">
         <div className="col-12">
           <div className="row border mx-0">
-            <div className="col-md-7 border-end p-0 text-center">
+            <div className="col-md-6 border-end p-0 text-center">
               <div className="row m-0 ">
                 <div className='col-sm-6 px-0 row m-0'>
                   <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Products</div>
@@ -152,13 +152,14 @@ const OrderDetailCard = ({
                 </div>
               </div>
             </div>
-            <div className="col-md-5 p-0">
+            <div className="col-md-6 p-0">
               <div className={`text-center d-none d-md-block  ${orderDetailStyles.table_header}`}></div>
               <div className={`${orderDetailStyles.order_detail_table} overflow-x-auto`}>
                 <table style={{ height: '100%' }}>
                   <tr className='text-nowrap text-md-wrap'>
                     <th className='px-1'>Color</th>
                     <th className='px-1'>Size (Inch)</th>
+                    <th className='px-1'>Custom Size</th>
                     <th className='px-1'>Dispatch Qty</th>
                     <th className='px-1'>Dispatch Wt</th>
                     <th className='px-1'>Qty</th>
@@ -171,10 +172,11 @@ const OrderDetailCard = ({
                         <tr key={index}>
                           <td className='px-1'>{data.colour}</td>
                           <td className='px-1'>{data.size} inch</td>
+                          <td className='px-1'>{data?.is_custom_size}</td>
                           <td className='px-1'>{data.ready_quantity}</td>
                           <td className='px-1'>{data.dispatch_weight}</td>
                           <td className='px-1'>{data.qty}</td>
-                          <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
+                          <td className="text-right px-1">{data?.weight?.toFixed(2)}gm</td>
                           <td className="text-right px-1">{data?.custom_oms_status}</td>
                         </tr >
                       );
