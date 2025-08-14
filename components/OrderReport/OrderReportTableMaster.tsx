@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import styles from '../../styles/components/orderReport.module.scss';
 import OrderFilters from './OrderFilters';
@@ -37,6 +37,18 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
   const filteredData = tableBodyData?.filter((item: any) => {
     return Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]);
   });
+
+  const totals = useMemo(() => {
+    return filteredData.reduce(
+      (acc: { qty: number; weight: number; netWeight: number }, item: any) => {
+        acc.qty += Number(item.qty || 0);
+        acc.weight += Number(item.total_weight || 0);
+        acc.netWeight += Number(item.total_net_weight || 0);
+        return acc;
+      },
+      { qty: 0, weight: 0, netWeight: 0 }
+    );
+  }, [filteredData]);
   return (
     <div className="container-fluid">
       <h2 className="theme-blue text-center mt-4">{title}</h2>
@@ -79,6 +91,24 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
                 </tr>
               ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td className={styles.tableFont} colSpan={6}></td>
+              <td className={styles.tableFont}>
+                <strong>Total</strong>
+              </td>
+              <td className={styles.tableFont}>
+                <strong>{totals.qty}</strong>
+              </td>
+              <td className={styles.tableFont}>
+                <strong>{totals.weight.toFixed(3)}</strong>
+              </td>
+              <td className={styles.tableFont}>
+                <strong>{totals.netWeight.toFixed(3)}</strong>
+              </td>
+              <td className={styles.tableFont}></td>
+            </tr>
+          </tfoot>
         </Table>
       </div>
     </div>
