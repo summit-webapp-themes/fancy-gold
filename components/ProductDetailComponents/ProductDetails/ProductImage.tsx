@@ -48,9 +48,9 @@ const ProductImage = ({ Imageslideshow }: any) => {
             {...{
               smallImage: {
                 alt: 'Product image',
-                isFluidWidth: false,
-                width: 400,
-                height: 400,
+                isFluidWidth: true,
+                // maxWidth: 400,
+                // maxHeight: 400,
                 src: API_BASE_URL + img,
               },
               largeImage: {

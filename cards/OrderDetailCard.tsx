@@ -71,10 +71,10 @@ const OrderDetailCard = ({
             <div className="col-7 text-center d-flex flex-column justify-content-center text-center">
               <div className="row align-items-center border">
                 <div className="col-2 ">
-                  <div className="img-wrap text-center" style={{ height: '110px' }}>
+                  <div className="img-wrap text-center" style={{ maxHeight: '110px' }}>
                     <Image
                       loader={imageLoader}
-                      className={`d-block w-100`}
+                      className={`d-block img-fluid`}
                       src={image !== null ? image : noImage}
                       alt="Barcode image"
                       priority

@@ -23,7 +23,7 @@ const CartProductDetail = ({ data, handleEditWastage, onEditWastage }: any) => {
       <div className="col-lg-4 p-3 text-center  ">
         <div
           className="d-inline-block position-relative cursor-pointer"
-          style={{ width: '100px', height: '100px' }}
+          style={{ maxWidth: '100px', maxHeight: '100px' }}
           onClick={() => handlePreviewModal()}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
