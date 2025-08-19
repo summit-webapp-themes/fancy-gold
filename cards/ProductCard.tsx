@@ -16,6 +16,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   const [isHovered, setIsHovered] = useState(false);
+   const { page, filter } = router.query;
   let wishProducts: any;
   let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
@@ -104,7 +105,8 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
     <Card className={` ${ProductCardStyles.product_card}`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-        <div
+        <Link
+          href={`${data?.url}?filter=${filter}`}
           className="text-decoration-none text-dark"
           onClick={() => handlePreviewModal(data)}
           onMouseEnter={() => setIsHovered(true)}
@@ -126,11 +128,11 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
               <FaEye size={24} className="text-white" />
             </div>
           )}
-        </div>
+        </Link>
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link href={`${data?.url}?filter=${filter}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
