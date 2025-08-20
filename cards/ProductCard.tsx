@@ -104,9 +104,9 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, inde
             width={1200}
             height={900}
             alt="Item Image"
-            // className={`${ProductCardStyles.product_code_img}`}
-            // style={{ width: '100%', height: '100%' }}
-            className='img-fluid'
+            className={`${ProductCardStyles.product_code_img}`}
+            style={{ width: '100%', height: '100%' }}
+            // className='img-fluid'
             priority={true}
           />
         </Link>
