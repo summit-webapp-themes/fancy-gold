@@ -93,11 +93,24 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, inde
       );
     }
   };
+  const params = new URLSearchParams({
+  page: String(page),
+  offset: String(index + 1),
+});
+
+if (filter !== undefined) {
+  if (Array.isArray(filter)) {
+    params.append("filter", filter.join(','));
+  } else {
+    params.append("filter", filter);
+  }
+}
+
   return (
     <Card className={` ${ProductCardStyles.product_card} pt-2`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
         {handleRenderIcon()}
-        <Link href={`${data?.url}?filter=${filter}&page=${page}&offset=${index + 1}`} target="_blank" className="text-decoration-none text-dark">
+        <Link href={`${data?.url}?${params.toString()}`} target="_blank" className="text-decoration-none text-dark">
           <Image
             loader={data.image !== null ? imageLoader : undefined}
             src={data.image !== null ? data.image : noImage}
@@ -113,7 +126,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, inde
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}?filter=${filter}&page=${page}&offset=${index + 1}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link href={`${data?.url}?${params.toString()}`} target="_blank" className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
           <div className="d-flex justify-content-between align-items-center">
