@@ -44,24 +44,27 @@ const ProductImage = ({ Imageslideshow }: any) => {
 
         {/* Main Magnified Image */}
         <div className="left_2">
-          <ReactImageMagnify
-            {...{
-              smallImage: {
-                alt: 'Product image',
-                isFluidWidth: false,
-                width: 400,
-                height: 400,
-                src: API_BASE_URL + img,
-              },
-              largeImage: {
-                src: API_BASE_URL + img,
-                width: 1600,
-                height: 1600,
-              },
+          <div className="image-wrapper">
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: 'Product image',
+                  isFluidWidth: true,
+                  // Width: 400,
+                  // height: 400,
+                  src: API_BASE_URL + img,
+                },
+                largeImage: {
+                  src: API_BASE_URL + img,
+                  width: 1600,
+                  height: 1600,
+                },
 
-              enlargedImageClassName: 'magnified-image',
-            }}
-          />
+                enlargedImageClassName: 'magnified-image',
+              }}
+            />
+          </div>
+
         </div>
       </div>
     </div>

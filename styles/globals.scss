@@ -176,12 +176,21 @@ body {
   object-fit: contain;
 }
 .left_2 img {
-  width: 500px;
-  height: 100%;
-  object-fit: contain;
+  // width: 500px;
+  // height: 100%;
+  // object-fit: contain;
 }
 .active {
   border: 2px solid #e77600;
+}
+
+
+.image-wrapper {
+  max-width: 400px !important;
+  max-height: 400px !important;
+}
+.image-wrapper img {
+  object-fit: contain !important;
 }
 .magnified-image {
   min-width: 300% !important;
