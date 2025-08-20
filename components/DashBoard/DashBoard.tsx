@@ -33,7 +33,7 @@ const DashBoard = () => {
       </div>
 
       <div className="row g-4">
-        {data?.map((item, index) => (
+        {data?.map((item:any, index:any) => (
           <div key={index} className="col-md-4">
             <div
               className="card text-white h-100 border-none"
