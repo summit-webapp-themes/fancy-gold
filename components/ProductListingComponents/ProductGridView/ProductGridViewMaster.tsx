@@ -12,6 +12,7 @@ const ProductGridViewMaster = ({
   handleShow,
   wishlistData,
   cartData,
+  sortBy
 }: any) => {
   const { query } = useRouter();
   const pageOffset = Number(query?.page) - 1;
@@ -40,7 +41,7 @@ const ProductGridViewMaster = ({
           handleShow={handleShow}
           wishlistData={wishlistData}
           cartData={cartData}
-
+          sortBy={sortBy}
         />
       );
     }
