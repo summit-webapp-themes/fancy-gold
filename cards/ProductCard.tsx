@@ -10,7 +10,7 @@ import noImage from '../public/assets/images/no_image.png';
 import { CONSTANTS } from '../services/config/app-config';
 import ProductCardStyles from '../styles/components/productCard.module.scss';
 
-const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, index }: any) => {
+const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, index, sortBy }: any) => {
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   let wishProducts: any;
@@ -96,6 +96,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, inde
   const params = new URLSearchParams({
   page: String(page),
   offset: String(index + 1),
+  sort_by:sortBy as any
 });
 
 if (filter !== undefined) {

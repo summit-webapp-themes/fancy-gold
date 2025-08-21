@@ -46,6 +46,7 @@ const ProductListingMaster = () => {
         handleShow={handleShow}
         wishlistData={wishlistData}
         cartData={cartData}
+        sortBy={sortBy}
       />
     );
   };
