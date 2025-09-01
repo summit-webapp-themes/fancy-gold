@@ -352,7 +352,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
                       checked={value}
                       onChange={(e) => handleCartData(key, e.target.checked)}
                     />
-                    <label className="form-check-label">Check</label>
+                    <label className="form-check-label">{key}</label>
                   </div>
                 ) : config === 'buttons' ? (
                   <div className="d-flex flex-wrap gap-2">
