@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import styles from '../../styles/components/orderReport.module.scss';
 import OrderFilters from './OrderFilters';
 
-const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
+const OrderReportTableMaster = ({ tableBodyData, title, purity }: any) => {
   const tableHeaderArray = [
     'Sr.No',
     'Transaction Date',
@@ -19,6 +19,9 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
     'Status',
   ];
   const [filters, setFilters] = useState<any>({});
+  useEffect(()=>{
+   setFilters(()=>({"purity":purity}))
+  }, [])
   function getUniqueValues(keys: any) {
     let result = keys.map((key: any) => ({
       label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '),
@@ -28,6 +31,7 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
     return result;
   }
 
+
   const handleFilterChange = (key: string, value: string) => {
     setFilters((prevFilters: any) => ({
       ...prevFilters,
@@ -35,9 +39,10 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
     }));
   };
 
-  const filteredData = tableBodyData?.filter((item: any) => {
-    return Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]);
-  });
+  const filteredData: any = tableBodyData?.filter((item: any) => {
+      return Object.keys(filters).every((key) => !filters[key] || item[key] === filters[key]);
+    });
+ 
 
   const totals = useMemo(() => {
     return filteredData.reduce(
@@ -50,13 +55,15 @@ const OrderReportTableMaster = ({ tableBodyData, title }: any) => {
       { qty: 0, weight: 0, netWeight: 0 }
     );
   }, [filteredData]);
+
   return (
     <div className="container-lg">
       <h2 className="theme-blue text-center mt-4">{title}</h2>
       <div className="mt-3 ">
         <OrderFilters
-          data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name'])}
+          data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name', 'purity'])}
           handleFilterChange={handleFilterChange}
+          purity={purity}
         />
       </div>
       <div className="mt-4">

@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 import stylesListing from '../../styles/components/_listingTable.module.scss';
 import OrderFilters from '../OrderReport/OrderFilters';
+import { setPriority } from 'os';
 
-const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder }: any) => {
+const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder, purity }: any) => {
   const router = useRouter();
   const pathParts = router.asPath.split('/');
   const heading = pathParts[pathParts.length - 1];
@@ -14,6 +15,10 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
   const [filters, setFilters] = useState<any>({});
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  useEffect(() => {
+    setFilters(() => ({ purity: purity }));
+  }, []);
 
   function getUniqueValues(keys: any) {
     return keys.map((key: any) => ({
@@ -50,6 +55,16 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
     return sortOrder === 'asc' ? valueA?.localeCompare(valueB) : valueB?.localeCompare(valueA);
   });
 
+  const total = useMemo(() => {
+    return filteredData.reduce(
+      (acc: { total_weight: number }, item: any) => {
+        acc.total_weight += Number(item.total_weight || 0);
+        return acc;
+      },
+      { total_weight: 0 }
+    );
+  }, [filteredData]);
+
   return (
     <div className="container-lg">
       <h4 className="text-center my-4 fw-bold">
@@ -67,6 +82,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
         <OrderFilters
           data={getUniqueValues(['transaction_date', 'delivery_date', 'customer_name', 'name', 'purity'])}
           handleFilterChange={handleFilterChange}
+          purity={purity}
         />
       </div>
       <Table striped responsive>
@@ -121,6 +137,18 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
               </tr>
             ))}
         </tbody>
+        <tfoot>
+          {sortedData?.length > 0 && (
+            <tr className={`text-start ${stylesListing.table_row}`}>
+              <td colSpan={5}> </td>
+              <td>
+                <strong>{total.total_weight.toFixed(3)}</strong>
+              </td>
+              <td colSpan={2}></td>
+            </tr>
+          )}
+          <tr></tr>
+        </tfoot>
       </Table>
     </div>
   );
