@@ -11,7 +11,7 @@ import styles from '../../styles/components/catalog.module.scss';
 import { callGetAPI } from '../../utils/http-methods';
 import ErrorStyles from '../../styles/components/errorboundary.module.scss';
 import image from '../../public/assets/images/api_error_img.webp';
-import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
+// import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 
 function CatalogListingMaster() {
   const dispatch = useDispatch();
@@ -38,12 +38,12 @@ function CatalogListingMaster() {
     setCatalogList(values?.data?.data);
   };
   const handleClickCatalogName = async (slug: string) => {
-    dispatch(
-      AddReference({
-        reference_page: 'Catalog',
-        reference_id: slug,
-      })
-    );
+    // dispatch(
+    //   AddReference({
+    //     reference_page: 'Catalog',
+    //     reference_id: slug,
+    //   })
+    // );
   };
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
