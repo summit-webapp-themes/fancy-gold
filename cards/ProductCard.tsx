@@ -16,11 +16,15 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
   const router = useRouter();
   const { handleAddToWishList, handleRemoveFromWishList } = useAddToWishlist();
   const [isHovered, setIsHovered] = useState(false);
+
   let wishProducts: any;
   let cartProducts: any;
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
+  function formatString(inputString) {
+    return inputString.toLowerCase().replace(' ', '-');
+  }
   const handleRenderIcon = () => {
     const socketData = { page_type: 'Product', page_id: data?.slug };
     {
@@ -100,6 +104,15 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
       );
     }
   };
+  function buildProductLink({ url, ref, refID, extraParams = {} }) {
+    const params = new URLSearchParams({
+      ...(ref ? { ref } : {}),
+      ...(refID ? { refID } : {}),
+      ...extraParams,
+    }).toString();
+
+    return params ? `${url}?${params}` : url;
+  }
   return (
     <Card className={` ${ProductCardStyles.product_card}`}>
       <div className={` ${ProductCardStyles.product_card_img} `}>
@@ -130,21 +143,15 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
       </div>
       <Card.Body className={`${ProductCardStyles.content_wrap}`}>
         <div className={`${ProductCardStyles.product_content_wrap}`}>
-          <Link href={`${data?.url}`} className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}>
+          <Link
+            href={buildProductLink({ url: data?.url, ref: 'category', refID: formatString(data?.level_2_category) })}
+            target="_blank"
+            className={`text-dark text-decoration-none ${ProductCardStyles.product_name}`}
+          >
             <Card.Title className={`my-0 ${ProductCardStyles.product_name} mb-0`}> {data?.name}</Card.Title>
           </Link>
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+          <div className="d-flex justify-content-between align-items-center">
             <div>
-              {/* {data?.bom_factory_code ? (
-                <Card.Text className={`my-0 ${ProductCardStyles.product_card_text}`}>{data?.bom_factory_code}</Card.Text>
-              ) : null}
-              <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Gross wt: {data.weight_per_unit}</Card.Text> */}
-              {/* <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Size: {data.length}</Card.Text> */}
-              {/* {(data?.level_2_category === 'MANGALSUTRA (75)' ||
-                data?.level_2_category === 'MANGALSUTRA (92)' ||
-                data?.item_group === 'STONE CHAINS') && (
-                <Card.Text className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>Net wt: {data?.net_weight}</Card.Text>
-              )}  */}
               {data?.item_description?.length > 0 &&
                 data?.item_description.map((item: any, index: any) => (
                   <Card.Text key={index} className={`my-0 py-0 ${ProductCardStyles.product_card_text} `}>
@@ -152,7 +159,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
                   </Card.Text>
                 ))}
             </div>
-            <div className='d-flex justify-content-end' >{handleRenderAddToCartBtn()}</div>
+            <div>{handleRenderAddToCartBtn()}</div>
           </div>
         </div>
       </Card.Body>
