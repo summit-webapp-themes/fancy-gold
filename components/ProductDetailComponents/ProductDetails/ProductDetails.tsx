@@ -51,7 +51,7 @@ const ProductDetails = ({
               <ProductDetailInfo
                 data={productDetailData}
                 getProductDetailData={fetchProductDetailDataAPI}
-                referenceTrackerData={referenceTrackerData}
+                // referenceTrackerData={referenceTrackerData}
               />
             </div>
             <PrevNextButtons data={productDetailData} />

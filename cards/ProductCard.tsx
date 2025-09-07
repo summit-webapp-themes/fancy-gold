@@ -119,7 +119,7 @@ const ProductCard = ({ data, handleShow, wishlistData, btnAction, cartData, hand
         {handleRenderIcon()}
         <div
           className="text-decoration-none text-dark"
-          onClick={() => handlePreviewModal(data)}
+          // onClick={() => handlePreviewModal(data)}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
