@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useProductListing from '../../hooks/ProductListPageHooks/useProductsDataHook';
 import { selectCart } from '../../store/slices/cart-slices/cart-local-slice';
-import { selectReferenceTracker } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
+// import { selectReferenceTracker } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 import { selectWishlist } from '../../store/slices/wishlist-slices/wishlist-local-slice';
 import styles from '../../styles/components/filterSidebar.module.scss';
 import WebFilters from './FilterView/WebFilters';
@@ -27,7 +27,7 @@ const ProductListingMaster = () => {
   } = useProductListing();
   const wishlistData = useSelector(selectWishlist)?.items;
   const cartData = useSelector(selectCart)?.items;
-  const referenceTrackerData = useSelector(selectReferenceTracker);
+  // const referenceTrackerData = useSelector(selectReferenceTracker);
   const [hideFilterSection, setHideFilterSection] = useState<boolean>(false);
   const [show, setShow] = useState(false);
 
@@ -80,12 +80,14 @@ const ProductListingMaster = () => {
             </div>
 
             <div className=" col-lg-10 col-md-8 col-sm-8">
-              <div className="row mt-2 mt-sm-0 product-listing-row pe-lg-0" style={{ paddingRight: '12px'}}>{handleDisplayOfProductsList()}</div>
+              <div className="row mt-2 mt-sm-0 product-listing-row pe-lg-0" style={{ paddingRight: '12px' }}>
+                {handleDisplayOfProductsList()}
+              </div>
             </div>
           </div>
         </div>
         <ImagePreviewModal imagePreview={imagePreview} setImagePreview={setImagePreview} data={previewData} />
-        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} referenceTrackerData={referenceTrackerData} />
+        <ProductDetailDrawer show={show} handleClose={handleClose} data={drawerData} />
       </section>
     </div>
   );

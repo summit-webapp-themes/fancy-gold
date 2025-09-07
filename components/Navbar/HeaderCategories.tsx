@@ -6,7 +6,7 @@ import ComponentErrorHandler from '../ComponentErrorHandler';
 import NavbarLoadingComponent from './NavbarLoadingComponent';
 import stylesHeader from '../../styles/components/header.module.scss';
 import { useDispatch } from 'react-redux';
-import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
+// import { AddReference } from '../../store/slices/reference-tracking-slices/reference-tracking-slice';
 
 const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   const dispatch = useDispatch();
@@ -22,12 +22,12 @@ const HeaderCategories = ({ navbarData, isLoading, errorMessage }: any) => {
   };
   const handleClickCategory = (slug: string) => {
     setShowPopoverIndex(null);
-    dispatch(
-      AddReference({
-        reference_page: 'Category',
-        reference_id: slug,
-      })
-    );
+    // dispatch(
+    //   AddReference({
+    //     reference_page: 'Category',
+    //     reference_id: slug,
+    //   })
+    // );
   };
   const popoverBottom = (item: any) => (
     <Popover id={`popover-${item.label}`} className={`p-2 ${stylesHeader.category_popover} shadow rounded`} onMouseLeave={handleMouseLeave}>
