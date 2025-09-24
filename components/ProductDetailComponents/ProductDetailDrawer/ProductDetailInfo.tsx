@@ -27,8 +27,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     design_style: '',
   };
 
-  console.log({ data });
-
   const [sizeTable, setSizeTable] = useState([initialState]);
   const [cartProductsData, setCartProductsData] = useState<any>({
     wastage: '',
