@@ -257,42 +257,39 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       </div>
       <div className="mb-2">
         <div className={`row mx-1 ${styles.tableRow}`}>
-     
           {data?.category_specification?.length > 0 ? (
-            data.category_specification.map((itemForTable: any, index: number) => {
-              return (
+            <>
+              <div className="col-2 border text-center py-1">Purity</div>
+              {data.category_specification.map((itemForTable: any, index: number) => (
                 <div className="col-2 border text-center py-1" key={index}>
                   {capitalizeFirstLetter(itemForTable?.specification)}
                 </div>
-              );
-            })
-          ) : (
-            <></>
-          )}
+              ))}
+            </>
+          ) : null}
           {/* <div className="col border"></div> */}
         </div>
         {sizeTable?.map((row, index) => (
           <div className="" key={index}>
-            {data?.category_specification?.length > 0 ? (
-              <div className="row mx-1">
-                {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
-                  return (
-                    <>{rendertTableFields(itemForTable, index, row)}</>
-                  );
-                })}
-                <div className="col-2 text-center border p-1">
-                  <button
-                    className="border-0 bg-light p-0 text-center"
-                    onClick={() => handleDeleteRow(index)}
-                    onKeyDown={(e) => handleKeyDown(e)}
-                  >
-                    <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+            <div className="row mx-1">
+              {data?.category_specification?.length > 0 ? (
+                <>
+                  <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div>
+                  {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
+                    return <>{rendertTableFields(itemForTable, index, row)}</>;
+                  })}
+                  <div className="col-2 text-center border p-1">
+                    <button
+                      className="border-0 bg-light p-0 text-center"
+                      onClick={() => handleDeleteRow(index)}
+                      onKeyDown={(e) => handleKeyDown(e)}
+                    >
+                      <IoClose className={`text-danger ${productDetailStyles.pointerCursor}`} />
+                    </button>
+                  </div>
+                </>
+              ) : null}
+            </div>
           </div>
         ))}
       </div>
