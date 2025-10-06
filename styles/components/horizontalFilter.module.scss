@@ -1,0 +1,62 @@
+.purity_button {
+  width: 3rem;
+  height: 100% !important;
+  padding: 0.1rem 0;
+  margin: 0 0.4rem 0 0.4rem;
+  border: 1px solid #1a1a49;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.purity_button:hover {
+  background: #1a1a49;
+  color: #ffd700;
+}
+.purity_button_active {
+  width: 3rem;
+  height: 100% !important;
+  padding: 0.1rem 0;
+  margin: 0 0.4rem 0 0.4rem;
+  border: 1px solid #1a1a49;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #1a1a49;
+  color: #ffd700;
+}
+.sort_by_select {
+  width: 10rem;
+  padding: 0 0.5rem 0 0.5rem;
+  margin: 0 0.5rem 0 0.5rem;
+  border: 1px solid #1a1a49;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.save_btn {
+  width: 4rem;
+  padding: 0 0.5rem 0 0.5rem;
+  border: 1px solid #1a1a49;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.save_btn:hover {
+  background: #1a1a49;
+  color: #ffd700;
+}
+.save_btn_active {
+  background: #1a1a49;
+  color: #ffd700;
+  width: 4rem;
+  padding: 0 0.5rem 0 0.5rem;
+  border: 1px solid #1a1a49;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.cust_name_input {
+  // max-width: 10rem !important;
+  height: 26px;
+  text-align: start;
+  border: 1px solid #1a1a49;
+  border-radius: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}

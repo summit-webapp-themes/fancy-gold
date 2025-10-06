@@ -1,0 +1,132 @@
+.header {
+  background: white;
+  width: 100% !important;
+}
+.navbar {
+  padding: 0;
+}
+
+.search_bar {
+  width: 40%;
+  max-width: 40%;
+  padding-bottom: 1.0625rem;
+  text-transform: uppercase;
+  flex: 2;
+}
+.label {
+  color: #1a1a49 !important;
+  text-decoration: none !important;
+}
+.icon_container {
+  position: relative;
+  display: flex;
+  justify-content: center !important;
+  flex-direction: column;
+  align-items: center;
+}
+.badge {
+  background: red;
+  border-radius: 50% !important;
+  bottom: 35px !important;
+  height: 1.1rem;
+  position: absolute;
+  right: 6px !important;
+  text-align: center;
+  width: 1.1rem;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.list_inline_margin {
+  margin-top: -2px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.badge_warning[href] {
+  background-color: #c67605;
+}
+
+.search_bar_input {
+  height: 40px;
+  padding-right: 40px;
+}
+.search_icon {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray; /* Adjust color as needed */
+  cursor: pointer;
+}
+.list_inline_item {
+  width: 60px;
+}
+.order_list_dropdown {
+  text-align: center;
+  font-size: 14px;
+}
+.order_list_dropdown a {
+  padding: 0px;
+  color: #1a1a49 !important;
+}
+.order_list_items {
+  padding: 4px !important;
+  font-size: 14px;
+  padding: 3px;
+}
+.logo {
+  // flex: 1;
+}
+.inlineList {
+  // flex: 2;
+}
+@media (max-width: 1070px) {
+  .search_bar {
+    width: 40%;
+  }
+}
+@media (max-width: 968px) {
+  .search_bar {
+    width: 35%;
+  }
+}
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .list_inline_item {
+    margin-top: 10px;
+    width: 50px;
+  }
+  .badge, .cart_badge {
+    right: 0px !important;
+  }
+  .mobnavbar {
+    justify-content: end !important;
+  }
+  .logo {
+    flex: none;
+  }
+  .search_bar {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.order_list_dropdown a {
+  padding: 0px;
+  color: #1a1a49 !important;
+}
+
+.order_list_items {
+  padding: 3px 7px !important;
+}
+
+@media (max-width: 767px) {
+  .order_list_dropdown {
+    right: auto !important;
+    left: 0 !important;
+  }
+}

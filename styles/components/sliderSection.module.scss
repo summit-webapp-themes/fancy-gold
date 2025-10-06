@@ -1,0 +1,34 @@
+.slider_arrow_right {
+  color: #1a1a49 !important;
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  font-size: 40px;
+  cursor: pointer;
+}
+.slider_arrow_left {
+  color: #1a1a49 !important;
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.slick-next {
+  right: 0px !important;
+}
+.productCard_slider_wrapper {
+  height: 340px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider_arrow_right {
+    font-size: 25px;
+    right: -10px;
+  }
+  .slider_arrow_left {
+    font-size: 25px;
+    left: -5px;
+  }
+}

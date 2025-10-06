@@ -1,0 +1,38 @@
+.no_data_state {
+  width: 100%;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 4px;
+
+  .no_data_content {
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .no_data_icon {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      border-radius: 200px;
+      justify-content: center;
+      background-color: #f7fafc;
+      box-shadow: 0px 2px 1px #e1e3ec;
+    }
+
+    .no_data_state_message {
+      color: #578495;
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: center;
+      // margin-top: 0.85rem;
+    }
+
+    .no_data_state_help {
+      color: #a2a5b9;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+  }
+}
