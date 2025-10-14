@@ -4,6 +4,7 @@ import ImageSkeleton from '../ProductDetailDrawer/ImageSkeleton';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
 import PrevNextButtons from './PrevNextButtons';
 import ProductCode from './ProductCode';
+import ProductFieldDetails from './ProductFieldDetails';
 import ProductImage from './ProductImage';
 import ProductVariants from './ProductVariants';
 
@@ -40,6 +41,7 @@ const ProductDetails = ({
           <div className="col-12 col-md-6 ">
             <div className="p-2 p-md-3 w-100 border">
               <ProductCode data={productDetailData} />
+              <ProductFieldDetails data={productDetailData} />
               <ProductVariants
                 productDetail={productDetailData}
                 variantsData={productVariantData?.variants?.length > 0 && productVariantData?.variants}
