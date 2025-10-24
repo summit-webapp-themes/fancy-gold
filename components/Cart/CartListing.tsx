@@ -24,6 +24,7 @@ const CartListing = () => {
   const [selectedPurity, setSelectedPurity] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [finalRemark, setFinalRemark] = useState('');
   const [isCustomerNameUpdateLoading, setCustomerNameUpdateLoading] = useState(false);
   const [isHandlePlaceOrderLoading, setIsHandlePlaceOrderLoading] = useState(false);
   const [modifiedPurity, setModifiedPurity] = useState<any>([]);
@@ -38,7 +39,6 @@ const CartListing = () => {
 
   const handleCloseClearCartModal = () => setShowClearCartModal(false);
   const handleShowClearCartModal = () => setShowClearCartModal(true);
-
 
   useEffect(() => {
     if (cartListingItems?.transaction_date) {
@@ -139,8 +139,7 @@ const CartListing = () => {
   //   }
   // };
 
-
-   const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async () => {
     if (isHandlePlaceOrderLoading) return; // Prevent multiple clicks while loading
     setIsHandlePlaceOrderLoading(true); // Start loader
 
@@ -155,6 +154,7 @@ const CartListing = () => {
       party_name: partyName,
       reference_page: 'Cart',
       reference_id: 'cart',
+      final_remark: finalRemark,
     };
 
     if (selectedDate < minDate) {
@@ -171,7 +171,6 @@ const CartListing = () => {
       setIsHandlePlaceOrderLoading(false); // Stop loader after API call
     }
   };
-
 
   const onEditwastage = (categoryIndex: number, orderIndex: number, data: string) => {
     const updatedItems = { ...cartListingItems };
@@ -207,9 +206,9 @@ const CartListing = () => {
     }
   };
 
-  const updatePurity =(e: React.ChangeEvent<HTMLSelectElement>)=>{
-    setSelectedPurity(e.target.value)
-  }
+  const updatePurity = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPurity(e.target.value);
+  };
 
   const updateColor = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedColor(e.target.value);
@@ -221,189 +220,6 @@ const CartListing = () => {
       fetchCartListingData();
     }
   };
-
-  // const handleDataRendering = () => {
-  //   if (isLoading) {
-  //     return <CartSkeleton />;
-  //   }
-  //   if (cartListingItems?.categories?.length > 0) {
-  //     return (
-  //       <>
-  //         <div className="border p-3">
-  //           <div className="d-flex justify-content-between">
-  //             <div>
-  //               <div className="mt-2 row">
-  //                 <label className="col-md-4">Customer Name: </label>
-
-  //                 <input type="text" className="col-md-5" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-  //                 <div className="col-md-1"></div>
-  //                 <button onClick={updateCartCust} className={`${styles.update_btn} col-md-2`}>
-  //                   Update
-  //                 </button>
-  //               </div>
-  //               <div className="mt-2 row">
-  //                 <label className="col-md-4">Order Purity:</label>
-
-  //                 <span className="col-md-8">{updatedPurity}</span>
-  //               </div>
-  //               <div className="mt-2 row">
-  //                 <label className="col-md-4">Update Purity:</label>
-  //                 <select
-  //                   className=" col-md-5"
-  //                   // value={selectedPurity}
-  //                   onChange={updatePurity}
-  //                   placeholder="text"
-  //                 >
-  //                   {modifiedPurity.map((item: any, index: any) => {
-  //                     if (!item) return null;
-  //                     return (
-  //                       <option key={index} value={item?.name}>
-  //                         {item?.name}
-  //                       </option>
-  //                     );
-  //                   })}
-  //                 </select>
-  //                 <div className="col-md-1"></div>
-  //                 <button
-  //                   onClick={() => updateCartData(customerName, selectedPurity, selectedColor, setUpdatedPurity, setUpdatedColor)}
-  //                   className={`col-md-2 ${styles.update_btn}`}
-  //                 >
-  //                   Update
-  //                 </button>
-  //               </div>
-  //               <div className="mt-2 row">
-  //                 <label className="col-md-4">Delivery Date: </label>
-  //                 <input
-  //                   type="date"
-  //                   className="col-md-5"
-  //                   value={deliveryDate}
-  //                   onChange={(e) => setDeliveryDate(e.target.value)}
-  //                   min={deliveryDate}
-  //                 />
-  //               </div>
-  //               <div className="mt-2 mx-0 row" style={{ minHeight: '32px' }}>
-  //                 <label className="col-sm-4 col-lg-3 px-0 px-lg-3">Colour:</label>
-
-  //                 <span className="col-sm-8 col-lg-9 px-0">{updatedColor}</span>
-  //               </div>
-  //               <div className="mt-2 mx-0 row">
-  //                 <label className="col-sm-4 col-lg-3 px-0 px-lg-3">Update Colour:</label>
-  //                 <div className="col-sm-4 col-lg-3 px-0">
-  //                   <select
-  //                     className=" form-control form-control-sm"
-  //                     // value={selectedPurity}
-  //                     onChange={updateColor}
-  //                     placeholder="text"
-  //                     style={{ maxWidth: '220px' }}
-  //                   >
-  //                     {colorList.map((item: any, index: any) => {
-  //                       return (
-  //                         <option key={index} value={item}>
-  //                           {item}
-  //                         </option>
-  //                       );
-  //                     })}
-  //                   </select>
-  //                 </div>
-  //                 <div className="col-sm-4 d-flex justify-content-lg-end px-0 px-sm-4 px-md-0">
-  //                   <button onClick={() => updateColorButtonClick()} className={`${styles.update_btn} btn btn-secondary py-0 mt-2 mt-sm-0`}>
-  //                     <span>Update</span>
-  //                   </button>
-  //                 </div>
-  //               </div>
-  //             </div>
-  //             <div className={`${styles.place_order_container}`}>
-  //               <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-  //                 Place Order
-  //               </button>
-  //             </div>
-  //           </div>
-  //           <hr className="mt-3" />
-  //           {cartListingItems?.categories?.length > 0 &&
-  //             cartListingItems?.categories?.map((category: any, categoryIndex: number) => (
-  //               <div className="p-3" key={categoryIndex}>
-  //                 <h5 className="py-2">
-  //                   {category?.category} | Total Weight: {category?.total_weight}gm
-  //                 </h5>
-  //                 <div className={`row ${styles?.table_header}`}>
-  //                   <div className="col-lg-5 col-md-5 col-12 text-center">Products</div>
-  //                   <div className="col-lg-2 col-md-2 col-12 text-center">Description</div>
-  //                   <div className="col-lg-5 col-md-5 col-12"></div>
-  //                 </div>
-  //                 <div className="row">
-  //                   {category?.orders?.length > 0 &&
-  //                     category?.orders?.map((order: any, orderIndex: any) => (
-  //                       <>
-  //                         <div className={`col-lg-7 col-md-6 col-12 ${styles.border}`}>
-  //                           <CartProductDetail
-  //                             data={order}
-  //                             onEditWastage={(data: any) => onEditwastage(categoryIndex, orderIndex, data)}
-  //                             handleEditWastage={handleUpdateListData}
-  //                           />
-  //                         </div>
-  //                         <div className={`col-lg-4 col-md-5 col-12 ${styles.border}`}>
-  //                           <SizeQtyTable
-  //                             data={order}
-  //                             onQtyChange={(sizeIndex: number, newQty: number, data: any) =>
-  //                               handleQtyChange(categoryIndex, orderIndex, sizeIndex, newQty, data)
-  //                             }
-  //                             onDelete={handleDeleteRow}
-  //                             // onDelete={(sizeIndex: number, data: any) => handleDeleteSize(categoryIndex, orderIndex, sizeIndex, data)}
-  //                           />
-  //                         </div>
-  //                         <div className={`col-lg-1 col-md-1 col-12 ${styles.cross_icon_container}`}>
-  //                           <button
-  //                             className="btn btn-link text-decoration-none text-dark"
-  //                             onClick={() => {
-  //                               handleDeleteRow(order?.item_code);
-  //                             }}
-  //                             disabled={disableRemove}
-  //                           >
-  //                             <RxCross2 />
-  //                           </button>
-  //                         </div>
-  //                       </>
-  //                     ))}
-  //                 </div>
-  //               </div>
-  //             ))}
-  //           <hr />
-  //           <div className="d-flex justify-content-between">
-  //             <textarea className="w-50 p-3" rows={2} placeholder="Terms & Conditions"></textarea>
-  //             <div className={`${styles.place_order_container}`}>
-  //               <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
-  //               <div className="d-flex justify-content-end w-100">
-  //                 <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-  //                   Place Order
-  //                 </button>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <div className="container p-2">
-  //           <div className="row my-2 w-100 p-0 text-center">
-  //             <div className="offset-6 col-md-6 col-6 text-end p-lg-0">
-  //               <button
-  //                 className={`${styles.clear_cart_btn}`}
-  //                 data-toggle="modal"
-  //                 data-target="#confirmationModal"
-  //                 onClick={handleClearCart}
-  //               >
-  //                 Clear Cart
-  //               </button>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  //   if (errorMessage !== '' && cartListingItems?.length <= 0 && isLoading === false) {
-  //     return <ApiErrorPage />;
-  //   }
-  //   if (Object.keys(cartListingItems).length === 0 && cartListingItems.constructor === Object && errorMessage === '') {
-  //     return <NoDataFound title="Cart list is empty !!" message="Add Items to cart to view cart list." />;
-  //   }
-  // };
 
   const handleDataRendering = () => {
     if (isLoading) {
@@ -582,19 +398,29 @@ const CartListing = () => {
               ))}
             <hr />
             <div className="row m-0">
-              {/* <textarea className="col-md-6 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
-              <div className={`${styles.place_order_container}`}>
-                <h3>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
-                <div className="d-flex w-100 justify-content-end">
-                  <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
-                    {isHandlePlaceOrderLoading ? (
-                      <span className="mx-4 px-2 ">
-                        <Spinner animation="border" size="sm" />
-                      </span>
-                    ) : (
-                      <span>Place Order</span>
-                    )}
-                  </button>
+              <div className="w-50"></div>
+              <div className="w-50">
+                <textarea
+                  name="final_remark"
+                  value={finalRemark}
+                  placeholder="Enter Final Remark"
+                  className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
+                  onChange={(e) => setFinalRemark(e.target.value)}
+                ></textarea>
+                {/* <textarea className="col-md-6 p-3" rows={2} placeholder="Terms & Conditions"></textarea> */}
+                <div className={`${styles.place_order_container} mt-3 align-items-end`}>
+                  <h3 className='mb-3'>Grand Total weight : {cartListingItems?.grand_total_weight}gm</h3>
+                  <div className="d-flex w-100 justify-content-end">
+                    <button className={`${styles?.place_order_btn}`} onClick={handlePlaceOrder}>
+                      {isHandlePlaceOrderLoading ? (
+                        <span className="mx-4 px-2 ">
+                          <Spinner animation="border" size="sm" />
+                        </span>
+                      ) : (
+                        <span>Place Order</span>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

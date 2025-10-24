@@ -125,10 +125,10 @@ const OrderDetail = () => {
                         order={ord?.order}
                         weight={ord?.weight_abbr}
                         purity={ord?.purity}
-                        remark={ord?.remark}
+                        note={ord?.note}
                         wastage={ord?.wastage}
                         totalWeight={ord?.total_weight}
-                        totalDispatch = {ord?.total_dispatch_weight}
+                        totalDispatch={ord?.total_dispatch_weight}
                         status={ord.item_status}
                         // setReviewState={setReviewState}
                         // callAddReviewAPI={callAddReviewAPI}
@@ -150,9 +150,11 @@ const OrderDetail = () => {
                 </div>
               ))}
           </div>
-
           <div className="container mb-4 content-prev">
             <div className="row border">
+              {orderData?.final_remark && <div className="col-12 text-start p-2">
+                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Final Remark: {orderData.final_remark}</h6>
+              </div>}
               <div className="col-6 text-start p-2">
                 <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>

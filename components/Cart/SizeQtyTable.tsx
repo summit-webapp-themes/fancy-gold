@@ -22,7 +22,7 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
   };
   return (
     <>
-      <div className={`row ${styles.font_12} text-center`}>
+      <div className={`row ${styles.font_12} mx-0 text-center`}>
         <div className="col-lg-2 col-2 border py-1">Colour</div>
         <div className="col-lg-3 col-3 border py-1">Size(inch)</div>
         <div className="col-lg-3 col-3 border py-1">Qty</div>
@@ -31,7 +31,7 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
       </div>
       {data?.order?.length > 0 &&
         data?.order?.map((item: any, index: number) => (
-          <div className={`row ${styles.font_12} text-center `} key={index}>
+          <div className={`row ${styles.font_12} mx-0 text-center `} key={index}>
             <div className="col-lg-2 col-2 border py-1">{item?.colour}</div>
             <div className="col-lg-3 col-3 border py-1">{item?.size}</div>
             <div className="col-lg-3 col-3 border p-0 py-1">
@@ -60,7 +60,7 @@ const SizeQtyTable = ({ data, onQtyChange, onDelete }: any) => {
             </div>
           </div>
         ))}
-      <div className={`row ${styles.font_12} text-center `}>
+      <div className={`row ${styles.font_12} mx-0 text-center `}>
         <div className="col-lg-5 border py-2">Total weight</div>
         <div className="col-lg-7 border py-2 text-end">{Number(data?.total_weight).toFixed(3)}gm</div>
       </div>
