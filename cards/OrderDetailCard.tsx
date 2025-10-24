@@ -14,7 +14,7 @@ const OrderDetailCard = ({
   market_design_name,
   purity,
   order,
-  remark,
+  note,
   totalWeight,
   totalDispatch,
   wastage,
@@ -114,7 +114,7 @@ const OrderDetailCard = ({
                     Wastage:-{wastage}
                   </p> */}
                   <p className="text-dark" style={{ fontSize: '14px' }}>
-                    {remark}
+                    {note}
                   </p>
                 </div>
                 <div className="col-1">

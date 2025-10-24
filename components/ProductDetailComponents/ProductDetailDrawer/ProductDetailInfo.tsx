@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -72,6 +72,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const handleCartData = (field: string, value: any) => {
     setCartProductsData((prev: any) => ({ ...prev, [field]: value }));
   };
+
   const postRejectionNoteAPI = (params: any) => {
     const version = CONSTANTS?.ARC_APP_CONFIG?.version;
     const method = 'reject_new_arrival_item';
@@ -111,7 +112,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
-
+    
     sizeTable.forEach((row, index) => {
       if (!row.size) {
         newErrors[index] = { ...newErrors[index], size: 'Size is required' };
@@ -122,9 +123,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         valid = false;
       }
     });
-
+    
     setErrors(newErrors);
-
+    
     if (!valid) {
       return;
     }
@@ -137,9 +138,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       colour: colour || '',
       // wastage: cartPrductsData.wastage,
       qty_size_list: sizeTable || [],
-      remark: cartProductsData.remark || '',
+      // remark: cartProductsData.remark || '',
       user: user || '',
+      note: cartProductsData.Note || '',
     };
+    
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
       addToCartItem(addToCartParams);
@@ -294,13 +297,13 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         ))}
       </div>
       <div className="">
-        <textarea
+        {/* <textarea
           name="remark"
           value={cartProductsData?.remark}
-          placeholder="Enter note"
+          placeholder="Enter Remark"
           className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
           onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
-        ></textarea>
+        ></textarea> */}
         {reject && (
           <textarea
             name="rejection_note"
