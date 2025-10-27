@@ -7,7 +7,7 @@ import OrderReportLoadingSkeleton from '../OrderReport/OrderReportLoadingSkeleto
 const ListingTable = dynamic(() => import('./ListingTable'));
 
 const OrderList = () => {
-  const { orderListData, isLoading, errorMessage, handleSelectOrder, deleteBulkOrder, purity }: any = useOrderListHook();
+  const { orderListData, isLoading, errorMessage, handleSelectOrder, deleteBulkOrder, purity, handlePaginationBtn, orderListTotalCount }: any = useOrderListHook();
   const headers = [
     { field_name: '', header: '' },
     { field_name: 'transaction_date', header: 'Order Date' },
@@ -41,6 +41,8 @@ const OrderList = () => {
             handleSelectOrder={handleSelectOrder}
             handleDeleteOrder={deleteBulkOrder}
             purity={purity}
+            handlePaginationBtn={handlePaginationBtn}
+            orderListTotalCount={orderListTotalCount}
           />
         );
       }

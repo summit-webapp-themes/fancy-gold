@@ -5,12 +5,12 @@ import { Table } from 'react-bootstrap';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 import stylesListing from '../../styles/components/_listingTable.module.scss';
 import OrderFilters from '../OrderReport/OrderFilters';
-import { setPriority } from 'os';
+import Pagination from '../Paginate/Pagination';
 
-const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder, purity }: any) => {
+const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder, purity, handlePaginationBtn, orderListTotalCount }: any) => {
   const router = useRouter();
   const pathParts = router.asPath.split('/');
-  const heading = pathParts[pathParts.length - 1];
+  const heading = pathParts[pathParts.length - 1]?.split('?')[0];
 
   const [filters, setFilters] = useState<any>({});
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -19,6 +19,12 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
   useEffect(() => {
     setFilters(() => ({ purity: purity }));
   }, []);
+  
+  const pageOffset = Number(router?.query?.page) - 1 || 0;
+
+  const handlePageClick = (event: any) => {
+    handlePaginationBtn(event?.selected);
+  };
 
   function getUniqueValues(keys: any) {
     return keys.map((key: any) => ({
@@ -64,6 +70,9 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
       { total_weight: 0 }
     );
   }, [filteredData]);
+
+  const totalCount = orderListTotalCount || sortedData.length || 0;
+  const isNextButtonDisabled: boolean = parseInt((totalCount / 12).toString(), 10) === pageOffset;
 
   return (
     <div className="container-lg">
@@ -141,7 +150,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
           {sortedData?.length > 0 && (
             <tr className={`text-start ${stylesListing.table_row}`}>
               <td colSpan={5}> </td>
-              <td>
+              <td className='text-center'>
                 <strong>{total.total_weight.toFixed(3)}</strong>
               </td>
               <td colSpan={2}></td>
@@ -150,6 +159,7 @@ const ListingTable = ({ headers, tableData, handleSelectOrder, handleDeleteOrder
           <tr></tr>
         </tfoot>
       </Table>
+      <Pagination totalCount={totalCount} handlePageClick={handlePageClick} pageOffset={pageOffset} isNextButtonDisabled={isNextButtonDisabled} />
     </div>
   );
 };
