@@ -243,7 +243,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   return (
     <div className="w-100">
       <div className="py-2">
-        <h6 className={`${styles.productCode} fw-bold mb-3`}>This product is available in below sizes :</h6>
+        {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size?.length > 0 && (
+          <h6 className={`${styles.productCode} fw-bold mb-3`}>This product is available in below sizes :</h6>
+        )}
         <div className="d-flex flex-wrap gap-2">
           {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size?.length > 0 && (
             <>
@@ -276,7 +278,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         <div className={`row mx-1 ${styles.tableRow}`}>
           {data?.category_specification?.length > 0 ? (
             <>
-              <div className="col-2 border text-center py-1">Purity</div>
+              {/* <div className="col-2 border text-center py-1">Purity</div> */}
               {data.category_specification.map((itemForTable: any, index: number) => (
                 <div className="col-2 border text-center py-1" key={index}>
                   {capitalizeFirstLetter(itemForTable?.specification)}
@@ -291,7 +293,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             <div className="row mx-1">
               {data?.category_specification?.length > 0 ? (
                 <>
-                  <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div>
+                  {/* <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div> */}
                   {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
                     return <>{rendertTableFields(itemForTable, index, row)}</>;
                   })}
