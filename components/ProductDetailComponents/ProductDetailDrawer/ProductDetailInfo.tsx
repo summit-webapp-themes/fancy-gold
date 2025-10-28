@@ -262,7 +262,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         <div className={`row mx-1 ${styles.tableRow}`}>
           {data?.category_specification?.length > 0 ? (
             <>
-              <div className="col-2 border text-center py-1">Purity</div>
+              {/* <div className="col-2 border text-center py-1">Purity</div> */}
               {data.category_specification.map((itemForTable: any, index: number) => (
                 <div className="col-2 border text-center py-1" key={index}>
                   {capitalizeFirstLetter(itemForTable?.specification)}
@@ -277,7 +277,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             <div className="row mx-1">
               {data?.category_specification?.length > 0 ? (
                 <>
-                  <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div>
+                  {/* <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div> */}
                   {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
                     return <>{rendertTableFields(itemForTable, index, row)}</>;
                   })}
