@@ -114,10 +114,10 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
     let valid = true;
     
     sizeTable.forEach((row, index) => {
-      if (!row.size) {
-        newErrors[index] = { ...newErrors[index], size: 'Size is required' };
-        valid = false;
-      }
+      // if (!row.size) {
+      //   newErrors[index] = { ...newErrors[index], size: 'Size is required' };
+      //   valid = false;
+      // }
       if (!row.quantity) {
         newErrors[index] = { ...newErrors[index], quantity: 'Quantity is required' };
         valid = false;
