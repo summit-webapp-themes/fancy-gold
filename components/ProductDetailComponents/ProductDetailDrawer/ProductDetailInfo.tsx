@@ -112,20 +112,16 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const handleAddToCart = () => {
     const newErrors: { [key: number]: { size?: string; quantity?: string } } = {};
     let valid = true;
-    
+
     sizeTable.forEach((row, index) => {
-      if (!row.size) {
-        newErrors[index] = { ...newErrors[index], size: 'Size is required' };
-        valid = false;
-      }
       if (!row.quantity) {
         newErrors[index] = { ...newErrors[index], quantity: 'Quantity is required' };
         valid = false;
       }
     });
-    
+
     setErrors(newErrors);
-    
+
     if (!valid) {
       return;
     }
@@ -136,13 +132,11 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       purity: purity || '',
       cust_name: cust_name || '',
       colour: colour || '',
-      // wastage: cartPrductsData.wastage,
       qty_size_list: sizeTable || [],
-      // remark: cartProductsData.remark || '',
       user: user || '',
       note: cartProductsData.Note || '',
     };
-    
+
     if (cust_name !== '' && cust_name !== null) {
       setCustomerError('');
       addToCartItem(addToCartParams);
@@ -215,12 +209,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       case 'formula':
         return (
           <div className="col-2 border py-1 text-center ">
-            <div className={`${styles.tableFontSize}`}>
-              {
-                // ((Number(data?.weight_per_unit) / Number(data?.length)) * Number(row.size)).toFixed(3)
-                computeFormulaFieldValue(itemForTable.value, itemForTable.value_2, data, row)
-              }
-            </div>
+            <div className={`${styles.tableFontSize}`}>{computeFormulaFieldValue(itemForTable.value, itemForTable.value_2, data, row)}</div>
           </div>
         );
     }
@@ -229,7 +218,9 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   return (
     <div className="w-100">
       <div className="py-2">
-        <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
+        {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size.length > 0 && (
+          <h6 className={`${styles.productCode} fw-bold mb-0`}>This product is available in below sizes :</h6>
+        )}
         <div className="d-flex">
           {Array.isArray(data?.item_characteristics?.size) && data?.item_characteristics?.size.length > 0 && (
             <>
@@ -262,7 +253,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         <div className={`row mx-1 ${styles.tableRow}`}>
           {data?.category_specification?.length > 0 ? (
             <>
-              <div className="col-2 border text-center py-1">Purity</div>
               {data.category_specification.map((itemForTable: any, index: number) => (
                 <div className="col-2 border text-center py-1" key={index}>
                   {capitalizeFirstLetter(itemForTable?.specification)}
@@ -277,7 +267,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
             <div className="row mx-1">
               {data?.category_specification?.length > 0 ? (
                 <>
-                  <div className={`col-2 border text-center py-1 ${styles.tableFontSize}`}>{purity}</div>
                   {data?.category_specification.map((itemForTable: any, itemForTableIdx: number) => {
                     return <>{rendertTableFields(itemForTable, index, row)}</>;
                   })}
@@ -297,13 +286,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
         ))}
       </div>
       <div className="">
-        {/* <textarea
-          name="remark"
-          value={cartProductsData?.remark}
-          placeholder="Enter Remark"
-          className={`p-2 m-1 border w-100 ${styles.tableFontSize}`}
-          onChange={(e) => setCartProductsData({ ...cartProductsData, remark: e.target.value })}
-        ></textarea> */}
         {reject && (
           <textarea
             name="rejection_note"
@@ -323,8 +305,6 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
 
             return (
               <div key={index} className="col-12">
-                {/* <label className="form-label">{label}</label> */}
-
                 {Array.isArray(config) ? (
                   // Handle dropdown for 'select'
                   <select name={key} className="form-select" value={value} onChange={(e) => handleInputChange(index, e.target.value)}>
