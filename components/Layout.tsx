@@ -48,8 +48,8 @@ const Layout = ({ children }: any) => {
     const handleVisibilityChange = () => {
       // Always re-read the latest socket_data
       const retrieveSessionStorage = sessionStorage.getItem('summit_page_data');
-      const { reference_type, reference_id, page_type, page_id } = JSON.parse(retrieveSessionStorage);
       if (!retrieveSessionStorage) return;
+      const { reference_type, reference_id, page_type, page_id } = JSON.parse(retrieveSessionStorage);
 
       const user_name = localStorage.getItem('party_name') || '';
       const phone = localStorage.getItem('phone') || '';
