@@ -10,8 +10,17 @@ import { Spinner } from 'react-bootstrap';
 
 const OrderDetail = () => {
   const { query } = useRouter();
-  const { orderData, isLoading, errorMessage, handleReorder, handleCancelOrder, showButtons, handleReadyToDispatch, handleDeleteOrder } =
-    useOrderDetailHook();
+  const {
+    orderData,
+    isLoading,
+    errorMessage,
+    handleReorder,
+    handleCancelOrder,
+    showButtons,
+    handleReadyToDispatch,
+    handleDeleteOrder,
+    ...orderModalData
+  } = useOrderDetailHook();
 
   const grandWeight = orderData.total_grand_weight;
   const common_comment = orderData.common_comment;
@@ -50,8 +59,6 @@ const OrderDetail = () => {
         </div>
       );
     }
-
-    console.log({ orderData })
 
     if (Object?.keys(orderData)?.length > 0 && !isLoading) {
       return (
@@ -157,8 +164,9 @@ const OrderDetail = () => {
                         showButtons={showButtons}
                         handleReadyToDispatch={handleReadyToDispatch}
                         handleDeleteOrder={handleDeleteOrder}
-                      // callUpdateSalesOrderStatusAPI={callUpdateSalesOrderStatusAPI}
-                      // reviewState={reviewState}
+                        // callUpdateSalesOrderStatusAPI={callUpdateSalesOrderStatusAPI}
+                        // reviewState={reviewState}
+                        {...orderModalData}
                       />
                     );
                   })}

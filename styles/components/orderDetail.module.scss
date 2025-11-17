@@ -123,6 +123,42 @@
   padding: 8px 4px !important;
 }
 
+.tableBtns {
+  width: 100px;
+  height: fit-content;
+  background: #dc3545;
+  border: 0;
+  border-radius: 5px;
+  color: #ecf0f1;
+  margin-top: 0;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  font-size: 0.7rem;
+  padding: 2px !important;
+}
+
+.greenBtn {
+  background: #08610f;
+}
+
+.submitBtn {
+  // width: 100px;
+  height: 36px;
+  background: #dc3545;
+  border: 0;
+  border-radius: 5px;
+  color: #ecf0f1;
+  margin-top: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  font-size: .9rem;
+  padding: 8px !important;
+}
+
+.cancelBtn {
+  background: #6c757d;
+}
+
 .quick_order_btn {
   width: 80px;
   height: 38px;

@@ -5,6 +5,28 @@ import noImage from '../public/assets/images/no_image.png';
 import orderDetailStyles from '../styles/components/orderDetail.module.scss';
 import { Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
 
+const modalFieldConfig: any = {
+  Dispatch: [
+    { name: 'dispatch_quantity', label: 'Dispatch Quantity', type: 'number' },
+    { name: 'dispatch_weight', label: 'Dispatch Weight (gm)', type: 'number' },
+  ],
+
+  Repair: [
+    { name: 'repair_quantity', label: 'Repair Quantity', type: 'number' },
+    { name: 'repair_remark', label: 'Repair Remark', type: 'text' },
+  ],
+
+  Reject: [
+    { name: 'rejected_quantity', label: 'Rejected Quantity', type: 'number' },
+    { name: 'rejection_reason', label: 'Rejection Reason', type: 'text' },
+  ],
+
+  Completed: [
+    { name: 'completed_quantity', label: 'Completed Quantity', type: 'number' },
+    { name: 'completed_weight', label: 'Completed Weight (gm)', type: 'number' },
+  ],
+};
+
 const OrderDetailCard = ({
   name,
   image,
@@ -35,6 +57,13 @@ const OrderDetailCard = ({
   showButtons,
   handleReadyToDispatch,
   handleDeleteOrder,
+  modalData,
+  modalType,
+  openModal,
+  closeModal,
+  handleModalInputChange,
+  handleModalSubmit,
+  buttonInfo,
 }: any) => {
   const [reviewModalToggle, setReviewModalToggle] = useState<boolean>(false);
   const [errMsgforReviewSubmitBtn, setErrMsgforReviewSubmitBtn] = useState<boolean>(false);
@@ -70,7 +99,7 @@ const OrderDetailCard = ({
           <div className="row border mx-0">
             <div className="col-md-7 border-end p-0 text-center">
               <div className="row m-0 ">
-                <div className='col-sm-6 px-0 row m-0'>
+                <div className="col-sm-6 px-0 row m-0">
                   <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Products</div>
                   <div className="col-md-4">
                     <div className="img-wrap text-center position-relative my-1" style={{ height: '110px' }}>
@@ -81,8 +110,8 @@ const OrderDetailCard = ({
                         alt="Product image"
                         priority
                         fill
-                      // width={100}
-                      // height={100}
+                        // width={100}
+                        // height={100}
                       />
                     </div>
                   </div>
@@ -112,7 +141,9 @@ const OrderDetailCard = ({
                 </div>
                 <div className={`col-sm-2 px-0 `}>
                   <div className={`border-end text-center ${orderDetailStyles.table_header}`}>Purity</div>
-                  <p className='mb-0' style={{ fontSize: '14px' }}>{purity}</p>
+                  <p className="mb-0" style={{ fontSize: '14px' }}>
+                    {purity}
+                  </p>
                 </div>
                 {/* <div className="col-sm-1 px-0 text-start">
                   <div className={`text-center ${orderDetailStyles.table_header}`}>Note</div>
@@ -129,7 +160,7 @@ const OrderDetailCard = ({
                     {status}
                   </p>
                 </div>
-                <div className='col-sm-2 px-0'>
+                <div className="col-sm-2 px-0">
                   <div className={`text-center d-none d-sm-block ${orderDetailStyles.table_header}`}></div>
                   {showButtons && ['pending', 'Accepted', 'WIP', 'Pending', 'accepted'].includes(status) && (
                     <div className="text-center">
@@ -156,65 +187,125 @@ const OrderDetailCard = ({
               <div className={`text-center d-none d-md-block  ${orderDetailStyles.table_header}`}></div>
               <div className={`${orderDetailStyles.order_detail_table} overflow-x-auto`}>
                 <table style={{ height: '100%' }}>
-                  <tr className='text-nowrap text-md-wrap'>
-                    <th className='px-1'>Color</th>
-                    <th className='px-1'>Size (Inch)</th>
-                    <th className='px-1'>Dispatch Qty</th>
-                    <th className='px-1'>Dispatch Wt</th>
-                    <th className='px-1'>Qty</th>
-                    <th className='px-1'>Weight (gm)</th>
-                    <th className='px-1'>status</th>
+                  <tr className="text-nowrap text-md-wrap">
+                    <th className="px-1">Color</th>
+                    <th className="px-1">Size (Inch)</th>
+                    <th className="px-1">Dispatch Qty</th>
+                    <th className="px-1">Dispatch Wt</th>
+                    <th className="px-1">Qty</th>
+                    <th className="px-1">Weight (gm)</th>
+                    <th className="px-1">status</th>
+                    {buttonInfo
+                      .filter((btn: any) => btn.value)
+                      .map((_: any, index: number) => {
+                        return <th className="px-1" key={index}></th>;
+                      })}
                   </tr>
                   {order.length > 0 &&
-                    order.map((data: any, index: any) => {
-                      return (
-                        <tr key={index}>
-                          <td className='px-1'>{data.colour}</td>
-                          <td className='px-1'>{data.size} inch</td>
-                          <td className='px-1'>{data.ready_quantity}</td>
-                          <td className='px-1'>{data.dispatch_weight}</td>
-                          <td className='px-1'>{data.qty}</td>
-                          <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
-                          <td className="text-right px-1">{data?.custom_oms_status}</td>
-                        </tr >
-                      );
-                    })}
+                    order.map((data: any, index: any) => (
+                      <tr key={index}>
+                        <td className="px-1">{data.colour}</td>
+                        <td className="px-1">{data.size} inch</td>
+                        <td className="px-1">{data.ready_quantity}</td>
+                        <td className="px-1">{data.dispatch_weight}</td>
+                        <td className="px-1">{data.qty}</td>
+                        <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
+                        <td className="text-right px-1">{data?.custom_oms_status}</td>
+                        {buttonInfo
+                          .filter((btn: any) => btn.value)
+                          .map((btn: any, index: number) => {
+                            const { label } = btn;
+
+                            const btnColorClass = label === 'Dispatch' || label === 'Completed' ? orderDetailStyles.greenBtn : '';
+
+                            return (
+                              <td className="py-1">
+                                <button
+                                  key={index}
+                                  className={`${orderDetailStyles.tableBtns} ${btnColorClass} mx-1`}
+                                  onClick={() => openModal(label, data)}
+                                >
+                                  {label}
+                                </button>
+                              </td>
+                            );
+                          })}
+                      </tr>
+                    ))}
                   <tr>
-                    <td style={{ fontSize: '10px !important' }}>Total Weight:</td>
+                    <td style={{ fontSize: '10px !important' }} colSpan={2}>
+                      Total Weight:
+                    </td>
                     <td className="text-right" colSpan={3}>
                       {totalWeight?.toFixed(2)} gm
                     </td>
                   </tr>
-                  {
-                    totalDispatched ?
-                      <tr>
-                        <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
-                        <td className="text-right" colSpan={3}>
-                          {totalDispatched?.toFixed(2)} gm
-                        </td>
-                      </tr> : ""
-                  }
+                  {totalDispatched ? (
+                    <tr>
+                      <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
+                      <td className="text-right" colSpan={3}>
+                        {totalDispatched?.toFixed(2)} gm
+                      </td>
+                    </tr>
+                  ) : (
+                    ''
+                  )}
 
-
-                  {
-                    issue_weight !== null && issue_weight !== '' && (
-                      <tr>
-                        <td style={{ fontSize: '10px !important' }}>Issue Weight:</td>
-                        <td className="text-right" colSpan={3}>
-                          {parseInt(issue_weight)} gm
-                        </td>
-                      </tr>
-                    )
-                  }
-                </table >
-              </div >
-            </div >
-          </div >
-        </div >
+                  {issue_weight !== null && issue_weight !== '' && (
+                    <tr>
+                      <td style={{ fontSize: '10px !important' }}>Issue Weight:</td>
+                      <td className="text-right" colSpan={3}>
+                        {parseInt(issue_weight)} gm
+                      </td>
+                    </tr>
+                  )}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="container">
           <div className="row">
             <div className="col-12">
+              <Modal show={!!modalType} onHide={closeModal} centered>
+                <ModalHeader closeButton>
+                  <ModalTitle>
+                    <h5 className="mb-0">{modalType}</h5>
+                  </ModalTitle>
+                </ModalHeader>
+
+                <ModalBody>
+                  <div className="d-flex flex-wrap gap-3">
+                    {modalFieldConfig[modalType]?.map((field: any) => (
+                      <div key={field.name} style={{ minWidth: '45%' }}>
+                        <label className="form-label fw-semibold" style={{ fontSize: '14px' }}>
+                          {field.label}
+                        </label>
+
+                        <input
+                          type={field.type}
+                          name={field.name}
+                          value={modalData[field.name] || ''}
+                          onChange={handleModalInputChange}
+                          className="form-control"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </ModalBody>
+
+                <ModalFooter>
+                  <button className={`${orderDetailStyles.cancelBtn} ${orderDetailStyles.submitBtn}`} onClick={closeModal}>
+                    Cancel
+                  </button>
+
+                  <button className={orderDetailStyles.submitBtn} onClick={handleModalSubmit}>
+                    Submit
+                  </button>
+                </ModalFooter>
+              </Modal>
+
               <Modal show={reviewModalToggle} onHide={showReviewModal} contentClassName="modal" className="">
                 <ModalHeader closeButton>
                   <ModalTitle>
@@ -238,7 +329,7 @@ const OrderDetailCard = ({
             </div>
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 };
