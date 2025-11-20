@@ -21,9 +21,9 @@ const modalFieldConfig: any = {
     { name: 'rejection_reason', label: 'Rejection Reason', type: 'text' },
   ],
 
-  Completed: [
-    { name: 'completed_quantity', label: 'Completed Quantity', type: 'number' },
-    { name: 'completed_weight', label: 'Completed Weight (gm)', type: 'number' },
+  Complete: [
+    { name: 'dispatch_quantity', label: 'Dispatch Quantity', type: 'number' },
+    { name: 'dispatch_weight', label: 'Dispatch Weight (gm)', type: 'number' },
   ],
 };
 
@@ -195,11 +195,6 @@ const OrderDetailCard = ({
                     <th className="px-1">Qty</th>
                     <th className="px-1">Weight (gm)</th>
                     <th className="px-1">status</th>
-                    {buttonInfo
-                      .filter((btn: any) => btn.value)
-                      .map((_: any, index: number) => {
-                        return <th className="px-1" key={index}></th>;
-                      })}
                   </tr>
                   {order.length > 0 &&
                     order.map((data: any, index: any) => (
@@ -216,12 +211,25 @@ const OrderDetailCard = ({
                           .map((btn: any, index: number) => {
                             const { label } = btn;
 
-                            const btnColorClass = label === 'Dispatch' || label === 'Completed' ? orderDetailStyles.greenBtn : '';
+                            const btnColorClass = label === 'Dispatch' || label === 'Complete' ? orderDetailStyles.greenBtn : '';
+
+                            // ❌ Skip rendering ALL buttons for these statuses
+                            if (
+                              data?.custom_oms_status === 'Completed' ||
+                              data?.custom_oms_status === 'Rejected' ||
+                              data?.custom_oms_status === 'Repaired'
+                            ) {
+                              return null;
+                            }
+
+                            // ❌ For Dispatched status → hide ONLY the Dispatch button
+                            if (data?.custom_oms_status === 'Dispatched' && label === 'Dispatch') {
+                              return null;
+                            }
 
                             return (
-                              <td className="py-1">
+                              <td key={index} className="py-1">
                                 <button
-                                  key={index}
                                   className={`${orderDetailStyles.tableBtns} ${btnColorClass} mx-1`}
                                   onClick={() => openModal(label, data)}
                                 >
