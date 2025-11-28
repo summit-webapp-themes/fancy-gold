@@ -5,6 +5,28 @@ import noImage from '../public/assets/images/no_image.png';
 import orderDetailStyles from '../styles/components/orderDetail.module.scss';
 import { Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from 'react-bootstrap';
 
+const modalFieldConfig: any = {
+  Dispatch: [
+    { name: 'dispatch_quantity', label: 'Dispatch Quantity', type: 'number' },
+    { name: 'dispatch_weight', label: 'Dispatch Weight (gm)', type: 'number' },
+  ],
+
+  Repair: [
+    { name: 'repair_quantity', label: 'Repair Quantity', type: 'number' },
+    { name: 'repair_remark', label: 'Repair Remark', type: 'text' },
+  ],
+
+  Reject: [
+    { name: 'rejected_quantity', label: 'Rejected Quantity', type: 'number' },
+    { name: 'rejection_reason', label: 'Rejection Reason', type: 'text' },
+  ],
+
+  Complete: [
+    { name: 'dispatch_quantity', label: 'Dispatch Quantity', type: 'number' },
+    { name: 'dispatch_weight', label: 'Dispatch Weight (gm)', type: 'number' },
+  ],
+};
+
 const OrderDetailCard = ({
   name,
   image,
@@ -35,6 +57,13 @@ const OrderDetailCard = ({
   showButtons,
   handleReadyToDispatch,
   handleDeleteOrder,
+  modalData,
+  modalType,
+  openModal,
+  closeModal,
+  handleModalInputChange,
+  handleModalSubmit,
+  buttonInfo,
 }: any) => {
   const [reviewModalToggle, setReviewModalToggle] = useState<boolean>(false);
   const [errMsgforReviewSubmitBtn, setErrMsgforReviewSubmitBtn] = useState<boolean>(false);
@@ -145,44 +174,76 @@ const OrderDetailCard = ({
             <div className="col-5 border p-0">
               <div className={`${orderDetailStyles.order_detail_table}`}>
                 <table style={{ height: '100%' }}>
-                  <tr>
-                    <th>Color</th>
-                    <th>Size(Inch)</th>
-                    <th>Dispatch Qty</th>
-                    <th>Dispatch Wt</th>
-                    <th>Qty</th>
-                    <th>Weight(gm)</th>
-                    <th>status</th>
+                  <tr className="text-nowrap text-md-wrap">
+                    <th className="px-1">Color</th>
+                    <th className="px-1">Size (Inch)</th>
+                    <th className="px-1">Dispatch Qty</th>
+                    <th className="px-1">Dispatch Wt</th>
+                    <th className="px-1">Qty</th>
+                    <th className="px-1">Weight (gm)</th>
+                    <th className="px-1">status</th>
+                    
                   </tr>
                   {order.length > 0 &&
-                    order.map((data: any, index: any) => {
-                      return (
-                        <tr key={index}>
-                          <td>{data.colour}</td>
-                          <td>{data.size} inch</td>
-                          <td>{data.ready_quantity}</td>
-                          <td>{data.dispatch_weight}</td>
-                          <td>{data.qty}</td>
-                          <td className="text-right">{data.weight}gm</td>
-                          <td className="text-right">{data?.custom_oms_status}</td>
-                        </tr>
-                      );
-                    })}
+                    order.map((data: any, index: any) => (
+                      <tr key={index}>
+                        <td className="px-1">{data.colour}</td>
+                        <td className="px-1">{data.size} inch</td>
+                        <td className="px-1">{data.dispatch_quantity}</td>
+                        <td className="px-1">{data.dispatch_weight}</td>
+                        <td className="px-1">{data.qty}</td>
+                        <td className="text-right px-1">{data.weight.toFixed(2)}gm</td>
+                        <td className="text-right px-1">{data?.custom_oms_status}</td>
+                        {buttonInfo
+                          .filter((btn: any) => btn.value)
+                          .map((btn: any, index: number) => {
+                            const { label } = btn;
+
+                            const btnColorClass = label === 'Dispatch' || label === 'Complete' ? orderDetailStyles.greenBtn : '';
+
+                            // ❌ Skip rendering ALL buttons for these statuses
+                            if (
+                              data?.custom_oms_status === 'Completed' ||
+                              data?.custom_oms_status === 'Rejected' ||
+                              data?.custom_oms_status === 'Repaired'
+                            ) {
+                              return null;
+                            }
+
+                            // ❌ For Dispatched status → hide ONLY the Dispatch button
+                            if (data?.custom_oms_status === 'Dispatched' && label === 'Dispatch') {
+                              return null;
+                            }
+
+                            return (
+                              <td key={index} className="py-1">
+                                <button
+                                  className={`${orderDetailStyles.tableBtns} ${btnColorClass} mx-1`}
+                                  onClick={() => openModal(label, data)}
+                                >
+                                  {label}
+                                </button>
+                              </td>
+                            );
+                          })}
+                      </tr>
+                    ))}
                   <tr>
-                    <td style={{ fontSize: '10px !important' }}>Total Weight:</td>
+                    <td style={{ fontSize: '10px !important' }} colSpan={2}>Total Weight:</td>
                     <td className="text-right" colSpan={3}>
                       {totalWeight.toFixed(2)} gm
                     </td>
                   </tr>
-                     {
-                    totalDispatch ? 
+                  {totalDispatch ? (
                     <tr>
                       <td style={{ fontSize: '10px !important' }}>Total Dispatch Wt:</td>
                       <td className="text-right" colSpan={3}>
                         {totalDispatch?.toFixed(2)} gm
                       </td>
-                    </tr> : ""
-                  }
+                    </tr>
+                  ) : (
+                    ''
+                  )}
 
                   {issue_weight !== null && issue_weight !== '' && (
                     <tr>
@@ -201,6 +262,43 @@ const OrderDetailCard = ({
         <div className="container">
           <div className="row">
             <div className="col-12">
+              <Modal show={!!modalType} onHide={closeModal} centered>
+                <ModalHeader closeButton>
+                  <ModalTitle>
+                    <h5 className="mb-0">{modalType}</h5>
+                  </ModalTitle>
+                </ModalHeader>
+
+                <ModalBody>
+                  <div className="d-flex flex-wrap gap-3">
+                    {modalFieldConfig[modalType]?.map((field: any) => (
+                      <div key={field.name} style={{ minWidth: '45%' }}>
+                        <label className="form-label fw-semibold" style={{ fontSize: '14px' }}>
+                          {field.label}
+                        </label>
+
+                        <input
+                          type={field.type}
+                          name={field.name}
+                          value={modalData[field.name] || ''}
+                          onChange={handleModalInputChange}
+                          className="form-control"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </ModalBody>
+
+                <ModalFooter>
+                  <button className={`${orderDetailStyles.cancelBtn} ${orderDetailStyles.submitBtn}`} onClick={closeModal}>
+                    Cancel
+                  </button>
+
+                  <button className={orderDetailStyles.submitBtn} onClick={handleModalSubmit}>
+                    Submit
+                  </button>
+                </ModalFooter>
+              </Modal>
               <Modal show={reviewModalToggle} onHide={showReviewModal} contentClassName="modal" className="">
                 <ModalHeader closeButton>
                   <ModalTitle>

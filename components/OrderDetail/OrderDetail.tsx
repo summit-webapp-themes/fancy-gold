@@ -9,8 +9,17 @@ import ApiErrorPage from '../ApiErrorPage';
 
 const OrderDetail = () => {
   const { query } = useRouter();
-  const { orderData, isLoading, errorMessage, handleReorder, handleCancelOrder, showButtons, handleReadyToDispatch, handleDeleteOrder } =
-    useOrderDetailHook();
+  const {
+    orderData,
+    isLoading,
+    errorMessage,
+    handleReorder,
+    handleCancelOrder,
+    showButtons,
+    handleReadyToDispatch,
+    handleDeleteOrder,
+    ...orderModalData
+  } = useOrderDetailHook();
 
   const grandWeight = orderData.total_grand_weight;
   const common_comment = orderData.common_comment;
@@ -144,6 +153,7 @@ const OrderDetail = () => {
                         handleDeleteOrder={handleDeleteOrder}
                         // callUpdateSalesOrderStatusAPI={callUpdateSalesOrderStatusAPI}
                         // reviewState={reviewState}
+                        {...orderModalData}
                       />
                     );
                   })}
@@ -152,9 +162,11 @@ const OrderDetail = () => {
           </div>
           <div className="container mb-4 content-prev">
             <div className="row border">
-              {orderData?.final_remark && <div className="col-12 text-start p-2">
-                <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Final Remark: {orderData.final_remark}</h6>
-              </div>}
+              {orderData?.final_remark && (
+                <div className="col-12 text-start p-2">
+                  <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Final Remark: {orderData.final_remark}</h6>
+                </div>
+              )}
               <div className="col-6 text-start p-2">
                 <h6 className={`mb-0 mt-2 ps-1 ${orderDetailStyles.order_detail_block}`}>Grand Total Weight: {grandWeight}gm</h6>
               </div>
