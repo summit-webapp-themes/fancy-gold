@@ -10,8 +10,9 @@ import styles from '../../../styles/components/productCard.module.scss';
 import productDetailStyles from '../../../styles/components/productDetail.module.scss';
 import { callPostAPI } from '../../../utils/http-methods';
 import { Spinner } from 'react-bootstrap';
+import useSSReview from '../../../hooks/ProductDetailPageHooks/useSSReview';
 
-const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
+const ProductDetailInfo = ({ data, getProductDetailData, ssReviewData }: any) => {
   const cartList = useSelector(selectCart)?.items;
   const TokenFromStore: any = useSelector(get_access_token);
   const { addToCartItem } = useAddToCartHook();
@@ -39,6 +40,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
   const [reject, setReject] = useState(false);
   const [addtoCartBtnLoader, setAddtoCartButtonLoader] = useState<boolean>(false);
   const inputRefs = useRef<any[]>([]);
+  const { saveSsReview } = useSSReview();
 
   const handleAddRow = () => {
     setSizeTable([...sizeTable, initialState]);
@@ -134,6 +136,14 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       setAddtoCartButtonLoader(false);
       return;
     }
+
+    // post ssReviewData to save it
+    let success = false;
+    if (ssReviewData?.ssSelection) {
+      success = await saveSsReview(ssReviewData);
+      if (!success) return;
+    }
+
     const addToCartParams = {
       item_code: data?.name || '',
       party_name: party_name || '',
@@ -153,6 +163,7 @@ const ProductDetailInfo = ({ data, getProductDetailData }: any) => {
       setCustomerError('');
       try {
         await addToCartItem(addToCartParams, undefined, socketData);
+        if(success) window.location.reload();
       } catch (error) {
         console.error('Error adding to cart:', error);
       }
