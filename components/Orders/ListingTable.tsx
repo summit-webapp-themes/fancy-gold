@@ -64,6 +64,7 @@ const ListingTable = ({
         filters={filters}
         setFilters={setFilters}
         filterOptions={filterOptions}
+        handlePaginationBtn={handlePaginationBtn}
       />
 
       <div className="text-end my-2">
@@ -99,27 +100,37 @@ const ListingTable = ({
         </thead>
 
         <tbody>
-          {sortedData.map((row: any) => (
-            <tr key={row.name} className="text-center">
-              <td>
-                <input
-                  type="checkbox"
-                  onChange={() => handleSelectOrder(row.name)}
-                />
+          {sortedData.length === 0 ? (
+            <tr>
+              <td colSpan={8} className="text-center py-4">
+                <div>
+                  <h5 className="theme-blue mb-0">Sorry, No Data Found</h5>
+                </div>
               </td>
-              <td>{row.transaction_date}</td>
-              <td>
-                <Link href={`/order-detail/${row.name}`}>
-                  {row.name}
-                </Link>
-              </td>
-              <td>{row.customer_name}</td>
-              <td>{row.purity}</td>
-              <td>{row.total_weight?.toFixed(3)}</td>
-              <td>{row.delivery_date}</td>
-              <td>{row.status}</td>
             </tr>
-          ))}
+          ) : (
+            sortedData.map((row: any) => (
+              <tr key={row.name} className="text-center">
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleSelectOrder(row.name)}
+                  />
+                </td>
+                <td>{row.transaction_date}</td>
+                <td>
+                  <Link href={`/order-detail/${row.name}`}>
+                    {row.name}
+                  </Link>
+                </td>
+                <td>{row.customer_name}</td>
+                <td>{row.purity}</td>
+                <td>{row.total_weight?.toFixed(3)}</td>
+                <td>{row.delivery_date}</td>
+                <td>{row.status}</td>
+              </tr>
+            ))
+          )}
         </tbody>
 
         <tfoot>

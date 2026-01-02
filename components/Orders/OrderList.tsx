@@ -64,16 +64,6 @@ const OrderList = () => {
     return <ComponentErrorHandler error={errorMessage} />;
   }
 
-  if (!orderListData || orderListData.length === 0) {
-    return (
-      <div className="text-center">
-        <div className="p-3">
-          <Image src={image} width={200} height={200} alt="No Data" />
-        </div>
-        <h2 className="theme-blue">Sorry, No Data Found</h2>
-      </div>
-    );
-  }
 
   return (
     <>

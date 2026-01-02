@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import Select from 'react-select';
 
-const OrderListFilter = ({ filters, setFilters, filterOptions }: any) => {
+const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationBtn }: any) => {
     const handleChange = (key: string, value: any) => {
+        handlePaginationBtn(0);
         setFilters((prev: any) => ({
             ...prev,
             [key]: value,
