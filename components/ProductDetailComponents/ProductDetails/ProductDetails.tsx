@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import NoDataFound from '../../NoDataFound';
 import DrawerSkeleton from '../ProductDetailDrawer/DrawerSkeleton';
 import ImageSkeleton from '../ProductDetailDrawer/ImageSkeleton';
 import ProductDetailInfo from '../ProductDetailDrawer/ProductDetailInfo';
+import ProductInput from '../ProductDetailDrawer/ProductInput';
 import PrevNextButtons from './PrevNextButtons';
 import ProductCode from './ProductCode';
 import ProductFieldDetails from './ProductFieldDetails';
@@ -17,6 +19,15 @@ const ProductDetails = ({
   isLoading,
   referenceTrackerData,
 }: any) => {
+
+  const [isAccepted, setIsAccepted] = useState(false);
+    const [ssReviewData, setSsReviewData] = useState({
+      item: "",
+      ssReview: "",
+      ssSelection: "",
+      ssReviewDate: ""
+    });
+
   const handledataRendering = () => {
     if (isLoading) {
       return (
@@ -50,11 +61,24 @@ const ProductDetails = ({
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo
-                data={productDetailData}
-                getProductDetailData={fetchProductDetailDataAPI}
-                // referenceTrackerData={referenceTrackerData}
-              />
+              {/* Hide and show this based on the url (research and review) */}
+              {
+                window.location.href.split("/")[4].startsWith("review") &&
+                <ProductInput
+                  setIsAccepted={setIsAccepted}
+                  ssReviewData={ssReviewData}
+                  setSsReviewData={setSsReviewData}
+                />
+              }
+
+              {
+                (!window.location.href.split("/")[4].startsWith("review") || isAccepted) &&
+                <ProductDetailInfo
+                  data={productDetailData}
+                  getProductDetailData={fetchProductDetailDataAPI}
+                  ssReviewData={ssReviewData}
+                />
+              }
             </div>
             <PrevNextButtons data={productDetailData} />
           </div>
