@@ -19,7 +19,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 <input
                     type="date"
                     className="form-control"
-                    value={filters.transaction_date || ''}
+                    value={filters?.transaction_date || ''}
                     onChange={(e) =>
                         handleChange('transaction_date', e.target.value)
                     }
@@ -32,7 +32,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 <input
                     type="date"
                     className="form-control"
-                    value={filters.delivery_date || ''}
+                    value={filters?.delivery_date || ''}
                     onChange={(e) =>
                         handleChange('delivery_date', e.target.value)
                     }
@@ -44,7 +44,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 <label className="fw-bold">Customer</label>
                 <Select
                     options={filterOptions?.customers}
-                    value={filters.customer_name}
+                    value={filters?.customer_name}
                     onChange={(opt) => handleChange('customer_name', opt)}
                     isClearable
                 />
@@ -55,7 +55,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 <label className="fw-bold">Purity</label>
                 <Select
                     options={filterOptions?.purities}
-                    value={filters.purity}
+                    value={filters?.purity}
                     onChange={(opt) => handleChange('purity', opt)}
                     isClearable
                 />
@@ -66,7 +66,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 <label className="fw-bold">Order ID</label>
                 <Select
                     options={filterOptions?.order_ids}
-                    value={filters.order_id}
+                    value={filters?.order_id}
                     onChange={(opt) => handleChange('order_id', opt)}
                     isClearable
                 />
