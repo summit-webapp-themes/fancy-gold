@@ -30,6 +30,14 @@ const Navbar = () => {
   const { cartCount, cartListingItems } = useFetchCartItems();
   const user = localStorage.getItem('user');
   const party_name = localStorage.getItem('party_name');
+  const navbarPermissions = JSON.parse(
+    localStorage.getItem('navbarPermissions') ??
+    JSON.stringify({
+      is_show_dashboard: false,
+      is_show_orders: false,
+      is_show_reports: false,
+    })
+  );
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -130,7 +138,7 @@ const Navbar = () => {
                     <Link href="/cart" legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
-                          <FaCartPlus className="icon" style={{ height: '24px'}} />
+                          <FaCartPlus className="icon" style={{ height: '24px' }} />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{cartCount}</span>
                           <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Cart</span>
                         </div>
@@ -141,7 +149,7 @@ const Navbar = () => {
                     <Link href="/wishlist " legacyBehavior>
                       <a className={`link-dark ${stylesNavbar.label}`}>
                         <div className={stylesNavbar.icon_container}>
-                          <FaHeart className="icon" style={{ height: '24px'}} />
+                          <FaHeart className="icon" style={{ height: '24px' }} />
                           <span className={`${stylesNavbar.badge} ${stylesNavbar.badge_warning} text-white`}>{wishlistCount}</span>
                           <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Wishlist</span>
                         </div>
@@ -151,110 +159,124 @@ const Navbar = () => {
 
                   {!isMobile && (
                     <>
-                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}  >
-                        <div className="text-center">
-                          <FaRegCalendar className="icon " />
-                        </div>
-                        <NavDropdown title="Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
-                          <Link href="/order-history" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Order List
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Completed Orders
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Cancelled Orders
-                            </NavDropdown.Item>
-                          </Link>
-                        </NavDropdown>
-                      </li>
-                      <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
-                        <div className="text-center">
-                          <FaRegCalendar className="icon " />
-                        </div>
-                        <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
-                          <Link href="/reports/pending-order" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Pending Order Report
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              In Process Order Report
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/reports/review-report" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Review Report
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Dispatched Order Report
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Due Date Reminder Report
-                            </NavDropdown.Item>
-                          </Link>
-                          <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
-                            <NavDropdown.Item
-                              as="a"
-                              className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
-                            >
-                              Late Order Report
-                            </NavDropdown.Item>
-                          </Link>
-                        </NavDropdown>
-                      </li>
-                      
+                      {/* orders */}
+                      {
+                        navbarPermissions?.is_show_orders &&
+                        <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}  >
+                          <div className="text-center">
+                            <FaRegCalendar className="icon " />
+                          </div>
+                          <NavDropdown title="Orders" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                            <Link href="/order-history" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Order List
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/order-history/completed-orders" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Completed Orders
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/order-history/cancelled-orders" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Cancelled Orders
+                              </NavDropdown.Item>
+                            </Link>
+                          </NavDropdown>
+                        </li>
+                      }
+
+                      {/* reports */}
+                      {
+                        navbarPermissions?.is_show_reports &&
+                        <li className={`${stylesNavbar.list_inline_item} ${stylesNavbar.list_inline_margin}`}>
+                          <div className="text-center">
+                            <FaRegCalendar className="icon " />
+                          </div>
+                          <NavDropdown title="Reports" id="basic-nav-dropdown" className={stylesNavbar.order_list_dropdown}>
+                            <Link href="/reports/pending-order" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Pending Order Report
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/reports/in-process-orders-report" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                In Process Order Report
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/reports/review-report" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Review Report
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/reports/dispatched-orders-report" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Dispatched Order Report
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/reports/due-date-reminder-report" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Due Date Reminder Report
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link href="/reports/late-orders-report" passHref className="text-decoration-none">
+                              <NavDropdown.Item
+                                as="a"
+                                className={`text-decoration-none ${stylesNavbar.order_list_items} custom-dropdown-item`}
+                              >
+                                Late Order Report
+                              </NavDropdown.Item>
+                            </Link>
+                          </NavDropdown>
+                        </li>
+                      }
+
                     </>
                   )}
-                  <li className={`${stylesNavbar.list_inline_margin}`}>
-                        {/* <div className="text-center">
+
+                  {/* dashboard */}
+                  {
+                    navbarPermissions?.is_show_dashboard &&
+                    <li className={`${stylesNavbar.list_inline_margin}`}>
+                      {/* <div className="text-center">
                           <FaRegCalendar className="icon " />
                         </div> */}
-                        <Link href="/dashboard" legacyBehavior>
-                          <a className={`link-dark`}>
-                            <div className={stylesNavbar.icon_container}>
-                              <FaJxl className="icon" />
-                            </div>
-                            <div className='text-center'>
-                              <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Dashboard</span>
-                            </div>
-                          </a>
-                        </Link>
-                      </li>
+                      <Link href="/dashboard" legacyBehavior>
+                        <a className={`link-dark`}>
+                          <div className={stylesNavbar.icon_container}>
+                            <FaJxl className="icon" />
+                          </div>
+                          <div className='text-center'>
+                            <span className={`d-none d-md-inline-block theme-blue ${stylesNavbar.order_list_dropdown}`}>Dashboard</span>
+                          </div>
+                        </a>
+                      </Link>
+                    </li>
+                  }
                   <li className={stylesNavbar.list_inline_item}>
                     <div className={stylesNavbar.icon_container}>
                       <FaUserCircle className="icon" />
