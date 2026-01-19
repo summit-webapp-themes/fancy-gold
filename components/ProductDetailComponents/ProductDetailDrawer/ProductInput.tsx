@@ -45,6 +45,18 @@ export default function ProductInput({ setIsAccepted, ssReviewData, setSsReviewD
     };
 
     useEffect(() => {
+        if (!ssReviewData.ssReviewDate) {
+            const today = new Date().toISOString().split('T')[0];
+
+            setSsReviewData((prev: any) => ({
+                ...prev,
+                ssReviewDate: today,
+            }));
+        }
+    }, []);
+
+
+    useEffect(() => {
         const { ssReview, ssSelection, ssReviewDate } = ssReviewData;
 
         if (
@@ -65,6 +77,16 @@ export default function ProductInput({ setIsAccepted, ssReviewData, setSsReviewD
         }
     }, [ssReviewData]);
 
+    const formatDate = (dateStr: string) => {
+        if (!dateStr) return '';
+
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+    };
 
     return (
         <div className="container mt-4">
@@ -111,14 +133,14 @@ export default function ProductInput({ setIsAccepted, ssReviewData, setSsReviewD
                         <th>SS Review Date</th>
                         <td>
                             <input
-                                type="date"
+                                type="text"
                                 className="form-control"
-                                name="ssReviewDate"
-                                value={ssReviewData.ssReviewDate}
-                                onChange={handleChange}
+                                value={formatDate(ssReviewData.ssReviewDate)}
+                                disabled
                             />
                         </td>
                     </tr>
+
                 </tbody>
             </table>
 
