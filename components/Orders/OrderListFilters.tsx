@@ -72,6 +72,39 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
                 />
             </div>
 
+            {/* Product */}
+            <div className="col-md-3 mt-2">
+                <label className="fw-bold">Product</label>
+                <Select
+                    options={filterOptions?.products}
+                    value={filters?.product}
+                    onChange={(opt) => handleChange('product', opt)}
+                    isClearable
+                />
+            </div>
+
+            {/* Factory */}
+            <div className="col-md-3 mt-2">
+                <label className="fw-bold">Factory</label>
+                <Select
+                    options={filterOptions?.factories}
+                    value={filters?.factory}
+                    onChange={(opt) => handleChange('factory', opt)}
+                    isClearable
+                />
+            </div>
+
+            {/* User */}
+            <div className="col-md-3 mt-2">
+                <label className="fw-bold">User</label>
+                <Select
+                    options={filterOptions?.users}
+                    value={filters?.user}
+                    onChange={(opt) => handleChange('user', opt)}
+                    isClearable
+                />
+            </div>
+
         </div>
     );
 };
