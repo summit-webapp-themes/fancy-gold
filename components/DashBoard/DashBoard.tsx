@@ -3,7 +3,20 @@ import useDashBoard from '../../hooks/DashBoard/useDashBoard-hook';
 import DashboardLoading from './DashBoardLoading';
 
 const DashBoard = () => {
-  const { data, purity, selectedPurity, setSelectedPurity, handleCardClick, colorMap, isLoading } = useDashBoard();
+
+  const {
+    data,
+    purity,
+    selectedPurity,
+    setSelectedPurity,
+    factories,
+    selectedFactory,
+    setSelectedFactory,
+    handleCardClick,
+    colorMap,
+    isLoading,
+  } = useDashBoard();
+
   function hexToRGBA(hex: string, opacity: number): string {
     const bigint = parseInt(hex.replace('#', ''), 16);
     const r = (bigint >> 16) & 255;
@@ -13,17 +26,36 @@ const DashBoard = () => {
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   }
   if (!isLoading) {
-    return <DashboardLoading/>
+    return <DashboardLoading />
   }
   return (
     <div className="container mt-4">
       <div className="row mb-4 align-items-center">
-        <div className="col-md-10 text-start">
-          <h3 className="fw-bold">Purity: {selectedPurity}</h3>
+        <div className="col-md-8 text-start">
+          <h3 className="fw-bold">
+            Purity: {selectedPurity}
+            {selectedFactory && ` | Factory: ${selectedFactory}`}
+          </h3>
         </div>
+
+        {/* Factory Select */}
+        <div className="col-md-2">
+          <select
+            className="form-select"
+            value={selectedFactory}
+            onChange={(e) => setSelectedFactory(e.target.value)}
+          >
+            {factories.map((factory, index) => (
+              <option key={index} value={factory.name}>
+                {factory.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="col-md-2">
           <select className="form-select" value={selectedPurity} onChange={(e) => setSelectedPurity(e.target.value)}>
-            {purity.map((item, index) => (
+            {purity?.map((item, index) => (
               <option key={index} value={item.name}>
                 {item.name}
               </option>
@@ -33,7 +65,7 @@ const DashBoard = () => {
       </div>
 
       <div className="row g-4">
-        {data?.map((item:any, index:any) => (
+        {data?.map((item: any, index: any) => (
           <div key={index} className="col-md-4">
             <div
               className="card text-white h-100 border-none"
