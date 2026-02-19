@@ -24,6 +24,7 @@ const OrderDetail = () => {
   const grandWeight = orderData.total_grand_weight;
   const common_comment = orderData.common_comment;
   const customerName = orderData.cust_name;
+  const isCancellationAllowed = orderData.is_cancellation_allowed;
 
   const printPage = () => {
     window.print();
@@ -58,10 +59,22 @@ const OrderDetail = () => {
                       Reorder
                     </button>
                   </div>
-                  <div className="mx-2">
-                    <button className={`rounded-2 ${orderDetailStyles?.btn}`} onClick={handleCancelOrder}>
-                      Cancel
-                    </button>
+                  <div className="mx-2"><button
+                    className={`rounded-2 ${orderDetailStyles?.btn}`}
+                    onClick={handleCancelOrder}
+                    disabled={!isCancellationAllowed}
+                    title={
+                      !isCancellationAllowed
+                        ? "Items from this order have been accepted/processed and cannot be canceled."
+                        : ""
+                    }
+                    style={{
+                      cursor: !isCancellationAllowed ? "not-allowed" : "pointer",
+                      opacity: !isCancellationAllowed ? 0.6 : 1,
+                    }}
+                  >
+                    Cancel
+                  </button>
                   </div>
                   <div className={`mx-2 ${orderDetailStyles.print_order} `}>
                     <FaPrint onClick={printPage} />
