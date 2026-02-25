@@ -7,6 +7,8 @@ import ProductCode from './ProductCode';
 import ProductFieldDetails from './ProductFieldDetails';
 import ProductImage from './ProductImage';
 import ProductVariants from './ProductVariants';
+import ProductInput from '../ProductDetailDrawer/ProductInput';
+import { useState } from 'react';
 
 const ProductDetails = ({
   productDetailData,
@@ -16,6 +18,15 @@ const ProductDetails = ({
   variantLoading,
   isLoading,
 }: any) => {
+
+  const [isAccepted, setIsAccepted] = useState(false);
+  const [ssReviewData, setSsReviewData] = useState({
+    item: "",
+    ssReview: "",
+    ssSelection: "",
+    ssReviewDate: ""
+  });
+
   const handledataRendering = () => {
     if (isLoading) {
       return (
@@ -49,7 +60,26 @@ const ProductDetails = ({
                 errorMessage={errorMessage}
                 loading={variantLoading}
               />
-              <ProductDetailInfo data={productDetailData} getProductDetailData={fetchProductDetailDataAPI} />
+              
+              {/* Hide and show this based on the url (research and review) */}
+              {
+                window.location.href.split("/")[4].startsWith("review") &&
+                <ProductInput
+                  setIsAccepted={setIsAccepted}
+                  ssReviewData={ssReviewData}
+                  setSsReviewData={setSsReviewData}
+                />
+              }
+
+              {
+                (!window.location.href.split("/")[4].startsWith("review") || isAccepted) &&
+                <ProductDetailInfo
+                  data={productDetailData}
+                  getProductDetailData={fetchProductDetailDataAPI}
+                  ssReviewData={ssReviewData}
+                />
+              }
+              
             </div>
             <PrevNextButtons data={productDetailData} />
           </div>

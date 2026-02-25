@@ -13,6 +13,7 @@ import ProductVariants from '../ProductDetails/ProductVariants';
 import DrawerSkeleton from './DrawerSkeleton';
 import ImageSkeleton from './ImageSkeleton';
 import ProductDetailInfo from './ProductDetailInfo';
+import ProductInput from './ProductInput';
 
 const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const TokenFromStore: any = useSelector(get_access_token);
@@ -23,6 +24,14 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
   const [attributesData, setAttributesData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false); // Loading state
   const [detailLoading, setDetailLoading] = useState(false);
+  const [isAccepted, setIsAccepted] = useState(false);
+  const [ssReviewData, setSsReviewData] = useState({
+    item: "",
+    ssReview: "",
+    ssSelection: "",
+    ssReviewDate: ""
+  });
+
   const getVariantsData = async () => {
     if (data?.variantOf !== null) {
       setLoading(true); // Set loading to true when API call starts
@@ -46,6 +55,7 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setVariantsData([]);
     }
   };
+
   const getProductDetailData = async (productName: string) => {
     const requestParams = {
       item: productName,
@@ -74,12 +84,18 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
       setAttributesData([]);
     }, 400);
   };
+
   const imageLoader = ({ src, width, quality }: any) => {
     return `${CONSTANTS.API_BASE_URL}${src}?w=${width}&q=${quality || 75}`;
   };
+
   useEffect(() => {
     if (data?.productName) {
       getProductDetailData(data?.productName);
+      setSsReviewData(prev => ({
+        ...prev,
+        item: data.productName
+      }));
     }
     if (data?.variantOf) {
       getVariantsData();
@@ -108,7 +124,26 @@ const ProductDetailDrawer = ({ show, handleClose, data }: any) => {
               errorMessage={errorMessage}
               loading={loading}
             />
-            <ProductDetailInfo data={productDetail} getProductDetailData={getProductDetailData} />
+            
+            {/* Hide and show this based on the url (research and review) */}
+            {
+              window.location.href.split("/")[4].startsWith("review") &&
+              <ProductInput
+                setIsAccepted={setIsAccepted}
+                ssReviewData={ssReviewData}
+                setSsReviewData={setSsReviewData}
+              />
+            }
+
+            {
+              (!window.location.href.split("/")[4].startsWith("review") || isAccepted) &&
+              <ProductDetailInfo
+                data={productDetail}
+                getProductDetailData={getProductDetailData}
+                ssReviewData={ssReviewData}
+              />
+            }
+            
             <div className="mt-2">
               <Image
                 src={productDetail?.image ? productDetail?.image : noImage}
