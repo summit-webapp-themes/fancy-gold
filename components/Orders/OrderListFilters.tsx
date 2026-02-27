@@ -41,7 +41,7 @@ const OrderListFilter = ({ filters, setFilters, filterOptions, handlePaginationB
 
             {/* Customer */}
             <div className="col-md-3">
-                <label className="fw-bold">Customer</label>
+                <label className="fw-bold">Order Name</label>
                 <Select
                     options={filterOptions?.customers}
                     value={filters?.customer_name}
