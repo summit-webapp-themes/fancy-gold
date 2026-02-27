@@ -45,7 +45,7 @@ const OrderList = () => {
     { field_name: '', header: '' },
     { field_name: 'transaction_date', header: 'Order Date' },
     { field_name: 'name', header: 'Order Id' },
-    { field_name: 'customer_name', header: 'Customer Name' },
+    { field_name: 'customer_name', header: 'Order Name' },
     { field_name: 'purity', header: 'Purity' },
     { field_name: 'total_weight', header: 'Total Ordered Weight' },
     { field_name: 'delivery_date', header: 'Due Date' },
